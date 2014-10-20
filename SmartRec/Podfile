@@ -1,0 +1,10 @@
+platform :ios, "8.0"
+
+target "SmartRec" do
+pod 'AFNetworking', '~> 2.3'
+end
+
+target "SmartRec" do
+
+end
+
