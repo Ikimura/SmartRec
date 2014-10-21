@@ -15,24 +15,13 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         allFiles = [VideoItem]();
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        let documentsDirectory = paths[0] as String
-        
-        var directoryContent: [AnyObject] = NSFileManager.defaultManager().contentsOfDirectoryAtPath(documentsDirectory, error: nil)!;
-        if directoryContent.count > 0 {
-            for i in 0...directoryContent.count {
-                //            var tempDate = NSDate ();
-                var tempItem = VideoItem();
-                if let name = directoryContent[i] as? String {
-                    tempItem.fileName = name;
-                    allFiles.append(tempItem);
-                }
-                
-            }
-        }
+
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.updateData();
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,18 +41,70 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: SRMovieTableViewCell = tableView.dequeueReusableCellWithIdentifier("movieCellidentifier", forIndexPath: indexPath) as SRMovieTableViewCell;
-        
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.timeStyle = .MediumStyle;
-        dateFormatter.dateStyle = .MediumStyle;
 
-        let str: String = dateFormatter.stringFromDate(allFiles[indexPath.row].date);
-        
-        cell.dateLabel.text = str;
+        if let item = allFiles[indexPath.row] as VideoItem! {
+            cell.dateLabel.text = item.fileName;
+        }
         
         return cell;
     }
+    
+    // Override to support conditional editing of the table view.
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true;
+    }
 
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (editingStyle == .Delete) {
+            //Delete the row from the data source
+            
+            let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+            var documentsDirectory = paths[0] as String
+            
+            let deleteItem: VideoItem = allFiles[indexPath.row];
+            documentsDirectory += "/";
+            documentsDirectory += deleteItem.fileName;
+            
+            
+            NSLog(documentsDirectory);
+            //
+            if(NSFileManager.defaultManager().fileExistsAtPath(documentsDirectory)) {
+                
+                var err: NSError?;
+                NSFileManager.defaultManager().removeItemAtPath(documentsDirectory, error: &err);
+                if (err == nil) {
+                    NSLog("delete");
+                    allFiles.removeAtIndex(indexPath.row);
+                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade);
+                }
+            }
+            
+        }
+    }
+
+    
+    func updateData() {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let documentsDirectory = paths[0] as String
+        
+        var directoryContent: [AnyObject] = NSFileManager.defaultManager().contentsOfDirectoryAtPath(documentsDirectory, error: nil)!;
+        if directoryContent.count > 0 {
+            for str in directoryContent {
+                
+                NSLog("Files exist");
+                
+                var tempItem = VideoItem();
+                if let name = str as? String {
+                    tempItem.fileName = name;
+                    allFiles.append(tempItem);
+                }
+                
+            }
+        }
+        
+        tableView.reloadData();
+    }
+    
     /*
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

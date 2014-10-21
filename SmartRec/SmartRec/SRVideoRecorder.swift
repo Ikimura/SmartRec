@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import AssetsLibrary
 
 class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     
@@ -24,11 +25,15 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     var delegate: AnyObject?;
     
     init(wtihURL fileURL: NSURL) {
-        url = fileURL;
-        super.init();
-
         
+        super.init();
+        
+        url = fileURL;
         self.setupCaptureSession();
+    }
+    
+    deinit{
+        
     }
     
     func setupCaptureSession() {
@@ -93,7 +98,6 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     
     func startRecording() {
         videoFileOutput.startRecordingToOutputFileURL(url, recordingDelegate: self);
-
     }
     
     func stopRecording() {
@@ -102,8 +106,12 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     
     //MARK: - AVCaptureFileOutputRecordingDelegate
     
+    func captureOutput(captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAtURL fileURL: NSURL!, fromConnections connections: [AnyObject]!) {
+        NSLog("didStartRecordingToOutputFileAtURL - enter");
+
+    }
+    
     func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
         NSLog("didFinishRecordingToOutputFileAtURL - enter");
-        
     }
 }

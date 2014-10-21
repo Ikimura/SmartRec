@@ -23,19 +23,29 @@ class SRVideoWriterViewController: UIViewController {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         var documentsDirectory = paths[0] as String
         
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.timeStyle = .MediumStyle;
+        dateFormatter.dateStyle = .NoStyle;
+        
+        let strName: String = dateFormatter.stringFromDate(NSDate());
+        
         var filePath = "";
         filePath += documentsDirectory;
-        filePath += "my_file.mov";
+        filePath += "/";
+        filePath += strName;
+        filePath += ".mov"
+        var newfilePath = filePath.stringByReplacingOccurrencesOfString(" ", withString: "");
+        NSLog(newfilePath);
         
-        if (NSFileManager.defaultManager().fileExistsAtPath(filePath))
+        if (NSFileManager.defaultManager().fileExistsAtPath(newfilePath))
         {
             var error: NSError?;
-            if (NSFileManager.defaultManager().removeItemAtPath(filePath, error: &error) == false)
+            if (NSFileManager.defaultManager().removeItemAtPath(newfilePath, error: &error) == false)
             {
                 //Error - handle if requried
             }
         }
-        let outputURL = NSURL(fileURLWithPath: filePath);
+        let outputURL = NSURL(fileURLWithPath: newfilePath);
         videoRecorder = SRVideoRecorder(wtihURL: outputURL!);
         
         //ADD VIDEO PREVIEW LAYER
@@ -47,12 +57,11 @@ class SRVideoWriterViewController: UIViewController {
         previewLayer.bounds = layerRect;
         previewLayer.position = CGPointMake(CGRectGetMidX(layerRect), CGRectGetMidY(layerRect));
         
-        //We use this instead so it goes on a layer behind our UI controls (avoids us having to manually bring each control to the front):
+//        We use this instead so it goes on a layer behind our UI controls (avoids us having to manually bring each control to the front):
         var cameraView: UIView = UIView();
-        self.view.insertSubview(cameraView, atIndex: 0);
         cameraView.layer.addSublayer(previewLayer);
+        self.view.insertSubview(cameraView, atIndex: 0);
         
-        self.view.bringSubviewToFront(recordBtn);
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -61,15 +70,8 @@ class SRVideoWriterViewController: UIViewController {
         videoRecorder.startRunning();
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated);
-        
-        videoRecorder.startRecording();
-    }
-    
     override func viewWillDisappear(animated: Bool) {
         super.viewDidDisappear(animated);
-        videoRecorder.stopRecording();
     }
     
     deinit {
@@ -96,11 +98,19 @@ class SRVideoWriterViewController: UIViewController {
     @IBAction func recBtnAction(sender: AnyObject) {
         if recordBtn.selected == false {
             NSLog("START RECORDING");
-
+            recordBtn.selected = true;
+            recordBtn.titleLabel?.text = "Stop";
+            // Disable the idle timer while recording
+            UIApplication.sharedApplication().idleTimerDisabled = true;
             //Start recording
             videoRecorder.startRecording();
             
+            
         } else {
+            recordBtn.selected = false;
+            recordBtn.titleLabel?.text = "Rec";
+            UIApplication.sharedApplication().idleTimerDisabled = false;
+
             videoRecorder.stopRecording();
         }
     }
