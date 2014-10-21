@@ -9,7 +9,6 @@
 import UIKit
 
 class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UITableViewDataSource {
-    let reuseIdentifier = "movieCellidentifier";
     
     @IBOutlet var tableView: UITableView!;
     var allFiles: [VideoItem]!;
@@ -18,13 +17,20 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
         super.viewDidLoad()
 
         allFiles = [VideoItem]();
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let documentsDirectory = paths[0] as String
         
-        for i in 0...4 {
-            var tempDate = NSDate ();
-            var tempItem = VideoItem();
-            tempItem.date = tempDate;
-            
-            allFiles.append(tempItem);
+        var directoryContent: [AnyObject] = NSFileManager.defaultManager().contentsOfDirectoryAtPath(documentsDirectory, error: nil)!;
+        if directoryContent.count > 0 {
+            for i in 0...directoryContent.count {
+                //            var tempDate = NSDate ();
+                var tempItem = VideoItem();
+                if let name = directoryContent[i] as? String {
+                    tempItem.fileName = name;
+                    allFiles.append(tempItem);
+                }
+                
+            }
         }
         // Do any additional setup after loading the view.
     }
@@ -45,7 +51,7 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: SRMovieTableViewCell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath) as SRMovieTableViewCell;
+        var cell: SRMovieTableViewCell = tableView.dequeueReusableCellWithIdentifier("movieCellidentifier", forIndexPath: indexPath) as SRMovieTableViewCell;
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = .MediumStyle;

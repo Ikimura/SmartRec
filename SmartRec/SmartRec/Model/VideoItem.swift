@@ -10,7 +10,8 @@ import Foundation
 
 class VideoItem : NSObject {
     var date: NSDate!;
-    
+    var fileName: String!;
+
     override init() {
     }
     

@@ -22,6 +22,8 @@
 		137E3B9C19F543B60094C5A1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 137E3B9B19F543B60094C5A1 /* QuartzCore.framework */; };
 		137E3B9E19F54F4B0094C5A1 /* SRVideoWriterCapturePipline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B9D19F54F4B0094C5A1 /* SRVideoWriterCapturePipline.swift */; };
 		137E3BA019F5538E0094C5A1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 137E3B9F19F5538E0094C5A1 /* AVFoundation.framework */; };
+		13C1F5BB19F63BAF00149649 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C1F5BA19F63BAF00149649 /* OpenGLES.framework */; };
+		13C1F5BD19F6466C00149649 /* SRVideoRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C1F5BC19F6466C00149649 /* SRVideoRecorder.swift */; };
 		9246CE854797EB575F7D3CF9 /* libPods-SmartRec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 629E0BE8345E5875EE1D9C09 /* libPods-SmartRec.a */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +57,8 @@
 		137E3B9B19F543B60094C5A1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		137E3B9D19F54F4B0094C5A1 /* SRVideoWriterCapturePipline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRVideoWriterCapturePipline.swift; sourceTree = "<group>"; };
 		137E3B9F19F5538E0094C5A1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		13C1F5BA19F63BAF00149649 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		13C1F5BC19F6466C00149649 /* SRVideoRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRVideoRecorder.swift; sourceTree = "<group>"; };
 		576FBF43DDEE1F6555A4FA62 /* Pods-SmartRec.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRec.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmartRec/Pods-SmartRec.debug.xcconfig"; sourceTree = "<group>"; };
 		629E0BE8345E5875EE1D9C09 /* libPods-SmartRec.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SmartRec.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEEFD9D2BCFD05A6A3E5D224 /* Pods-SmartRec.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRec.release.xcconfig"; path = "Pods/Target Support Files/Pods-SmartRec/Pods-SmartRec.release.xcconfig"; sourceTree = "<group>"; };
@@ -65,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13C1F5BB19F63BAF00149649 /* OpenGLES.framework in Frameworks */,
 				137E3BA019F5538E0094C5A1 /* AVFoundation.framework in Frameworks */,
 				137E3B9C19F543B60094C5A1 /* QuartzCore.framework in Frameworks */,
 				9246CE854797EB575F7D3CF9 /* libPods-SmartRec.a in Frameworks */,
@@ -107,6 +112,7 @@
 				137E3B9319F53A9D0094C5A1 /* Model */,
 				137E3B8819F5313B0094C5A1 /* GUI */,
 				137E3B9D19F54F4B0094C5A1 /* SRVideoWriterCapturePipline.swift */,
+				13C1F5BC19F6466C00149649 /* SRVideoRecorder.swift */,
 				137E3B6819F52BF00094C5A1 /* AppDelegate.swift */,
 				137E3B6619F52BF00094C5A1 /* Supporting Files */,
 			);
@@ -189,6 +195,7 @@
 		2DBCF0BAAB98CAACFCF53789 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				13C1F5BA19F63BAF00149649 /* OpenGLES.framework */,
 				137E3B9F19F5538E0094C5A1 /* AVFoundation.framework */,
 				137E3B9B19F543B60094C5A1 /* QuartzCore.framework */,
 				629E0BE8345E5875EE1D9C09 /* libPods-SmartRec.a */,
@@ -345,6 +352,7 @@
 				137E3B9E19F54F4B0094C5A1 /* SRVideoWriterCapturePipline.swift in Sources */,
 				137E3B9719F5420C0094C5A1 /* SRTabBarViewController.swift in Sources */,
 				137E3B8B19F531B20094C5A1 /* SRNavigationController.swift in Sources */,
+				13C1F5BD19F6466C00149649 /* SRVideoRecorder.swift in Sources */,
 				137E3B8D19F532550094C5A1 /* SRCommonViewController.swift in Sources */,
 				137E3B9A19F542DB0094C5A1 /* SRVideoWriterViewController.swift in Sources */,
 				137E3B9019F532A90094C5A1 /* SRMovieListViewController.swift in Sources */,
