@@ -17,6 +17,8 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
         super.viewDidLoad()
         allFiles = [VideoItem]();
 
+        tableView.estimatedRowHeight = 74;
+        tableView.rowHeight = UITableViewAutomaticDimension;
         // Do any additional setup after loading the view.
     }
     
