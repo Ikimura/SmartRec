@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		130A5B8D19F7CECB004515A7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130A5B8C19F7CECB004515A7 /* Constants.swift */; };
+		1313411219F78D68003BF084 /* SRShowVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1313411119F78D68003BF084 /* SRShowVideoViewController.swift */; };
+		1313411419F78DAE003BF084 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1313411319F78DAE003BF084 /* MediaPlayer.framework */; };
 		13361DB319F6917A00F0CB64 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13361DB219F6917A00F0CB64 /* AssetsLibrary.framework */; };
 		137E3B6919F52BF00094C5A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B6819F52BF00094C5A1 /* AppDelegate.swift */; };
 		137E3B6E19F52BF00094C5A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 137E3B6C19F52BF00094C5A1 /* Main.storyboard */; };
@@ -21,7 +24,6 @@
 		137E3B9719F5420C0094C5A1 /* SRTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B9619F5420C0094C5A1 /* SRTabBarViewController.swift */; };
 		137E3B9A19F542DB0094C5A1 /* SRVideoWriterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B9919F542DB0094C5A1 /* SRVideoWriterViewController.swift */; };
 		137E3B9C19F543B60094C5A1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 137E3B9B19F543B60094C5A1 /* QuartzCore.framework */; };
-		137E3B9E19F54F4B0094C5A1 /* SRVideoWriterCapturePipline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B9D19F54F4B0094C5A1 /* SRVideoWriterCapturePipline.swift */; };
 		137E3BA019F5538E0094C5A1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 137E3B9F19F5538E0094C5A1 /* AVFoundation.framework */; };
 		13C1F5BB19F63BAF00149649 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C1F5BA19F63BAF00149649 /* OpenGLES.framework */; };
 		13C1F5BD19F6466C00149649 /* SRVideoRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C1F5BC19F6466C00149649 /* SRVideoRecorder.swift */; };
@@ -39,6 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		130A5B8C19F7CECB004515A7 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		1313411119F78D68003BF084 /* SRShowVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRShowVideoViewController.swift; sourceTree = "<group>"; };
+		1313411319F78DAE003BF084 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		13361DB219F6917A00F0CB64 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		137E3B6319F52BF00094C5A1 /* SmartRec.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartRec.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		137E3B6719F52BF00094C5A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -57,7 +62,6 @@
 		137E3B9619F5420C0094C5A1 /* SRTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRTabBarViewController.swift; sourceTree = "<group>"; };
 		137E3B9919F542DB0094C5A1 /* SRVideoWriterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRVideoWriterViewController.swift; sourceTree = "<group>"; };
 		137E3B9B19F543B60094C5A1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		137E3B9D19F54F4B0094C5A1 /* SRVideoWriterCapturePipline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRVideoWriterCapturePipline.swift; sourceTree = "<group>"; };
 		137E3B9F19F5538E0094C5A1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		13C1F5BA19F63BAF00149649 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		13C1F5BC19F6466C00149649 /* SRVideoRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRVideoRecorder.swift; sourceTree = "<group>"; };
@@ -71,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1313411419F78DAE003BF084 /* MediaPlayer.framework in Frameworks */,
 				13361DB319F6917A00F0CB64 /* AssetsLibrary.framework in Frameworks */,
 				13C1F5BB19F63BAF00149649 /* OpenGLES.framework in Frameworks */,
 				137E3BA019F5538E0094C5A1 /* AVFoundation.framework in Frameworks */,
@@ -89,6 +94,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		130A5B8B19F7CE91004515A7 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				130A5B8C19F7CECB004515A7 /* Constants.swift */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
+		1313411019F78D23003BF084 /* ShowVideo */ = {
+			isa = PBXGroup;
+			children = (
+				1313411119F78D68003BF084 /* SRShowVideoViewController.swift */,
+			);
+			path = ShowVideo;
+			sourceTree = "<group>";
+		};
 		137E3B5A19F52BF00094C5A1 = {
 			isa = PBXGroup;
 			children = (
@@ -114,7 +135,6 @@
 			children = (
 				137E3B9319F53A9D0094C5A1 /* Model */,
 				137E3B8819F5313B0094C5A1 /* GUI */,
-				137E3B9D19F54F4B0094C5A1 /* SRVideoWriterCapturePipline.swift */,
 				13C1F5BC19F6466C00149649 /* SRVideoRecorder.swift */,
 				137E3B6819F52BF00094C5A1 /* AppDelegate.swift */,
 				137E3B6619F52BF00094C5A1 /* Supporting Files */,
@@ -153,6 +173,8 @@
 		137E3B8819F5313B0094C5A1 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				130A5B8B19F7CE91004515A7 /* Constants */,
+				1313411019F78D23003BF084 /* ShowVideo */,
 				137E3B9819F542B80094C5A1 /* VideoWriter */,
 				137E3B8E19F532700094C5A1 /* MovieList */,
 				137E3B8919F5313B0094C5A1 /* Common */,
@@ -198,6 +220,7 @@
 		2DBCF0BAAB98CAACFCF53789 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1313411319F78DAE003BF084 /* MediaPlayer.framework */,
 				13361DB219F6917A00F0CB64 /* AssetsLibrary.framework */,
 				13C1F5BA19F63BAF00149649 /* OpenGLES.framework */,
 				137E3B9F19F5538E0094C5A1 /* AVFoundation.framework */,
@@ -353,15 +376,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				137E3B9519F53B7D0094C5A1 /* VideoItem.swift in Sources */,
-				137E3B9E19F54F4B0094C5A1 /* SRVideoWriterCapturePipline.swift in Sources */,
 				137E3B9719F5420C0094C5A1 /* SRTabBarViewController.swift in Sources */,
 				137E3B8B19F531B20094C5A1 /* SRNavigationController.swift in Sources */,
 				13C1F5BD19F6466C00149649 /* SRVideoRecorder.swift in Sources */,
 				137E3B8D19F532550094C5A1 /* SRCommonViewController.swift in Sources */,
 				137E3B9A19F542DB0094C5A1 /* SRVideoWriterViewController.swift in Sources */,
+				1313411219F78D68003BF084 /* SRShowVideoViewController.swift in Sources */,
 				137E3B9019F532A90094C5A1 /* SRMovieListViewController.swift in Sources */,
 				137E3B6919F52BF00094C5A1 /* AppDelegate.swift in Sources */,
 				137E3B9219F533A90094C5A1 /* SRMovieTableViewCell.swift in Sources */,
+				130A5B8D19F7CECB004515A7 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

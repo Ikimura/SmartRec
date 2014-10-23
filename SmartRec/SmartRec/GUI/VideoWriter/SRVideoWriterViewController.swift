@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class SRVideoWriterViewController: UIViewController {
+class SRVideoWriterViewController: SRCommonViewController, SRVideoRecorderDelegate {
 
     @IBOutlet weak var recordBtn: UIButton!
     var previewLayer: AVCaptureVideoPreviewLayer!;
@@ -18,9 +18,75 @@ class SRVideoWriterViewController: UIViewController {
     //MARK: life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        var filePath = self.makeNewFilePath();
+        NSLog(filePath);
         
+        let outputURL = NSURL(fileURLWithPath: filePath)!;
+        videoRecorder = SRVideoRecorder(URL: outputURL);
+        videoRecorder.setDelegate(self, callbackQueue:dispatch_get_main_queue());
+
+        self.preparePreviewLayer();
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated);
+        videoRecorder.startRunning();
+    }
+    
+    deinit {
+        
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+
+    //MARK: - Handlers
+    
+    @IBAction func recBtnAction(sender: AnyObject) {
+        if recordBtn.selected == false {
+            self.startRecording();
+        } else {
+            self.stopRecording();
+        }
+    }
+    
+    //MARK: - SRVideoRecorderDelegate
+    
+    func captureVideoRecordingDidStartRecoding(captureRecorder: SRVideoRecorder) {
+        NSLog("didStartRecordingToOutputFileAtURL - delegate");
+
+    }
+    
+    func captureVideoRecordingDidStopRecoding(captureRecorder: SRVideoRecorder, withError error: NSError) {
+        NSLog("didFinishRecordingToOutputFileAtURL - delegate");
+        self.stopRecording();
+    }
+    
+    //MARK: - mathods protected
+    
+    func preparePreviewLayer() {
+        
+        //ADD VIDEO PREVIEW LAYER
+        previewLayer = AVCaptureVideoPreviewLayer(session: videoRecorder.captureSession);
+        previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        
+        var layerRect: CGRect = CGRectMake(self.view.layer.bounds.origin.x , self.view.layer.bounds.origin.y, self.view.layer.bounds.maxX , self.view.layer.bounds.maxY);
+        
+        previewLayer.bounds = layerRect;
+        previewLayer.position = CGPointMake(CGRectGetMidX(layerRect), CGRectGetMidY(layerRect));
+        
+        var cameraView: UIView = UIView();
+        cameraView.layer.addSublayer(previewLayer);
+        self.view.insertSubview(cameraView, atIndex: 0);
+    }
+    
+    func makeNewFilePath() -> String {
         //Create temporary URL to record to
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let paths = NSSearchPathForDirectoriesInDomains(kFileDirectory, .UserDomainMask, true)
         var documentsDirectory = paths[0] as String
         
         let dateFormatter = NSDateFormatter()
@@ -34,91 +100,36 @@ class SRVideoWriterViewController: UIViewController {
         filePath += "/";
         filePath += strName;
         filePath += ".mov"
-        var newfilePath = filePath.stringByReplacingOccurrencesOfString(" ", withString: "");
-        NSLog(newfilePath);
         
-        if (NSFileManager.defaultManager().fileExistsAtPath(newfilePath))
-        {
-            var error: NSError?;
-            if (NSFileManager.defaultManager().removeItemAtPath(newfilePath, error: &error) == false)
-            {
-                //Error - handle if requried
-            }
-        }
-        let outputURL = NSURL(fileURLWithPath: newfilePath);
-        videoRecorder = SRVideoRecorder(wtihURL: outputURL!);
-        
-        //ADD VIDEO PREVIEW LAYER
-        previewLayer = AVCaptureVideoPreviewLayer(session: videoRecorder.captureSession);
-        previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-        
-        var layerRect: CGRect = self.view.layer.bounds;
-        
-        previewLayer.bounds = layerRect;
-        previewLayer.position = CGPointMake(CGRectGetMidX(layerRect), CGRectGetMidY(layerRect));
-        
-//        We use this instead so it goes on a layer behind our UI controls (avoids us having to manually bring each control to the front):
-        var cameraView: UIView = UIView();
-        cameraView.layer.addSublayer(previewLayer);
-        self.view.insertSubview(cameraView, atIndex: 0);
-        
+        return filePath.stringByReplacingOccurrencesOfString(" ", withString: "");
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated);
+    func startRecording() {
+        NSLog("START RECORDING");
+        recordBtn.enabled = false;
         
-        videoRecorder.startRunning();
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewDidDisappear(animated);
-    }
-    
-    deinit {
+        videoRecorder.startRecording();
         
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    //MARKL: - Notifications
-    
-    func applicationDidEnterBackground() -> Void {
-
+        recordBtn.selected = true;
+        recordBtn.titleLabel?.text = "Stop";
+        // Disable the idle timer while recording
+        UIApplication.sharedApplication().idleTimerDisabled = true;
+        //Start recording
+        recordBtn.enabled = true;
     }
     
-    func applicationWillEnterForeground() -> Void {
+    func stopRecording() {
+        NSLog("STOP RECORDING");
+        recordBtn.enabled = false;
         
-    }
-
-    //MARK: - Handlers
-    
-    @IBAction func recBtnAction(sender: AnyObject) {
-        if recordBtn.selected == false {
-            NSLog("START RECORDING");
-            recordBtn.selected = true;
-            recordBtn.titleLabel?.text = "Stop";
-            // Disable the idle timer while recording
-            UIApplication.sharedApplication().idleTimerDisabled = true;
-            //Start recording
-            videoRecorder.startRecording();
-            
-            
-        } else {
-            recordBtn.selected = false;
-            recordBtn.titleLabel?.text = "Rec";
-            UIApplication.sharedApplication().idleTimerDisabled = false;
-
-            videoRecorder.stopRecording();
-        }
-    }
-    
-    //MARK: - mathods protected
-    
-    func recordingStopped() -> Void {
-
+        videoRecorder.stopRecording();
+        
+        recordBtn.selected = false;
+        recordBtn.titleLabel?.text = "Rec";
+        
+        UIApplication.sharedApplication().idleTimerDisabled = false;
+        
+        recordBtn.enabled = true;
     }
 
 }

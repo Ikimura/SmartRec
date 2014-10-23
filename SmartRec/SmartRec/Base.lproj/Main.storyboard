@@ -18,13 +18,16 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="15s-wt-xfD">
-                                <rect key="frame" x="278" y="507" width="44" height="44"/>
+                                <rect key="frame" x="256" y="463" width="88" height="88"/>
                                 <color key="backgroundColor" red="0.84313725490000002" green="0.13741409709999999" blue="0.17986480969999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="44" id="TiY-JX-LI4"/>
-                                    <constraint firstAttribute="height" constant="44" id="wfU-AD-7pt"/>
+                                    <constraint firstAttribute="width" constant="88" id="TiY-JX-LI4"/>
+                                    <constraint firstAttribute="height" constant="88" id="wfU-AD-7pt"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <color key="tintColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Rec">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -37,7 +40,6 @@
                             <constraint firstItem="UZb-JP-bue" firstAttribute="top" secondItem="15s-wt-xfD" secondAttribute="bottom" id="8yO-q2-w8b"/>
                             <constraint firstAttribute="centerX" secondItem="15s-wt-xfD" secondAttribute="centerX" id="cNY-Y6-xKU"/>
                         </constraints>
-                        <variation key="widthClass=compact"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" id="ETC-qY-Brt"/>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -89,10 +91,11 @@
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="SRMovieListViewController" customModule="SmartRec" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" id="DrO-88-ZdI">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="DrO-88-ZdI">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="movieCellidentifier" rowHeight="74" id="ZwV-in-GJu" customClass="SRMovieTableViewCell" customModule="SmartRec" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -100,13 +103,12 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZwV-in-GJu" id="NiY-JW-obA">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yzy-uN-umC">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="yzy-uN-umC">
                                             <rect key="frame" x="14" y="15" width="44" height="44"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="XxN-Ms-btc"/>
                                                 <constraint firstAttribute="width" constant="44" id="nlJ-Ty-50L"/>
                                             </constraints>
-                                            <variation key="widthClass=compact"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="472" translatesAutoresizingMaskIntoConstraints="NO" id="ps3-eb-IDw">
                                             <rect key="frame" x="75" y="33" width="472" height="30"/>
@@ -150,12 +152,12 @@
                                             <variation key="widthClass=compact" constant="15"/>
                                         </constraint>
                                     </constraints>
-                                    <variation key="widthClass=compact"/>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="dateLabel" destination="l81-8F-hr1" id="thj-Uv-LGr"/>
                                     <outlet property="locationLabel" destination="ps3-eb-IDw" id="gQD-kv-wWO"/>
                                     <outlet property="photoImage" destination="yzy-uN-umC" id="dJQ-oE-Bfg"/>
+                                    <segue destination="Kc9-BI-r0t" kind="showDetail" identifier="showVideoIdentifier" id="9gC-Pj-tYq"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -172,12 +174,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-62" y="-191"/>
+            <point key="canvasLocation" x="-242" y="-190"/>
         </scene>
-        <!--View Controller-->
+        <!--Show Video View Controller-->
         <scene sceneID="2f0-Ee-aTY">
             <objects>
-                <viewController id="Kc9-BI-r0t" sceneMemberID="viewController">
+                <viewController id="Kc9-BI-r0t" customClass="SRShowVideoViewController" customModule="SmartRec" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vMI-u8-Caf"/>
                         <viewControllerLayoutGuide type="bottom" id="tk8-DQ-s9Q"/>
@@ -185,12 +187,47 @@
                     <view key="view" contentMode="scaleToFill" id="dW9-Qu-9qf">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dpj-Mb-Coc">
+                                <rect key="frame" x="0.0" y="20" width="600" height="280"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.84313725490000002" green="0.13741409709999999" blue="0.17986480969999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Dpj-Mb-Coc" secondAttribute="trailing" id="18U-TK-SN7"/>
+                            <constraint firstItem="tk8-DQ-s9Q" firstAttribute="top" secondItem="Dpj-Mb-Coc" secondAttribute="bottom" constant="300" id="cFp-Xh-oTq"/>
+                            <constraint firstItem="Dpj-Mb-Coc" firstAttribute="top" secondItem="vMI-u8-Caf" secondAttribute="bottom" id="mLV-pz-t9K"/>
+                            <constraint firstItem="Dpj-Mb-Coc" firstAttribute="leading" secondItem="dW9-Qu-9qf" secondAttribute="leading" id="q75-BO-tCO"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="moviePlayerView" destination="Dpj-Mb-Coc" id="VD3-FJ-uDR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hh2-Lh-wg0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="680" y="-190"/>
+            <point key="canvasLocation" x="575" y="-190"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="0un-N8-e5V">
+            <objects>
+                <viewController id="df6-db-peg" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ITe-qy-VPs"/>
+                        <viewControllerLayoutGuide type="bottom" id="CVR-8G-roy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0wv-GQ-3zE">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CR1-lX-aJa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="image_placeholder" width="44" height="44"/>
+    </resources>
 </document>

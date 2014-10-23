@@ -53,40 +53,48 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true;
     }
-
+    
+    //TODO: FIX
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == .Delete) {
             //Delete the row from the data source
-            
-            let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-            var documentsDirectory = paths[0] as String
-            
             let deleteItem: VideoItem = allFiles[indexPath.row];
-            documentsDirectory += "/";
-            documentsDirectory += deleteItem.fileName;
             
-            
-            NSLog(documentsDirectory);
+            let filePath = self.formFilePathString(name: deleteItem.fileName);
             //
-            if(NSFileManager.defaultManager().fileExistsAtPath(documentsDirectory)) {
-                
+            if(NSFileManager.defaultManager().fileExistsAtPath(filePath)) {
                 var err: NSError?;
-                NSFileManager.defaultManager().removeItemAtPath(documentsDirectory, error: &err);
+                NSFileManager.defaultManager().removeItemAtPath(filePath, error: &err);
                 if (err == nil) {
                     NSLog("delete");
                     allFiles.removeAtIndex(indexPath.row);
-                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade);
+                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .None);
                 }
             }
             
         }
     }
-
     
+    //TODO: FIX
+    func formFilePathString(name fileName: String) -> String {
+        
+        let paths = NSSearchPathForDirectoriesInDomains(kFileDirectory, .UserDomainMask, true);
+        var documentsDirectory = paths[0] as String;
+        
+        documentsDirectory += "/";
+        documentsDirectory += fileName;
+        
+        NSLog(documentsDirectory);
+
+        return documentsDirectory;
+    }
+    
+    //TODO: FIX
     func updateData() {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let paths = NSSearchPathForDirectoriesInDomains(kFileDirectory, .UserDomainMask, true)
         let documentsDirectory = paths[0] as String
         
+        allFiles = [];
         var directoryContent: [AnyObject] = NSFileManager.defaultManager().contentsOfDirectoryAtPath(documentsDirectory, error: nil)!;
         if directoryContent.count > 0 {
             for str in directoryContent {
@@ -105,13 +113,24 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
         tableView.reloadData();
     }
     
-    /*
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        
+        var filePath = "";
+        if let selectedCell = sender as? SRMovieTableViewCell {
+            let indexPath: NSIndexPath = tableView.indexPathForCell(selectedCell)!;
+            filePath = self.formFilePathString(name: allFiles[indexPath.row].fileName);
+        }
+        
+        let URL = NSURL(fileURLWithPath: filePath);
+        
         // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "showVideoIdentifier" {
+            if let showVideoVC = segue.destinationViewController as? SRShowVideoViewController {
+                showVideoVC.fileURL = URL;
+            }
+        }
     }
-    */
+
 
 }
