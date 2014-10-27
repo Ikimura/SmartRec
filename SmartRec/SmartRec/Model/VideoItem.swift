@@ -7,12 +7,20 @@
 //
 
 import Foundation
+import UIKit.UIImage
 
 class VideoItem : NSObject {
-    var date: NSDate!;
-    var fileName: String!;
-
-    override init() {
+    let date: NSDate!;
+    let fileName: String!;
+    let thumbnailImage: UIImage!;
+    
+    
+    init(date: NSDate, fileName: String, thumbnailImage: UIImage) {
+        super.init();
+        
+        self.date = date;
+        self.fileName = fileName;
+        self.thumbnailImage = thumbnailImage;
     }
     
 }

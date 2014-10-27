@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -46,6 +47,7 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
 
         if let item = allFiles[indexPath.row] as VideoItem! {
             cell.dateLabel.text = item.fileName;
+            cell.photoImage.image = item.thumbnailImage;
         }
         
         return cell;
@@ -83,12 +85,27 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
         let paths = NSSearchPathForDirectoriesInDomains(kFileDirectory, .UserDomainMask, true);
         var documentsDirectory = paths[0] as String;
         
-        documentsDirectory += "/";
-        documentsDirectory += fileName;
+        documentsDirectory += "/\(fileName)";
         
         NSLog(documentsDirectory);
 
         return documentsDirectory;
+    }
+    
+    private func thumbnailImage(url: NSURL) -> UIImage {
+        let sourceAsset:AVAsset = AVAsset.assetWithURL(url) as AVAsset;
+        let duration: CMTime = sourceAsset.duration;
+        
+        let generator: AVAssetImageGenerator = AVAssetImageGenerator(asset: sourceAsset);
+//
+//        //Get the 1st frame 3 seconds in
+        let frameTimeStart: Int64 = 3;
+        let frameLocation: Int32 = 1;
+//
+//        //Snatch a frame
+        let frameRef: CGImageRef = generator.copyCGImageAtTime(CMTimeMake(frameTimeStart, frameLocation), actualTime: nil, error: nil);
+        
+        return UIImage(CGImage: frameRef)!;
     }
     
     //TODO: FIX
@@ -103,12 +120,18 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
                 
                 NSLog("Files exist");
                 
-                var tempItem = VideoItem();
                 if let name = str as? String {
-                    tempItem.fileName = name;
-                    allFiles.append(tempItem);
+                    
+                    var filePth = "\(documentsDirectory)/\(name)";
+                    NSLog(filePth);
+                    
+                    if let url = NSURL(fileURLWithPath: filePth) as NSURL? {
+                        
+                        var thmbImage: UIImage = self.thumbnailImage(url);
+                        var tempItem = VideoItem(date: NSDate(), fileName: name, thumbnailImage: thmbImage);
+                        allFiles.append(tempItem);
+                    }
                 }
-                
             }
         }
         
