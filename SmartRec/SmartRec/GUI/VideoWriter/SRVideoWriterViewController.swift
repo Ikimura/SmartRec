@@ -9,29 +9,29 @@
 import UIKit
 import AVFoundation
 
-class SRVideoWriterViewController: SRCommonViewController, SRVideoRecorderDelegate {
+class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManagerDelegateProtocol {
 
     @IBOutlet weak var recordBtn: UIButton!
-    var previewLayer: AVCaptureVideoPreviewLayer!;
-    var videoRecorder: SRVideoRecorder!;
+    
+    private var recordManager: SRVideoCaptureManager!;
+    private var previewView: UIView?;
     
     //MARK: life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var filePath = self.makeNewFilePath();
-        NSLog(filePath);
-        
-        let outputURL = NSURL(fileURLWithPath: filePath)!;
-        videoRecorder = SRVideoRecorder(URL: outputURL);
-        videoRecorder.setDelegate(self, callbackQueue:dispatch_get_main_queue());
-
-        self.preparePreviewLayer();
+        recordManager = SRVideoCaptureManager();
+        recordManager.delegate = self;
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
-        videoRecorder.startRunning();
+        recordManager.startRunnigSession();
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated);
+        recordManager.stopRunnigSession();
     }
     
     deinit {
@@ -43,7 +43,6 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoRecorderDelega
         // Dispose of any resources that can be recreated.
     }
     
-
     //MARK: - Handlers
     
     @IBAction func recBtnAction(sender: AnyObject) {
@@ -54,62 +53,14 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoRecorderDelega
         }
     }
     
-    //MARK: - SRVideoRecorderDelegate
+    //MARK: - private
     
-    func captureVideoRecordingDidStartRecoding(captureRecorder: SRVideoRecorder) {
-        NSLog("didStartRecordingToOutputFileAtURL - delegate");
-
-    }
-    
-    func captureVideoRecordingDidStopRecoding(captureRecorder: SRVideoRecorder, withError error: NSError) {
-        NSLog("didFinishRecordingToOutputFileAtURL - delegate");
-        self.stopRecording();
-    }
-    
-    //MARK: - mathods protected
-    
-    func preparePreviewLayer() {
-        
-        //ADD VIDEO PREVIEW LAYER
-        previewLayer = AVCaptureVideoPreviewLayer(session: videoRecorder.captureSession);
-        previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-        
-        var layerRect: CGRect = CGRectMake(self.view.layer.bounds.origin.x , self.view.layer.bounds.origin.y, self.view.layer.bounds.maxX , self.view.layer.bounds.maxY);
-        
-        previewLayer.bounds = layerRect;
-        previewLayer.position = CGPointMake(CGRectGetMidX(layerRect), CGRectGetMidY(layerRect));
-        
-        var cameraView: UIView = UIView();
-        cameraView.layer.addSublayer(previewLayer);
-        self.view.insertSubview(cameraView, atIndex: 0);
-    }
-    
-    func makeNewFilePath() -> String {
-        //Create temporary URL to record to
-        let paths = NSSearchPathForDirectoriesInDomains(kFileDirectory, .UserDomainMask, true)
-        var documentsDirectory = paths[0] as String
-        
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.timeStyle = .MediumStyle;
-        dateFormatter.dateStyle = .NoStyle;
-        
-        let strName: String = dateFormatter.stringFromDate(NSDate());
-        
-        var filePath = "";
-        filePath += documentsDirectory;
-        filePath += "/";
-        filePath += strName;
-        filePath += ".mov"
-        
-        return filePath.stringByReplacingOccurrencesOfString(" ", withString: "");
-    }
-    
-    func startRecording() {
+    private func startRecording() {
         NSLog("START RECORDING");
         recordBtn.enabled = false;
-        
-        videoRecorder.startRecording();
-        
+        //
+        recordManager.startRecording();
+        //
         recordBtn.selected = true;
         recordBtn.titleLabel?.text = "Stop";
         // Disable the idle timer while recording
@@ -118,18 +69,42 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoRecorderDelega
         recordBtn.enabled = true;
     }
     
-    func stopRecording() {
+    private func stopRecording() {
         NSLog("STOP RECORDING");
         recordBtn.enabled = false;
-        
-        videoRecorder.stopRecording();
-        
+        //
+        recordManager.stopRecording();
+        //
         recordBtn.selected = false;
         recordBtn.titleLabel?.text = "Rec";
         
         UIApplication.sharedApplication().idleTimerDisabled = false;
         
         recordBtn.enabled = true;
+    }
+    
+    //MARK - SRVideoRecorderDelegateProtocol
+    
+    func videoCaptureManagerCanGetPreviewView(captureSession: AVCaptureSession) {
+        NSLog("captureVideoRecordingPreviewView - delegate");
+
+        if previewView == nil {
+            
+            var previewLayer: AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession);
+            
+            previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+            
+            var layerRect: CGRect = CGRectMake(self.view.layer.bounds.origin.x, self.view.layer.bounds.origin.y, self.view.layer.bounds.maxX, self.view.layer.bounds.maxY);
+            
+            previewLayer.bounds = layerRect;
+            previewLayer.position = CGPointMake(CGRectGetMidX(layerRect), CGRectGetMidY(layerRect));
+            
+            previewView = UIView();
+            previewView?.layer.addSublayer(previewLayer);
+            
+            view.insertSubview(previewView!, atIndex: 0);
+        }
+
     }
 
 }

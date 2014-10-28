@@ -120,12 +120,9 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
                 
                 NSLog("Files exist");
                 
-                if let name = str as? String {
-                    
-                    var filePth = "\(documentsDirectory)/\(name)";
-                    NSLog(filePth);
-                    
-                    if let url = NSURL(fileURLWithPath: filePth) as NSURL? {
+                if var name = str as? String {
+                                        
+                    if let url = NSURL.URL(directoryName: kFileDirectory, fileName: name) as NSURL! {
                         
                         var thmbImage: UIImage = self.thumbnailImage(url);
                         var tempItem = VideoItem(date: NSDate(), fileName: name, thumbnailImage: thmbImage);

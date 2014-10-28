@@ -8,49 +8,51 @@
 
 import UIKit
 import AVFoundation
-import AssetsLibrary
 
-protocol SRVideoRecorderDelegate {
-     func captureVideoRecordingDidStartRecoding(captureRecorder: SRVideoRecorder);
-     func captureVideoRecordingDidStopRecoding(captureRecorder: SRVideoRecorder, withError error: NSError);
+protocol SRVideoRecorderDelegateProtocol {
+    func captureVideoRecordingDidStartRecoding(captureRecorder: SRVideoRecorder);
+    func captureVideoRecordingDidStopRecoding(captureRecorder: SRVideoRecorder, withError error: NSError);
+    func captureVideoRecordingPreviewView(captureRecorder: SRVideoRecorder);
 }
 
 class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     
     var captureSession: AVCaptureSession!;
-    var videoDevice: AVCaptureDevice!;
-    var videoConnection: AVCaptureConnection!;
-    var videoFrameRate: Float!;
-    var videoDimensions: CMVideoDimensions!;
-    var videoFileOutput: AVCaptureMovieFileOutput!;
-    var videoOrientation: AVCaptureVideoOrientation!;
-    
-    var url: NSURL!;
-    
-    var delegate: SRVideoRecorderDelegate?;
+    var url: NSURL?;
+    var sessionQueue: dispatch_queue_t!;
     
     var delegateCallbackQueue: dispatch_queue_t!;
+    
+    var delegate: SRVideoRecorderDelegateProtocol?;
+    
+    private var videoDevice: AVCaptureDevice!;
+    private var videoConnection: AVCaptureConnection!;
+    private var videoFrameRate: Int32!;
+    private var videoFileOutput: AVCaptureMovieFileOutput!;
+    private var videoOrientation: AVCaptureVideoOrientation!;
+    private var videoDuration: Float64!;
 
-    init(URL fileURL: NSURL) {
+    init(duration: Float64, frameRate: Int32, orientation: AVCaptureVideoOrientation) {
         super.init();
-        
-        url = fileURL;
-        self.setupCaptureSession();
+                
+        videoDuration = duration;
+        videoFrameRate = frameRate;
+        videoOrientation = orientation;
     }
     
     deinit{
         
     }
     
-    func setupCaptureSession() {
+    private func setupCaptureSession() {
+        
         if (captureSession != nil) {
             return;
         }
-        
         captureSession = AVCaptureSession();
         
         //    /* Video */
-        self.videoDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo);
+        videoDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo);
         
         var videoIn: AVCaptureDeviceInput = AVCaptureDeviceInput(device: self.videoDevice, error: nil);
         
@@ -62,26 +64,22 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
         videoFileOutput = AVCaptureMovieFileOutput();
         
         var duration: Float64 = kVideoDuration;
-        var frameRate: Int32;
         var sessionPreset = AVCaptureSessionPresetHigh;
         
         // For single core systems like iPhone 4 and iPod Touch 4th Generation we use a lower resolution and framerate to maintain real-time performance.
         if ( NSProcessInfo.processInfo().processorCount == 1 ) {
-            
             if (captureSession.canSetSessionPreset(AVCaptureSessionPreset640x480)) {
                 sessionPreset = AVCaptureSessionPreset640x480;
             }
-            frameRate = kLowFramRate;
-            
+            videoFrameRate = kLowFramRate;
         } else {
             if ( captureSession.canSetSessionPreset(AVCaptureSessionPreset1280x720)) {
                 sessionPreset = AVCaptureSessionPreset1280x720;
             }
-            
-            frameRate = kHighFramRate;
+            videoFrameRate = kHighFramRate;
         }
         
-        var maxDuration: CMTime = CMTimeMakeWithSeconds(duration, frameRate);	//<<SET MAX DURATION
+        var maxDuration: CMTime = CMTimeMakeWithSeconds(videoDuration, videoFrameRate);	//<<SET MAX DURATION
         videoFileOutput.maxRecordedDuration = maxDuration;
 
         if (self.captureSession.canAddOutput(videoFileOutput)) {
@@ -95,22 +93,26 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     }
     
     func startRunning() {
-        captureSession.startRunning();
+        self.setupCaptureSession();
+        self.captureSession.startRunning();
+        delegate?.captureVideoRecordingPreviewView(self);
     }
     
     func stopRunning() {
-        captureSession.stopRunning();
+        self.captureSession.stopRunning();
     }
     
     func startRecording() {
-        videoFileOutput.startRecordingToOutputFileURL(url, recordingDelegate: self);
+        if url != nil{
+            videoFileOutput.startRecordingToOutputFileURL(url, recordingDelegate: self);
+        }
     }
     
     func stopRecording() {
         videoFileOutput.stopRecording();
     }
     
-    func setDelegate(delegate: SRVideoRecorderDelegate, callbackQueue delegateCallbackQueue:(dispatch_queue_t)) {
+    func setDelegate(delegate: SRVideoRecorderDelegateProtocol, callbackQueue delegateCallbackQueue:(dispatch_queue_t)) {
         self.delegate = delegate;
         self.delegateCallbackQueue = delegateCallbackQueue;
     }
@@ -119,18 +121,40 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAtURL fileURL: NSURL!, fromConnections connections: [AnyObject]!) {
         NSLog("didStartRecordingToOutputFileAtURL - enter");
-        delegate?.captureVideoRecordingDidStartRecoding(self);
+        
+        dispatch_async(delegateCallbackQueue, {[unowned self] () -> Void in
+            self.delegate?.captureVideoRecordingDidStartRecoding(self);
+            
+            return;
+        });
     }
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
         NSLog("didFinishRecordingToOutputFileAtURL - enter");
-        delegate?.captureVideoRecordingDidStopRecoding(self, withError: error);
+        dispatch_async(delegateCallbackQueue, {[unowned self] () -> Void in
+            self.delegate?.captureVideoRecordingDidStopRecoding(self, withError: error);
+            
+            return;
+        });
     }
+    //MARK - Notifications
     
-    
-    func captureOutput(captureOutput: AVCaptureFileOutput!, willFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
-        NSLog("willFinishRecordingToOutputFileAtURL - enter");
-
-    }
-    
+    //    func captureSessionNotification(notification: NSNotification) {
+    ////        dispatch_async(captureSessionQueue, { () -> Void in
+    //            switch notification.name {
+    //            case AVCaptureSessionWasInterruptedNotification:
+    //                NSLog("session interrupted");
+    //            case AVCaptureSessionInterruptionEndedNotification:
+    //                NSLog("session interruption ended" );
+    //            case AVCaptureSessionRuntimeErrorNotification:
+    //                NSLog("session error" );
+    //            case AVCaptureSessionDidStartRunningNotification:
+    //                NSLog("session started running");
+    //            case AVCaptureSessionDidStopRunningNotification:
+    //                NSLog("session stopped running");
+    //            default:
+    //                NSLog("default");
+    //            }
+    ////        });
+    //    }
 }
