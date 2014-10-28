@@ -11,7 +11,7 @@ import AVFoundation
 
 protocol SRVideoRecorderDelegateProtocol {
     func captureVideoRecordingDidStartRecoding(captureRecorder: SRVideoRecorder);
-    func captureVideoRecordingDidStopRecoding(captureRecorder: SRVideoRecorder, withError error: NSError);
+    func captureVideoRecordingDidStopRecoding(captureRecorder: SRVideoRecorder, withError error: NSError?);
     func captureVideoRecordingPreviewView(captureRecorder: SRVideoRecorder);
 }
 
@@ -137,24 +137,4 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
             return;
         });
     }
-    //MARK - Notifications
-    
-    //    func captureSessionNotification(notification: NSNotification) {
-    ////        dispatch_async(captureSessionQueue, { () -> Void in
-    //            switch notification.name {
-    //            case AVCaptureSessionWasInterruptedNotification:
-    //                NSLog("session interrupted");
-    //            case AVCaptureSessionInterruptionEndedNotification:
-    //                NSLog("session interruption ended" );
-    //            case AVCaptureSessionRuntimeErrorNotification:
-    //                NSLog("session error" );
-    //            case AVCaptureSessionDidStartRunningNotification:
-    //                NSLog("session started running");
-    //            case AVCaptureSessionDidStopRunningNotification:
-    //                NSLog("session stopped running");
-    //            default:
-    //                NSLog("default");
-    //            }
-    ////        });
-    //    }
 }

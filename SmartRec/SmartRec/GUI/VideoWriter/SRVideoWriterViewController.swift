@@ -59,7 +59,7 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         NSLog("START RECORDING");
         recordBtn.enabled = false;
         //
-        recordManager.startRecording();
+        recordManager.startRecordingVideo();
         //
         recordBtn.selected = true;
         recordBtn.titleLabel?.text = "Stop";
@@ -73,7 +73,7 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         NSLog("STOP RECORDING");
         recordBtn.enabled = false;
         //
-        recordManager.stopRecording();
+        recordManager.stopRecordingVideo();
         //
         recordBtn.selected = false;
         recordBtn.titleLabel?.text = "Rec";

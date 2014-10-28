@@ -48,7 +48,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegateProtocol {
     
     //MARK: public
     
-    func startRecording() {
+    func startRecordingVideo() {
         let fileName = self.makeNewFilePath();
         NSLog(fileName);
         if let outputURL = NSURL.URL(directoryName: kFileDirectory, fileName: fileName) as NSURL! {
@@ -58,7 +58,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegateProtocol {
         }
     }
     
-    func stopRecording() {
+    func stopRecordingVideo() {
         isRecording = false;
         currentRecorder.stopRecording();
     }
@@ -89,11 +89,11 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegateProtocol {
         NSLog("captureVideoRecordingDidStartRecoding - delegate");
     }
     
-    func captureVideoRecordingDidStopRecoding(captureRecorder: SRVideoRecorder, withError error: NSError) {
+    func captureVideoRecordingDidStopRecoding(captureRecorder: SRVideoRecorder, withError error: NSError?) {
         //start new video part recording
         NSLog("captureVideoRecordingDidStopRecoding - delegate");
         if isRecording == true {
-            self.startRecording();
+            self.startRecordingVideo();
         }
     }
     
