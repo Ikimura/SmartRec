@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-protocol SRVideoRecorderDelegateProtocol {
+protocol SRVideoRecorderDelegate {
     func captureVideoRecordingDidStartRecoding(captureRecorder: SRVideoRecorder);
     func captureVideoRecordingDidStopRecoding(captureRecorder: SRVideoRecorder, withError error: NSError?);
     func captureVideoRecordingPreviewView(captureRecorder: SRVideoRecorder);
@@ -23,7 +23,7 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     
     var delegateCallbackQueue: dispatch_queue_t!;
     
-    var delegate: SRVideoRecorderDelegateProtocol?;
+    var delegate: SRVideoRecorderDelegate?;
     
     private var videoDevice: AVCaptureDevice!;
     private var videoConnection: AVCaptureConnection!;
@@ -112,7 +112,7 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
         videoFileOutput.stopRecording();
     }
     
-    func setDelegate(delegate: SRVideoRecorderDelegateProtocol, callbackQueue delegateCallbackQueue:(dispatch_queue_t)) {
+    func setDelegate(delegate: SRVideoRecorderDelegate, callbackQueue delegateCallbackQueue:(dispatch_queue_t)) {
         self.delegate = delegate;
         self.delegateCallbackQueue = delegateCallbackQueue;
     }

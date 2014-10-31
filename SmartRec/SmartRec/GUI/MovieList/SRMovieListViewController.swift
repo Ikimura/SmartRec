@@ -20,10 +20,10 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
 
         tableView.estimatedRowHeight = 74;
         tableView.rowHeight = UITableViewAutomaticDimension;
-        // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated);
         self.updateData();
     }
 
@@ -139,17 +139,16 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         
         var filePath = "";
+        var URL: NSURL? = nil;
         if let selectedCell = sender as? SRMovieTableViewCell {
             let indexPath: NSIndexPath = tableView.indexPathForCell(selectedCell)!;
-            filePath = self.formFilePathString(name: allFiles[indexPath.row].fileName);
+            URL = NSURL.URL(directoryName: kFileDirectory, fileName: allFiles[indexPath.row].fileName)!;
         }
-        
-        let URL = NSURL(fileURLWithPath: filePath);
         
         // Get the new view controller using segue.destinationViewController.
         if segue.identifier == "showVideoIdentifier" {
             if let showVideoVC = segue.destinationViewController as? SRShowVideoViewController {
-                showVideoVC.fileURL = URL;
+                showVideoVC.fileURL = URL!;
             }
         }
     }

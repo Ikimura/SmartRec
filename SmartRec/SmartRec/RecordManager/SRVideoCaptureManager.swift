@@ -9,14 +9,15 @@
 import UIKit
 import AVFoundation
 
-protocol SRVideoCaptureManagerDelegateProtocol {
+protocol SRVideoCaptureManagerDelegate {
     func videoCaptureManagerCanGetPreviewView(captureSession: AVCaptureSession);
+    func videoCaptureManagerDidEndVideoPartRecording(captureManager: SRVideoCaptureManager);
 }
 
-class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegateProtocol {
+class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     
     var currentRecorder: SRVideoRecorder!;
-    var delegate: SRVideoCaptureManagerDelegateProtocol?;
+    var delegate: SRVideoCaptureManagerDelegate?;
     
     private lazy var dateFormatter: NSDateFormatter = {
         
@@ -43,7 +44,6 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegateProtocol {
         currentRecorder = SRVideoRecorder(duration: duration, frameRate: frameRate, orientation: videoOrientation);
         currentRecorder.setDelegate(self, callbackQueue:dispatch_get_main_queue());
 
-        //secodnly start running
     }
     
     //MARK: public
@@ -68,6 +68,10 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegateProtocol {
     }
     
     func stopRunnigSession() {
+        if isRecording == true {
+            isRecording = false;
+            currentRecorder.stopRecording();
+        }
         currentRecorder.stopRunning();
     }
     
@@ -92,6 +96,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegateProtocol {
     func captureVideoRecordingDidStopRecoding(captureRecorder: SRVideoRecorder, withError error: NSError?) {
         //start new video part recording
         NSLog("captureVideoRecordingDidStopRecoding - delegate");
+        delegate?.videoCaptureManagerDidEndVideoPartRecording(self);
         if isRecording == true {
             self.startRecordingVideo();
         }
