@@ -27,9 +27,8 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name: UIApplicationDidEnterBackgroundNotification, object: UIApplication.sharedApplication());
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name: UIApplicationDidEnterBackgroundNotification, object: UIApplication.sharedApplication());
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: UIApplication.sharedApplication());
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillResignActiveNotification", name: UIApplicationWillResignActiveNotification, object: UIApplication.sharedApplication());
 
         SRLocationManager.sharedInstance.delegate = self;
         recordManager = SRVideoCaptureManager();
@@ -47,10 +46,8 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     }
     
     deinit {
-//        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: UIApplication.sharedApplication());
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: UIApplication.sharedApplication());
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: UIApplication.sharedApplication());
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillResignActiveNotification, object: UIApplication.sharedApplication());
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -177,20 +174,14 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     
     //MARK - UIApplication notofocation
     
-//    func applicationDidEnterBackground() {
-//        NSLog("applicationDidEnterBackground notif");
-//        self.stopTimer();
-//        self.stopRecording();
-//    }
+    func applicationDidEnterBackground() {
+        NSLog("applicationDidEnterBackground notif");
+        self.stopTimer();
+        self.stopRecording();
+    }
     
     func applicationWillEnterForeground() {
         NSLog("applicationWillEnterForeground notif");
         self.updateUIByDefault();
-    }
-    
-    func applicationWillResignActiveNotification() {
-        NSLog("applicationWillResignActiveNotification notif");
-        self.stopTimer();
-        self.stopRecording();
     }
 }

@@ -53,7 +53,9 @@ class SRShowVideoViewController: SRCommonViewController {
     }
 
     deinit {
+        moviePlayer = nil;
         NSNotificationCenter.defaultCenter().removeObserver(self, name: MPMoviePlayerPlaybackDidFinishNotification, object: moviePlayer)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: MPMoviePlayerPlaybackStateDidChangeNotification, object: moviePlayer)
     }
     
     /*
