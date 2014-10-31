@@ -19,7 +19,6 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     
     var captureSession: AVCaptureSession!;
     var url: NSURL?;
-    var sessionQueue: dispatch_queue_t!;
     
     var delegateCallbackQueue: dispatch_queue_t!;
     
@@ -31,13 +30,16 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     private var videoFileOutput: AVCaptureMovieFileOutput!;
     private var videoOrientation: AVCaptureVideoOrientation!;
     private var videoDuration: Float64!;
-
+    private var sessionQueue: dispatch_queue_t!;
+    
     init(duration: Float64, frameRate: Int32, orientation: AVCaptureVideoOrientation) {
         super.init();
                 
         videoDuration = duration;
         videoFrameRate = frameRate;
         videoOrientation = orientation;
+        
+        sessionQueue = dispatch_queue_create( "con.epam.evnt.SmartRec.session", DISPATCH_QUEUE_SERIAL );
     }
     
     deinit{
@@ -62,7 +64,7 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
         
         //video out
         videoFileOutput = AVCaptureMovieFileOutput();
-        
+
         var duration: Float64 = kVideoDuration;
         var sessionPreset = AVCaptureSessionPresetHigh;
         
@@ -86,20 +88,25 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
             self.captureSession.addOutput(videoFileOutput);
         }
         
-        videoOrientation = .Portrait;
-        
         videoConnection = videoFileOutput.connectionWithMediaType(AVMediaTypeVideo);
         videoConnection.videoOrientation = videoOrientation;
     }
     
     func startRunning() {
-        self.setupCaptureSession();
-        self.captureSession.startRunning();
-        delegate?.captureVideoRecordingPreviewView(self);
+        dispatch_sync(sessionQueue, { [unowned self] () -> Void in
+            self.setupCaptureSession();
+            self.captureSession.startRunning();
+            dispatch_async(self.delegateCallbackQueue, {() -> Void in
+                self.delegate?.captureVideoRecordingPreviewView(self);
+                return;
+            });
+        });
     }
     
     func stopRunning() {
-        self.captureSession.stopRunning();
+        dispatch_sync(sessionQueue, { [unowned self] () -> Void in
+            self.captureSession.stopRunning();
+        });
     }
     
     func startRecording() {

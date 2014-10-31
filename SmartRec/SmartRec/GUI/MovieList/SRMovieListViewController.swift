@@ -92,20 +92,26 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
         return documentsDirectory;
     }
     
+    //TODO: FIX
     private func thumbnailImage(url: NSURL) -> UIImage {
         let sourceAsset:AVAsset = AVAsset.assetWithURL(url) as AVAsset;
         let duration: CMTime = sourceAsset.duration;
         
         let generator: AVAssetImageGenerator = AVAssetImageGenerator(asset: sourceAsset);
 //
-//        //Get the 1st frame 3 seconds in
-        let frameTimeStart: Int64 = 3;
-        let frameLocation: Int32 = 1;
-//
+        var time: CMTime = sourceAsset.duration;
+        time.value = 1000;
+
+        let maxSize: CGSize = CGSizeMake(44, 64);
+        generator.maximumSize = maxSize;
 //        //Snatch a frame
-        let frameRef: CGImageRef = generator.copyCGImageAtTime(CMTimeMake(frameTimeStart, frameLocation), actualTime: nil, error: nil);
+        let frameRef: CGImageRef = generator.copyCGImageAtTime(time, actualTime: nil, error: nil);
         
-        return UIImage(CGImage: frameRef)!;
+        var resImage: UIImage = UIImage(CGImage: frameRef)!;
+        
+        let image: UIImage = UIImage(CGImage: resImage.CGImage, scale: 1.0, orientation: .Right)!;
+        
+        return image;
     }
     
     //TODO: FIX

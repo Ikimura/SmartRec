@@ -21,14 +21,15 @@ class SRLocationManager : NSObject, CLLocationManagerDelegate {
         return Static.instance;
     }
     
-    private var locationManager: CLLocationManager;
     var delegate: SRLocationManagerDelegate?;
     
+    private var locationManager: CLLocationManager;
+
     override init() {
         locationManager = CLLocationManager();
         
         super.init();
-        //TODO: kCLLocationAccuracyHundredMeters
+        //TODO: kCLLocationAccuracyHundredMeterscon.epam.evnt.
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
         //TODO: 50
         locationManager.distanceFilter = 1;
@@ -39,16 +40,16 @@ class SRLocationManager : NSObject, CLLocationManagerDelegate {
     }
     
     func startMonitoringLocation() {
-        locationManager.startUpdatingLocation();
+        self.locationManager.startUpdatingLocation();
 //        locationManager.startMonitoringSignificantLocationChanges();
     }
     
     func stopMonitoringLocation() {
-        locationManager.stopUpdatingLocation();
+        self.locationManager.stopUpdatingLocation();
 //        locationManager.stopMonitoringSignificantLocationChanges();
     }
     
-    //MARK - CLLocationManagerDelegate
+    //MARK: - CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         switch status {

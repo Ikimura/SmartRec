@@ -22,7 +22,8 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     private var previewView: UIView?;
     private var timer: NSTimer?;
     private var seconds: Int = 0;
-    
+    private var locationQueue: dispatch_queue_t?;
+
     //MARK: life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,8 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name: UIApplicationDidEnterBackgroundNotification, object: UIApplication.sharedApplication());
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: UIApplication.sharedApplication());
 
+        locationQueue = dispatch_queue_create("con.epam.evnt.SmartRec", DISPATCH_QUEUE_SERIAL);
+        
         SRLocationManager.sharedInstance.delegate = self;
         recordManager = SRVideoCaptureManager();
         recordManager.delegate = self;
@@ -67,6 +70,15 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     
     //MARK: - private
     
+    func updateTimeLabel(t: NSTimer) {
+        var minutesPast, secondsPast: Int;
+        
+        seconds++;
+        minutesPast = (seconds % 3600) / 60;
+        secondsPast = (seconds % 3600) % 60;
+        timeLabel.text = NSString(format: "%02d:%02d", minutesPast, secondsPast);
+    }
+    
     private func updateUIByDefault() {
         dispatch_async(dispatch_get_main_queue(), { [unowned self] () -> Void in
             self.timeLabel.text = "00:00";
@@ -91,7 +103,9 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         //Record video
         recordManager.startRecordingVideo();
         //Update location, speed, timer
-        SRLocationManager.sharedInstance.startMonitoringLocation();
+        dispatch_async(locationQueue, { () -> Void in
+            SRLocationManager.sharedInstance.startMonitoringLocation();
+        });
         self.startTimer();
         //
         recordBtn.selected = true;
@@ -108,7 +122,9 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         //
         recordManager.stopRecordingVideo();
         //
-        SRLocationManager.sharedInstance.stopMonitoringLocation();
+        dispatch_async(locationQueue, { () -> Void in
+            SRLocationManager.sharedInstance.stopMonitoringLocation();
+        });
         self.stopTimer();
         self.updateUIByDefault();
         //
@@ -120,7 +136,7 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         recordBtn.enabled = true;
     }
     
-    //MARK - SRVideoRecorderDelegateProtocol
+    //MARK: - SRVideoRecorderDelegateProtocol
     
     func videoCaptureManagerDidEndVideoPartRecording(captureManager: SRVideoCaptureManager) {
         NSLog("videoCaptureManagerDidEndVideoPartRecording - delegate");
@@ -149,7 +165,7 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         }
     }
     
-    //MARK - SRLocationManagerDelegate
+    //MARK: - SRLocationManagerDelegate
     
     func srlocationManager(manager: SRLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         
@@ -163,16 +179,7 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         }
     }
     
-    func updateTimeLabel(t: NSTimer) {
-        var minutesPast, secondsPast: Int;
-        
-        seconds++;
-        minutesPast = (seconds % 3600) / 60;
-        secondsPast = (seconds % 3600) % 60;
-        timeLabel.text = NSString(format: "%02d:%02d", minutesPast, secondsPast);
-    }
-    
-    //MARK - UIApplication notofocation
+    //MARK: - UIApplication notofocation
     
     func applicationDidEnterBackground() {
         NSLog("applicationDidEnterBackground notif");
