@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import CoreData
 
 protocol SRVideoCaptureManagerDelegate {
     func videoCaptureManagerCanGetPreviewView(captureSession: AVCaptureSession);
@@ -28,7 +29,12 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         return tempDormatter;
     }();
     
-    var isRecording: Bool!;
+    private var isRecording: Bool!;
+    private lazy var currentRecData: [String: AnyObject] = {
+        var tempArray = [String: AnyObject]();
+        
+        return tempArray;
+    }();
     
     override init(){
         super.init();
@@ -49,7 +55,13 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     //MARK: public
     
     func startRecordingVideo() {
-        let fileName = self.makeNewFilePath();
+        let date = NSDate();
+        let fileName = self.makeNewFilePath(date);
+        
+        currentRecData["id"] = String(date.hashValue);
+        currentRecData["name"] = fileName;
+        currentRecData["date"] = date;
+        
         NSLog(fileName);
         if let outputURL = NSURL.URL(directoryName: kFileDirectory, fileName: fileName) as NSURL! {
             isRecording = true;
@@ -77,10 +89,18 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     
     //MARK: private
     
-    private func makeNewFilePath() -> String {
+    private func makeNewFilePath(parameter: AnyObject!) -> String {
         //Create temporary URL to record to
+        var fileStr: String = "";
         
-        var fileStr: String = dateFormatter.stringFromDate(NSDate());
+        switch parameter {
+            
+        case is NSDate: fileStr = dateFormatter.stringFromDate(parameter as NSDate);
+        case is String: fileStr += parameter as String;
+        default:
+            println("Error");
+        }
+        
         fileStr += ".mov";
         
         return fileStr.stringByReplacingOccurrencesOfString(" ", withString: "");
@@ -97,6 +117,33 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         //start new video part recording
         NSLog("captureVideoRecordingDidStopRecoding - delegate");
         delegate?.videoCaptureManagerDidEndVideoPartRecording(self);
+        
+        //get url
+        let url = NSURL.URL(directoryName: kFileDirectory, fileName: currentRecData["name"] as String)!;
+        //get asset
+        var thumbnailImage: UIImage?;
+        if let sourceAsset = AVAsset.assetWithURL(url) as? AVAsset {
+            let maxSize: CGSize = CGSizeMake(44, 64);
+            //get thumbnail image
+            thumbnailImage = sourceAsset.thumbnailWithSize(size: maxSize);
+        }
+        
+        //save managed context
+        let tempDelegate = UIApplication.sharedApplication().delegate as? AppDelegate;
+        let tempMain: NSManagedObjectContext! = tempDelegate?.mainObjectContext;
+        
+        var entity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectNote, inManagedObjectContext: tempMain) as SRNote;
+        entity.id = currentRecData["id"] as String;
+        entity.fileName = currentRecData["name"] as String;
+        entity.date = currentRecData["date"] as NSDate;
+        entity.imageThumbnail = UIImageJPEGRepresentation(thumbnailImage, 1.0);
+
+        var error: NSError?;
+        if tempMain?.save(&error) == false {
+            println(error);
+        }
+        
+        //
         if isRecording == true {
             self.startRecordingVideo();
         }

@@ -8,23 +8,61 @@
 
 import UIKit
 import AVFoundation
+import CoreData
 
-class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UITableViewDataSource {
+class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate {
     
     @IBOutlet var tableView: UITableView!;
-    var allFiles: [VideoItem]!;
+    
+    private lazy var masterContext: NSManagedObjectContext = {
+        let tempDelegate = UIApplication.sharedApplication().delegate as? AppDelegate;
+        
+        let tempMaster = tempDelegate?.masterObjectContext;
+        
+        return tempMaster!;
+    }();
+    
+    private lazy var mainObjectContext: NSManagedObjectContext = {
+        let tempDelegate = UIApplication.sharedApplication().delegate as? AppDelegate;
+
+        let tempMain = tempDelegate?.mainObjectContext;
+        
+        return tempMain!;
+    }();
+    
+    private lazy var fetchedResultController: NSFetchedResultsController = {
+        
+        var tempFetchedRC: NSFetchedResultsController?;
+        
+        let entity: NSEntityDescription = NSEntityDescription.entityForName(kManagedObjectNote, inManagedObjectContext: self.mainObjectContext)!;
+        let sort = NSSortDescriptor(key: "date", ascending: true)
+
+        var fetchRequest: NSFetchRequest = NSFetchRequest();
+        fetchRequest.entity = entity;
+        fetchRequest.sortDescriptors = [sort];
+        
+        tempFetchedRC = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.mainObjectContext, sectionNameKeyPath: nil, cacheName: nil);
+        tempFetchedRC?.delegate = self;
+        
+        return tempFetchedRC!;
+    }();
+    
+    //MARK: Life cicle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        allFiles = [VideoItem]();
 
         tableView.estimatedRowHeight = 74;
         tableView.rowHeight = UITableViewAutomaticDimension;
+        
+        var error: NSError? = nil;
+        if !self.fetchedResultController.performFetch(&error) {
+            NSLog("Unresolved error %@", error!);
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated);
-        self.updateData();
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,22 +70,63 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: NSFetchedResultsControllerDelegate
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        self.tableView.beginUpdates();
+    }
+
+    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        
+        switch type {
+        case .Insert: self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade);
+        case .Delete: self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade);
+        default:
+            println("Error!");
+        }
+    }
+
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        
+        let tblView = self.tableView;
+        
+        switch type {
+        case .Insert: tblView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade);
+        case .Delete: tblView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade);
+        case .Update: tblView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade);
+        case .Move:
+            tblView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade);
+            tblView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade);
+        default:
+            println("Error!");
+        }
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        self.tableView.endUpdates();
+    }
+
     //MARK: UITableViewDataSource
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return self.fetchedResultController.sections!.count;
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var rows: Int = 0;
-        if section == 0 {
-            rows = allFiles.count;
-        }
-        return rows;
+        var rows: NSFetchedResultsSectionInfo = self.fetchedResultController.sections![section] as NSFetchedResultsSectionInfo;
+
+        return rows.numberOfObjects;
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: SRMovieTableViewCell = tableView.dequeueReusableCellWithIdentifier("movieCellidentifier", forIndexPath: indexPath) as SRMovieTableViewCell;
+        var cell: SRMovieTableViewCell = tableView.dequeueReusableCellWithIdentifier(kMovieListCellIdentifier, forIndexPath: indexPath) as SRMovieTableViewCell;
 
-        if let item = allFiles[indexPath.row] as VideoItem! {
+        if let item = self.fetchedResultController.fetchedObjects![indexPath.row] as? SRNote {
             cell.dateLabel.text = item.fileName;
-            cell.photoImage.image = item.thumbnailImage;
+            
+            if let image = UIImage(data: item.valueForKey("imageThumbnail") as NSData) {
+                cell.photoImage.image = image;
+            }
         }
         
         return cell;
@@ -62,99 +141,36 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == .Delete) {
             //Delete the row from the data source
-            let deleteItem: VideoItem = allFiles[indexPath.row];
-            
-            let filePath = self.formFilePathString(name: deleteItem.fileName);
-            //
-            if(NSFileManager.defaultManager().fileExistsAtPath(filePath)) {
-                var err: NSError?;
-                NSFileManager.defaultManager().removeItemAtPath(filePath, error: &err);
-                if (err == nil) {
-                    NSLog("delete");
-                    allFiles.removeAtIndex(indexPath.row);
-                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .None);
-                }
-            }
-            
-        }
-    }
-    
-    //TODO: FIX
-    func formFilePathString(name fileName: String) -> String {
-        
-        let paths = NSSearchPathForDirectoriesInDomains(kFileDirectory, .UserDomainMask, true);
-        var documentsDirectory = paths[0] as String;
-        
-        documentsDirectory += "/\(fileName)";
-        
-        NSLog(documentsDirectory);
-
-        return documentsDirectory;
-    }
-    
-    //TODO: FIX
-    private func thumbnailImage(url: NSURL) -> UIImage {
-        let sourceAsset:AVAsset = AVAsset.assetWithURL(url) as AVAsset;
-        let duration: CMTime = sourceAsset.duration;
-        
-        let generator: AVAssetImageGenerator = AVAssetImageGenerator(asset: sourceAsset);
-//
-        var time: CMTime = sourceAsset.duration;
-        time.value = 1000;
-
-        let maxSize: CGSize = CGSizeMake(44, 64);
-        generator.maximumSize = maxSize;
-//        //Snatch a frame
-        let frameRef: CGImageRef = generator.copyCGImageAtTime(time, actualTime: nil, error: nil);
-        
-        var resImage: UIImage = UIImage(CGImage: frameRef)!;
-        
-        let image: UIImage = UIImage(CGImage: resImage.CGImage, scale: 1.0, orientation: .Right)!;
-        
-        return image;
-    }
-    
-    //TODO: FIX
-    func updateData() {
-        let paths = NSSearchPathForDirectoriesInDomains(kFileDirectory, .UserDomainMask, true)
-        let documentsDirectory = paths[0] as String
-        
-        allFiles = [];
-        var directoryContent: [AnyObject] = NSFileManager.defaultManager().contentsOfDirectoryAtPath(documentsDirectory, error: nil)!;
-        if directoryContent.count > 0 {
-            for str in directoryContent {
+            if let deleteItem = self.fetchedResultController.fetchedObjects![indexPath.row] as? SRNote {
                 
-                NSLog("Files exist");
+                let managedObjectContext = deleteItem.managedObjectContext!;
+                managedObjectContext.deleteObject(deleteItem)
                 
-                if var name = str as? String {
-                                        
-                    if let url = NSURL.URL(directoryName: kFileDirectory, fileName: name) as NSURL! {
-                        
-                        var thmbImage: UIImage = self.thumbnailImage(url);
-                        var tempItem = VideoItem(date: NSDate(), fileName: name, thumbnailImage: thmbImage);
-                        allFiles.append(tempItem);
-                    }
+                /* save `NSManagedObjectContext`
+                deletes model from the persistent store (SQLite DB) */
+                var e: NSError?;
+                if (!managedObjectContext.save(&e)) {
+                    println("cancel error: \(e!.localizedDescription)")
                 }
             }
         }
-        
-        tableView.reloadData();
     }
-    
+        
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         
-        var filePath = "";
-        var URL: NSURL? = nil;
+        var url: NSURL?;
         if let selectedCell = sender as? SRMovieTableViewCell {
             let indexPath: NSIndexPath = tableView.indexPathForCell(selectedCell)!;
-            URL = NSURL.URL(directoryName: kFileDirectory, fileName: allFiles[indexPath.row].fileName)!;
+            if let selectedItem = self.fetchedResultController.fetchedObjects![indexPath.row] as? SRNote {
+                url = NSURL.URL(directoryName: kFileDirectory, fileName: selectedItem.fileName)!;
+            }
         }
         
         // Get the new view controller using segue.destinationViewController.
-        if segue.identifier == "showVideoIdentifier" {
+        if segue.identifier == kShowMovieSegueIdentifier {
             if let showVideoVC = segue.destinationViewController as? SRShowVideoViewController {
-                showVideoVC.fileURL = URL!;
+                showVideoVC.fileURL = url!;
             }
         }
     }

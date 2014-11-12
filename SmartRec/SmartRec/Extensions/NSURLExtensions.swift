@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension NSURL {
+public extension NSURL {
     
     class func URL(#directoryName: NSSearchPathDirectory, fileName: String) -> NSURL? {
         

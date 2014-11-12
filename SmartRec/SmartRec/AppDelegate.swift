@@ -7,12 +7,45 @@
 //
 
 import UIKit
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    internal lazy var masterObjectContext: NSManagedObjectContext = {
+        var tempMaster = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType);
+        tempMaster.persistentStoreCoordinator = self.storeCoordinator;
+        
+        return tempMaster;
+        }();
+    
+    internal lazy var mainObjectContext: NSManagedObjectContext = {
+        var tempMain = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType);
+        tempMain.persistentStoreCoordinator = self.storeCoordinator;
+        
+        return tempMain;
+    }();
+    
+    private lazy var storeCoordinator: NSPersistentStoreCoordinator = {
+        
+        let managedObjectModel = NSManagedObjectModel.mergedModelFromBundles(nil);
+        var tempStoreCordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel!);
 
+        let tempURLS = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask);
+        
+        let storeURL = (tempURLS[tempURLS.count - 1]).URLByAppendingPathComponent("SmartRec.sqlite")
+        
+        var error: NSError?;
+        tempStoreCordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil, error: &error)
+        
+        if error != nil {
+            NSLog("\(error)");
+        }
+        
+        return tempStoreCordinator;
+    }();
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.

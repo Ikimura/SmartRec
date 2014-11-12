@@ -14,7 +14,6 @@
 		1359A0DA1A00E50C00FC8994 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1359A0D91A00E50C00FC8994 /* CoreLocation.framework */; };
 		1359A0DD1A00E88A00FC8994 /* SRLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1359A0DC1A00E88A00FC8994 /* SRLocationManager.swift */; };
 		1359A0DF1A0123E100FC8994 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1359A0DE1A0123E100FC8994 /* CoreData.framework */; };
-		1359A0E21A01245300FC8994 /* SmartRec.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1359A0E01A01245300FC8994 /* SmartRec.xcdatamodeld */; };
 		137E3B6919F52BF00094C5A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B6819F52BF00094C5A1 /* AppDelegate.swift */; };
 		137E3B6E19F52BF00094C5A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 137E3B6C19F52BF00094C5A1 /* Main.storyboard */; };
 		137E3B7019F52BF00094C5A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 137E3B6F19F52BF00094C5A1 /* Images.xcassets */; };
@@ -24,14 +23,19 @@
 		137E3B8D19F532550094C5A1 /* SRCommonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B8C19F532550094C5A1 /* SRCommonViewController.swift */; };
 		137E3B9019F532A90094C5A1 /* SRMovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B8F19F532A90094C5A1 /* SRMovieListViewController.swift */; };
 		137E3B9219F533A90094C5A1 /* SRMovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B9119F533A90094C5A1 /* SRMovieTableViewCell.swift */; };
-		137E3B9519F53B7D0094C5A1 /* VideoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B9419F53B7D0094C5A1 /* VideoItem.swift */; };
 		137E3B9719F5420C0094C5A1 /* SRTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B9619F5420C0094C5A1 /* SRTabBarViewController.swift */; };
 		137E3B9A19F542DB0094C5A1 /* SRVideoWriterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B9919F542DB0094C5A1 /* SRVideoWriterViewController.swift */; };
 		137E3B9C19F543B60094C5A1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 137E3B9B19F543B60094C5A1 /* QuartzCore.framework */; };
 		137E3BA019F5538E0094C5A1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 137E3B9F19F5538E0094C5A1 /* AVFoundation.framework */; };
 		138532BA19FA490D00430319 /* SRVideoCaptureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138532B919FA490D00430319 /* SRVideoCaptureManager.swift */; };
+		1394B1001A075D71009D0780 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1394B0FF1A075D71009D0780 /* CoreMotion.framework */; };
+		1394B1031A076514009D0780 /* SRAccelerometrManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1394B1021A076514009D0780 /* SRAccelerometrManager.swift */; };
 		13C1F5BD19F6466C00149649 /* SRVideoRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C1F5BC19F6466C00149649 /* SRVideoRecorder.swift */; };
+		13D7456C1A139C620089BA09 /* SRExtensionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D7456B1A139C620089BA09 /* SRExtensionsTest.swift */; };
+		13D786891A1358E700A4DD3C /* SmartRec.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13D786871A1358E700A4DD3C /* SmartRec.xcdatamodeld */; };
 		13E5AE7719FF7BF900ABFAD8 /* NSURLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E5AE7619FF7BF900ABFAD8 /* NSURLExtensions.swift */; };
+		13F985751A1390E100E9B958 /* SRNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F985741A1390E100E9B958 /* SRNote.swift */; };
+		13F985771A13912400E9B958 /* AVAssetExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F985761A13912400E9B958 /* AVAssetExtensions.swift */; };
 		9246CE854797EB575F7D3CF9 /* libPods-SmartRec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 629E0BE8345E5875EE1D9C09 /* libPods-SmartRec.a */; };
 /* End PBXBuildFile section */
 
@@ -53,7 +57,6 @@
 		1359A0D91A00E50C00FC8994 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1359A0DC1A00E88A00FC8994 /* SRLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRLocationManager.swift; sourceTree = "<group>"; };
 		1359A0DE1A0123E100FC8994 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		1359A0E11A01245300FC8994 /* SmartRec.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SmartRec.xcdatamodel; sourceTree = "<group>"; };
 		137E3B6319F52BF00094C5A1 /* SmartRec.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartRec.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		137E3B6719F52BF00094C5A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		137E3B6819F52BF00094C5A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,15 +70,20 @@
 		137E3B8C19F532550094C5A1 /* SRCommonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCommonViewController.swift; sourceTree = "<group>"; };
 		137E3B8F19F532A90094C5A1 /* SRMovieListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRMovieListViewController.swift; sourceTree = "<group>"; };
 		137E3B9119F533A90094C5A1 /* SRMovieTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRMovieTableViewCell.swift; sourceTree = "<group>"; };
-		137E3B9419F53B7D0094C5A1 /* VideoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoItem.swift; sourceTree = "<group>"; };
 		137E3B9619F5420C0094C5A1 /* SRTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRTabBarViewController.swift; sourceTree = "<group>"; };
 		137E3B9919F542DB0094C5A1 /* SRVideoWriterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRVideoWriterViewController.swift; sourceTree = "<group>"; };
 		137E3B9B19F543B60094C5A1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		137E3B9F19F5538E0094C5A1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		138532B919FA490D00430319 /* SRVideoCaptureManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRVideoCaptureManager.swift; sourceTree = "<group>"; };
+		1394B0FF1A075D71009D0780 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		1394B1021A076514009D0780 /* SRAccelerometrManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAccelerometrManager.swift; sourceTree = "<group>"; };
 		13C1F5BA19F63BAF00149649 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		13C1F5BC19F6466C00149649 /* SRVideoRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRVideoRecorder.swift; path = ../SRVideoRecorder.swift; sourceTree = "<group>"; };
+		13D7456B1A139C620089BA09 /* SRExtensionsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRExtensionsTest.swift; sourceTree = "<group>"; };
+		13D786881A1358E700A4DD3C /* SmartRec.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SmartRec.xcdatamodel; sourceTree = "<group>"; };
 		13E5AE7619FF7BF900ABFAD8 /* NSURLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLExtensions.swift; sourceTree = "<group>"; };
+		13F985741A1390E100E9B958 /* SRNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRNote.swift; sourceTree = "<group>"; };
+		13F985761A13912400E9B958 /* AVAssetExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVAssetExtensions.swift; sourceTree = "<group>"; };
 		576FBF43DDEE1F6555A4FA62 /* Pods-SmartRec.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRec.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmartRec/Pods-SmartRec.debug.xcconfig"; sourceTree = "<group>"; };
 		629E0BE8345E5875EE1D9C09 /* libPods-SmartRec.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SmartRec.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEEFD9D2BCFD05A6A3E5D224 /* Pods-SmartRec.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRec.release.xcconfig"; path = "Pods/Target Support Files/Pods-SmartRec/Pods-SmartRec.release.xcconfig"; sourceTree = "<group>"; };
@@ -86,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1394B1001A075D71009D0780 /* CoreMotion.framework in Frameworks */,
 				1359A0DF1A0123E100FC8994 /* CoreData.framework in Frameworks */,
 				1359A0DA1A00E50C00FC8994 /* CoreLocation.framework in Frameworks */,
 				1313411419F78DAE003BF084 /* MediaPlayer.framework in Frameworks */,
@@ -154,6 +163,8 @@
 		137E3B6519F52BF00094C5A1 /* SmartRec */ = {
 			isa = PBXGroup;
 			children = (
+				13D786861A1358D700A4DD3C /* CoreData */,
+				1394B1011A0764BC009D0780 /* MotionManager */,
 				1359A0DB1A00E5C700FC8994 /* LocationManager */,
 				130A5B8B19F7CE91004515A7 /* Constants */,
 				13E5AE7519FF7B6700ABFAD8 /* Extensions */,
@@ -182,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				137E3B7E19F52BF10094C5A1 /* SmartRecTests.swift */,
+				13D7456B1A139C620089BA09 /* SRExtensionsTest.swift */,
 				137E3B7C19F52BF10094C5A1 /* Supporting Files */,
 			);
 			path = SmartRecTests;
@@ -228,8 +240,6 @@
 		137E3B9319F53A9D0094C5A1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1359A0E01A01245300FC8994 /* SmartRec.xcdatamodeld */,
-				137E3B9419F53B7D0094C5A1 /* VideoItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -258,10 +268,28 @@
 			path = VideoRecorder;
 			sourceTree = "<group>";
 		};
+		1394B1011A0764BC009D0780 /* MotionManager */ = {
+			isa = PBXGroup;
+			children = (
+				1394B1021A076514009D0780 /* SRAccelerometrManager.swift */,
+			);
+			path = MotionManager;
+			sourceTree = "<group>";
+		};
+		13D786861A1358D700A4DD3C /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				13D786871A1358E700A4DD3C /* SmartRec.xcdatamodeld */,
+				13F985741A1390E100E9B958 /* SRNote.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		13E5AE7519FF7B6700ABFAD8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				13E5AE7619FF7BF900ABFAD8 /* NSURLExtensions.swift */,
+				13F985761A13912400E9B958 /* AVAssetExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -269,6 +297,7 @@
 		2DBCF0BAAB98CAACFCF53789 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1394B0FF1A075D71009D0780 /* CoreMotion.framework */,
 				1359A0DE1A0123E100FC8994 /* CoreData.framework */,
 				1359A0D91A00E50C00FC8994 /* CoreLocation.framework */,
 				1313411319F78DAE003BF084 /* MediaPlayer.framework */,
@@ -342,7 +371,6 @@
 				TargetAttributes = {
 					137E3B6219F52BF00094C5A1 = {
 						CreatedOnToolsVersion = 6.0.1;
-						DevelopmentTeam = 6C5B687R9E;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 0;
@@ -432,14 +460,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				137E3B9519F53B7D0094C5A1 /* VideoItem.swift in Sources */,
 				13E5AE7719FF7BF900ABFAD8 /* NSURLExtensions.swift in Sources */,
 				137E3B9719F5420C0094C5A1 /* SRTabBarViewController.swift in Sources */,
+				13F985751A1390E100E9B958 /* SRNote.swift in Sources */,
 				137E3B8B19F531B20094C5A1 /* SRNavigationController.swift in Sources */,
 				13C1F5BD19F6466C00149649 /* SRVideoRecorder.swift in Sources */,
 				137E3B8D19F532550094C5A1 /* SRCommonViewController.swift in Sources */,
+				1394B1031A076514009D0780 /* SRAccelerometrManager.swift in Sources */,
 				137E3B9A19F542DB0094C5A1 /* SRVideoWriterViewController.swift in Sources */,
-				1359A0E21A01245300FC8994 /* SmartRec.xcdatamodeld in Sources */,
+				13D786891A1358E700A4DD3C /* SmartRec.xcdatamodeld in Sources */,
 				1313411219F78D68003BF084 /* SRShowVideoViewController.swift in Sources */,
 				137E3B9019F532A90094C5A1 /* SRMovieListViewController.swift in Sources */,
 				137E3B6919F52BF00094C5A1 /* AppDelegate.swift in Sources */,
@@ -447,6 +476,7 @@
 				1359A0DD1A00E88A00FC8994 /* SRLocationManager.swift in Sources */,
 				137E3B9219F533A90094C5A1 /* SRMovieTableViewCell.swift in Sources */,
 				130A5B8D19F7CECB004515A7 /* Constants.swift in Sources */,
+				13F985771A13912400E9B958 /* AVAssetExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +484,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13D7456C1A139C620089BA09 /* SRExtensionsTest.swift in Sources */,
 				137E3B7F19F52BF10094C5A1 /* SmartRecTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -505,6 +536,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -570,7 +602,8 @@
 			baseConfigurationReference = 576FBF43DDEE1F6555A4FA62 /* Pods-SmartRec.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SmartRec/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -582,7 +615,8 @@
 			baseConfigurationReference = EEEFD9D2BCFD05A6A3E5D224 /* Pods-SmartRec.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SmartRec/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -656,12 +690,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		1359A0E01A01245300FC8994 /* SmartRec.xcdatamodeld */ = {
+		13D786871A1358E700A4DD3C /* SmartRec.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				1359A0E11A01245300FC8994 /* SmartRec.xcdatamodel */,
+				13D786881A1358E700A4DD3C /* SmartRec.xcdatamodel */,
 			);
-			currentVersion = 1359A0E11A01245300FC8994 /* SmartRec.xcdatamodel */;
+			currentVersion = 13D786881A1358E700A4DD3C /* SmartRec.xcdatamodel */;
 			path = SmartRec.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

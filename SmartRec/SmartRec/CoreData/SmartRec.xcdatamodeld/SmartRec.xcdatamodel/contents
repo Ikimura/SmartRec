@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A389" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="SRNote" representedClassName="SRNote" syncable="YES">
+    <entity name="SRNote" representedClassName="SmartRec.SRNote" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="fileName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="thumbnailImage" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageThumbnail" optional="YES" attributeType="Binary" syncable="YES"/>
     </entity>
     <elements>
-        <element name="SRNote" positionX="-5382" positionY="-1384" width="128" height="90"/>
+        <element name="SRNote" positionX="-63" positionY="-18" width="128" height="105"/>
     </elements>
 </model>

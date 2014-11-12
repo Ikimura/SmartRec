@@ -96,10 +96,11 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
         dispatch_sync(sessionQueue, { [unowned self] () -> Void in
             self.setupCaptureSession();
             self.captureSession.startRunning();
-            dispatch_async(self.delegateCallbackQueue, {() -> Void in
-                self.delegate?.captureVideoRecordingPreviewView(self);
-                return;
-            });
+
+        });
+        dispatch_async(delegateCallbackQueue, { [unowned self] () -> Void in
+            self.delegate?.captureVideoRecordingPreviewView(self);
+            return;
         });
     }
     
