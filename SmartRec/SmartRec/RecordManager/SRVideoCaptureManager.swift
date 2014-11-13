@@ -126,21 +126,14 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
             let maxSize: CGSize = CGSizeMake(44, 64);
             //get thumbnail image
             thumbnailImage = sourceAsset.thumbnailWithSize(size: maxSize);
+            currentRecData["thumbnailImage"] = UIImageJPEGRepresentation(thumbnailImage, 1.0);
         }
         
-        //save managed context
-        let tempMain: NSManagedObjectContext! = SRCoreDataManager.sharedInstance.mainObjectContext;
+        //add object
         
-        var entity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectNote, inManagedObjectContext: tempMain) as SRNote;
-        entity.id = currentRecData["id"] as String;
-        entity.fileName = currentRecData["name"] as String;
-        entity.date = currentRecData["date"] as NSDate;
-        entity.imageThumbnail = UIImageJPEGRepresentation(thumbnailImage, 1.0);
-
-        var error: NSError?;
-        if tempMain?.save(&error) == false {
-            println(error);
-        }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {[unowned self] () -> Void in
+            SRCoreDataManager.sharedInstance.insertObjcet(self.currentRecData);
+        })
         
         //
         if isRecording == true {

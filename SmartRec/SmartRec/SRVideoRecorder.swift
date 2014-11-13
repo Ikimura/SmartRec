@@ -100,6 +100,7 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
         });
         dispatch_async(delegateCallbackQueue, { [unowned self] () -> Void in
             self.delegate?.captureVideoRecordingPreviewView(self);
+            //FIXME: fix
             return;
         });
     }
@@ -132,7 +133,7 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
         
         dispatch_async(delegateCallbackQueue, {[unowned self] () -> Void in
             self.delegate?.captureVideoRecordingDidStartRecoding(self);
-            
+            //FIXME: fix
             return;
         });
     }
@@ -141,7 +142,7 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
         NSLog("didFinishRecordingToOutputFileAtURL - enter");
         dispatch_async(delegateCallbackQueue, {[unowned self] () -> Void in
             self.delegate?.captureVideoRecordingDidStopRecoding(self, withError: error);
-            
+            //FIXME: fix
             return;
         });
     }

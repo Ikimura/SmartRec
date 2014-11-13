@@ -18,6 +18,8 @@ public class SRCoreDataManager: NSObject {
         return Static.instance;
     }
     
+    //MARK: lazy properties
+    
     internal lazy var masterObjectContext: NSManagedObjectContext = {
         var tempMaster = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType);
         tempMaster.persistentStoreCoordinator = self.storeCoordinator;
@@ -50,4 +52,56 @@ public class SRCoreDataManager: NSObject {
         
         return tempStoreCordinator;
         }();
+    
+//    private var operationQueue: NSOperationQueue?;
+    
+    //MARK: life cicle
+    
+    public override init() {
+        super.init();
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "mocDidSaveNotification:", name: NSManagedObjectContextDidSaveNotification, object: nil);
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NSManagedObjectContextDidSaveNotification, object: nil);
+    }
+    
+    //FIXME: with generic
+    
+    internal func insertObjcet(data: [String: AnyObject]) {
+        
+        var entity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectNote, inManagedObjectContext: mainObjectContext) as SRNote;
+        
+        entity.id = data["id"] as String;
+        entity.fileName = data["name"] as String;
+        entity.date = data["date"] as NSDate;
+        entity.imageThumbnail = data["thumbnailImage"] as NSData;
+        
+        self.saveContext(mainObjectContext);
+    }
+    
+    //MARK: private methids
+    
+    private func saveContext(context: NSManagedObjectContext) {
+        
+        context.performBlockAndWait { [unowned context] () -> Void in
+            var error: NSError?;
+            if context.save(&error) == false {
+                println(error);
+            }
+        };
+    }
+    
+    //MARK: save notification
+
+    func mocDidSaveNotification(notification: NSNotification) {
+        if let savedContext = notification.object as? NSManagedObjectContext {
+        // ignore change notifications for the main MOC
+            if (masterObjectContext !== savedContext){
+                saveContext(masterObjectContext);
+            }
+        }
+    }
+    
 }
