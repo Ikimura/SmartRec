@@ -18,7 +18,6 @@
 		137E3B6E19F52BF00094C5A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 137E3B6C19F52BF00094C5A1 /* Main.storyboard */; };
 		137E3B7019F52BF00094C5A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 137E3B6F19F52BF00094C5A1 /* Images.xcassets */; };
 		137E3B7319F52BF00094C5A1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 137E3B7119F52BF00094C5A1 /* LaunchScreen.xib */; };
-		137E3B7F19F52BF10094C5A1 /* SmartRecTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B7E19F52BF10094C5A1 /* SmartRecTests.swift */; };
 		137E3B8B19F531B20094C5A1 /* SRNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B8A19F531B20094C5A1 /* SRNavigationController.swift */; };
 		137E3B8D19F532550094C5A1 /* SRCommonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B8C19F532550094C5A1 /* SRCommonViewController.swift */; };
 		137E3B9019F532A90094C5A1 /* SRMovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B8F19F532A90094C5A1 /* SRMovieListViewController.swift */; };
@@ -31,6 +30,10 @@
 		1394B1001A075D71009D0780 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1394B0FF1A075D71009D0780 /* CoreMotion.framework */; };
 		1394B1031A076514009D0780 /* SRAccelerometrManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1394B1021A076514009D0780 /* SRAccelerometrManager.swift */; };
 		13C1F5BD19F6466C00149649 /* SRVideoRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C1F5BC19F6466C00149649 /* SRVideoRecorder.swift */; };
+		13CA8BD21A149BAB00E8C6D8 /* SRLocationSingletonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CA8BD11A149BAB00E8C6D8 /* SRLocationSingletonTests.swift */; };
+		13CA8BD41A14A0B600E8C6D8 /* SRAccelerometrSingletonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CA8BD31A14A0B600E8C6D8 /* SRAccelerometrSingletonTests.swift */; };
+		13CA8BD61A14A3BA00E8C6D8 /* SRCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CA8BD51A14A3BA00E8C6D8 /* SRCoreDataManager.swift */; };
+		13CA8BD91A14A51C00E8C6D8 /* SRCoreDataSingletonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CA8BD81A14A51C00E8C6D8 /* SRCoreDataSingletonTests.swift */; };
 		13D7456C1A139C620089BA09 /* SRExtensionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D7456B1A139C620089BA09 /* SRExtensionsTest.swift */; };
 		13D786891A1358E700A4DD3C /* SmartRec.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13D786871A1358E700A4DD3C /* SmartRec.xcdatamodeld */; };
 		13E5AE7719FF7BF900ABFAD8 /* NSURLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E5AE7619FF7BF900ABFAD8 /* NSURLExtensions.swift */; };
@@ -65,7 +68,6 @@
 		137E3B7219F52BF00094C5A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		137E3B7819F52BF10094C5A1 /* SmartRecTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartRecTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		137E3B7D19F52BF10094C5A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		137E3B7E19F52BF10094C5A1 /* SmartRecTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartRecTests.swift; sourceTree = "<group>"; };
 		137E3B8A19F531B20094C5A1 /* SRNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRNavigationController.swift; sourceTree = "<group>"; };
 		137E3B8C19F532550094C5A1 /* SRCommonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCommonViewController.swift; sourceTree = "<group>"; };
 		137E3B8F19F532A90094C5A1 /* SRMovieListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRMovieListViewController.swift; sourceTree = "<group>"; };
@@ -79,10 +81,14 @@
 		1394B1021A076514009D0780 /* SRAccelerometrManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAccelerometrManager.swift; sourceTree = "<group>"; };
 		13C1F5BA19F63BAF00149649 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		13C1F5BC19F6466C00149649 /* SRVideoRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRVideoRecorder.swift; path = ../SRVideoRecorder.swift; sourceTree = "<group>"; };
+		13CA8BD11A149BAB00E8C6D8 /* SRLocationSingletonTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRLocationSingletonTests.swift; sourceTree = "<group>"; };
+		13CA8BD31A14A0B600E8C6D8 /* SRAccelerometrSingletonTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAccelerometrSingletonTests.swift; sourceTree = "<group>"; };
+		13CA8BD51A14A3BA00E8C6D8 /* SRCoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataManager.swift; sourceTree = "<group>"; };
+		13CA8BD81A14A51C00E8C6D8 /* SRCoreDataSingletonTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataSingletonTests.swift; sourceTree = "<group>"; };
 		13D7456B1A139C620089BA09 /* SRExtensionsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRExtensionsTest.swift; sourceTree = "<group>"; };
 		13D786881A1358E700A4DD3C /* SmartRec.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SmartRec.xcdatamodel; sourceTree = "<group>"; };
 		13E5AE7619FF7BF900ABFAD8 /* NSURLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLExtensions.swift; sourceTree = "<group>"; };
-		13F985741A1390E100E9B958 /* SRNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRNote.swift; sourceTree = "<group>"; };
+		13F985741A1390E100E9B958 /* SRNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRNote.swift; path = ../SRNote.swift; sourceTree = "<group>"; };
 		13F985761A13912400E9B958 /* AVAssetExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVAssetExtensions.swift; sourceTree = "<group>"; };
 		576FBF43DDEE1F6555A4FA62 /* Pods-SmartRec.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRec.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmartRec/Pods-SmartRec.debug.xcconfig"; sourceTree = "<group>"; };
 		629E0BE8345E5875EE1D9C09 /* libPods-SmartRec.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SmartRec.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,7 +198,7 @@
 		137E3B7B19F52BF10094C5A1 /* SmartRecTests */ = {
 			isa = PBXGroup;
 			children = (
-				137E3B7E19F52BF10094C5A1 /* SmartRecTests.swift */,
+				13CA8BD71A14A4F400E8C6D8 /* Singletons */,
 				13D7456B1A139C620089BA09 /* SRExtensionsTest.swift */,
 				137E3B7C19F52BF10094C5A1 /* Supporting Files */,
 			);
@@ -276,11 +282,38 @@
 			path = MotionManager;
 			sourceTree = "<group>";
 		};
+		13CA8BCF1A1496F300E8C6D8 /* ManagedObjects */ = {
+			isa = PBXGroup;
+			children = (
+				13F985741A1390E100E9B958 /* SRNote.swift */,
+			);
+			path = ManagedObjects;
+			sourceTree = "<group>";
+		};
+		13CA8BD01A14973400E8C6D8 /* CoreDataManager */ = {
+			isa = PBXGroup;
+			children = (
+				13CA8BD51A14A3BA00E8C6D8 /* SRCoreDataManager.swift */,
+			);
+			path = CoreDataManager;
+			sourceTree = "<group>";
+		};
+		13CA8BD71A14A4F400E8C6D8 /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				13CA8BD11A149BAB00E8C6D8 /* SRLocationSingletonTests.swift */,
+				13CA8BD31A14A0B600E8C6D8 /* SRAccelerometrSingletonTests.swift */,
+				13CA8BD81A14A51C00E8C6D8 /* SRCoreDataSingletonTests.swift */,
+			);
+			name = Singletons;
+			sourceTree = "<group>";
+		};
 		13D786861A1358D700A4DD3C /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				13CA8BD01A14973400E8C6D8 /* CoreDataManager */,
+				13CA8BCF1A1496F300E8C6D8 /* ManagedObjects */,
 				13D786871A1358E700A4DD3C /* SmartRec.xcdatamodeld */,
-				13F985741A1390E100E9B958 /* SRNote.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -471,6 +504,7 @@
 				13D786891A1358E700A4DD3C /* SmartRec.xcdatamodeld in Sources */,
 				1313411219F78D68003BF084 /* SRShowVideoViewController.swift in Sources */,
 				137E3B9019F532A90094C5A1 /* SRMovieListViewController.swift in Sources */,
+				13CA8BD61A14A3BA00E8C6D8 /* SRCoreDataManager.swift in Sources */,
 				137E3B6919F52BF00094C5A1 /* AppDelegate.swift in Sources */,
 				138532BA19FA490D00430319 /* SRVideoCaptureManager.swift in Sources */,
 				1359A0DD1A00E88A00FC8994 /* SRLocationManager.swift in Sources */,
@@ -484,8 +518,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13CA8BD21A149BAB00E8C6D8 /* SRLocationSingletonTests.swift in Sources */,
 				13D7456C1A139C620089BA09 /* SRExtensionsTest.swift in Sources */,
-				137E3B7F19F52BF10094C5A1 /* SmartRecTests.swift in Sources */,
+				13CA8BD41A14A0B600E8C6D8 /* SRAccelerometrSingletonTests.swift in Sources */,
+				13CA8BD91A14A51C00E8C6D8 /* SRCoreDataSingletonTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,6 +661,7 @@
 		};
 		137E3B8619F52BF10094C5A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 576FBF43DDEE1F6555A4FA62 /* Pods-SmartRec.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -644,6 +681,7 @@
 		};
 		137E3B8719F52BF10094C5A1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EEEFD9D2BCFD05A6A3E5D224 /* Pods-SmartRec.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (

@@ -5,7 +5,6 @@
 //  Created by Artsiom Karseka on 11/12/14.
 //  Copyright (c) 2014 con.epam.evnt. All rights reserved.
 //
-import UIKit
 import XCTest
 import SmartRec
 
@@ -21,12 +20,14 @@ class SRExtensionsTest: XCTestCase {
         super.tearDown()
     }
     
-//    func testExample() {
-//        // This is an example of a functional test case.
-//        XCTAssert(true, "Pass")
-//    }
+    func testURL_Creation() {
+        let fileName = "my_file";
+        let url = NSURL.URL(directoryName: .DocumentDirectory, fileName: fileName)!;
+        
+        XCTAssertNotNil(url);
+    }
     
-    func testURLCreaterPerformance() {
+    func testURLCreater_Performance() {
         // This is an example of a performance test case.
         self.measureBlock() {
             // Put the code you want to measure the time of here.

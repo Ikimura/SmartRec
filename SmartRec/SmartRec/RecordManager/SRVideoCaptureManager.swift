@@ -129,8 +129,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         }
         
         //save managed context
-        let tempDelegate = UIApplication.sharedApplication().delegate as? AppDelegate;
-        let tempMain: NSManagedObjectContext! = tempDelegate?.mainObjectContext;
+        let tempMain: NSManagedObjectContext! = SRCoreDataManager.sharedInstance.mainObjectContext;
         
         var entity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectNote, inManagedObjectContext: tempMain) as SRNote;
         entity.id = currentRecData["id"] as String;

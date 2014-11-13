@@ -21,3 +21,5 @@ let kManagedObjectNote: String = "SRNote";
 let kMovieListCellIdentifier: String = "movieCellidentifier";
 
 let kShowMovieSegueIdentifier: String = "showVideoIdentifier";
+
+let kStorePathComponent: String = "SmartRec.sqlite";

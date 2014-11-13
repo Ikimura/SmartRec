@@ -14,34 +14,18 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
     
     @IBOutlet var tableView: UITableView!;
     
-    private lazy var masterContext: NSManagedObjectContext = {
-        let tempDelegate = UIApplication.sharedApplication().delegate as? AppDelegate;
-        
-        let tempMaster = tempDelegate?.masterObjectContext;
-        
-        return tempMaster!;
-    }();
-    
-    private lazy var mainObjectContext: NSManagedObjectContext = {
-        let tempDelegate = UIApplication.sharedApplication().delegate as? AppDelegate;
-
-        let tempMain = tempDelegate?.mainObjectContext;
-        
-        return tempMain!;
-    }();
-    
     private lazy var fetchedResultController: NSFetchedResultsController = {
         
         var tempFetchedRC: NSFetchedResultsController?;
         
-        let entity: NSEntityDescription = NSEntityDescription.entityForName(kManagedObjectNote, inManagedObjectContext: self.mainObjectContext)!;
+        let entity: NSEntityDescription = NSEntityDescription.entityForName(kManagedObjectNote, inManagedObjectContext: SRCoreDataManager.sharedInstance.mainObjectContext)!;
         let sort = NSSortDescriptor(key: "date", ascending: true)
 
         var fetchRequest: NSFetchRequest = NSFetchRequest();
         fetchRequest.entity = entity;
         fetchRequest.sortDescriptors = [sort];
         
-        tempFetchedRC = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.mainObjectContext, sectionNameKeyPath: nil, cacheName: nil);
+        tempFetchedRC = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: SRCoreDataManager.sharedInstance.mainObjectContext, sectionNameKeyPath: nil, cacheName: nil);
         tempFetchedRC?.delegate = self;
         
         return tempFetchedRC!;

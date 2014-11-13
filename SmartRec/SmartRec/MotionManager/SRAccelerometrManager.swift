@@ -13,8 +13,8 @@ protocol SRAccelerometrManagerDelegate {
     func accelerometrManagerDidUpdateData(accelaration: CMAccelerometerData!);
 }
 
-class SRAccelerometrManager: NSObject {
-    class var sharedInstance : SRAccelerometrManager {
+public class SRAccelerometrManager: NSObject {
+    public class var sharedInstance : SRAccelerometrManager {
         struct Static {
             static let instance : SRAccelerometrManager = SRAccelerometrManager();
         }
@@ -26,7 +26,7 @@ class SRAccelerometrManager: NSObject {
     private var motionManager: CMMotionManager!;
     private var operationQueue: NSOperationQueue?;
     
-    override init() {
+    public override init() {
         motionManager = CMMotionManager();
         
         super.init();
@@ -39,7 +39,7 @@ class SRAccelerometrManager: NSObject {
         }
     }
     
-    func startAccelerationMonitoring(withInterval: NSTimeInterval) {
+    public func startAccelerationMonitoring(withInterval: NSTimeInterval) {
         
         self.setUpManager(withInterval);
         
@@ -52,7 +52,7 @@ class SRAccelerometrManager: NSObject {
         });
     }
     
-    func stopAccelerationMonitoring() {
+    public func stopAccelerationMonitoring() {
         motionManager.stopAccelerometerUpdates();
     }
 }

@@ -13,8 +13,8 @@ protocol SRLocationManagerDelegate {
     func srlocationManager(manager: SRLocationManager!, didUpdateLocations locations: [AnyObject]!);
 }
 
-class SRLocationManager : NSObject, CLLocationManagerDelegate {
-    class var sharedInstance : SRLocationManager {
+public class SRLocationManager : NSObject, CLLocationManagerDelegate {
+    public class var sharedInstance : SRLocationManager {
         struct Static {
             static let instance : SRLocationManager = SRLocationManager();
         }
@@ -25,7 +25,7 @@ class SRLocationManager : NSObject, CLLocationManagerDelegate {
     
     private var locationManager: CLLocationManager;
 
-    override init() {
+    public override init() {
         locationManager = CLLocationManager();
         
         super.init();
@@ -39,19 +39,19 @@ class SRLocationManager : NSObject, CLLocationManagerDelegate {
         }
     }
     
-    func startMonitoringLocation() {
+    public func startMonitoringLocation() {
         self.locationManager.startUpdatingLocation();
 //        locationManager.startMonitoringSignificantLocationChanges();
     }
     
-    func stopMonitoringLocation() {
+    public func stopMonitoringLocation() {
         self.locationManager.stopUpdatingLocation();
 //        locationManager.stopMonitoringSignificantLocationChanges();
     }
     
     //MARK: - CLLocationManagerDelegate
     
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    public func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         switch status {
         case .AuthorizedWhenInUse:
             NSLog("\(status)");
@@ -60,19 +60,19 @@ class SRLocationManager : NSObject, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    public func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         delegate?.srlocationManager(self, didUpdateLocations: locations);
     }
-    
-    func locationManagerDidPauseLocationUpdates(manager: CLLocationManager!) {
+  
+    public func locationManagerDidPauseLocationUpdates(manager: CLLocationManager!) {
         
     }
     
-    func locationManagerDidResumeLocationUpdates(manager: CLLocationManager!) {
+    public func locationManagerDidResumeLocationUpdates(manager: CLLocationManager!) {
         
     }
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    public func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         NSLog("\(error)");
     }
     
