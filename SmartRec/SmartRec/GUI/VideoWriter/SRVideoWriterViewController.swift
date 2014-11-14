@@ -74,7 +74,7 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         }
     }
     
-    //MARK: - private
+    //MARK: - private methods
     
     func updateTimeLabel(t: NSTimer) {
         var minutesPast, secondsPast: Int;

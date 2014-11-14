@@ -17,7 +17,6 @@ protocol SRVideoCaptureManagerDelegate {
 
 class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     
-    var currentRecorder: SRVideoRecorder!;
     var delegate: SRVideoCaptureManagerDelegate?;
     
     private lazy var dateFormatter: NSDateFormatter = {
@@ -29,6 +28,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         return tempDormatter;
     }();
     
+    private var currentRecorder: SRVideoRecorder!;
     private var isRecording: Bool!;
     private lazy var currentRecData: [String: AnyObject] = {
         var tempArray = [String: AnyObject]();
@@ -52,7 +52,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
 
     }
     
-    //MARK: public
+    //MARK: - internal interface
     
     func startRecordingVideo() {
         let date = NSDate();
@@ -87,7 +87,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         currentRecorder.stopRunning();
     }
     
-    //MARK: private
+    //MARK: - private methods
     
     private func makeNewFilePath(parameter: AnyObject!) -> String {
         //Create temporary URL to record to

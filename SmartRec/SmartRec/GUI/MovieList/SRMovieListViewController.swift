@@ -12,7 +12,7 @@ import CoreData
 
 class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate {
     
-    @IBOutlet var tableView: UITableView!;
+    @IBOutlet private var tableView: UITableView!;
     
     private lazy var fetchedResultController: NSFetchedResultsController = {
         
@@ -31,7 +31,7 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
         return tempFetchedRC!;
     }();
     
-    //MARK: Life cicle
+    //MARK: - Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +54,7 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK: NSFetchedResultsControllerDelegate
+    //MARK: - NSFetchedResultsControllerDelegate
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         self.tableView.beginUpdates();
@@ -90,7 +90,7 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
         self.tableView.endUpdates();
     }
 
-    //MARK: UITableViewDataSource
+    //MARK: - UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return self.fetchedResultController.sections!.count;
@@ -116,6 +116,8 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
         return cell;
     }
     
+    //MARK: - UITableViewDelegate
+
     // Override to support conditional editing of the table view.
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true;

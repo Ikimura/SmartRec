@@ -18,7 +18,7 @@ public class SRCoreDataManager: NSObject {
         return Static.instance;
     }
     
-    //MARK: lazy properties
+    //MARK: - lazy properties
     
     internal lazy var masterObjectContext: NSManagedObjectContext = {
         var tempMaster = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType);
@@ -55,7 +55,7 @@ public class SRCoreDataManager: NSObject {
     
 //    private var operationQueue: NSOperationQueue?;
     
-    //MARK: life cicle
+    //MARK: - life cycle
     
     public override init() {
         super.init();
@@ -81,7 +81,7 @@ public class SRCoreDataManager: NSObject {
         self.saveContext(mainObjectContext);
     }
     
-    //MARK: private methids
+    //MARK: - private methods
     
     private func saveContext(context: NSManagedObjectContext) {
         
@@ -93,7 +93,7 @@ public class SRCoreDataManager: NSObject {
         };
     }
     
-    //MARK: save notification
+    //MARK: - save notification
 
     func mocDidSaveNotification(notification: NSNotification) {
         if let savedContext = notification.object as? NSManagedObjectContext {

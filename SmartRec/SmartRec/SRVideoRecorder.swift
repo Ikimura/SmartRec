@@ -20,8 +20,6 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     var captureSession: AVCaptureSession!;
     var url: NSURL?;
     
-    var delegateCallbackQueue: dispatch_queue_t!;
-    
     var delegate: SRVideoRecorderDelegate?;
     
     private var videoDevice: AVCaptureDevice!;
@@ -31,7 +29,8 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     private var videoOrientation: AVCaptureVideoOrientation!;
     private var videoDuration: Float64!;
     private var sessionQueue: dispatch_queue_t!;
-    
+    private var delegateCallbackQueue: dispatch_queue_t!;
+
     init(duration: Float64, frameRate: Int32, orientation: AVCaptureVideoOrientation) {
         super.init();
                 
@@ -45,6 +44,8 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     deinit{
         
     }
+    
+    //MARK: - private methods
     
     private func setupCaptureSession() {
         
@@ -91,6 +92,8 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
         videoConnection = videoFileOutput.connectionWithMediaType(AVMediaTypeVideo);
         videoConnection.videoOrientation = videoOrientation;
     }
+    
+    //MARK: - internal interface
     
     func startRunning() {
         dispatch_sync(sessionQueue, { [unowned self] () -> Void in

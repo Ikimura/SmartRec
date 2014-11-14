@@ -39,6 +39,8 @@ public class SRLocationManager : NSObject, CLLocationManagerDelegate {
         }
     }
     
+    //MARK: - public interface
+    
     public func startMonitoringLocation() {
         self.locationManager.startUpdatingLocation();
 //        locationManager.startMonitoringSignificantLocationChanges();
