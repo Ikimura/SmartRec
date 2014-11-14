@@ -23,3 +23,7 @@ let kMovieListCellIdentifier: String = "movieCellidentifier";
 let kShowMovieSegueIdentifier: String = "showVideoIdentifier";
 
 let kStorePathComponent: String = "SmartRec.sqlite";
+
+let kGoogleMapsAPIKey: String = "AIzaSyDkaCDkatCMTXFFbC_cdRnkBC2KsGL7C3Q";
+
+let kGoogleMapsAPIURL: String = "http://maps.googleapis.com/maps/api/directions/json";

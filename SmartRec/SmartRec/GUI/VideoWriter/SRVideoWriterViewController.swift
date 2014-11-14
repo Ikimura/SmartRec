@@ -82,7 +82,7 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         seconds++;
         minutesPast = (seconds % 3600) / 60;
         secondsPast = (seconds % 3600) % 60;
-        timeLabel.text = NSString(format: "%02d:%02d", minutesPast, secondsPast);
+        timeLabel.text = String(format: "%02d:%02d", minutesPast, secondsPast);
     }
     
     private func updateUIByDefault() {
@@ -185,9 +185,9 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         if let crnLoc = locations[locations.count - 1] as? CLLocation {
             //use dispatch get main queue
             dispatch_async(dispatch_get_main_queue(), { [unowned self] () -> Void in
-                self.latitudeLabel.text = NSString(format: "%.8f", crnLoc.coordinate.latitude);
-                self.longitudeLabel.text = NSString(format: "%.8f", crnLoc.coordinate.longitude);
-                self.speedLabel.text = NSString(format: "%.1f m/s", crnLoc.speed);
+                self.latitudeLabel.text = String(format: "%.8f", crnLoc.coordinate.latitude);
+                self.longitudeLabel.text = String(format: "%.8f", crnLoc.coordinate.longitude);
+                self.speedLabel.text = String(format: "%.1f m/s", crnLoc.speed);
             });
         }
     }
@@ -216,9 +216,9 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     func accelerometrManagerDidUpdateData(accelerometerData: CMAccelerometerData!) {
         var acceleration = accelerometerData.acceleration;
         dispatch_async(dispatch_get_main_queue(), { [unowned self, acceleration] () -> Void in
-            self.accelerationXLabel.text = NSString(format: "X:%.8f", acceleration.x);
-            self.accelerationYLabel.text = NSString(format: "Y:%.8f", acceleration.y);
-            self.accelerationZLabel.text = NSString(format: "Z:%.8f", acceleration.z);
+            self.accelerationXLabel.text = String(format: "X:%.8f", acceleration.x);
+            self.accelerationYLabel.text = String(format: "Y:%.8f", acceleration.y);
+            self.accelerationZLabel.text = String(format: "Z:%.8f", acceleration.z);
         });
 
     }

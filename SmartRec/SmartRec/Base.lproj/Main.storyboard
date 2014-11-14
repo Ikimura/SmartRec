@@ -139,6 +139,28 @@
             </objects>
             <point key="canvasLocation" x="-1037" y="505"/>
         </scene>
+        <!--Map-->
+        <scene sceneID="xhV-Va-Zf1">
+            <objects>
+                <viewController id="LVw-2h-Vli" customClass="SRRouteMapViewController" customModule="SmartRec" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9Z4-ew-KhH"/>
+                        <viewControllerLayoutGuide type="bottom" id="nlX-Cs-4Xa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cEd-Pk-g0M" customClass="GMSMapView">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Map" id="iqS-fv-drX"/>
+                    <connections>
+                        <outlet property="googleMapView" destination="cEd-Pk-g0M" id="1Us-tt-4oA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dD3-xQ-DRV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-974" y="1289"/>
+        </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="fgD-EL-0Ie">
             <objects>
@@ -152,6 +174,7 @@
                     <connections>
                         <segue destination="Udy-4C-Mc5" kind="relationship" relationship="viewControllers" id="G6a-8h-35l"/>
                         <segue destination="san-K3-CT4" kind="relationship" relationship="viewControllers" id="uOn-ha-9cK"/>
+                        <segue destination="LVw-2h-Vli" kind="relationship" relationship="viewControllers" id="rh8-Iz-IU2"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FFK-D3-oVt" userLabel="First Responder" sceneMemberID="firstResponder"/>

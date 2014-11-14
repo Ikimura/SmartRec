@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1304A2781A16226C004CBD9B /* SRRouteMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1304A2771A16226C004CBD9B /* SRRouteMapViewController.swift */; };
+		1304A27A1A1622A9004CBD9B /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A2791A1622A9004CBD9B /* GoogleMaps.framework */; };
+		1304A27C1A1622F0004CBD9B /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1304A27B1A1622F0004CBD9B /* GoogleMaps.bundle */; };
+		1304A27E1A162319004CBD9B /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A27D1A162319004CBD9B /* CoreText.framework */; };
+		1304A2801A162320004CBD9B /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A27F1A162320004CBD9B /* GLKit.framework */; };
+		1304A2821A162327004CBD9B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A2811A162327004CBD9B /* ImageIO.framework */; };
+		1304A2841A16232F004CBD9B /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A2831A16232F004CBD9B /* libc++.dylib */; };
+		1304A2861A16234E004CBD9B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A2851A16234E004CBD9B /* libicucore.dylib */; };
+		1304A2881A162356004CBD9B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A2871A162356004CBD9B /* libz.dylib */; };
+		1304A2891A16235D004CBD9B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C1F5BA19F63BAF00149649 /* OpenGLES.framework */; };
+		1304A28B1A162372004CBD9B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A28A1A162372004CBD9B /* SystemConfiguration.framework */; };
 		130A5B8D19F7CECB004515A7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130A5B8C19F7CECB004515A7 /* Constants.swift */; };
 		1313411219F78D68003BF084 /* SRShowVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1313411119F78D68003BF084 /* SRShowVideoViewController.swift */; };
 		1313411419F78DAE003BF084 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1313411319F78DAE003BF084 /* MediaPlayer.framework */; };
@@ -53,6 +64,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1304A2771A16226C004CBD9B /* SRRouteMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRRouteMapViewController.swift; sourceTree = "<group>"; };
+		1304A2791A1622A9004CBD9B /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
+		1304A27B1A1622F0004CBD9B /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
+		1304A27D1A162319004CBD9B /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		1304A27F1A162320004CBD9B /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		1304A2811A162327004CBD9B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		1304A2831A16232F004CBD9B /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		1304A2851A16234E004CBD9B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		1304A2871A162356004CBD9B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		1304A28A1A162372004CBD9B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1304A28C1A16244D004CBD9B /* SmartRec-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SmartRec-Bridging-Header.h"; sourceTree = "<group>"; };
 		130A5B8C19F7CECB004515A7 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1313411119F78D68003BF084 /* SRShowVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRShowVideoViewController.swift; sourceTree = "<group>"; };
 		1313411319F78DAE003BF084 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -100,13 +122,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1304A28B1A162372004CBD9B /* SystemConfiguration.framework in Frameworks */,
+				137E3B9C19F543B60094C5A1 /* QuartzCore.framework in Frameworks */,
+				1304A2891A16235D004CBD9B /* OpenGLES.framework in Frameworks */,
+				1304A2881A162356004CBD9B /* libz.dylib in Frameworks */,
+				1304A2861A16234E004CBD9B /* libicucore.dylib in Frameworks */,
+				1304A2841A16232F004CBD9B /* libc++.dylib in Frameworks */,
+				1304A2821A162327004CBD9B /* ImageIO.framework in Frameworks */,
+				1304A2801A162320004CBD9B /* GLKit.framework in Frameworks */,
+				1304A27E1A162319004CBD9B /* CoreText.framework in Frameworks */,
+				137E3BA019F5538E0094C5A1 /* AVFoundation.framework in Frameworks */,
 				1394B1001A075D71009D0780 /* CoreMotion.framework in Frameworks */,
 				1359A0DF1A0123E100FC8994 /* CoreData.framework in Frameworks */,
 				1359A0DA1A00E50C00FC8994 /* CoreLocation.framework in Frameworks */,
 				1313411419F78DAE003BF084 /* MediaPlayer.framework in Frameworks */,
 				13361DB319F6917A00F0CB64 /* AssetsLibrary.framework in Frameworks */,
-				137E3BA019F5538E0094C5A1 /* AVFoundation.framework in Frameworks */,
-				137E3B9C19F543B60094C5A1 /* QuartzCore.framework in Frameworks */,
+				1304A27A1A1622A9004CBD9B /* GoogleMaps.framework in Frameworks */,
 				9246CE854797EB575F7D3CF9 /* libPods-SmartRec.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,6 +152,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1304A2761A16226C004CBD9B /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				1304A2771A16226C004CBD9B /* SRRouteMapViewController.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
 		130A5B8B19F7CE91004515A7 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +188,7 @@
 		137E3B5A19F52BF00094C5A1 = {
 			isa = PBXGroup;
 			children = (
+				1304A28C1A16244D004CBD9B /* SmartRec-Bridging-Header.h */,
 				137E3B6519F52BF00094C5A1 /* SmartRec */,
 				137E3B7B19F52BF10094C5A1 /* SmartRecTests */,
 				137E3B6419F52BF00094C5A1 /* Products */,
@@ -216,6 +256,7 @@
 		137E3B8819F5313B0094C5A1 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				1304A2761A16226C004CBD9B /* Map */,
 				1313411019F78D23003BF084 /* ShowVideo */,
 				137E3B9819F542B80094C5A1 /* VideoWriter */,
 				137E3B8E19F532700094C5A1 /* MovieList */,
@@ -330,6 +371,15 @@
 		2DBCF0BAAB98CAACFCF53789 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1304A28A1A162372004CBD9B /* SystemConfiguration.framework */,
+				1304A2871A162356004CBD9B /* libz.dylib */,
+				1304A2851A16234E004CBD9B /* libicucore.dylib */,
+				1304A2831A16232F004CBD9B /* libc++.dylib */,
+				1304A2811A162327004CBD9B /* ImageIO.framework */,
+				1304A27F1A162320004CBD9B /* GLKit.framework */,
+				1304A27D1A162319004CBD9B /* CoreText.framework */,
+				1304A27B1A1622F0004CBD9B /* GoogleMaps.bundle */,
+				1304A2791A1622A9004CBD9B /* GoogleMaps.framework */,
 				1394B0FF1A075D71009D0780 /* CoreMotion.framework */,
 				1359A0DE1A0123E100FC8994 /* CoreData.framework */,
 				1359A0D91A00E50C00FC8994 /* CoreLocation.framework */,
@@ -443,6 +493,7 @@
 				137E3B6E19F52BF00094C5A1 /* Main.storyboard in Resources */,
 				137E3B7319F52BF00094C5A1 /* LaunchScreen.xib in Resources */,
 				137E3B7019F52BF00094C5A1 /* Images.xcassets in Resources */,
+				1304A27C1A1622F0004CBD9B /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,6 +562,7 @@
 				137E3B9219F533A90094C5A1 /* SRMovieTableViewCell.swift in Sources */,
 				130A5B8D19F7CECB004515A7 /* Constants.swift in Sources */,
 				13F985771A13912400E9B958 /* AVAssetExtensions.swift in Sources */,
+				1304A2781A16226C004CBD9B /* SRRouteMapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,6 +645,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -628,6 +681,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -638,11 +692,18 @@
 			baseConfigurationReference = 576FBF43DDEE1F6555A4FA62 /* Pods-SmartRec.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SmartRec/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SmartRec-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -651,11 +712,17 @@
 			baseConfigurationReference = EEEFD9D2BCFD05A6A3E5D224 /* Pods-SmartRec.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SmartRec/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SmartRec-Bridging-Header.h";
 			};
 			name = Release;
 		};
