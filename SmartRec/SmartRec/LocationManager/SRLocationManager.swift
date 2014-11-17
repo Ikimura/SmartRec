@@ -23,12 +23,14 @@ public class SRLocationManager : NSObject, CLLocationManagerDelegate {
     
     var delegate: SRLocationManagerDelegate?;
     
-    private var locationManager: CLLocationManager;
+    private var locationManager: CLLocationManager!;
+    private var currrentLocation: CLLocation?;
 
     public override init() {
-        locationManager = CLLocationManager();
-        
         super.init();
+        
+        locationManager = CLLocationManager();
+
         //TODO: kCLLocationAccuracyHundredMeterscon.epam.evnt.
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
         //TODO: 50
@@ -44,6 +46,10 @@ public class SRLocationManager : NSObject, CLLocationManagerDelegate {
     public func startMonitoringLocation() {
         self.locationManager.startUpdatingLocation();
 //        locationManager.startMonitoringSignificantLocationChanges();
+    }
+    
+    public func currentLocation() -> CLLocation? {
+        return currrentLocation;
     }
     
     public func stopMonitoringLocation() {
@@ -63,6 +69,7 @@ public class SRLocationManager : NSObject, CLLocationManagerDelegate {
     }
     
     public func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        currrentLocation = locations[0] as? CLLocation;
         delegate?.srlocationManager(self, didUpdateLocations: locations);
     }
   

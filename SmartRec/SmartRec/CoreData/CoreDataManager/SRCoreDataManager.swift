@@ -38,13 +38,17 @@ public class SRCoreDataManager: NSObject {
         
         let managedObjectModel = NSManagedObjectModel.mergedModelFromBundles(nil);
         var tempStoreCordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel!);
+        let options: [String: Bool] = [
+            NSMigratePersistentStoresAutomaticallyOption : true,
+            NSInferMappingModelAutomaticallyOption : true
+        ];
         
         let tempURLS = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask);
         
         let storeURL = (tempURLS[tempURLS.count - 1]).URLByAppendingPathComponent(kStorePathComponent);
         
         var error: NSError?;
-        tempStoreCordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil, error: &error);
+        tempStoreCordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options, error: &error);
         
         if error != nil {
             NSLog("\(error)");
@@ -71,7 +75,7 @@ public class SRCoreDataManager: NSObject {
     
     internal func insertObjcet(data: [String: AnyObject]) {
         
-        var entity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectNote, inManagedObjectContext: mainObjectContext) as SRNote;
+        var entity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectNote, inManagedObjectContext: mainObjectContext) as SRVideoData;
         
         entity.id = data["id"] as String;
         entity.fileName = data["name"] as String;

@@ -16,7 +16,7 @@ let kHighFramRate: Int32 = 30;
 
 let kFileDirectory: NSSearchPathDirectory = .DocumentDirectory;
 
-let kManagedObjectNote: String = "SRNote";
+let kManagedObjectNote: String = "SRVideoData";
 
 let kMovieListCellIdentifier: String = "movieCellidentifier";
 

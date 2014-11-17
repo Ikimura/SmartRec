@@ -25,6 +25,20 @@
 		1359A0DA1A00E50C00FC8994 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1359A0D91A00E50C00FC8994 /* CoreLocation.framework */; };
 		1359A0DD1A00E88A00FC8994 /* SRLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1359A0DC1A00E88A00FC8994 /* SRLocationManager.swift */; };
 		1359A0DF1A0123E100FC8994 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1359A0DE1A0123E100FC8994 /* CoreData.framework */; };
+		136895681A1A26E400D37A14 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A2791A1622A9004CBD9B /* GoogleMaps.framework */; };
+		136895691A1A270900D37A14 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A28A1A162372004CBD9B /* SystemConfiguration.framework */; };
+		1368956A1A1A271900D37A14 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1359A0DE1A0123E100FC8994 /* CoreData.framework */; };
+		1368956B1A1A272100D37A14 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1359A0D91A00E50C00FC8994 /* CoreLocation.framework */; };
+		1368956C1A1A272800D37A14 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A27D1A162319004CBD9B /* CoreText.framework */; };
+		1368956D1A1A272E00D37A14 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A27F1A162320004CBD9B /* GLKit.framework */; };
+		1368956E1A1A273200D37A14 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A2811A162327004CBD9B /* ImageIO.framework */; };
+		1368956F1A1A273800D37A14 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A2831A16232F004CBD9B /* libc++.dylib */; };
+		136895701A1A273E00D37A14 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A2851A16234E004CBD9B /* libicucore.dylib */; };
+		136895711A1A274500D37A14 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A2871A162356004CBD9B /* libz.dylib */; };
+		136895721A1A274E00D37A14 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C1F5BA19F63BAF00149649 /* OpenGLES.framework */; };
+		136895731A1A275400D37A14 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 137E3B9B19F543B60094C5A1 /* QuartzCore.framework */; };
+		1368957D1A1A2ABE00D37A14 /* SRVideoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1368957C1A1A2ABE00D37A14 /* SRVideoData.swift */; };
+		1368957F1A1A2ABF00D37A14 /* SRRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1368957E1A1A2ABF00D37A14 /* SRRoute.swift */; };
 		137E3B6919F52BF00094C5A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B6819F52BF00094C5A1 /* AppDelegate.swift */; };
 		137E3B6E19F52BF00094C5A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 137E3B6C19F52BF00094C5A1 /* Main.storyboard */; };
 		137E3B7019F52BF00094C5A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 137E3B6F19F52BF00094C5A1 /* Images.xcassets */; };
@@ -48,7 +62,6 @@
 		13D7456C1A139C620089BA09 /* SRExtensionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D7456B1A139C620089BA09 /* SRExtensionsTest.swift */; };
 		13D786891A1358E700A4DD3C /* SmartRec.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13D786871A1358E700A4DD3C /* SmartRec.xcdatamodeld */; };
 		13E5AE7719FF7BF900ABFAD8 /* NSURLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E5AE7619FF7BF900ABFAD8 /* NSURLExtensions.swift */; };
-		13F985751A1390E100E9B958 /* SRNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F985741A1390E100E9B958 /* SRNote.swift */; };
 		13F985771A13912400E9B958 /* AVAssetExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F985761A13912400E9B958 /* AVAssetExtensions.swift */; };
 		9246CE854797EB575F7D3CF9 /* libPods-SmartRec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 629E0BE8345E5875EE1D9C09 /* libPods-SmartRec.a */; };
 /* End PBXBuildFile section */
@@ -82,6 +95,9 @@
 		1359A0D91A00E50C00FC8994 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1359A0DC1A00E88A00FC8994 /* SRLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRLocationManager.swift; sourceTree = "<group>"; };
 		1359A0DE1A0123E100FC8994 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		136895671A1A1E8D00D37A14 /* SmartRec 1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SmartRec 1.1.xcdatamodel"; sourceTree = "<group>"; };
+		1368957C1A1A2ABE00D37A14 /* SRVideoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRVideoData.swift; path = ../SRVideoData.swift; sourceTree = "<group>"; };
+		1368957E1A1A2ABF00D37A14 /* SRRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRRoute.swift; path = ../SRRoute.swift; sourceTree = "<group>"; };
 		137E3B6319F52BF00094C5A1 /* SmartRec.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartRec.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		137E3B6719F52BF00094C5A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		137E3B6819F52BF00094C5A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -110,7 +126,6 @@
 		13D7456B1A139C620089BA09 /* SRExtensionsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRExtensionsTest.swift; sourceTree = "<group>"; };
 		13D786881A1358E700A4DD3C /* SmartRec.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SmartRec.xcdatamodel; sourceTree = "<group>"; };
 		13E5AE7619FF7BF900ABFAD8 /* NSURLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLExtensions.swift; sourceTree = "<group>"; };
-		13F985741A1390E100E9B958 /* SRNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRNote.swift; path = ../SRNote.swift; sourceTree = "<group>"; };
 		13F985761A13912400E9B958 /* AVAssetExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVAssetExtensions.swift; sourceTree = "<group>"; };
 		576FBF43DDEE1F6555A4FA62 /* Pods-SmartRec.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRec.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmartRec/Pods-SmartRec.debug.xcconfig"; sourceTree = "<group>"; };
 		629E0BE8345E5875EE1D9C09 /* libPods-SmartRec.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SmartRec.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,6 +161,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1368956B1A1A272100D37A14 /* CoreLocation.framework in Frameworks */,
+				136895711A1A274500D37A14 /* libz.dylib in Frameworks */,
+				136895691A1A270900D37A14 /* SystemConfiguration.framework in Frameworks */,
+				1368956E1A1A273200D37A14 /* ImageIO.framework in Frameworks */,
+				136895721A1A274E00D37A14 /* OpenGLES.framework in Frameworks */,
+				1368956C1A1A272800D37A14 /* CoreText.framework in Frameworks */,
+				1368956A1A1A271900D37A14 /* CoreData.framework in Frameworks */,
+				1368956D1A1A272E00D37A14 /* GLKit.framework in Frameworks */,
+				136895731A1A275400D37A14 /* QuartzCore.framework in Frameworks */,
+				1368956F1A1A273800D37A14 /* libc++.dylib in Frameworks */,
+				136895701A1A273E00D37A14 /* libicucore.dylib in Frameworks */,
+				136895681A1A26E400D37A14 /* GoogleMaps.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,7 +353,8 @@
 		13CA8BCF1A1496F300E8C6D8 /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
-				13F985741A1390E100E9B958 /* SRNote.swift */,
+				1368957E1A1A2ABF00D37A14 /* SRRoute.swift */,
+				1368957C1A1A2ABE00D37A14 /* SRVideoData.swift */,
 			);
 			path = ManagedObjects;
 			sourceTree = "<group>";
@@ -544,9 +572,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1368957F1A1A2ABF00D37A14 /* SRRoute.swift in Sources */,
 				13E5AE7719FF7BF900ABFAD8 /* NSURLExtensions.swift in Sources */,
 				137E3B9719F5420C0094C5A1 /* SRTabBarViewController.swift in Sources */,
-				13F985751A1390E100E9B958 /* SRNote.swift in Sources */,
 				137E3B8B19F531B20094C5A1 /* SRNavigationController.swift in Sources */,
 				13C1F5BD19F6466C00149649 /* SRVideoRecorder.swift in Sources */,
 				137E3B8D19F532550094C5A1 /* SRCommonViewController.swift in Sources */,
@@ -559,6 +587,7 @@
 				137E3B6919F52BF00094C5A1 /* AppDelegate.swift in Sources */,
 				138532BA19FA490D00430319 /* SRVideoCaptureManager.swift in Sources */,
 				1359A0DD1A00E88A00FC8994 /* SRLocationManager.swift in Sources */,
+				1368957D1A1A2ABE00D37A14 /* SRVideoData.swift in Sources */,
 				137E3B9219F533A90094C5A1 /* SRMovieTableViewCell.swift in Sources */,
 				130A5B8D19F7CECB004515A7 /* Constants.swift in Sources */,
 				13F985771A13912400E9B958 /* AVAssetExtensions.swift in Sources */,
@@ -734,6 +763,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -754,6 +784,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = SmartRecTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -798,9 +829,10 @@
 		13D786871A1358E700A4DD3C /* SmartRec.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				136895671A1A1E8D00D37A14 /* SmartRec 1.1.xcdatamodel */,
 				13D786881A1358E700A4DD3C /* SmartRec.xcdatamodel */,
 			);
-			currentVersion = 13D786881A1358E700A4DD3C /* SmartRec.xcdatamodel */;
+			currentVersion = 136895671A1A1E8D00D37A14 /* SmartRec 1.1.xcdatamodel */;
 			path = SmartRec.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
