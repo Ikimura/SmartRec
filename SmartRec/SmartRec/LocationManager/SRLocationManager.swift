@@ -9,10 +9,6 @@
 import Foundation
 import CoreLocation
 
-protocol SRLocationManagerDelegate {
-    func srlocationManager(manager: SRLocationManager!, didUpdateLocations locations: [AnyObject]!);
-}
-
 public class SRLocationManager : NSObject, CLLocationManagerDelegate {
     public class var sharedInstance : SRLocationManager {
         struct Static {
@@ -20,9 +16,7 @@ public class SRLocationManager : NSObject, CLLocationManagerDelegate {
         }
         return Static.instance;
     }
-    
-    var delegate: SRLocationManagerDelegate?;
-    
+        
     private var locationManager: CLLocationManager!;
     private var currrentLocation: CLLocation?;
 
@@ -33,7 +27,7 @@ public class SRLocationManager : NSObject, CLLocationManagerDelegate {
 
         //TODO: kCLLocationAccuracyHundredMeterscon.epam.evnt.
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
-        //TODO: 50
+        //TODO: 100
         locationManager.distanceFilter = 1;
         locationManager.delegate = self;
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
@@ -70,7 +64,9 @@ public class SRLocationManager : NSObject, CLLocationManagerDelegate {
     
     public func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         currrentLocation = locations[0] as? CLLocation;
-        delegate?.srlocationManager(self, didUpdateLocations: locations);
+        //post notification
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("SRLocationManagerDidUpdateLocations", object:locations);
     }
   
     public func locationManagerDidPauseLocationUpdates(manager: CLLocationManager!) {

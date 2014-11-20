@@ -30,11 +30,18 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     
     private var currentRecorder: SRVideoRecorder!;
     private var isRecording: Bool!;
+    //FIXME: - fix
     private lazy var currentRecData: [String: AnyObject] = {
         var tempArray = [String: AnyObject]();
         
         return tempArray;
     }();
+    //FIXME: - fix
+    private lazy var routeData: [CLLocationCoordinate2D] = {
+        var tempArray = [CLLocationCoordinate2D]();
+        
+        return tempArray;
+        }();
     
     override init(){
         super.init();
@@ -55,12 +62,16 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     //MARK: - internal interface
     
     func startRecordingVideo() {
+        //get notifications about position changing
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdatedLocations:", name: "SRLocationManagerDidUpdateLocations", object: nil)
+        
         let date = NSDate();
         let fileName = self.makeNewFilePath(date);
         
         currentRecData["id"] = String(date.hashValue);
         currentRecData["name"] = fileName;
         currentRecData["date"] = date;
+        currentRecData["location"] = SRLocationManager.sharedInstance.currentLocation();
         
         NSLog(fileName);
         if let outputURL = NSURL.URL(directoryName: kFileDirectory, fileName: fileName) as NSURL! {
@@ -71,6 +82,11 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     }
     
     func stopRecordingVideo() {
+        //delete observer
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+        //clear data
+        routeData.removeAll(keepCapacity: false);
+        
         isRecording = false;
         currentRecorder.stopRecording();
     }
@@ -106,6 +122,16 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         return fileStr.stringByReplacingOccurrencesOfString(" ", withString: "");
     }
     
+    //MARK: - SRLocationManager notification
+    
+    func didUpdatedLocations(locations: AnyObject) {
+        
+        if let crnLoc = locations[locations.count - 1] as? CLLocation {
+            //save location
+            routeData.append(crnLoc.coordinate);
+        }
+    }
+    
     //MARK - SRVideoRecorderDelegateProtocol
     
     func captureVideoRecordingDidStartRecoding(captureRecorder: SRVideoRecorder) {
@@ -123,7 +149,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         //get asset
         var thumbnailImage: UIImage?;
         if let sourceAsset = AVAsset.assetWithURL(url) as? AVAsset {
-            let maxSize: CGSize = CGSizeMake(44, 64);
+            let maxSize: CGSize = CGSizeMake(kThumbnailWidth, kThumbnailHeight);
             //get thumbnail image
             thumbnailImage = sourceAsset.thumbnailWithSize(size: maxSize);
             currentRecData["thumbnailImage"] = UIImageJPEGRepresentation(thumbnailImage, 1.0);
@@ -132,7 +158,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         //add object
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {[unowned self] () -> Void in
-            SRCoreDataManager.sharedInstance.insertObjcet(self.currentRecData);
+            SRCoreDataManager.sharedInstance.insertObjcet(self.currentRecData, routeData: self.routeData);
         })
         
         //

@@ -11,7 +11,7 @@ import AVFoundation
 import CoreLocation
 import CoreMotion
 
-class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManagerDelegate, SRLocationManagerDelegate, SRAccelerometrManagerDelegate {
+class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManagerDelegate, SRAccelerometrManagerDelegate {
 
     @IBOutlet weak var recordBtn: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
@@ -36,10 +36,10 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name: UIApplicationDidEnterBackgroundNotification, object: UIApplication.sharedApplication());
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: UIApplication.sharedApplication());
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdatedLocations:", name: "SRLocationManagerDidUpdateLocations", object: nil)
 
         locationQueue = dispatch_queue_create("con.epam.evnt.SmartRec.locations", DISPATCH_QUEUE_SERIAL);
         
-//        SRLocationManager.sharedInstance.delegate = self;
 //        SRAccelerometrManager.sharedInstance.delegate = self;
         recordManager.delegate = self;
     }
@@ -55,8 +55,7 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: UIApplication.sharedApplication());
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: UIApplication.sharedApplication());
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -178,9 +177,9 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         }
     }
     
-    //MARK: - SRLocationManagerDelegate
+    //MARK: - SRLocationManager notification
     
-    func srlocationManager(manager: SRLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    func didUpdatedLocations(locations: AnyObject) {
         
         if let crnLoc = locations[locations.count - 1] as? CLLocation {
             //use dispatch get main queue

@@ -19,7 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         GMSServices.provideAPIKey(kGoogleMapsAPIKey);
-        SRLocationManager.sharedInstance;
+        SRLocationManager.sharedInstance.startMonitoringLocation();
+
         return true
     }
 

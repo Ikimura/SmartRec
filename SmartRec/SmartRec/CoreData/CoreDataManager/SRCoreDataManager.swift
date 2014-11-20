@@ -25,14 +25,14 @@ public class SRCoreDataManager: NSObject {
         tempMaster.persistentStoreCoordinator = self.storeCoordinator;
         
         return tempMaster;
-        }();
+    }();
     
     internal lazy var mainObjectContext: NSManagedObjectContext = {
         var tempMain = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType);
         tempMain.persistentStoreCoordinator = self.storeCoordinator;
         
         return tempMain;
-        }();
+    }();
     
     private lazy var storeCoordinator: NSPersistentStoreCoordinator = {
         
@@ -55,9 +55,7 @@ public class SRCoreDataManager: NSObject {
         }
         
         return tempStoreCordinator;
-        }();
-    
-//    private var operationQueue: NSOperationQueue?;
+    }();
     
     //MARK: - life cycle
     
@@ -73,7 +71,11 @@ public class SRCoreDataManager: NSObject {
     
     //FIXME: with generic
     
-    internal func insertObjcet(data: [String: AnyObject]) {
+    internal func insertObjcet(data: [String: AnyObject], routeData: [CLLocationCoordinate2D]) {
+        
+        var routeEntity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoute, inManagedObjectContext: mainObjectContext) as SRRoute;
+        
+        routeEntity.data = NSData(bytes: routeData, length: routeData.count * sizeof(CLLocationCoordinate2D));
         
         var entity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectNote, inManagedObjectContext: mainObjectContext) as SRVideoData;
         
@@ -81,6 +83,12 @@ public class SRCoreDataManager: NSObject {
         entity.fileName = data["name"] as String;
         entity.date = data["date"] as NSDate;
         entity.imageThumbnail = data["thumbnailImage"] as NSData;
+        
+        if let vLocation = data["location"] as CLLocation! {
+            entity.location = NSKeyedArchiver.archivedDataWithRootObject(vLocation);
+        }
+        
+        entity.newRelationship = routeEntity;
         
         self.saveContext(mainObjectContext);
     }
