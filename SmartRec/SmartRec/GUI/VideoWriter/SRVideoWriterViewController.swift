@@ -30,28 +30,41 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     private var locationQueue: dispatch_queue_t?;
 
     //MARK: life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         recordManager = SRVideoCaptureManager();
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name: UIApplicationDidEnterBackgroundNotification, object: UIApplication.sharedApplication());
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: UIApplication.sharedApplication());
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdatedLocations:", name: "SRLocationManagerDidUpdateLocations", object: nil)
-
-        locationQueue = dispatch_queue_create("con.epam.evnt.SmartRec.locations", DISPATCH_QUEUE_SERIAL);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdatedLocations:", name: kLocationTitleNotification, object: nil)
         
 //        SRAccelerometrManager.sharedInstance.delegate = self;
         recordManager.delegate = self;
+
+        locationQueue = dispatch_queue_create("con.epam.evnt.SmartRec.locations", DISPATCH_QUEUE_SERIAL);
+
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
         recordManager.startRunnigSession();
+        //FIXME: - fix it
+        recordManager.createNewRoute();
+        
+        //Update location, speed, timer
+        dispatch_async(locationQueue, { () -> Void in
+            SRLocationManager.sharedInstance.startMonitoringLocation();
+        });
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
         recordManager.stopRunnigSession();
+        //stup location updating
+        dispatch_async(locationQueue, { () -> Void in
+            SRLocationManager.sharedInstance.stopMonitoringLocation();
+        });
     }
     
     deinit {
@@ -85,14 +98,16 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     }
     
     private func updateUIByDefault() {
-        dispatch_async(dispatch_get_main_queue(), { [unowned self] () -> Void in
-            self.timeLabel.text = "00:00";
-            self.latitudeLabel.text = "-";
-            self.longitudeLabel.text = "-";
-            self.speedLabel.text = "0 m/s";
-            self.accelerationXLabel.text = "X:";
-            self.accelerationYLabel.text = "Y:";
-            self.accelerationZLabel.text = "Z:";
+        dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+            if var blockSelf = self {
+                blockSelf.timeLabel.text = "00:00";
+                blockSelf.latitudeLabel.text = "-";
+                blockSelf.longitudeLabel.text = "-";
+                blockSelf.speedLabel.text = "0 m/s";
+                blockSelf.accelerationXLabel.text = "X:";
+                blockSelf.accelerationYLabel.text = "Y:";
+                blockSelf.accelerationZLabel.text = "Z:";
+            }
         });
     }
     
@@ -110,10 +125,6 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         recordBtn.enabled = false;
         //Record video
         recordManager.startRecordingVideo();
-        //Update location, speed, timer
-//        dispatch_async(locationQueue, { () -> Void in
-//            SRLocationManager.sharedInstance.startMonitoringLocation();
-//        });
         self.startTimer();
         //start monitoring acceleration
 //        SRAccelerometrManager.sharedInstance.startAccelerationMonitoring(0.2);
@@ -131,10 +142,6 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         recordBtn.enabled = false;
         //
         recordManager.stopRecordingVideo();
-        //
-//        dispatch_async(locationQueue, { () -> Void in
-//            SRLocationManager.sharedInstance.stopMonitoringLocation();
-//        });
         self.stopTimer();
         //stop monitoring acceleration
 //        SRAccelerometrManager.sharedInstance.stopAccelerationMonitoring();
@@ -179,15 +186,21 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     
     //MARK: - SRLocationManager notification
     
-    func didUpdatedLocations(locations: AnyObject) {
+    func didUpdatedLocations(notification: NSNotification) {
+        println("Did recieve location notification");
         
-        if let crnLoc = locations[locations.count - 1] as? CLLocation {
-            //use dispatch get main queue
-            dispatch_async(dispatch_get_main_queue(), { [unowned self] () -> Void in
-                self.latitudeLabel.text = String(format: "%.8f", crnLoc.coordinate.latitude);
-                self.longitudeLabel.text = String(format: "%.8f", crnLoc.coordinate.longitude);
-                self.speedLabel.text = String(format: "%.1f m/s", crnLoc.speed);
-            });
+        if let userInfo: [NSObject: AnyObject?] = notification.userInfo as [NSObject: AnyObject?]! {
+            if let crnLoc = userInfo["location"] as? CLLocation! {
+                println("Did updated current location");
+                
+                dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+                    if var blockSelf = self {
+                        blockSelf.latitudeLabel.text = String(format: "%.8f", crnLoc.coordinate.latitude);
+                        blockSelf.longitudeLabel.text = String(format: "%.8f", crnLoc.coordinate.longitude);
+                        blockSelf.speedLabel.text = String(format: "%.1f m/s", crnLoc.speed);
+                    }
+                });
+            }
         }
     }
     
@@ -200,7 +213,7 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
             SRLocationManager.sharedInstance.stopMonitoringLocation();
         });
         //stop monitoring acceleration
-        SRAccelerometrManager.sharedInstance.stopAccelerationMonitoring();
+//        SRAccelerometrManager.sharedInstance.stopAccelerationMonitoring();
         self.stopTimer();
         
     }
@@ -214,12 +227,13 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     
     func accelerometrManagerDidUpdateData(accelerometerData: CMAccelerometerData!) {
         var acceleration = accelerometerData.acceleration;
-        dispatch_async(dispatch_get_main_queue(), { [unowned self, acceleration] () -> Void in
-            self.accelerationXLabel.text = String(format: "X:%.8f", acceleration.x);
-            self.accelerationYLabel.text = String(format: "Y:%.8f", acceleration.y);
-            self.accelerationZLabel.text = String(format: "Z:%.8f", acceleration.z);
+        dispatch_async(dispatch_get_main_queue(), { [weak self, acceleration] () -> Void in
+            if var blockSelf = self {
+                blockSelf.accelerationXLabel.text = String(format: "X:%.8f", acceleration.x);
+                blockSelf.accelerationYLabel.text = String(format: "Y:%.8f", acceleration.y);
+                blockSelf.accelerationZLabel.text = String(format: "Z:%.8f", acceleration.z);
+            }
         });
-
     }
 
 }

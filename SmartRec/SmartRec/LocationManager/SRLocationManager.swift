@@ -66,7 +66,7 @@ public class SRLocationManager : NSObject, CLLocationManagerDelegate {
         currrentLocation = locations[0] as? CLLocation;
         //post notification
         
-        NSNotificationCenter.defaultCenter().postNotificationName("SRLocationManagerDidUpdateLocations", object:locations);
+        NSNotificationCenter.defaultCenter().postNotificationName(kLocationTitleNotification, object: nil, userInfo: ["location": locations[0] as CLLocation]);
     }
   
     public func locationManagerDidPauseLocationUpdates(manager: CLLocationManager!) {

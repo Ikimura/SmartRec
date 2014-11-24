@@ -43,11 +43,14 @@ public class SRAccelerometrManager: NSObject {
         
         self.setUpManager(withInterval);
         
-        motionManager.startAccelerometerUpdatesToQueue(operationQueue, withHandler: { [unowned self] (accelerometerData: CMAccelerometerData!, error: NSError!) -> Void in
-            self.delegate?.accelerometrManagerDidUpdateData(accelerometerData);
+        motionManager.startAccelerometerUpdatesToQueue(operationQueue, withHandler: { [weak self] (accelerometerData: CMAccelerometerData!, error: NSError!) -> Void in
             
-            if error != nil {
-                NSLog("%@", error);
+            if var blockSelf = self {
+                blockSelf.delegate?.accelerometrManagerDidUpdateData(accelerometerData);
+                
+                if error != nil {
+                    NSLog("%@", error);
+                }
             }
         });
     }

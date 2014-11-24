@@ -15,14 +15,9 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
     private var myCoordinate: CLLocationCoordinate2D!;
     private var targetCoordinate: CLLocationCoordinate2D!;
     
-    private var results: [AnyObject]!;
+    private var results: [AnyObject]?;
     //stubs
-    private var stubPaths: [CLLocationCoordinate2D] = {
-        let temp = [CLLocationCoordinate2D(latitude: 53.902253, longitude: 27.5618629),
-            CLLocationCoordinate2D(latitude: 53.9365, longitude: 27.4829),
-            CLLocationCoordinate2D(latitude: 53.845278, longitude: 27.629167)];
-        return temp;
-    }();
+    private var stubPaths: [CLLocationCoordinate2D]? = [];
     
     private lazy var mapInfoView: SRMarkerInfoView! = {
         if let infoView = UIView.viewFromNibName("SRMarkerInfoView") as? SRMarkerInfoView!  {
@@ -43,32 +38,39 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
         //setup amp
         self.setUpMapView();
         
-        //connect points of route
-        self.makePolylineFor(stubPaths);
-        
-        //show points
-        for var i = 0; i < stubPaths.count; i++ {
-            var date = NSDate();
-            
-            var dic: [String: AnyObject!] = ["date": date.description,
-                "fileName": "video\(i)",
-                "lat": stubPaths[i].latitude,
-                "lng": stubPaths[i].longitude,
-                "photo": ""];
-            
-            var place: SRVideoPlace = SRVideoPlace(dictionary: dic);
-            self.showMarker(place);
-        }
-//
-//        self.getData();
-//
-//        for var i = 0; i < results.count; i++ {
-//            if let entity = results[i] as? SRVideoData {
-//                if let location = NSKeyedUnarchiver.unarchiveObjectWithData(entity.location) as? CLLocation {
-//                    self.showMarker(CLLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude));
-//                }
-//            }
-//        }
+        SRCoreDataManager.sharedInstance.fetchEntities("SRRoute", withCompletion: { [weak self] (result, error) -> Void in
+            if var blockSelf = self {
+                
+                blockSelf.results = result;
+                
+                for (_, route) in enumerate(blockSelf.results!) {
+                    if let routeItem = route as? SRRoute {
+                        var marks = routeItem.videoMarks.allObjects;
+                        
+                        for (_, routeMark) in enumerate(marks) {
+                            if let mark = routeMark as? SRVideoMark {
+                                println(mark.latitude.doubleValue);
+                                println(mark.longitude.doubleValue);
+                                blockSelf.stubPaths!.append(CLLocationCoordinate2D(latitude: mark.latitude.doubleValue, longitude: mark.longitude.doubleValue));
+                                
+                                //show annotations
+                                var dic: [String: AnyObject!] = [
+                                    "id": mark.id,
+                                    "date": mark.videoData.date.description,
+                                    "fileName": mark.videoData.fileName,
+                                    "lat": mark.latitude.doubleValue,
+                                    "lng": mark.longitude.doubleValue,
+                                    "photo": mark.thumnailImage];
+                                //
+                                var place: SRVideoPlace = SRVideoPlace(dictionary: dic);
+                                blockSelf.showMarker(place);
+                            }
+                        }
+                    }
+                }
+                blockSelf.makePolylineFor(blockSelf.stubPaths!);
+            }
+        });        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -79,19 +81,6 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
         super.viewWillDisappear(animated);
     }
     
-    //FIXME: - fix it
-    
-    private func getData() {
-        let model = NSManagedObjectModel.mergedModelFromBundles(nil);
-        
-        var requestTemplate: NSFetchRequest = NSFetchRequest();
-        var videoEntity: NSEntityDescription = model?.entitiesByName["SRVideoData"] as NSEntityDescription!;
-        
-        requestTemplate.entity = videoEntity;
-        
-        results = SRCoreDataManager.sharedInstance.mainObjectContext.executeFetchRequest(requestTemplate, error: nil);
-    }
-
     //MARK: - private interface
     
     private func setUpMapView() {
@@ -106,11 +95,10 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
     }
     
     private func makePolylineFor(paths: [CLLocationCoordinate2D]){
-        
         var gmsPaths: GMSMutablePath = GMSMutablePath();
         
-        for var i = 0; i < paths.count; i++ {
-            gmsPaths.addCoordinate(paths[i]);
+        for (_, path) in enumerate(paths) {
+            gmsPaths.addCoordinate(path);
         }
         
         var polyline: GMSPolyline = GMSPolyline(path: gmsPaths);
@@ -134,7 +122,8 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
     
     func mapView(mapView: GMSMapView, didTapInfoWindowOfMarker marker: GMSMarker) {
         if let routeMarker = marker as? SRRouteMarker {
-            videoFileURL = NSURL.URL(directoryName: kFileDirectory, fileName: routeMarker.routePoint.fileName);
+            videoFileURL = NSURL.URL(directoryName: kFileDirectory, fileName: "\(routeMarker.routePoint.fileName).mov");
+            println(videoFileURL);
             self.performSegueWithIdentifier(kShowVideoDetailSegueIdentifier, sender: self);
         }
     }
@@ -146,8 +135,6 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
             
             mapInfoView.titleLabel.text = routeMarker.routePoint.fileName;
             mapInfoView.subtitleLabel.text = routeMarker.routePoint.date;
-
-//            mapInfoView.subtitleLabel.text = "trolo2";
             
             if let photo = routeMarker.routePoint.photo {
                 mapInfoView.imageView.image = photo;

@@ -17,7 +17,9 @@ let kHighFramRate: Int32 = 30;
 
 let kFileDirectory: NSSearchPathDirectory = .DocumentDirectory;
 
-let kManagedObjectNote: String = "SRVideoData";
+let kManagedObjectVideoMark: String = "SRVideoMark";
+
+let kManagedObjectVideoData: String = "SRVideoData";
 
 let kManagedObjectRoute: String = "SRRoute";
 
@@ -36,3 +38,9 @@ let kGoogleMapsAPIURL: String = "http://maps.googleapis.com/maps/api/directions/
 let kThumbnailHeight: CGFloat = 64;
 
 let kThumbnailWidth: CGFloat = 44;
+
+let kFileNameFormat: String = "h:mm:s.SSa_d_M_y";
+
+let kFileExtension: String = ".mov";
+
+let kLocationTitleNotification: String = "SRLocationManagerDidUpdateLocations";

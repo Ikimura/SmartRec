@@ -61,7 +61,6 @@ public class SRCoreDataManager: NSObject {
     
     public override init() {
         super.init();
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "mocDidSaveNotification:", name: NSManagedObjectContextDidSaveNotification, object: nil);
     }
     
@@ -71,36 +70,95 @@ public class SRCoreDataManager: NSObject {
     
     //FIXME: with generic
     
-    internal func insertObjcet(data: [String: AnyObject], routeData: [CLLocationCoordinate2D]) {
+    private func insertVideoData(data: [String: AnyObject]) -> SRVideoData! {
+        var videoDataEntity = NSEntityDescription.insertNewObjectForEntityForName("SRVideoData", inManagedObjectContext: self.mainObjectContext) as SRVideoData;
+        videoDataEntity.id = data["id"] as String;
+        videoDataEntity.fileName = data["name"] as String;
+        videoDataEntity.date = data["date"] as NSDate;
         
-        var routeEntity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoute, inManagedObjectContext: mainObjectContext) as SRRoute;
+        return videoDataEntity;
+    }
+    
+    private func insertVideoMark(markData: [String: AnyObject]) -> SRVideoMark! {
         
-        routeEntity.data = NSData(bytes: routeData, length: routeData.count * sizeof(CLLocationCoordinate2D));
+        var videoMarkEntity = NSEntityDescription.insertNewObjectForEntityForName("SRVideoMark", inManagedObjectContext: self.mainObjectContext) as SRVideoMark;
         
-        var entity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectNote, inManagedObjectContext: mainObjectContext) as SRVideoData;
+        videoMarkEntity.id = markData["id"] as String;
+        videoMarkEntity.latitude = NSNumber(double: markData["lat"] as Double);
+        videoMarkEntity.longitude = NSNumber(double: markData["lng"] as Double);
+        videoMarkEntity.thumnailImage = markData["image"] as NSData;
         
-        entity.id = data["id"] as String;
-        entity.fileName = data["name"] as String;
-        entity.date = data["date"] as NSDate;
-        entity.imageThumbnail = data["thumbnailImage"] as NSData;
+        return videoMarkEntity;
+    }
+
+    private func checkForExistingEntity(name: String, withId identifier: String, inContext context: NSManagedObjectContext) -> NSManagedObject? {
+        var fetchRequest: NSFetchRequest = NSFetchRequest();
+        let entity: NSEntityDescription = NSEntityDescription.entityForName(name, inManagedObjectContext: context)!;
         
-        if let vLocation = data["location"] as CLLocation! {
-            entity.location = NSKeyedArchiver.archivedDataWithRootObject(vLocation);
+        fetchRequest.entity = entity;
+        
+        let predicate: NSPredicate = NSPredicate(format: "id == %@", identifier)!;
+        fetchRequest.predicate = predicate;
+        
+        var error: NSError?;
+        
+        var res: AnyObject? = context.executeFetchRequest(fetchRequest, error: &error)?.first;
+        
+        if error != nil {
+            println(error);
         }
         
-        entity.newRelationship = routeEntity;
+        return res as? NSManagedObject;
+    }
+    
+    internal func fetchEntities(name: String, withCompletion completion:((result: [AnyObject], error: NSError?) -> Void))  {
+        var fetchRequest: NSFetchRequest = NSFetchRequest();
+        let entity: NSEntityDescription = NSEntityDescription.entityForName(name, inManagedObjectContext: self.mainObjectContext)!;
         
-        self.saveContext(mainObjectContext);
+        fetchRequest.entity = entity;
+        
+        var error: NSError?;
+        
+        var res = self.mainObjectContext.executeFetchRequest(fetchRequest, error: &error);
+        
+        completion(result: res!, error: error?);
+    }
+    
+    internal func insertRoute(data: [String: AnyObject]) {
+        var routeEntity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoute, inManagedObjectContext: self.mainObjectContext) as SRRoute;
+        routeEntity.id = data["id"] as String;
+        routeEntity.startDate = data["date"] as NSDate;
+        
+        self.saveContext(self.mainObjectContext);
+    }
+    
+    internal func addVideoMark(markData: [String: AnyObject], videoData: [String: AnyObject], routeId: String) {
+        
+        mainObjectContext.performBlockAndWait { [weak self] () -> Void in
+            if var blockSelf = self {
+                var route = blockSelf.checkForExistingEntity("SRRoute", withId: routeId, inContext: blockSelf.mainObjectContext) as? SRRoute;
+                let videoData = blockSelf.insertVideoData(videoData);
+                
+                var videoMark = blockSelf.insertVideoMark(markData);
+                videoMark.videoData = videoData;
+                
+                route?.addMark(videoMark);
+                
+                blockSelf.saveContext(blockSelf.mainObjectContext);
+            }
+        };
     }
     
     //MARK: - private methods
     
     private func saveContext(context: NSManagedObjectContext) {
         
-        context.performBlockAndWait { [unowned context] () -> Void in
-            var error: NSError?;
-            if context.save(&error) == false {
-                println(error);
+        context.performBlockAndWait { [weak context] () -> Void in
+            if var blockContext = context {
+                var error: NSError?;
+                if blockContext.save(&error) == false {
+                    println(error);
+                }
             }
         };
     }

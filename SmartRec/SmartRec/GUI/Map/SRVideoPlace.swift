@@ -14,14 +14,14 @@ import CoreLocation
 
 class SRVideoPlace {
   
-//    let videoIdentifier: String;
+    let videoIdentifier: String;
     let fileName: String;
     let date: String;
     let coordinate: CLLocationCoordinate2D;
     var photo: UIImage?;
   
     init(dictionary: [String: AnyObject!]) {
-//        videoIdentifier = dictionary["id"] as String;
+        videoIdentifier = dictionary["id"] as String;
         date = dictionary["date"] as String;
         fileName = dictionary["fileName"] as String;
         
@@ -29,8 +29,8 @@ class SRVideoPlace {
         let lng = dictionary["lng"] as? CLLocationDegrees!;
         coordinate = CLLocationCoordinate2DMake(lat!, lng!)
     
-        if let temp = dictionary["photo"] as? UIImage {
-            photo = temp;
+        if let temp = dictionary["photo"] as? NSData {
+            photo = UIImage(data: temp)?;
         }
     }
 }

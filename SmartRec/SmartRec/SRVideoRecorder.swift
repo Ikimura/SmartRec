@@ -96,21 +96,24 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     //MARK: - internal interface
     
     func startRunning() {
-        dispatch_sync(sessionQueue, { [unowned self] () -> Void in
-            self.setupCaptureSession();
-            self.captureSession.startRunning();
-
+        dispatch_sync(sessionQueue, { [weak self] () -> Void in
+            if var blockSelf = self {
+                blockSelf.setupCaptureSession();
+                blockSelf.captureSession.startRunning();
+            }
         });
-        dispatch_async(delegateCallbackQueue, { [unowned self] () -> Void in
-            self.delegate?.captureVideoRecordingPreviewView(self);
-            //FIXME: fix
-            return;
+        dispatch_async(delegateCallbackQueue, { [weak self] () -> Void in
+            if var blockSelf = self {
+                blockSelf.delegate?.captureVideoRecordingPreviewView(blockSelf);
+            }
         });
     }
     
     func stopRunning() {
-        dispatch_sync(sessionQueue, { [unowned self] () -> Void in
-            self.captureSession.stopRunning();
+        dispatch_sync(sessionQueue, { [weak self] () -> Void in
+            if var blockSelf = self {
+                blockSelf.captureSession.stopRunning();
+            }
         });
     }
     
@@ -134,19 +137,19 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     func captureOutput(captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAtURL fileURL: NSURL!, fromConnections connections: [AnyObject]!) {
         NSLog("didStartRecordingToOutputFileAtURL - enter");
         
-        dispatch_async(delegateCallbackQueue, {[unowned self] () -> Void in
-            self.delegate?.captureVideoRecordingDidStartRecoding(self);
-            //FIXME: fix
-            return;
+        dispatch_async(delegateCallbackQueue, { [weak self] () -> Void in
+            if var blockSelf = self {
+                blockSelf.delegate?.captureVideoRecordingDidStartRecoding(blockSelf);
+            }
         });
     }
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
         NSLog("didFinishRecordingToOutputFileAtURL - enter");
-        dispatch_async(delegateCallbackQueue, {[unowned self] () -> Void in
-            self.delegate?.captureVideoRecordingDidStopRecoding(self, withError: error);
-            //FIXME: fix
-            return;
+        dispatch_async(delegateCallbackQueue, {[weak self] () -> Void in
+            if var blockSelf = self {
+                blockSelf.delegate?.captureVideoRecordingDidStopRecoding(blockSelf, withError: error);
+            }
         });
     }
 }

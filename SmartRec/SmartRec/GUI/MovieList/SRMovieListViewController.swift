@@ -18,8 +18,8 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
         
         var tempFetchedRC: NSFetchedResultsController?;
         
-        let entity: NSEntityDescription = NSEntityDescription.entityForName(kManagedObjectNote, inManagedObjectContext: SRCoreDataManager.sharedInstance.mainObjectContext)!;
-        let sort = NSSortDescriptor(key: "date", ascending: true)
+        let entity: NSEntityDescription = NSEntityDescription.entityForName(kManagedObjectVideoMark, inManagedObjectContext: SRCoreDataManager.sharedInstance.mainObjectContext)!;
+        let sort = NSSortDescriptor(key: "videoData.date", ascending: true)
 
         var fetchRequest: NSFetchRequest = NSFetchRequest();
         fetchRequest.entity = entity;
@@ -105,11 +105,14 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: SRMovieTableViewCell = tableView.dequeueReusableCellWithIdentifier(kMovieListCellIdentifier, forIndexPath: indexPath) as SRMovieTableViewCell;
 
-        if let item = self.fetchedResultController.fetchedObjects![indexPath.row] as? SRVideoData {
-            cell.dateLabel.text = item.fileName;
-            
-            if let image = UIImage(data: item.valueForKey("imageThumbnail") as NSData) {
+        if let item = self.fetchedResultController.fetchedObjects![indexPath.row] as? SRVideoMark {
+            let videoDataItem = item.videoData
+                
+            cell.dateLabel.text = videoDataItem.fileName;
+            if let image = UIImage(data: item.thumnailImage)? {
                 cell.photoImage.image = image;
+            } else {
+                println("No Image");
             }
         }
         
@@ -127,7 +130,7 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == .Delete) {
             //Delete the row from the data source
-            if let deleteItem = self.fetchedResultController.fetchedObjects![indexPath.row] as? SRVideoData {
+            if let deleteItem = self.fetchedResultController.fetchedObjects![indexPath.row] as? SRVideoMark {
                 
                 let managedObjectContext = deleteItem.managedObjectContext!;
                 managedObjectContext.deleteObject(deleteItem)
@@ -148,8 +151,8 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
         var url: NSURL?;
         if let selectedCell = sender as? SRMovieTableViewCell {
             let indexPath: NSIndexPath = tableView.indexPathForCell(selectedCell)!;
-            if let selectedItem = self.fetchedResultController.fetchedObjects![indexPath.row] as? SRVideoData {
-                url = NSURL.URL(directoryName: kFileDirectory, fileName: selectedItem.fileName)!;
+            if let selectedItem = self.fetchedResultController.fetchedObjects![indexPath.row] as? SRVideoMark {
+                url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(selectedItem.videoData.fileName)\(kFileExtension)")!;
             }
         }
         

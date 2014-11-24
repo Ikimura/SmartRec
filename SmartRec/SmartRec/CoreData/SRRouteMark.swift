@@ -1,5 +1,5 @@
 //
-//  SRVideoData.swift
+//  SRRouteMark.swift
 //  SmartRec
 //
 //  Created by Artsiom Karseka on 11/21/14.
@@ -9,10 +9,11 @@
 import Foundation
 import CoreData
 
-class SRVideoData: NSManagedObject {
+class SRRouteMark: NSManagedObject {
 
-    @NSManaged var date: NSDate
-    @NSManaged var fileName: String
     @NSManaged var id: String
+    @NSManaged var latitude: NSNumber
+    @NSManaged var longitude: NSNumber
+    @NSManaged var time: NSDate
 
 }

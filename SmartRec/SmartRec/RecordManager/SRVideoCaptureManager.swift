@@ -19,29 +19,35 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     
     var delegate: SRVideoCaptureManagerDelegate?;
     
-    private lazy var dateFormatter: NSDateFormatter = {
-        
-        var tempDormatter = NSDateFormatter();
-        tempDormatter.timeStyle = .MediumStyle;
-        tempDormatter.dateStyle = .NoStyle;
-        
-        return tempDormatter;
-    }();
-    
     private var currentRecorder: SRVideoRecorder!;
+    
     private var isRecording: Bool!;
     //FIXME: - fix
-    private lazy var currentRecData: [String: AnyObject] = {
+    private lazy var currentMarkData: [String: AnyObject] = {
         var tempArray = [String: AnyObject]();
-        
+
         return tempArray;
     }();
-    //FIXME: - fix
-    private lazy var routeData: [CLLocationCoordinate2D] = {
-        var tempArray = [CLLocationCoordinate2D]();
-        
+    
+    private lazy var currentVideoData: [String: AnyObject] = {
+        var tempArray = [String: AnyObject]();
+
         return tempArray;
-        }();
+    }();
+    
+    private lazy var currentRouteData: [String: AnyObject] = {
+        var tempArray = [String: AnyObject]();
+
+        return tempArray;
+    }();
+    
+    private lazy var locationData: [CLLocationCoordinate2D] = {
+        var tempArray = [CLLocationCoordinate2D]();
+
+        return tempArray;
+    }();
+    
+    //MARK: - life cycle
     
     override init(){
         super.init();
@@ -57,35 +63,65 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         currentRecorder = SRVideoRecorder(duration: duration, frameRate: frameRate, orientation: videoOrientation);
         currentRecorder.setDelegate(self, callbackQueue:dispatch_get_main_queue());
 
+        //get notifications about position changing
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdatedLocations:", name: kLocationTitleNotification, object: nil);
+    }
+    
+    deinit {
+        //delete observer
+        NSNotificationCenter.defaultCenter().removeObserver(self);
     }
     
     //MARK: - internal interface
     
+    //FIXME: - move in route manager that should be contain a logic
+    func createNewRoute() {
+        let identifier = String.randomString();
+        println(identifier);
+        self.currentRouteData["id"] = identifier;
+    }
+    
     func startRecordingVideo() {
-        //get notifications about position changing
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdatedLocations:", name: "SRLocationManagerDidUpdateLocations", object: nil)
         
         let date = NSDate();
-        let fileName = self.makeNewFilePath(date);
+        let fileName = String.stringFromDate(date, withFormat: kFileNameFormat);
+        let filePath = "\(fileName)\(kFileExtension)";
         
-        currentRecData["id"] = String(date.hashValue);
-        currentRecData["name"] = fileName;
-        currentRecData["date"] = date;
-        currentRecData["location"] = SRLocationManager.sharedInstance.currentLocation();
-        
-        NSLog(fileName);
-        if let outputURL = NSURL.URL(directoryName: kFileDirectory, fileName: fileName) as NSURL! {
+        println(filePath);
+        if let outputURL = NSURL.URL(directoryName: kFileDirectory, fileName: filePath) as NSURL! {
+            println(outputURL);
             isRecording = true;
             currentRecorder.url = outputURL;
             currentRecorder.startRecording();
         }
+        
+        self.currentMarkData["id"] = String.randomString();
+        
+        println(SRLocationManager.sharedInstance.currentLocation()?.coordinate.latitude);
+        println(SRLocationManager.sharedInstance.currentLocation()?.coordinate.longitude);
+
+        currentMarkData["lat"] = SRLocationManager.sharedInstance.currentLocation()?.coordinate.latitude;
+        currentMarkData["lng"] = SRLocationManager.sharedInstance.currentLocation()?.coordinate.longitude;
+        
+        self.currentVideoData["id"] = String.randomString();
+        currentVideoData["name"] = fileName;
+        
+        currentVideoData["date"] = date;
+        
+        //FIXME: - move in route manager that should be contain a logic
+        currentRouteData["date"] = date;
+        
+        //add object
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {[weak self] () -> Void in
+            if var blockSelf = self {
+                SRCoreDataManager.sharedInstance.insertRoute(blockSelf.currentRouteData);
+            }
+        });
     }
     
     func stopRecordingVideo() {
-        //delete observer
-        NSNotificationCenter.defaultCenter().removeObserver(self)
         //clear data
-        routeData.removeAll(keepCapacity: false);
+        locationData.removeAll(keepCapacity: false);
         
         isRecording = false;
         currentRecorder.stopRecording();
@@ -97,7 +133,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     
     func stopRunnigSession() {
         if isRecording == true {
-            isRecording = false;
+            isRecording = !isRecording;
             currentRecorder.stopRecording();
         }
         currentRecorder.stopRunning();
@@ -105,30 +141,19 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     
     //MARK: - private methods
     
-    private func makeNewFilePath(parameter: AnyObject!) -> String {
-        //Create temporary URL to record to
-        var fileStr: String = "";
-        
-        switch parameter {
-            
-        case is NSDate: fileStr = dateFormatter.stringFromDate(parameter as NSDate);
-        case is String: fileStr += parameter as String;
-        default:
-            println("Error");
-        }
-        
-        fileStr += ".mov";
-        
-        return fileStr.stringByReplacingOccurrencesOfString(" ", withString: "");
-    }
     
     //MARK: - SRLocationManager notification
     
-    func didUpdatedLocations(locations: AnyObject) {
-        
-        if let crnLoc = locations[locations.count - 1] as? CLLocation {
-            //save location
-            routeData.append(crnLoc.coordinate);
+    func didUpdatedLocations(notification: NSNotification) {
+        println("Did recieve location notification");
+
+        if let userInfo: [NSObject: AnyObject?] = notification.userInfo as [NSObject: AnyObject?]! {
+            if let crnLoc = userInfo["location"] as? CLLocation! {
+                println("Did updated current location");
+                
+                println(crnLoc.coordinate.latitude);
+                self.locationData.append(crnLoc.coordinate);
+            }
         }
     }
     
@@ -145,22 +170,25 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         delegate?.videoCaptureManagerDidEndVideoPartRecording(self);
         
         //get url
-        let url = NSURL.URL(directoryName: kFileDirectory, fileName: currentRecData["name"] as String)!;
+        let fileName = currentVideoData["name"] as String;
+        
+        let url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(fileName)\(kFileExtension)");
         //get asset
         var thumbnailImage: UIImage?;
         if let sourceAsset = AVAsset.assetWithURL(url) as? AVAsset {
             let maxSize: CGSize = CGSizeMake(kThumbnailWidth, kThumbnailHeight);
             //get thumbnail image
             thumbnailImage = sourceAsset.thumbnailWithSize(size: maxSize);
-            currentRecData["thumbnailImage"] = UIImageJPEGRepresentation(thumbnailImage, 1.0);
+            currentMarkData["image"] = UIImageJPEGRepresentation(thumbnailImage, 1.0);
         }
         
         //add object
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {[unowned self] () -> Void in
-            SRCoreDataManager.sharedInstance.insertObjcet(self.currentRecData, routeData: self.routeData);
-        })
-        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] () -> Void in
+            if var blockSelf = self {
+                SRCoreDataManager.sharedInstance.addVideoMark(blockSelf.currentMarkData, videoData: blockSelf.currentVideoData, routeId: blockSelf.currentRouteData["id"] as String!);
+            }
+        });
+    
         //
         if isRecording == true {
             self.startRecordingVideo();
