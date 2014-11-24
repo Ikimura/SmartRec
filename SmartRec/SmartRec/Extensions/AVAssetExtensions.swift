@@ -24,7 +24,7 @@ extension AVAsset {
         
         generator.maximumSize = maxSize;
         
-        //        //Snatch a frame
+        //Snatch a frame
         let frameRef: CGImageRef = generator.copyCGImageAtTime(time, actualTime: nil, error: nil);
         let resImage: UIImage = UIImage(CGImage: frameRef)!;
         

@@ -51,7 +51,6 @@
 		136895711A1A274500D37A14 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A2871A162356004CBD9B /* libz.dylib */; };
 		136895721A1A274E00D37A14 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C1F5BA19F63BAF00149649 /* OpenGLES.framework */; };
 		136895731A1A275400D37A14 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 137E3B9B19F543B60094C5A1 /* QuartzCore.framework */; };
-		136895811A1A3BF600D37A14 /* SRLocationSingletonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136895801A1A3BF600D37A14 /* SRLocationSingletonTests.swift */; };
 		137E3B6919F52BF00094C5A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E3B6819F52BF00094C5A1 /* AppDelegate.swift */; };
 		137E3B6E19F52BF00094C5A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 137E3B6C19F52BF00094C5A1 /* Main.storyboard */; };
 		137E3B7019F52BF00094C5A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 137E3B6F19F52BF00094C5A1 /* Images.xcassets */; };
@@ -70,11 +69,16 @@
 		1399996D1A1B44F10059726F /* SRCoreDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399996C1A1B44F10059726F /* SRCoreDataTestCase.swift */; };
 		1399996E1A1B472A0059726F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130A5B8C19F7CECB004515A7 /* Constants.swift */; };
 		139999701A1B485D0059726F /* SRManagedObjectsTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399996F1A1B485D0059726F /* SRManagedObjectsTestCase.swift */; };
+		13A4FDD51A237B0B00201DD5 /* SRSingletonLocationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A4FDD41A237B0B00201DD5 /* SRSingletonLocationSpec.swift */; };
+		13A4FDDF1A237BD800201DD5 /* SRCoreDataSingletonSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A4FDDE1A237BD800201DD5 /* SRCoreDataSingletonSpec.swift */; };
+		13A4FDE21A237D0300201DD5 /* SRUIViewExtensionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A4FDE11A237D0300201DD5 /* SRUIViewExtensionSpec.swift */; };
+		13A4FDE31A237F0D00201DD5 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EBF1ED1A1DC7A900029072 /* UIViewExtensions.swift */; };
+		13B660E81A236D0100EDA68A /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B660E11A236CD700EDA68A /* Quick.framework */; };
+		13B660E91A236D0600EDA68A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B660D21A236CCD00EDA68A /* Nimble.framework */; };
+		13B660EB1A236D7600EDA68A /* SRSingletonAccelerometerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B660EA1A236D7600EDA68A /* SRSingletonAccelerometerSpec.swift */; };
 		13C1F5BD19F6466C00149649 /* SRVideoRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C1F5BC19F6466C00149649 /* SRVideoRecorder.swift */; };
-		13CA8BD41A14A0B600E8C6D8 /* SRAccelerometrSingletonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CA8BD31A14A0B600E8C6D8 /* SRAccelerometrSingletonTests.swift */; };
 		13CA8BD61A14A3BA00E8C6D8 /* SRCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CA8BD51A14A3BA00E8C6D8 /* SRCoreDataManager.swift */; };
-		13CA8BD91A14A51C00E8C6D8 /* SRCoreDataSingletonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CA8BD81A14A51C00E8C6D8 /* SRCoreDataSingletonTests.swift */; };
-		13D7456C1A139C620089BA09 /* SRExtensionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D7456B1A139C620089BA09 /* SRExtensionsTest.swift */; };
+		13D7456C1A139C620089BA09 /* SRPerformaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D7456B1A139C620089BA09 /* SRPerformaceTests.swift */; };
 		13D786891A1358E700A4DD3C /* SmartRec.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13D786871A1358E700A4DD3C /* SmartRec.xcdatamodeld */; };
 		13E5AE7719FF7BF900ABFAD8 /* NSURLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E5AE7619FF7BF900ABFAD8 /* NSURLExtensions.swift */; };
 		13EBF1EE1A1DC7A900029072 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EBF1ED1A1DC7A900029072 /* UIViewExtensions.swift */; };
@@ -89,6 +93,62 @@
 			proxyType = 1;
 			remoteGlobalIDString = 137E3B6219F52BF00094C5A1;
 			remoteInfo = SmartRec;
+		};
+		13B660D11A236CCD00EDA68A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 13B660CA1A236CCD00EDA68A /* Nimble.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1F1A74291940169200FFFC47;
+			remoteInfo = "Nimble-iOS";
+		};
+		13B660D31A236CCD00EDA68A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 13B660CA1A236CCD00EDA68A /* Nimble.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1F1A74341940169200FFFC47;
+			remoteInfo = "Nimble-iOSTests";
+		};
+		13B660D51A236CCD00EDA68A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 13B660CA1A236CCD00EDA68A /* Nimble.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1F925EAD195C0D6300ED456B;
+			remoteInfo = "Nimble-OSX";
+		};
+		13B660D71A236CCD00EDA68A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 13B660CA1A236CCD00EDA68A /* Nimble.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1F925EB7195C0D6300ED456B;
+			remoteInfo = "Nimble-OSXTests";
+		};
+		13B660E01A236CD700EDA68A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 13B660D91A236CD700EDA68A /* Quick.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DAEB6B8E1943873100289F44;
+			remoteInfo = "Quick-OSX";
+		};
+		13B660E21A236CD700EDA68A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 13B660D91A236CD700EDA68A /* Quick.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DAEB6B991943873100289F44;
+			remoteInfo = "Quick-OSXTests";
+		};
+		13B660E41A236CD700EDA68A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 13B660D91A236CD700EDA68A /* Quick.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5A5D117C19473F2100F6D13D;
+			remoteInfo = "Quick-iOS";
+		};
+		13B660E61A236CD700EDA68A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 13B660D91A236CD700EDA68A /* Quick.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5A5D118619473F2100F6D13D;
+			remoteInfo = "Quick-iOSTests";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -122,7 +182,6 @@
 		1359A0DC1A00E88A00FC8994 /* SRLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRLocationManager.swift; sourceTree = "<group>"; };
 		1359A0DE1A0123E100FC8994 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		136895671A1A1E8D00D37A14 /* SmartRec 1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SmartRec 1.1.xcdatamodel"; sourceTree = "<group>"; };
-		136895801A1A3BF600D37A14 /* SRLocationSingletonTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRLocationSingletonTests.swift; sourceTree = "<group>"; };
 		137E3B6319F52BF00094C5A1 /* SmartRec.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartRec.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		137E3B6719F52BF00094C5A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		137E3B6819F52BF00094C5A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -144,12 +203,16 @@
 		1394B1021A076514009D0780 /* SRAccelerometrManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAccelerometrManager.swift; sourceTree = "<group>"; };
 		1399996C1A1B44F10059726F /* SRCoreDataTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataTestCase.swift; sourceTree = "<group>"; };
 		1399996F1A1B485D0059726F /* SRManagedObjectsTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRManagedObjectsTestCase.swift; sourceTree = "<group>"; };
+		13A4FDD41A237B0B00201DD5 /* SRSingletonLocationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSingletonLocationSpec.swift; sourceTree = "<group>"; };
+		13A4FDDE1A237BD800201DD5 /* SRCoreDataSingletonSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataSingletonSpec.swift; sourceTree = "<group>"; };
+		13A4FDE11A237D0300201DD5 /* SRUIViewExtensionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRUIViewExtensionSpec.swift; sourceTree = "<group>"; };
+		13B660CA1A236CCD00EDA68A /* Nimble.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nimble.xcodeproj; path = ../../Vendor/Nimble/Nimble.xcodeproj; sourceTree = "<group>"; };
+		13B660D91A236CD700EDA68A /* Quick.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Quick.xcodeproj; path = ../../Vendor/Quick/Quick.xcodeproj; sourceTree = "<group>"; };
+		13B660EA1A236D7600EDA68A /* SRSingletonAccelerometerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSingletonAccelerometerSpec.swift; sourceTree = "<group>"; };
 		13C1F5BA19F63BAF00149649 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		13C1F5BC19F6466C00149649 /* SRVideoRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRVideoRecorder.swift; path = ../SRVideoRecorder.swift; sourceTree = "<group>"; };
-		13CA8BD31A14A0B600E8C6D8 /* SRAccelerometrSingletonTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAccelerometrSingletonTests.swift; sourceTree = "<group>"; };
 		13CA8BD51A14A3BA00E8C6D8 /* SRCoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataManager.swift; sourceTree = "<group>"; };
-		13CA8BD81A14A51C00E8C6D8 /* SRCoreDataSingletonTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataSingletonTests.swift; sourceTree = "<group>"; };
-		13D7456B1A139C620089BA09 /* SRExtensionsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRExtensionsTest.swift; sourceTree = "<group>"; };
+		13D7456B1A139C620089BA09 /* SRPerformaceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPerformaceTests.swift; sourceTree = "<group>"; };
 		13D786881A1358E700A4DD3C /* SmartRec.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SmartRec.xcdatamodel; sourceTree = "<group>"; };
 		13E5AE7619FF7BF900ABFAD8 /* NSURLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLExtensions.swift; sourceTree = "<group>"; };
 		13EBF1ED1A1DC7A900029072 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
@@ -188,6 +251,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13B660E91A236D0600EDA68A /* Nimble.framework in Frameworks */,
+				13B660E81A236D0100EDA68A /* Quick.framework in Frameworks */,
 				1368956B1A1A272100D37A14 /* CoreLocation.framework in Frameworks */,
 				136895711A1A274500D37A14 /* libz.dylib in Frameworks */,
 				136895691A1A270900D37A14 /* SystemConfiguration.framework in Frameworks */,
@@ -312,9 +377,12 @@
 		137E3B7B19F52BF10094C5A1 /* SmartRecTests */ = {
 			isa = PBXGroup;
 			children = (
-				1399996B1A1B44410059726F /* CoreData */,
 				13CA8BD71A14A4F400E8C6D8 /* Singletons */,
-				13D7456B1A139C620089BA09 /* SRExtensionsTest.swift */,
+				1399996B1A1B44410059726F /* CoreData */,
+				13A4FDE01A237CBE00201DD5 /* Extensions */,
+				13B660D91A236CD700EDA68A /* Quick.xcodeproj */,
+				13B660CA1A236CCD00EDA68A /* Nimble.xcodeproj */,
+				13D7456B1A139C620089BA09 /* SRPerformaceTests.swift */,
 				137E3B7C19F52BF10094C5A1 /* Supporting Files */,
 			);
 			path = SmartRecTests;
@@ -407,6 +475,36 @@
 			name = CoreData;
 			sourceTree = "<group>";
 		};
+		13A4FDE01A237CBE00201DD5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				13A4FDE11A237D0300201DD5 /* SRUIViewExtensionSpec.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		13B660CB1A236CCD00EDA68A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				13B660D21A236CCD00EDA68A /* Nimble.framework */,
+				13B660D41A236CCD00EDA68A /* NimbleTests.xctest */,
+				13B660D61A236CCD00EDA68A /* Nimble.framework */,
+				13B660D81A236CCD00EDA68A /* NimbleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		13B660DA1A236CD700EDA68A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				13B660E11A236CD700EDA68A /* Quick.framework */,
+				13B660E31A236CD700EDA68A /* Quick-OSXTests.xctest */,
+				13B660E51A236CD700EDA68A /* Quick.framework */,
+				13B660E71A236CD700EDA68A /* Quick-iOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		13CA8BD01A14973400E8C6D8 /* CoreDataManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -418,9 +516,9 @@
 		13CA8BD71A14A4F400E8C6D8 /* Singletons */ = {
 			isa = PBXGroup;
 			children = (
-				136895801A1A3BF600D37A14 /* SRLocationSingletonTests.swift */,
-				13CA8BD31A14A0B600E8C6D8 /* SRAccelerometrSingletonTests.swift */,
-				13CA8BD81A14A51C00E8C6D8 /* SRCoreDataSingletonTests.swift */,
+				13B660EA1A236D7600EDA68A /* SRSingletonAccelerometerSpec.swift */,
+				13A4FDD41A237B0B00201DD5 /* SRSingletonLocationSpec.swift */,
+				13A4FDDE1A237BD800201DD5 /* SRCoreDataSingletonSpec.swift */,
 			);
 			name = Singletons;
 			sourceTree = "<group>";
@@ -558,6 +656,16 @@
 			mainGroup = 137E3B5A19F52BF00094C5A1;
 			productRefGroup = 137E3B6419F52BF00094C5A1 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 13B660CB1A236CCD00EDA68A /* Products */;
+					ProjectRef = 13B660CA1A236CCD00EDA68A /* Nimble.xcodeproj */;
+				},
+				{
+					ProductGroup = 13B660DA1A236CD700EDA68A /* Products */;
+					ProjectRef = 13B660D91A236CD700EDA68A /* Quick.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				137E3B6219F52BF00094C5A1 /* SmartRec */,
@@ -565,6 +673,65 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		13B660D21A236CCD00EDA68A /* Nimble.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Nimble.framework;
+			remoteRef = 13B660D11A236CCD00EDA68A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		13B660D41A236CCD00EDA68A /* NimbleTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = NimbleTests.xctest;
+			remoteRef = 13B660D31A236CCD00EDA68A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		13B660D61A236CCD00EDA68A /* Nimble.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Nimble.framework;
+			remoteRef = 13B660D51A236CCD00EDA68A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		13B660D81A236CCD00EDA68A /* NimbleTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = NimbleTests.xctest;
+			remoteRef = 13B660D71A236CCD00EDA68A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		13B660E11A236CD700EDA68A /* Quick.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Quick.framework;
+			remoteRef = 13B660E01A236CD700EDA68A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		13B660E31A236CD700EDA68A /* Quick-OSXTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Quick-OSXTests.xctest";
+			remoteRef = 13B660E21A236CD700EDA68A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		13B660E51A236CD700EDA68A /* Quick.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Quick.framework;
+			remoteRef = 13B660E41A236CD700EDA68A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		13B660E71A236CD700EDA68A /* Quick-iOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Quick-iOSTests.xctest";
+			remoteRef = 13B660E61A236CD700EDA68A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		137E3B6119F52BF00094C5A1 /* Resources */ = {
@@ -660,17 +827,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13A4FDE31A237F0D00201DD5 /* UIViewExtensions.swift in Sources */,
 				1313C3921A1F65070079D288 /* SRRoute.swift in Sources */,
 				1318DEC51A1F574B007B0F54 /* StringExtensions.swift in Sources */,
+				13A4FDE21A237D0300201DD5 /* SRUIViewExtensionSpec.swift in Sources */,
 				139999701A1B485D0059726F /* SRManagedObjectsTestCase.swift in Sources */,
 				1399996E1A1B472A0059726F /* Constants.swift in Sources */,
-				13D7456C1A139C620089BA09 /* SRExtensionsTest.swift in Sources */,
+				13D7456C1A139C620089BA09 /* SRPerformaceTests.swift in Sources */,
 				1399996D1A1B44F10059726F /* SRCoreDataTestCase.swift in Sources */,
-				136895811A1A3BF600D37A14 /* SRLocationSingletonTests.swift in Sources */,
+				13A4FDD51A237B0B00201DD5 /* SRSingletonLocationSpec.swift in Sources */,
 				1313C38F1A1F65070079D288 /* SRVideoData.swift in Sources */,
-				13CA8BD41A14A0B600E8C6D8 /* SRAccelerometrSingletonTests.swift in Sources */,
-				13CA8BD91A14A51C00E8C6D8 /* SRCoreDataSingletonTests.swift in Sources */,
 				1313C38C1A1F65060079D288 /* SRVideoMark.swift in Sources */,
+				13A4FDDF1A237BD800201DD5 /* SRCoreDataSingletonSpec.swift in Sources */,
+				13B660EB1A236D7600EDA68A /* SRSingletonAccelerometerSpec.swift in Sources */,
 				1313C3951A1F65080079D288 /* SRRouteMark.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

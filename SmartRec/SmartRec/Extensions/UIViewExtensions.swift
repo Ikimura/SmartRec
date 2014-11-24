@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 con.epam.evnt. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension UIView {
     class func viewFromNibName(name: String) -> UIView? {

@@ -8,7 +8,7 @@
 import XCTest
 import SmartRec
 
-class SRExtensionsTest: XCTestCase {
+class SRPerformaceTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
