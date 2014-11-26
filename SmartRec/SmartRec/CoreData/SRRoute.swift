@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class SRRoute: NSManagedObject {
+public class SRRoute: NSManagedObject {
 
     @NSManaged var data: NSData
     @NSManaged var id: String

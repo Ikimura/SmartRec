@@ -31,6 +31,8 @@ let kShowVideoDetailSegueIdentifier: String = "showVideoDetailItentifier";
 
 let kStorePathComponent: String = "SmartRec.sqlite";
 
+let kTestStorePathComponent: String = "SmartRecTest.sqlite";
+
 let kGoogleMapsAPIKey: String = "AIzaSyDkaCDkatCMTXFFbC_cdRnkBC2KsGL7C3Q";
 
 let kGoogleMapsAPIURL: String = "http://maps.googleapis.com/maps/api/directions/json";

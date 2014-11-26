@@ -19,24 +19,25 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     
     var delegate: SRVideoCaptureManagerDelegate?;
     
+    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
     private var currentRecorder: SRVideoRecorder!;
-    
     private var isRecording: Bool!;
+    private var routeId: String?;
     //FIXME: - fix
-    private lazy var currentMarkData: [String: AnyObject] = {
-        var tempArray = [String: AnyObject]();
+    private lazy var currentMarkData: [String: Any] = {
+        var tempArray = [String: Any]();
 
         return tempArray;
     }();
     
-    private lazy var currentVideoData: [String: AnyObject] = {
-        var tempArray = [String: AnyObject]();
+    private lazy var currentVideoData: [String: Any] = {
+        var tempArray = [String: Any]();
 
         return tempArray;
     }();
     
-    private lazy var currentRouteData: [String: AnyObject] = {
-        var tempArray = [String: AnyObject]();
+    private lazy var currentRouteData: [String: Any] = {
+        var tempArray = [String: Any]();
 
         return tempArray;
     }();
@@ -112,9 +113,12 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         currentRouteData["date"] = date;
         
         //add object
+        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {[weak self] () -> Void in
             if var blockSelf = self {
-                SRCoreDataManager.sharedInstance.insertRoute(blockSelf.currentRouteData);
+                let route = (blockSelf.appDelegate.coreDataManager.insertEntity(kManagedObjectRoute, dectionaryData: blockSelf.currentRouteData) as? SRRoute);
+                
+                blockSelf.routeId = route?.id;
             }
         });
     }
@@ -181,11 +185,17 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
             thumbnailImage = sourceAsset.thumbnailWithSize(size: maxSize);
             currentMarkData["image"] = UIImageJPEGRepresentation(thumbnailImage, 1.0);
         }
-        
+        //
         //add object
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] () -> Void in
             if var blockSelf = self {
-                SRCoreDataManager.sharedInstance.addVideoMark(blockSelf.currentMarkData, videoData: blockSelf.currentVideoData, routeId: blockSelf.currentRouteData["id"] as String!);
+                //insert SRVideoMark
+                if let videoMark = blockSelf.appDelegate.coreDataManager.insertEntity(kManagedObjectVideoMark, dectionaryData: blockSelf.currentMarkData) as? SRVideoMark {
+                    //link SRVideoData with SRVodeoMark
+                    blockSelf.appDelegate.coreDataManager.addRelationBetweenVideoData(blockSelf.currentVideoData, andRouteMark: videoMark.id);
+                    //link SRVideoMark with SRRoute
+                    blockSelf.appDelegate.coreDataManager.addRelationBetweenVideoMark(videoMark, andRute: blockSelf.routeId!);
+                }
             }
         });
     

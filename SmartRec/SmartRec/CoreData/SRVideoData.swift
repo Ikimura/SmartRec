@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class SRVideoData: NSManagedObject {
+public class SRVideoData: NSManagedObject {
 
     @NSManaged var date: NSDate
     @NSManaged var fileName: String

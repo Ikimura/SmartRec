@@ -38,13 +38,17 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
         //setup amp
         self.setUpMapView();
         
-        SRCoreDataManager.sharedInstance.fetchEntities("SRRoute", withCompletion: { [weak self] (result, error) -> Void in
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+
+        appDelegate.coreDataManager.fetchEntities(kManagedObjectRoute, withCompletion: { [weak self] (result, error) -> Void in
             if var blockSelf = self {
                 
                 blockSelf.results = result;
                 
                 for (_, route) in enumerate(blockSelf.results!) {
                     if let routeItem = route as? SRRoute {
+                        println(routeItem.id);
+                        
                         var marks = routeItem.videoMarks.allObjects;
                         
                         for (_, routeMark) in enumerate(marks) {

@@ -11,13 +11,9 @@ import Foundation
 extension NSString {
     
     class func randomString() -> String! {
+        let uuid = NSUUID().UUIDString;
         
-        var s = NSMutableData(length: 16);
-        let result = SecRandomCopyBytes(kSecRandomDefault, UInt(s!.length), UnsafeMutablePointer<UInt8>(s!.mutableBytes))
-        
-        let base64str = s!.base64EncodedStringWithOptions(nil);
-        
-        return base64str;
+        return uuid;
     }
     
     class func stringFromDate(date: NSDate, withFormat format: String) -> String! {

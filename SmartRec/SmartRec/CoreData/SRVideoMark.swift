@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class SRVideoMark: NSManagedObject {
+public class SRVideoMark: NSManagedObject {
 
     @NSManaged var id: String
     @NSManaged var latitude: NSNumber

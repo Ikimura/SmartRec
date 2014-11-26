@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class SRRouteMark: NSManagedObject {
+public class SRRouteMark: NSManagedObject {
 
     @NSManaged var id: String
     @NSManaged var latitude: NSNumber

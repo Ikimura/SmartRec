@@ -14,9 +14,13 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    var coreDataManager: SRCoreDataManager!;
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        coreDataManager = SRCoreDataManager(storePath: kStorePathComponent);
         
         GMSServices.provideAPIKey(kGoogleMapsAPIKey);
         SRLocationManager.sharedInstance;

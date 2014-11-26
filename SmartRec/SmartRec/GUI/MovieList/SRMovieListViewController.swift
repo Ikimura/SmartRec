@@ -18,14 +18,16 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
         
         var tempFetchedRC: NSFetchedResultsController?;
         
-        let entity: NSEntityDescription = NSEntityDescription.entityForName(kManagedObjectVideoMark, inManagedObjectContext: SRCoreDataManager.sharedInstance.mainObjectContext)!;
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
+        
+        let entity: NSEntityDescription = NSEntityDescription.entityForName(kManagedObjectVideoMark, inManagedObjectContext: appDelegate.coreDataManager.mainObjectContext)!;
         let sort = NSSortDescriptor(key: "videoData.date", ascending: true)
 
         var fetchRequest: NSFetchRequest = NSFetchRequest();
         fetchRequest.entity = entity;
         fetchRequest.sortDescriptors = [sort];
         
-        tempFetchedRC = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: SRCoreDataManager.sharedInstance.mainObjectContext, sectionNameKeyPath: nil, cacheName: nil);
+        tempFetchedRC = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: appDelegate.coreDataManager.mainObjectContext, sectionNameKeyPath: nil, cacheName: nil);
         tempFetchedRC?.delegate = self;
         
         return tempFetchedRC!;

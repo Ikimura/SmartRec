@@ -11,12 +11,7 @@ import CoreData
 
 public class SRCoreDataManager: NSObject {
     
-    public class var sharedInstance : SRCoreDataManager {
-        struct Static {
-            static let instance : SRCoreDataManager = SRCoreDataManager();
-        }
-        return Static.instance;
-    }
+    private var storePath: String!;
     
     //MARK: - lazy properties
     
@@ -27,7 +22,7 @@ public class SRCoreDataManager: NSObject {
         return tempMaster;
     }();
     
-    internal lazy var mainObjectContext: NSManagedObjectContext = {
+    public lazy var mainObjectContext: NSManagedObjectContext = {
         var tempMain = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType);
         tempMain.persistentStoreCoordinator = self.storeCoordinator;
         
@@ -38,6 +33,7 @@ public class SRCoreDataManager: NSObject {
         
         let managedObjectModel = NSManagedObjectModel.mergedModelFromBundles(nil);
         var tempStoreCordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel!);
+        //for migration
         let options: [String: Bool] = [
             NSMigratePersistentStoresAutomaticallyOption : true,
             NSInferMappingModelAutomaticallyOption : true
@@ -45,7 +41,7 @@ public class SRCoreDataManager: NSObject {
         
         let tempURLS = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask);
         
-        let storeURL = (tempURLS[tempURLS.count - 1]).URLByAppendingPathComponent(kStorePathComponent);
+        let storeURL = (tempURLS[tempURLS.count - 1]).URLByAppendingPathComponent(self.storePath);
         
         var error: NSError?;
         tempStoreCordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options, error: &error);
@@ -59,38 +55,100 @@ public class SRCoreDataManager: NSObject {
     
     //MARK: - life cycle
     
-    public override init() {
+    public init(storePath: String) {
         super.init();
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "mocDidSaveNotification:", name: NSManagedObjectContextDidSaveNotification, object: nil);
+        
+        self.storePath = storePath;
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "mocDidSaveNotification:", name: NSManagedObjectContextDidSaveNotification, object: self.mainObjectContext);
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NSManagedObjectContextDidSaveNotification, object: nil);
-    }
-    
-    //FIXME: with generic
-    
-    private func insertVideoData(data: [String: AnyObject]) -> SRVideoData! {
-        var videoDataEntity = NSEntityDescription.insertNewObjectForEntityForName("SRVideoData", inManagedObjectContext: self.mainObjectContext) as SRVideoData;
-        videoDataEntity.id = data["id"] as String;
-        videoDataEntity.fileName = data["name"] as String;
-        videoDataEntity.date = data["date"] as NSDate;
-        
-        return videoDataEntity;
-    }
-    
-    private func insertVideoMark(markData: [String: AnyObject]) -> SRVideoMark! {
-        
-        var videoMarkEntity = NSEntityDescription.insertNewObjectForEntityForName("SRVideoMark", inManagedObjectContext: self.mainObjectContext) as SRVideoMark;
-        
-        videoMarkEntity.id = markData["id"] as String;
-        videoMarkEntity.latitude = NSNumber(double: markData["lat"] as Double);
-        videoMarkEntity.longitude = NSNumber(double: markData["lng"] as Double);
-        videoMarkEntity.thumnailImage = markData["image"] as NSData;
-        
-        return videoMarkEntity;
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NSManagedObjectContextDidSaveNotification, object: self.mainObjectContext);
     }
 
+    //MARK: - new public API
+    
+    public func insertEntity(entityName: String, dectionaryData: [String: Any]) -> NSManagedObject? {
+        var entity: NSManagedObject? = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: self.masterObjectContext) as? NSManagedObject;
+        
+        switch entityName {
+        case kManagedObjectRoute:
+            println("route")
+            if var route = entity as? SRRoute {
+                route.id = dectionaryData["id"] as String;
+                route.startDate = dectionaryData["date"] as NSDate;
+            };
+        case kManagedObjectVideoMark:
+            println("videomark");
+            if var mark = entity as? SRVideoMark {
+                mark.id = dectionaryData["id"] as String;
+                mark.latitude = NSNumber(double: dectionaryData["lat"] as Double);
+                mark.longitude = NSNumber(double: dectionaryData["lng"] as Double);
+                if let imageData = dectionaryData["image"] as? NSData {
+                    mark.thumnailImage = imageData;
+                }
+            }
+        case kManagedObjectVideoData:
+            println("video data");
+            if var data = entity as? SRVideoData {
+                data.id = dectionaryData["id"] as String;
+                data.fileName = dectionaryData["name"] as String;
+                data.date = dectionaryData["date"] as NSDate;
+            }
+        default: println("default");
+            
+        }
+        
+        self.saveContext(self.mainObjectContext);
+        
+        return entity;
+    }
+    
+    public func addRelationBetweenVideoMark(videoMark: SRVideoMark, andRute identifier: String) {
+        
+        mainObjectContext.performBlock { [weak self] () -> Void in
+            if var blockSelf = self {
+                if var route = blockSelf.checkForExistingEntity(kManagedObjectRoute, withId: identifier, inContext: blockSelf.masterObjectContext) as? SRRoute {
+                    route.addMark(videoMark);
+                    
+                    blockSelf.saveContext(blockSelf.masterObjectContext);
+                }
+            }
+        };
+    }
+
+    public func addRelationBetweenVideoData(videoData: [String: Any], andRouteMark identifier: String) {
+        
+        mainObjectContext.performBlock { [weak self] () -> Void in
+            if var blockSelf = self {
+                if var videoMark = blockSelf.checkForExistingEntity(kManagedObjectVideoMark, withId: identifier, inContext: blockSelf.masterObjectContext) as? SRVideoMark {
+                    if let videoData = blockSelf.insertEntity(kManagedObjectVideoData, dectionaryData: videoData) as? SRVideoData {
+                        videoMark.videoData = videoData;
+                        
+                        blockSelf.saveContext(blockSelf.masterObjectContext);
+                    }
+                }
+            }
+        };
+    }
+    
+    //MARK: - internal API
+
+    internal func fetchEntities(name: String, withCompletion completion:((result: [AnyObject], error: NSError?) -> Void))  {
+        var fetchRequest: NSFetchRequest = NSFetchRequest();
+        let entity: NSEntityDescription = NSEntityDescription.entityForName(name, inManagedObjectContext: self.mainObjectContext)!;
+        
+        fetchRequest.entity = entity;
+        
+        var error: NSError?;
+        
+        var res = self.mainObjectContext.executeFetchRequest(fetchRequest, error: &error);
+        
+        completion(result: res!, error: error?);
+    }
+    
+    //MARK: - private methods
+    
     private func checkForExistingEntity(name: String, withId identifier: String, inContext context: NSManagedObjectContext) -> NSManagedObject? {
         var fetchRequest: NSFetchRequest = NSFetchRequest();
         let entity: NSEntityDescription = NSEntityDescription.entityForName(name, inManagedObjectContext: context)!;
@@ -111,46 +169,6 @@ public class SRCoreDataManager: NSObject {
         return res as? NSManagedObject;
     }
     
-    internal func fetchEntities(name: String, withCompletion completion:((result: [AnyObject], error: NSError?) -> Void))  {
-        var fetchRequest: NSFetchRequest = NSFetchRequest();
-        let entity: NSEntityDescription = NSEntityDescription.entityForName(name, inManagedObjectContext: self.mainObjectContext)!;
-        
-        fetchRequest.entity = entity;
-        
-        var error: NSError?;
-        
-        var res = self.mainObjectContext.executeFetchRequest(fetchRequest, error: &error);
-        
-        completion(result: res!, error: error?);
-    }
-    
-    internal func insertRoute(data: [String: AnyObject]) {
-        var routeEntity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoute, inManagedObjectContext: self.mainObjectContext) as SRRoute;
-        routeEntity.id = data["id"] as String;
-        routeEntity.startDate = data["date"] as NSDate;
-        
-        self.saveContext(self.mainObjectContext);
-    }
-    
-    internal func addVideoMark(markData: [String: AnyObject], videoData: [String: AnyObject], routeId: String) {
-        
-        mainObjectContext.performBlockAndWait { [weak self] () -> Void in
-            if var blockSelf = self {
-                var route = blockSelf.checkForExistingEntity("SRRoute", withId: routeId, inContext: blockSelf.mainObjectContext) as? SRRoute;
-                let videoData = blockSelf.insertVideoData(videoData);
-                
-                var videoMark = blockSelf.insertVideoMark(markData);
-                videoMark.videoData = videoData;
-                
-                route?.addMark(videoMark);
-                
-                blockSelf.saveContext(blockSelf.mainObjectContext);
-            }
-        };
-    }
-    
-    //MARK: - private methods
-    
     private func saveContext(context: NSManagedObjectContext) {
         
         context.performBlockAndWait { [weak context] () -> Void in
@@ -169,7 +187,9 @@ public class SRCoreDataManager: NSObject {
         if let savedContext = notification.object as? NSManagedObjectContext {
         // ignore change notifications for the main MOC
             if (masterObjectContext !== savedContext){
-                saveContext(masterObjectContext);
+                self.saveContext(masterObjectContext);
+            } else {
+                self.saveContext(mainObjectContext);
             }
         }
     }
