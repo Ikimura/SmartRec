@@ -63,13 +63,13 @@ public class SRCoreDataManager: NSObject {
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NSManagedObjectContextDidSaveNotification, object: self.mainObjectContext);
+        NSNotificationCenter.defaultCenter().removeObserver(self);
     }
 
     //MARK: - new public API
     
     public func insertEntity(entityName: String, dectionaryData: [String: Any]) -> NSManagedObject? {
-        var entity: NSManagedObject? = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: self.masterObjectContext) as? NSManagedObject;
+        var entity: NSManagedObject? = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: self.mainObjectContext) as? NSManagedObject;
         
         switch entityName {
         case kManagedObjectRoute:
@@ -100,18 +100,19 @@ public class SRCoreDataManager: NSObject {
         }
         
         self.saveContext(self.mainObjectContext);
-        
+
         return entity;
     }
     
     public func addRelationBetweenVideoMark(videoMark: SRVideoMark, andRute identifier: String) {
         
-        mainObjectContext.performBlock { [weak self] () -> Void in
+        mainObjectContext.performBlockAndWait { [weak self] () -> Void in
             if var blockSelf = self {
-                if var route = blockSelf.checkForExistingEntity(kManagedObjectRoute, withId: identifier, inContext: blockSelf.masterObjectContext) as? SRRoute {
+                if var route = blockSelf.checkForExistingEntity(kManagedObjectRoute, withId: identifier, inContext: blockSelf.mainObjectContext) as? SRRoute {
                     route.addMark(videoMark);
                     
-                    blockSelf.saveContext(blockSelf.masterObjectContext);
+                    blockSelf.saveContext(blockSelf.mainObjectContext);
+
                 }
             }
         };
@@ -119,13 +120,13 @@ public class SRCoreDataManager: NSObject {
 
     public func addRelationBetweenVideoData(videoData: [String: Any], andRouteMark identifier: String) {
         
-        mainObjectContext.performBlock { [weak self] () -> Void in
+        mainObjectContext.performBlockAndWait{ [weak self] () -> Void in
             if var blockSelf = self {
-                if var videoMark = blockSelf.checkForExistingEntity(kManagedObjectVideoMark, withId: identifier, inContext: blockSelf.masterObjectContext) as? SRVideoMark {
+                if var videoMark = blockSelf.checkForExistingEntity(kManagedObjectVideoMark, withId: identifier, inContext: blockSelf.mainObjectContext) as? SRVideoMark {
                     if let videoData = blockSelf.insertEntity(kManagedObjectVideoData, dectionaryData: videoData) as? SRVideoData {
                         videoMark.videoData = videoData;
                         
-                        blockSelf.saveContext(blockSelf.masterObjectContext);
+                        blockSelf.saveContext(blockSelf.mainObjectContext);
                     }
                 }
             }
@@ -141,9 +142,9 @@ public class SRCoreDataManager: NSObject {
         fetchRequest.entity = entity;
         
         var error: NSError?;
-        
+                
         var res = self.mainObjectContext.executeFetchRequest(fetchRequest, error: &error);
-        
+                
         completion(result: res!, error: error?);
     }
     
@@ -174,6 +175,7 @@ public class SRCoreDataManager: NSObject {
         context.performBlockAndWait { [weak context] () -> Void in
             if var blockContext = context {
                 var error: NSError?;
+                println(blockContext);
                 if blockContext.save(&error) == false {
                     println(error);
                 }
@@ -187,9 +189,7 @@ public class SRCoreDataManager: NSObject {
         if let savedContext = notification.object as? NSManagedObjectContext {
         // ignore change notifications for the main MOC
             if (masterObjectContext !== savedContext){
-                self.saveContext(masterObjectContext);
-            } else {
-                self.saveContext(mainObjectContext);
+                self.saveContext(self.masterObjectContext);
             }
         }
     }

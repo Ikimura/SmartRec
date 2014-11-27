@@ -63,7 +63,8 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
     }
 
     func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
-        
+        println("didChangeSection - list controller");
+
         switch type {
         case .Insert: self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade);
         case .Delete: self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade);
@@ -73,7 +74,8 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
     }
 
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        
+        println("didChangeObject - list controller");
+
         let tblView = self.tableView;
         
         switch type {
@@ -108,9 +110,12 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
         var cell: SRMovieTableViewCell = tableView.dequeueReusableCellWithIdentifier(kMovieListCellIdentifier, forIndexPath: indexPath) as SRMovieTableViewCell;
 
         if let item = self.fetchedResultController.fetchedObjects![indexPath.row] as? SRVideoMark {
-            let videoDataItem = item.videoData
-                
-            cell.dateLabel.text = videoDataItem.fileName;
+            
+            if var videoDataItem = item.videoData {
+                println(videoDataItem.fileName);
+                cell.dateLabel.text = videoDataItem.fileName;
+            }
+
             if let image = UIImage(data: item.thumnailImage)? {
                 cell.photoImage.image = image;
             } else {
@@ -154,7 +159,9 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
         if let selectedCell = sender as? SRMovieTableViewCell {
             let indexPath: NSIndexPath = tableView.indexPathForCell(selectedCell)!;
             if let selectedItem = self.fetchedResultController.fetchedObjects![indexPath.row] as? SRVideoMark {
-                url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(selectedItem.videoData.fileName)\(kFileExtension)")!;
+                if let fileName = selectedItem.videoData?.fileName as String! {
+                    url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(fileName)\(kFileExtension)")!;
+                }
             }
         }
         

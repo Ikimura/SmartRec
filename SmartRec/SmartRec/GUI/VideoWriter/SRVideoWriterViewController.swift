@@ -163,6 +163,15 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         seconds = 0;
     }
     
+    func videoCaptureManagerDidFinishedRecording(captureManager: SRVideoCaptureManager) {
+        NSLog("videoCaptureManagerDidFinishedRecording - delegate");
+        dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+            if var blockSelf = self {
+                blockSelf.stopRecording();
+            }
+        });
+    }
+    
     func videoCaptureManagerCanGetPreviewView(captureSession: AVCaptureSession) {
         NSLog("captureVideoRecordingPreviewView - delegate");
 

@@ -50,7 +50,6 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
                         println(routeItem.id);
                         
                         var marks = routeItem.videoMarks.allObjects;
-                        
                         for (_, routeMark) in enumerate(marks) {
                             if let mark = routeMark as? SRVideoMark {
                                 println(mark.latitude.doubleValue);
@@ -60,8 +59,8 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
                                 //show annotations
                                 var dic: [String: AnyObject!] = [
                                     "id": mark.id,
-                                    "date": mark.videoData.date.description,
-                                    "fileName": mark.videoData.fileName,
+                                    "date": mark.videoData?.date.description,
+                                    "fileName": mark.videoData?.fileName,
                                     "lat": mark.latitude.doubleValue,
                                     "lng": mark.longitude.doubleValue,
                                     "photo": mark.thumnailImage];

@@ -13,6 +13,7 @@ import CoreData
 protocol SRVideoCaptureManagerDelegate {
     func videoCaptureManagerCanGetPreviewView(captureSession: AVCaptureSession);
     func videoCaptureManagerDidEndVideoPartRecording(captureManager: SRVideoCaptureManager);
+    func videoCaptureManagerDidFinishedRecording(captureManager: SRVideoCaptureManager);
 }
 
 class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
@@ -169,9 +170,6 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     }
     
     func captureVideoRecordingDidStopRecoding(captureRecorder: SRVideoRecorder, withError error: NSError?) {
-        //start new video part recording
-        NSLog("captureVideoRecordingDidStopRecoding - delegate");
-        delegate?.videoCaptureManagerDidEndVideoPartRecording(self);
         
         //get url
         let fileName = currentVideoData["name"] as String;
@@ -200,8 +198,14 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         });
     
         //
+        //start new video part recording
         if isRecording == true {
+            NSLog("captureVideoRecordingDidStopRecoding - delegate");
+            delegate?.videoCaptureManagerDidEndVideoPartRecording(self);
+            
             self.startRecordingVideo();
+        } else {
+            delegate?.videoCaptureManagerDidFinishedRecording(self);
         }
     }
     

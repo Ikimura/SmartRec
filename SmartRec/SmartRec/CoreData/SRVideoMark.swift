@@ -15,6 +15,6 @@ public class SRVideoMark: NSManagedObject {
     @NSManaged var latitude: NSNumber
     @NSManaged var longitude: NSNumber
     @NSManaged var thumnailImage: NSData
-    @NSManaged var videoData: SRVideoData
+    @NSManaged var videoData: SRVideoData?
 
 }
