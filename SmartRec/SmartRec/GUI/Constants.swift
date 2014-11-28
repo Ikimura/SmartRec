@@ -46,3 +46,5 @@ let kFileNameFormat: String = "h:mm:s.SSa_d_M_y";
 let kFileExtension: String = ".mov";
 
 let kLocationTitleNotification: String = "SRLocationManagerDidUpdateLocations";
+
+let kBusyViewNibName: String = "SRBusyView";

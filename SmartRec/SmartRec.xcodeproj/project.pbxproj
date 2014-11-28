@@ -75,6 +75,8 @@
 		13B660E81A236D0100EDA68A /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B660E11A236CD700EDA68A /* Quick.framework */; };
 		13B660E91A236D0600EDA68A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B660D21A236CCD00EDA68A /* Nimble.framework */; };
 		13B660EB1A236D7600EDA68A /* SRSingletonAccelerometerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B660EA1A236D7600EDA68A /* SRSingletonAccelerometerSpec.swift */; };
+		13BCBB291A28996600E823F9 /* SRBusyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13BCBB271A28996600E823F9 /* SRBusyView.xib */; };
+		13BCBB331A28998200E823F9 /* SRBusyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCBB321A28998200E823F9 /* SRBusyView.swift */; };
 		13C1F5BD19F6466C00149649 /* SRVideoRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C1F5BC19F6466C00149649 /* SRVideoRecorder.swift */; };
 		13CA8BD61A14A3BA00E8C6D8 /* SRCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CA8BD51A14A3BA00E8C6D8 /* SRCoreDataManager.swift */; };
 		13D7456C1A139C620089BA09 /* SRPerformaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D7456B1A139C620089BA09 /* SRPerformaceTests.swift */; };
@@ -207,6 +209,8 @@
 		13B660CA1A236CCD00EDA68A /* Nimble.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nimble.xcodeproj; path = ../../Vendor/Nimble/Nimble.xcodeproj; sourceTree = "<group>"; };
 		13B660D91A236CD700EDA68A /* Quick.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Quick.xcodeproj; path = ../../Vendor/Quick/Quick.xcodeproj; sourceTree = "<group>"; };
 		13B660EA1A236D7600EDA68A /* SRSingletonAccelerometerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSingletonAccelerometerSpec.swift; sourceTree = "<group>"; };
+		13BCBB271A28996600E823F9 /* SRBusyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SRBusyView.xib; sourceTree = "<group>"; };
+		13BCBB321A28998200E823F9 /* SRBusyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRBusyView.swift; sourceTree = "<group>"; };
 		13C1F5BA19F63BAF00149649 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		13C1F5BC19F6466C00149649 /* SRVideoRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRVideoRecorder.swift; path = ../SRVideoRecorder.swift; sourceTree = "<group>"; };
 		13CA8BD51A14A3BA00E8C6D8 /* SRCoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataManager.swift; sourceTree = "<group>"; };
@@ -397,6 +401,7 @@
 		137E3B8819F5313B0094C5A1 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				13BCBB241A28996600E823F9 /* CustomControls */,
 				1304A2761A16226C004CBD9B /* Map */,
 				1313411019F78D23003BF084 /* ShowVideo */,
 				137E3B9819F542B80094C5A1 /* VideoWriter */,
@@ -501,6 +506,15 @@
 				13B660E71A236CD700EDA68A /* Quick-iOSTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		13BCBB241A28996600E823F9 /* CustomControls */ = {
+			isa = PBXGroup;
+			children = (
+				13BCBB271A28996600E823F9 /* SRBusyView.xib */,
+				13BCBB321A28998200E823F9 /* SRBusyView.swift */,
+			);
+			path = CustomControls;
 			sourceTree = "<group>";
 		};
 		13CA8BD01A14973400E8C6D8 /* CoreDataManager */ = {
@@ -737,6 +751,7 @@
 			files = (
 				137E3B6E19F52BF00094C5A1 /* Main.storyboard in Resources */,
 				137E3B7319F52BF00094C5A1 /* LaunchScreen.xib in Resources */,
+				13BCBB291A28996600E823F9 /* SRBusyView.xib in Resources */,
 				137E3B7019F52BF00094C5A1 /* Images.xcassets in Resources */,
 				1304A27C1A1622F0004CBD9B /* GoogleMaps.bundle in Resources */,
 				1338720C1A1CC9DF00FFC29F /* SRMarkerInfoView.xib in Resources */,
@@ -814,6 +829,7 @@
 				1313C3911A1F65070079D288 /* SRRoute.swift in Sources */,
 				137E3B9219F533A90094C5A1 /* SRMovieTableViewCell.swift in Sources */,
 				130A5B8D19F7CECB004515A7 /* Constants.swift in Sources */,
+				13BCBB331A28998200E823F9 /* SRBusyView.swift in Sources */,
 				1318DEC41A1F54AD007B0F54 /* StringExtensions.swift in Sources */,
 				13F985771A13912400E9B958 /* AVAssetExtensions.swift in Sources */,
 				1304A2781A16226C004CBD9B /* SRRouteMapViewController.swift in Sources */,

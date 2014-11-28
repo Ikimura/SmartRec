@@ -9,10 +9,12 @@
 import UIKit
 
 class SRCommonViewController: UIViewController {
-
+    
+    private var busyView: SRBusyView?;
+    private var busyCounter: Int = 0;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
 
@@ -20,15 +22,28 @@ class SRCommonViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func showBusyView() {
+        busyCounter++;
+        
+        if (self.busyView == nil) {
+            self.busyView = SRBusyView.viewFromNibName(kBusyViewNibName) as? SRBusyView;
+            
+            self.view.addSubview(self.busyView!);
+        }
+        else {
+            self.view.bringSubviewToFront(self.busyView!);
+        }
+        self.busyView!.showBusyView();
     }
-    */
+    
+    func hideBusyView() {
+        if (--busyCounter <= 0) {
+            busyCounter = 0;
+            self.busyView!.hideBusyView();
+            self.busyView!.removeFromSuperview();
+            self.busyView = nil;
+        }
+    }
 
 }

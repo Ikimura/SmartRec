@@ -51,12 +51,14 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
     private func loadData() {
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         
-        println("Loading indicator showing");
+        println("Loading indicator show");
+        self.showBusyView();
         
         appDelegate.coreDataManager.fetchEntities(kManagedObjectRoute, withCompletion: { [weak self] (fetchResult: NSAsynchronousFetchResult) -> Void in
-            println("Loading indicator hided");
             
             if var blockSelf = self {
+                println("Loading indicator hide");
+                blockSelf.hideBusyView();
                 
                 if ((fetchResult.finalResult) != nil) {
                     // Update Items
