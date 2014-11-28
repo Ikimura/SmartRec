@@ -16,8 +16,6 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
     private var targetCoordinate: CLLocationCoordinate2D!;
     
     private var results: [AnyObject]?;
-    //stubs
-    private var stubPaths: [CLLocationCoordinate2D]? = [];
     
     private lazy var mapInfoView: SRMarkerInfoView! = {
         if let infoView = UIView.viewFromNibName("SRMarkerInfoView") as? SRMarkerInfoView!  {
@@ -31,53 +29,17 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
     
     //MARK: - life cycle
     
-    //FIXME: - 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //setup amp
         self.setUpMapView();
-        
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-
-        appDelegate.coreDataManager.fetchEntities(kManagedObjectRoute, withCompletion: { [weak self] (result, error) -> Void in
-            if var blockSelf = self {
-                
-                blockSelf.results = result;
-                
-                for (_, route) in enumerate(blockSelf.results!) {
-                    if let routeItem = route as? SRRoute {
-                        println(routeItem.id);
-                        
-                        var marks = routeItem.videoMarks.allObjects;
-                        for (_, routeMark) in enumerate(marks) {
-                            if let mark = routeMark as? SRVideoMark {
-                                println(mark.latitude.doubleValue);
-                                println(mark.longitude.doubleValue);
-                                blockSelf.stubPaths!.append(CLLocationCoordinate2D(latitude: mark.latitude.doubleValue, longitude: mark.longitude.doubleValue));
-                                
-                                //show annotations
-                                var dic: [String: AnyObject!] = [
-                                    "id": mark.id,
-                                    "date": mark.videoData?.date.description,
-                                    "fileName": mark.videoData?.fileName,
-                                    "lat": mark.latitude.doubleValue,
-                                    "lng": mark.longitude.doubleValue,
-                                    "photo": mark.thumnailImage];
-                                //
-                                var place: SRVideoPlace = SRVideoPlace(dictionary: dic);
-                                blockSelf.showMarker(place);
-                            }
-                        }
-                    }
-                }
-                blockSelf.makePolylineFor(blockSelf.stubPaths!);
-            }
-        });        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
+        //load data
+        self.loadData();
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -85,6 +47,55 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
     }
     
     //MARK: - private interface
+    
+    private func loadData() {
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        
+        println("Loading indicator showing");
+        
+        appDelegate.coreDataManager.fetchEntities(kManagedObjectRoute, withCompletion: { [weak self] (fetchResult: NSAsynchronousFetchResult) -> Void in
+            println("Loading indicator hided");
+            
+            if var blockSelf = self {
+                
+                if ((fetchResult.finalResult) != nil) {
+                    // Update Items
+                    blockSelf.results = fetchResult.finalResult;
+                    
+                    for route in blockSelf.results! {
+                        if let routeItem = route as? SRRoute {
+                            //show route
+                            dispatch_async(dispatch_get_main_queue(), {() -> Void in
+                                blockSelf.makePolylineForRoute(routeItem);
+                            });
+                            
+                            println(routeItem.id);
+                            for (_, routeMark) in enumerate(routeItem.videoMarks) {
+                                if let mark = routeMark as? SRVideoMark {
+                                    println(mark.latitude.doubleValue);
+                                    println(mark.longitude.doubleValue);
+                                    
+                                    //show annotations
+                                    var dic: [String: AnyObject!] = [
+                                        "id": mark.id,
+                                        "date": mark.videoData?.date.description,
+                                        "fileName": mark.videoData?.fileName,
+                                        "lat": mark.latitude.doubleValue,
+                                        "lng": mark.longitude.doubleValue,
+                                        "photo": mark.thumnailImage];
+                                    //
+                                    var place: SRVideoPlace = SRVideoPlace(dictionary: dic);
+                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                        blockSelf.showMarker(place);
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
     
     private func setUpMapView() {
         if let location = SRLocationManager.sharedInstance.currentLocation() as CLLocation! {
@@ -97,11 +108,12 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
         googleMapView.myLocationEnabled = true
     }
     
-    private func makePolylineFor(paths: [CLLocationCoordinate2D]){
+    private func makePolylineForRoute(route: SRRoute){
         var gmsPaths: GMSMutablePath = GMSMutablePath();
-        
-        for (_, path) in enumerate(paths) {
-            gmsPaths.addCoordinate(path);
+
+        //FIXME: - change videoMarks to routeMarks
+        for (_, routeMark) in enumerate(route.videoMarks) {
+            gmsPaths.addCoordinate(CLLocationCoordinate2D(latitude: routeMark.latitude.doubleValue, longitude: routeMark.longitude.doubleValue));
         }
         
         var polyline: GMSPolyline = GMSPolyline(path: gmsPaths);

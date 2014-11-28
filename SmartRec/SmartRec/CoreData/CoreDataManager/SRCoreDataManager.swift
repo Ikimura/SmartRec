@@ -135,17 +135,27 @@ public class SRCoreDataManager: NSObject {
     
     //MARK: - internal API
 
-    internal func fetchEntities(name: String, withCompletion completion:((result: [AnyObject], error: NSError?) -> Void))  {
-        var fetchRequest: NSFetchRequest = NSFetchRequest();
-        let entity: NSEntityDescription = NSEntityDescription.entityForName(name, inManagedObjectContext: self.mainObjectContext)!;
+    internal func fetchEntities(name: String, withCompletion completion:((fetchResult: NSAsynchronousFetchResult) -> Void))  {
         
-        fetchRequest.entity = entity;
+        // Initialize Fetch Request
+        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: name);
+        fetchRequest.sortDescriptors = [ NSSortDescriptor(key: "startDate", ascending: true) ];
         
-        var error: NSError?;
-                
-        var res = self.mainObjectContext.executeFetchRequest(fetchRequest, error: &error);
-                
-        completion(result: res!, error: error?);
+        // Initialize Asynchronous Fetch Request
+        var asynchronousFetchRequest: NSAsynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result: NSAsynchronousFetchResult!) -> Void in
+            //complition
+            completion(fetchResult: result);
+        };
+        
+        self.mainObjectContext.performBlock { () -> Void in
+            // Execute Asynchronous Fetch Request
+            var asynchronousFetchRequestError: NSError?;
+            var asynchronousFetchResult: NSAsynchronousFetchResult = self.mainObjectContext.executeRequest(asynchronousFetchRequest, error: &asynchronousFetchRequestError) as NSAsynchronousFetchResult;
+            
+            if (asynchronousFetchRequestError != nil) {
+                NSLog("Unable to execute asynchronous fetch result.");
+            }
+        }
     }
     
     //MARK: - private methods
