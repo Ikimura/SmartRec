@@ -170,11 +170,17 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     }
     
     func captureVideoRecordingDidStopRecoding(captureRecorder: SRVideoRecorder, withError error: NSError?) {
-        
-        //get url
         let fileName = currentVideoData["name"] as String;
         
         let url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(fileName)\(kFileExtension)");
+        //TODO: delete items
+        /*
+        if !autosaveFlag {
+        //add url of file in list for deleting or delete file instanteniously
+        }
+        */
+        //get url
+        
         //get asset
         var thumbnailImage: UIImage?;
         if let sourceAsset = AVAsset.assetWithURL(url) as? AVAsset {

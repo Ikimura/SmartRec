@@ -11,44 +11,45 @@ import AVFoundation
 import CoreLocation
 import CoreMotion
 
-class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManagerDelegate, SRAccelerometrManagerDelegate {
+class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManagerDelegate {
 
     @IBOutlet weak var recordBtn: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var latitudeLabel: UILabel!
     @IBOutlet weak var longitudeLabel: UILabel!
     @IBOutlet weak var speedLabel: UILabel!
-    
-    @IBOutlet weak var accelerationXLabel: UILabel!
-    @IBOutlet weak var accelerationYLabel: UILabel!
-    @IBOutlet weak var accelerationZLabel: UILabel!
 
     private var recordManager: SRVideoCaptureManager!;
     private var previewView: UIView?;
     private var timer: NSTimer?;
     private var seconds: Int = 0;
     private var locationQueue: dispatch_queue_t?;
+    private var acceleraometrWidget: SRGSensor?;
 
     //MARK: life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         recordManager = SRVideoCaptureManager();
-        
+        recordManager.delegate = self;
+
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name: UIApplicationDidEnterBackgroundNotification, object: UIApplication.sharedApplication());
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: UIApplication.sharedApplication());
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdatedLocations:", name: kLocationTitleNotification, object: nil)
+
+        acceleraometrWidget = SRGSensor(delta: 0.05, frequancy: 1/50, allowView: true);
         
-//        SRAccelerometrManager.sharedInstance.delegate = self;
-        recordManager.delegate = self;
-
         locationQueue = dispatch_queue_create("con.epam.evnt.SmartRec.locations", DISPATCH_QUEUE_SERIAL);
-
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
+        
+        //add constraints
+        self.setUpView();
+        
         recordManager.startRunnigSession();
+        
         //FIXME: - fix it
         recordManager.createNewRoute();
         
@@ -56,15 +57,21 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         dispatch_async(locationQueue, { () -> Void in
             SRLocationManager.sharedInstance.startMonitoringLocation();
         });
+        //start monitoring acceleration
+        acceleraometrWidget?.startAccelerationMonitoring();
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
+        
         recordManager.stopRunnigSession();
+        
         //stup location updating
         dispatch_async(locationQueue, { () -> Void in
             SRLocationManager.sharedInstance.stopMonitoringLocation();
         });
+        //stop monitoring acceleration
+        acceleraometrWidget?.stopAccelerationMonitoring();
     }
     
     deinit {
@@ -88,6 +95,20 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     
     //MARK: - private methods
     
+    private func setUpView() {
+        acceleraometrWidget!.widgetView.setTranslatesAutoresizingMaskIntoConstraints(false);
+        
+        view.addSubview(acceleraometrWidget!.widgetView);
+        let viewsDictionary: [NSObject: AnyObject] = ["widgetView": acceleraometrWidget!.widgetView];
+        
+        let constraint_POS_V = NSLayoutConstraint.constraintsWithVisualFormat("H:[widgetView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary);
+        
+        let constraint_POS_H = NSLayoutConstraint.constraintsWithVisualFormat("V:|-150-[widgetView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary);
+        
+        view.addConstraints(constraint_POS_V);
+        view.addConstraints(constraint_POS_H);
+    }
+    
     func updateTimeLabel(t: NSTimer) {
         var minutesPast, secondsPast: Int;
         
@@ -104,9 +125,6 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
                 blockSelf.latitudeLabel.text = "-";
                 blockSelf.longitudeLabel.text = "-";
                 blockSelf.speedLabel.text = "0 m/s";
-                blockSelf.accelerationXLabel.text = "X:";
-                blockSelf.accelerationYLabel.text = "Y:";
-                blockSelf.accelerationZLabel.text = "Z:";
             }
         });
     }
@@ -126,8 +144,6 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         //Record video
         recordManager.startRecordingVideo();
         self.startTimer();
-        //start monitoring acceleration
-//        SRAccelerometrManager.sharedInstance.startAccelerationMonitoring(0.2);
         //
         recordBtn.selected = true;
         recordBtn.titleLabel?.text = "Stop";
@@ -143,8 +159,7 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         //
         recordManager.stopRecordingVideo();
         self.stopTimer();
-        //stop monitoring acceleration
-//        SRAccelerometrManager.sharedInstance.stopAccelerationMonitoring();
+
         self.updateUIByDefault();
         //
         recordBtn.selected = false;
@@ -218,31 +233,20 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     func applicationDidEnterBackground() {
         NSLog("applicationDidEnterBackground notif");
         self.stopRecording();
+        self.stopTimer();
+
         dispatch_async(locationQueue, { () -> Void in
             SRLocationManager.sharedInstance.stopMonitoringLocation();
         });
         //stop monitoring acceleration
-//        SRAccelerometrManager.sharedInstance.stopAccelerationMonitoring();
-        self.stopTimer();
-        
+        acceleraometrWidget?.stopAccelerationMonitoring();
     }
     
     func applicationWillEnterForeground() {
         NSLog("applicationWillEnterForeground notif");
         self.updateUIByDefault();
-    }
-    
-    //MARK: - SRAccelerometrManagerDelegate
-    
-    func accelerometrManagerDidUpdateData(accelerometerData: CMAccelerometerData!) {
-        var acceleration = accelerometerData.acceleration;
-        dispatch_async(dispatch_get_main_queue(), { [weak self, acceleration] () -> Void in
-            if var blockSelf = self {
-                blockSelf.accelerationXLabel.text = String(format: "X:%.8f", acceleration.x);
-                blockSelf.accelerationYLabel.text = String(format: "Y:%.8f", acceleration.y);
-                blockSelf.accelerationZLabel.text = String(format: "Z:%.8f", acceleration.z);
-            }
-        });
+        //start monitoring acceleration
+        acceleraometrWidget?.startAccelerationMonitoring();
     }
 
 }

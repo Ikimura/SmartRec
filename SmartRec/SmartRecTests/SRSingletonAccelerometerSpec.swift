@@ -11,27 +11,27 @@ import Nimble
 import SmartRec
 
 class SRSingletonAccelerometerSpec: QuickSpec {
-    override func spec() {
-        
-        describe("a SRAccelerometerManager") {
-            
-            context("when the manager initialized") {
-                it("is not nil") {
-                    expect(SRAccelerometrManager.sharedInstance).notTo(beNil());
-                }
-                
-                describe("and shredInstance") {
-                    it("is defferent instanses") {
-                        expect(SRAccelerometrManager.sharedInstance === SRAccelerometrManager()).notTo(beTruthy());
-                    }
-                }
-                
-                describe("and SRAccelerometerManager") {
-                    it("is same instanse") {
-                        expect(SRAccelerometrManager.sharedInstance === SRAccelerometrManager.sharedInstance).to(beTruthy());
-                    }
-                }
-            }
-        }
-    }
+//    override func spec() {
+//        
+//        describe("a SRAccelerometerManager") {
+//            
+//            context("when the manager initialized") {
+//                it("is not nil") {
+//                    expect(SRAccelerometrManager.sharedInstance).notTo(beNil());
+//                }
+//                
+//                describe("and shredInstance") {
+//                    it("is defferent instanses") {
+//                        expect(SRAccelerometrManager.sharedInstance === SRAccelerometrManager()).notTo(beTruthy());
+//                    }
+//                }
+//                
+//                describe("and SRAccelerometerManager") {
+//                    it("is same instanse") {
+//                        expect(SRAccelerometrManager.sharedInstance === SRAccelerometrManager.sharedInstance).to(beTruthy());
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
