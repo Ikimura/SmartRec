@@ -14,6 +14,10 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
     
     @IBOutlet private var tableView: UITableView!;
     
+    private lazy var fileManager: NSFileManager = {
+        return NSFileManager.defaultManager();
+    }();
+
     private lazy var fetchedResultController: NSFetchedResultsController = {
         
         var tempFetchedRC: NSFetchedResultsController?;
@@ -139,14 +143,34 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
             //Delete the row from the data source
             if let deleteItem = self.fetchedResultController.fetchedObjects![indexPath.row] as? SRVideoMark {
                 
-                let managedObjectContext = deleteItem.managedObjectContext!;
-                managedObjectContext.deleteObject(deleteItem)
-                
-                /* save `NSManagedObjectContext`
-                deletes model from the persistent store (SQLite DB) */
-                var e: NSError?;
-                if (!managedObjectContext.save(&e)) {
-                    println("cancel error: \(e!.localizedDescription)")
+                //FIXME: - move deleting
+                if var videoDataItem = deleteItem.videoData {
+                    
+                    let fileName = videoDataItem.fileName;
+                    let url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(fileName)\(kFileExtension)");
+                    println("Debug. URL: \(url!)");
+                    println("Debug. PATH: \(url!.path!)");
+
+                    if self.fileManager.fileExistsAtPath(url!.path!) {
+                        var error: NSError?;
+                        fileManager.removeItemAtURL(url!, error: &error);
+                        
+                        if error != nil {
+                            println("Debug. Deleting failed");
+                        } else {
+                            let managedObjectContext = deleteItem.managedObjectContext!;
+                            managedObjectContext.deleteObject(deleteItem)
+                            
+                            /* save `NSManagedObjectContext`
+                            deletes model from the persistent store (SQLite DB) */
+                            var e: NSError?;
+                            if (!managedObjectContext.save(&e)) {
+                                println("cancel error: \(e!.localizedDescription)")
+                            }
+                        }
+                    } else {
+                        println("Debug. File doesn't exist");
+                    }
                 }
             }
         }

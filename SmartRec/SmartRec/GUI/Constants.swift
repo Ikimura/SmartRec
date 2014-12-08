@@ -41,7 +41,7 @@ let kThumbnailHeight: CGFloat = 64;
 
 let kThumbnailWidth: CGFloat = 44;
 
-let kFileNameFormat: String = "h:mm:s.SSa_d_M_y";
+let kFileNameFormat: String = "h_mm_s_SSa_d_M_y";
 
 let kFileExtension: String = ".mov";
 

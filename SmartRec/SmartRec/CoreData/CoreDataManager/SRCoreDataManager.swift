@@ -84,6 +84,8 @@ public class SRCoreDataManager: NSObject {
                 mark.id = dectionaryData["id"] as String;
                 mark.latitude = NSNumber(double: dectionaryData["lat"] as Double);
                 mark.longitude = NSNumber(double: dectionaryData["lng"] as Double);
+                mark.autoSaved = NSNumber(bool: dectionaryData["save"] as Bool);
+
                 if let imageData = dectionaryData["image"] as? NSData {
                     mark.thumnailImage = imageData;
                 }

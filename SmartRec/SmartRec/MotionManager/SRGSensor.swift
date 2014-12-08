@@ -49,10 +49,10 @@ public class SRGSensor: NSObject {
             if var blockSelf = self {
 ///TODO: - detection
 
-                /*if |currentAccValueZ| - |averageAccValueZ| > 0.5 {
-                        notefiy video recorder about autosave
-                    }
-                */
+                if (fabs(accelerometerData.acceleration.z) - fabs(blockSelf.accelerationZAverage) > 0.5) {
+                    NSNotificationCenter.defaultCenter().postNotificationName("Occasion", object: nil);
+                    //notefiy video recorder about autosave
+                }
             
                 //filtering noise
                 if (fabs(accelerometerData.acceleration.x - blockSelf.accelerationXAverage) > blockSelf.accelerationValueDelta ||
