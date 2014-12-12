@@ -145,28 +145,27 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
                 
                 //FIXME: - move deleting
                 if var videoDataItem = deleteItem.videoData {
-                    
-                    let fileName = videoDataItem.fileName;
-                    let url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(fileName)\(kFileExtension)");
+                    let url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(videoDataItem.fileName)\(kFileExtension)");
                     println("Debug. URL: \(url!)");
                     println("Debug. PATH: \(url!.path!)");
 
                     if self.fileManager.fileExistsAtPath(url!.path!) {
-                        var error: NSError?;
-                        fileManager.removeItemAtURL(url!, error: &error);
+                        let result = fileManager.removeItemWithURL(url!);
                         
-                        if error != nil {
-                            println("Debug. Deleting failed");
-                        } else {
+                        switch result {
+                        case .Success(let quotient):
+                            println("Debug. File deleted!");
+                            
                             let managedObjectContext = deleteItem.managedObjectContext!;
                             managedObjectContext.deleteObject(deleteItem)
                             
-                            /* save `NSManagedObjectContext`
-                            deletes model from the persistent store (SQLite DB) */
+                            /*deletes model from the persistent store (SQLite DB) */
                             var e: NSError?;
                             if (!managedObjectContext.save(&e)) {
                                 println("cancel error: \(e!.localizedDescription)")
                             }
+                        case .Failure(let error):
+                            println("Debug. Deleting failed");
                         }
                     } else {
                         println("Debug. File doesn't exist");

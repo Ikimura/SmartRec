@@ -24,25 +24,13 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     private var currentRecorder: SRVideoRecorder!;
     private var isRecording: Bool!;
     private var routeId: String?;
-    private var currentURL: NSURL?;
-    //FIXME: - fix
-    private lazy var currentMarkData: [String: Any] = {
-        var tempArray = [String: Any]();
+    private lazy var fileManager: NSFileManager = {
+        return NSFileManager.defaultManager();
+        }();
 
-        return tempArray;
-    }();
-    
-    private lazy var currentVideoData: [String: Any] = {
-        var tempArray = [String: Any]();
-
-        return tempArray;
-    }();
-    
-    private lazy var currentRouteData: [String: Any] = {
-        var tempArray = [String: Any]();
-
-        return tempArray;
-    }();
+    private var currentVideoData: SRVideoDataStruct?;
+    private var currentVideoMarkData: SRVideoMarkStruct?;
+    private var currentRouteData: SRRouteStruct?;
     
     private lazy var locationData: [CLLocationCoordinate2D] = {
         var tempArray = [CLLocationCoordinate2D]();
@@ -69,7 +57,6 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         //get notifications about position changing
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdatedLocations:", name: kLocationTitleNotification, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didOccasionAppears:", name: "Occasion", object: nil);
-
     }
     
     deinit {
@@ -83,45 +70,40 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     func createNewRoute() {
         let identifier = String.randomString();
         println(identifier);
-        self.currentRouteData["id"] = identifier;
+        
+        currentRouteData = SRRouteStruct(id: identifier, dateSeconds: NSDate().timeIntervalSince1970);
     }
     
     func startRecordingVideo() {
-        
         let date = NSDate();
         let fileName = String.stringFromDate(date, withFormat: kFileNameFormat);
         let filePath = "\(fileName)\(kFileExtension)";
         
-        println(filePath);
+        currentVideoData = SRVideoDataStruct(id: String.randomString(), fileName: fileName, dateSeconds: date.timeIntervalSince1970);
+
+        println("Debug. New data: \(currentVideoData!.fileName)\(kFileExtension)");
+        
         if let outputURL = NSURL.URL(directoryName: kFileDirectory, fileName: filePath) as NSURL! {
             println(outputURL);
-            currentURL = outputURL;
             isRecording = true;
-            currentRecorder.url = currentURL;
+            currentRecorder.url = outputURL;
             currentRecorder.startRecording();
         }
         
-        self.currentMarkData["id"] = String.randomString();
-        
         println(SRLocationManager.sharedInstance.currentLocation()?.coordinate.latitude);
         println(SRLocationManager.sharedInstance.currentLocation()?.coordinate.longitude);
-
-        currentMarkData["lat"] = SRLocationManager.sharedInstance.currentLocation()?.coordinate.latitude;
-        currentMarkData["lng"] = SRLocationManager.sharedInstance.currentLocation()?.coordinate.longitude;
-        currentMarkData["save"] = false;
         
-        self.currentVideoData["id"] = String.randomString();
-        currentVideoData["name"] = fileName;
-        currentVideoData["date"] = date;
-        
-        //FIXME: - move in route manager that should be contain a logic
-        currentRouteData["date"] = date;
+        currentVideoMarkData = SRVideoMarkStruct(id: String.randomString(),
+            lng: SRLocationManager.sharedInstance.currentLocation()!.coordinate.longitude,
+            lat: SRLocationManager.sharedInstance.currentLocation()!.coordinate.latitude,
+            autoSave: false,
+            image: nil
+        );
         
         //add object
-        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {[weak self] () -> Void in
             if var blockSelf = self {
-                let route = (blockSelf.appDelegate.coreDataManager.insertEntity(kManagedObjectRoute, dectionaryData: blockSelf.currentRouteData) as? SRRoute);
+                let route = (blockSelf.appDelegate.coreDataManager.insertRouteEntity(blockSelf.currentRouteData!) as? SRRoute);
                 
                 blockSelf.routeId = route?.id;
             }
@@ -150,32 +132,32 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     
     //MARK: - private methods
     
-    private func saveInformation() {
+    private func saveInformationInCoreData(videoData: SRVideoDataStruct, markData: SRVideoMarkStruct) {
         //add object
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] () -> Void in
             if var blockSelf = self {
                 //insert SRVideoMark
-                if let videoMark = blockSelf.appDelegate.coreDataManager.insertEntity(kManagedObjectVideoMark, dectionaryData: blockSelf.currentMarkData) as? SRVideoMark {
-                    //link SRVideoData with SRVodeoMark
-                    blockSelf.appDelegate.coreDataManager.addRelationBetweenVideoData(blockSelf.currentVideoData, andRouteMark: videoMark.id);
-                    //link SRVideoMark with SRRoute
+                if let videoMark = blockSelf.appDelegate.coreDataManager.insertVideoMarkEntity(markData) as? SRVideoMark {
+                    println("For save data: \(videoData.fileName)");
+//                    link SRVideoData with SRVodeoMark
+                    blockSelf.appDelegate.coreDataManager.addRelationBetweenVideoData(videoData, andRouteMark: videoMark.id);
+//                    link SRVideoMark with SRRoute
                     blockSelf.appDelegate.coreDataManager.addRelationBetweenVideoMark(videoMark, andRute: blockSelf.routeId!);
                 }
             }
         });
     }
     
-    private func deleteInformation() {
-        //FIXME: - move deleting
-        let fileManager = NSFileManager.defaultManager();
-        var error: NSError?;
-        fileManager.removeItemAtURL(currentURL!, error: &error);
+    private func deleteFileFromDisc(fileName: String) {
+        let result = self.fileManager.removeItemWithURL(NSURL.URL(directoryName: kFileDirectory, fileName: fileName)!);
         
-        if error != nil {
+        switch result {
+        case .Success(let quotient):
+            println("Debug. File deleted!");
+        case .Failure(let error):
             println("Debug. Deleting failed");
         }
     }
-    
     
     //MARK: - SRLocationManager notification
     
@@ -195,8 +177,8 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     func didOccasionAppears(notification: NSNotification) {
         println("Debug. Did recieve occasion notification");
         //mark current record 
-        if ((isRecording == true) && ((currentMarkData["save"] as Bool) == false)) {
-            currentMarkData["save"] = true;
+        if (isRecording == true && !currentVideoMarkData!.autoSave) {
+            currentVideoMarkData!.autoSave = true;
         }
     }
     
@@ -208,34 +190,33 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     }
     
     func captureVideoRecordingDidStopRecoding(captureRecorder: SRVideoRecorder, withError error: NSError?) {
-        
-        if let needToSave = currentMarkData["save"] as? Bool {
+        if currentVideoMarkData!.autoSave { //need save video
+            println("Debug. Save file");
             
-            if needToSave { //need save video
-                println("Debug. Save data");
-
-                //get asset by url
-                var thumbnailImage: UIImage?;
-                if let sourceAsset = AVAsset.assetWithURL(currentURL!) as? AVAsset {
+            //get asset by url
+            var thumbnailImage: UIImage?;
+            
+            if let urlForAsset = NSURL.URL(directoryName: kFileDirectory, fileName: "\(currentVideoData!.fileName)\(kFileExtension)") as NSURL! {
+                if let sourceAsset = AVAsset.assetWithURL(urlForAsset) as? AVAsset {
                     let maxSize: CGSize = CGSizeMake(kThumbnailWidth, kThumbnailHeight);
                     //get thumbnail image
                     thumbnailImage = sourceAsset.thumbnailWithSize(size: maxSize);
-                    currentMarkData["image"] = UIImageJPEGRepresentation(thumbnailImage, 1.0);
+                    currentVideoMarkData!.image = UIImageJPEGRepresentation(thumbnailImage, 1.0);
                 }
-                //save
-                self.saveInformation();
-
-            } else { //delete file instantaneously or add url in list
-                println("Debug. Delete file");
-                //delete
-                self.deleteInformation();
             }
-        }        
+            //save
+            self.saveInformationInCoreData(currentVideoData!, markData: currentVideoMarkData!);
+
+        } else { //delete file instantaneously or add url in list
+            println("Debug. Delete file: \(currentVideoData!.fileName)\(kFileExtension)");
+            //delete
+            self.deleteFileFromDisc("\(currentVideoData!.fileName)\(kFileExtension)");
+        }
     
         //
         //start new video part recording
         if isRecording == true {
-            NSLog("captureVideoRecordingDidStopRecoding - delegate");
+            println("captureVideoRecordingDidStopRecoding - delegate");
             delegate?.videoCaptureManagerDidEndVideoPartRecording(self);
             
             self.startRecordingVideo();
@@ -245,7 +226,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     }
     
     func captureVideoRecordingPreviewView(captureRecorder: SRVideoRecorder) {
-        NSLog("captureVideoRecordingPreviewView");
+        println("captureVideoRecordingPreviewView");
         delegate?.videoCaptureManagerCanGetPreviewView(currentRecorder.captureSession);
     }
 }

@@ -21,5 +21,37 @@ class SRUIViewExtensionSpec: QuickSpec {
                 }
             }
         }
+        
+        describe("a FileManager") {
+            var fileName: String?;
+            var fileURL: NSURL?;
+            var fileData: NSString?;
+            
+            beforeEach({ () -> () in
+                //arrange
+                fileName = "temp.txt";
+                fileData = "tempData";
+                fileURL = NSURL.fileURLWithPath(NSTemporaryDirectory().stringByAppendingPathComponent(fileName!));
+                
+                let data: NSData = fileData!.dataUsingEncoding(NSUTF8StringEncoding)!;
+                var error: NSError?;
+                data.writeToURL(fileURL!, options: .AtomicWrite, error: &error);
+            });
+            
+            context("can delete file") {
+                it("with url") {
+                    //act
+                    let result: SRResult = NSFileManager.defaultManager().removeItemWithURL(fileURL!);
+                    //assert
+                    
+                    switch result{
+                    case .Success(let succes):
+                        expect(true).to(beTruthy());
+                    case .Failure(let errString):
+                        expect(false).to(beTruthy());
+                    }
+                }
+            }
+        }
     }
 }

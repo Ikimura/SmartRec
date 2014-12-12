@@ -68,37 +68,49 @@ public class SRCoreDataManager: NSObject {
 
     //MARK: - new public API
     
-    public func insertEntity(entityName: String, dectionaryData: [String: Any]) -> NSManagedObject? {
-        var entity: NSManagedObject? = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: self.mainObjectContext) as? NSManagedObject;
+    public func insertVideoMarkEntity(dataStruct: SRVideoMarkStruct) -> NSManagedObject? {
+        var entity: SRVideoMark? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoMark, inManagedObjectContext: self.mainObjectContext) as? SRVideoMark;
         
-        switch entityName {
-        case kManagedObjectRoute:
-            println("route")
-            if var route = entity as? SRRoute {
-                route.id = dectionaryData["id"] as String;
-                route.startDate = dectionaryData["date"] as NSDate;
-            };
-        case kManagedObjectVideoMark:
-            println("videomark");
-            if var mark = entity as? SRVideoMark {
-                mark.id = dectionaryData["id"] as String;
-                mark.latitude = NSNumber(double: dectionaryData["lat"] as Double);
-                mark.longitude = NSNumber(double: dectionaryData["lng"] as Double);
-                mark.autoSaved = NSNumber(bool: dectionaryData["save"] as Bool);
-
-                if let imageData = dectionaryData["image"] as? NSData {
-                    mark.thumnailImage = imageData;
-                }
+        println("SRVideoMark")
+        if entity != nil {
+            entity!.id = dataStruct.id;
+            entity!.latitude = dataStruct.lat;
+            entity!.longitude = dataStruct.lng;
+            entity!.autoSaved = dataStruct.autoSave;
+            if let imageData =  dataStruct.image as NSData! {
+                entity!.thumnailImage = imageData;
             }
-        case kManagedObjectVideoData:
-            println("video data");
-            if var data = entity as? SRVideoData {
-                data.id = dectionaryData["id"] as String;
-                data.fileName = dectionaryData["name"] as String;
-                data.date = dectionaryData["date"] as NSDate;
-            }
-        default: println("default");
-            
+        }
+        
+        self.saveContext(self.mainObjectContext);
+        
+        return entity;
+    }
+    
+    public func insertVideoDataEntity(dataStruct: SRVideoDataStruct) -> NSManagedObject? {
+        var entity: SRVideoData? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoData, inManagedObjectContext: self.mainObjectContext) as? SRVideoData;
+        
+        println("SRVideoData")
+        if entity != nil {
+            entity!.id = dataStruct.id;
+            entity!.fileName = dataStruct.fileName;
+            //FIXME: - maybe change to sec
+            entity!.date = NSDate(timeIntervalSince1970: dataStruct.dateSeconds);
+        }
+        
+        self.saveContext(self.mainObjectContext);
+        
+        return entity;
+    }
+    
+    public func insertRouteEntity(dataStruct: SRRouteStruct) -> NSManagedObject? {
+        var entity: SRRoute? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoute, inManagedObjectContext: self.mainObjectContext) as? SRRoute;
+        
+        println("route")
+        if entity != nil {
+            entity!.id = dataStruct.id;
+            //FIXME: - to nstimeinterval
+            entity!.startDate = NSDate(timeIntervalSince1970: dataStruct.dateSeconds);
         }
         
         self.saveContext(self.mainObjectContext);
@@ -120,14 +132,13 @@ public class SRCoreDataManager: NSObject {
         };
     }
 
-    public func addRelationBetweenVideoData(videoData: [String: Any], andRouteMark identifier: String) {
+    public func addRelationBetweenVideoData(videoData: SRVideoDataStruct, andRouteMark identifier: String) {
         
         mainObjectContext.performBlockAndWait{ [weak self] () -> Void in
             if var blockSelf = self {
                 if var videoMark = blockSelf.checkForExistingEntity(kManagedObjectVideoMark, withId: identifier, inContext: blockSelf.mainObjectContext) as? SRVideoMark {
-                    if let videoData = blockSelf.insertEntity(kManagedObjectVideoData, dectionaryData: videoData) as? SRVideoData {
+                    if let videoData = blockSelf.insertVideoDataEntity(videoData) as? SRVideoData {
                         videoMark.videoData = videoData;
-                        
                         blockSelf.saveContext(blockSelf.mainObjectContext);
                     }
                 }
@@ -197,11 +208,11 @@ public class SRCoreDataManager: NSObject {
     
     //MARK: - save notification
 
-    func mocDidSaveNotification(notification: NSNotification) {
+    internal func mocDidSaveNotification(notification: NSNotification) {
         if let savedContext = notification.object as? NSManagedObjectContext {
         // ignore change notifications for the main MOC
-            if (masterObjectContext !== savedContext){
-                self.saveContext(self.masterObjectContext);
+            if (self.masterObjectContext !== savedContext){
+                self.saveContext(masterObjectContext);
             }
         }
     }
