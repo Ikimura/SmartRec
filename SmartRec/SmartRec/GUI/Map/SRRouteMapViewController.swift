@@ -58,6 +58,7 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
             
             if var blockSelf = self {
                 println("Loading indicator hide");
+                
                 blockSelf.hideBusyView();
                 
                 if ((fetchResult.finalResult) != nil) {
