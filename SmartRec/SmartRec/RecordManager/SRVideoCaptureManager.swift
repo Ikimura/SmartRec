@@ -23,7 +23,8 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
     private var currentRecorder: SRVideoRecorder!;
     private var isRecording: Bool!;
-    private var routeId: String?;
+    private var needToDeleteRoute: Bool = true;
+    private var route: SRRoute?;
     private lazy var fileManager: NSFileManager = {
         return NSFileManager.defaultManager();
         }();
@@ -31,13 +32,9 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     private var currentVideoData: SRVideoDataStruct?;
     private var currentVideoMarkData: SRVideoMarkStruct?;
     private var currentRouteData: SRRouteStruct?;
+    private var currentRoutePointData: SRRoutePointStruct?;
     
-    private lazy var locationData: [CLLocationCoordinate2D] = {
-        var tempArray = [CLLocationCoordinate2D]();
-
-        return tempArray;
-    }();
-    
+    private var previousPoint: CLLocationCoordinate2D?;
     //MARK: - life cycle
     
     override init(){
@@ -66,20 +63,67 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     
     //MARK: - internal interface
     
-    //FIXME: - move in route manager that should be contain a logic
+    //FIXME: - move in route manager that should be contain this logic
     func createNewRoute() {
         let identifier = String.randomString();
         println(identifier);
         
         currentRouteData = SRRouteStruct(id: identifier, dateSeconds: NSDate().timeIntervalSince1970);
+        
+        //add object
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {[weak self] () -> Void in
+            if var blockSelf = self {
+                let newRoute = (blockSelf.appDelegate.coreDataManager.insertRouteEntity(blockSelf.currentRouteData!) as? SRRoute);
+                
+                blockSelf.route = newRoute!;
+            }
+        });
     }
+
+    func finishRoute() {
+        if (needToDeleteRoute == true) {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {[weak self] () -> Void in
+                if var blockSelf = self {
+                    blockSelf.appDelegate.coreDataManager.deleteEntity(blockSelf.route!);
+                }
+            });
+        }
+    }
+    
+    private func addNewRoutePoint(point: SRRoutePointStruct) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] () -> Void in
+            println("Debug: Add new point");
+            
+            if var blockSelf = self {
+                //insert SRVideoMark
+                if let routePoint = blockSelf.appDelegate.coreDataManager.insertRoutePointEntity(blockSelf.currentRoutePointData!) as? SRRouteMark {
+                    //                    link point with route
+                    blockSelf.appDelegate.coreDataManager.addRelationBetweenRoutePoint(routePoint, andRoute: blockSelf.route!.id);
+                }
+            }
+        });
+    }
+    
+    //MARK:- inerface
     
     func startRecordingVideo() {
         let date = NSDate();
         let fileName = String.stringFromDate(date, withFormat: kFileNameFormat);
         let filePath = "\(fileName)\(kFileExtension)";
+        //mark that we will have not empty route
+        needToDeleteRoute = false;
         
         currentVideoData = SRVideoDataStruct(id: String.randomString(), fileName: fileName, dateSeconds: date.timeIntervalSince1970);
+
+        //create route point
+        currentRoutePointData = SRRoutePointStruct(id: String.randomString(),
+            lng: SRLocationManager.sharedInstance.currentLocation()!.coordinate.longitude,
+            lat: SRLocationManager.sharedInstance.currentLocation()!.coordinate.latitude,
+            time: date.timeIntervalSince1970
+        );
+        
+        //need link route point with route
+        self.addNewRoutePoint(currentRoutePointData!);
 
         println("Debug. New data: \(currentVideoData!.fileName)\(kFileExtension)");
         
@@ -99,21 +143,9 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
             autoSave: false,
             image: nil
         );
-        
-        //add object
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {[weak self] () -> Void in
-            if var blockSelf = self {
-                let route = (blockSelf.appDelegate.coreDataManager.insertRouteEntity(blockSelf.currentRouteData!) as? SRRoute);
-                
-                blockSelf.routeId = route?.id;
-            }
-        });
     }
     
     func stopRecordingVideo() {
-        //clear data
-        locationData.removeAll(keepCapacity: false);
-        
         isRecording = false;
         currentRecorder.stopRecording();
     }
@@ -142,7 +174,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
 //                    link SRVideoData with SRVodeoMark
                     blockSelf.appDelegate.coreDataManager.addRelationBetweenVideoData(videoData, andRouteMark: videoMark.id);
 //                    link SRVideoMark with SRRoute
-                    blockSelf.appDelegate.coreDataManager.addRelationBetweenVideoMark(videoMark, andRute: blockSelf.routeId!);
+                    blockSelf.appDelegate.coreDataManager.addRelationBetweenVideoMark(videoMark, andRute: blockSelf.route!.id);
                 }
             }
         });
@@ -164,12 +196,25 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     func didUpdatedLocations(notification: NSNotification) {
         println("Did recieve location notification");
 
-        if let userInfo: [NSObject: AnyObject?] = notification.userInfo as [NSObject: AnyObject?]! {
-            if let crnLoc = userInfo["location"] as? CLLocation! {
-                println("Did updated current location");
-                
-                println(crnLoc.coordinate.latitude);
-                self.locationData.append(crnLoc.coordinate);
+        if (isRecording == true) {
+            if let userInfo: [NSObject: AnyObject?] = notification.userInfo as [NSObject: AnyObject?]! {
+                if let crnLoc = userInfo["location"] as? CLLocation! {
+                    println("Did updated current location");
+
+                    if previousPoint == nil {
+                        previousPoint = CLLocationCoordinate2D(latitude: crnLoc.coordinate.latitude, longitude: crnLoc.coordinate.longitude);
+                    } else if (crnLoc.coordinate.latitude != previousPoint!.latitude && crnLoc.coordinate.longitude != previousPoint!.longitude) {
+                        //FXME:- move in manager
+                        self.addNewRoutePoint(SRRoutePointStruct(id: String.randomString(),
+                            lng: crnLoc.coordinate.longitude,
+                            lat: crnLoc.coordinate.latitude,
+                            time: NSDate().timeIntervalSince1970
+                            ));
+                        
+                        previousPoint = crnLoc!.coordinate;
+                        
+                    }
+                }
             }
         }
     }

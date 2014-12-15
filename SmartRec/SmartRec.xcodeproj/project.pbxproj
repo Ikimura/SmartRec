@@ -50,6 +50,8 @@
 		1359A0DA1A00E50C00FC8994 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1359A0D91A00E50C00FC8994 /* CoreLocation.framework */; };
 		1359A0DD1A00E88A00FC8994 /* SRLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1359A0DC1A00E88A00FC8994 /* SRLocationManager.swift */; };
 		1359A0DF1A0123E100FC8994 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1359A0DE1A0123E100FC8994 /* CoreData.framework */; };
+		1361452C1A3F396300097AA3 /* SRRoutePointStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1361452B1A3F396300097AA3 /* SRRoutePointStruct.swift */; };
+		1361452D1A3F402F00097AA3 /* SRRoutePointStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1361452B1A3F396300097AA3 /* SRRoutePointStruct.swift */; };
 		136895681A1A26E400D37A14 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A2791A1622A9004CBD9B /* GoogleMaps.framework */; };
 		136895691A1A270900D37A14 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A28A1A162372004CBD9B /* SystemConfiguration.framework */; };
 		1368956A1A1A271900D37A14 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1359A0DE1A0123E100FC8994 /* CoreData.framework */; };
@@ -192,6 +194,7 @@
 		1359A0D91A00E50C00FC8994 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1359A0DC1A00E88A00FC8994 /* SRLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRLocationManager.swift; sourceTree = "<group>"; };
 		1359A0DE1A0123E100FC8994 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		1361452B1A3F396300097AA3 /* SRRoutePointStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRRoutePointStruct.swift; path = ../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/Model/SRRoutePointStruct.swift; sourceTree = "<group>"; };
 		136895671A1A1E8D00D37A14 /* SmartRec 1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SmartRec 1.1.xcdatamodel"; sourceTree = "<group>"; };
 		137945941A3B0BFA00AF1A97 /* SRRouteStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRRouteStruct.swift; sourceTree = "<group>"; };
 		137945951A3B0BFA00AF1A97 /* SRVideoDataStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRVideoDataStruct.swift; sourceTree = "<group>"; };
@@ -455,6 +458,7 @@
 				137945941A3B0BFA00AF1A97 /* SRRouteStruct.swift */,
 				137945951A3B0BFA00AF1A97 /* SRVideoDataStruct.swift */,
 				137945961A3B0BFA00AF1A97 /* SRVideoMarkStruct.swift */,
+				1361452B1A3F396300097AA3 /* SRRoutePointStruct.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -841,6 +845,7 @@
 				137E3B8B19F531B20094C5A1 /* SRNavigationController.swift in Sources */,
 				1379459B1A3B0C3E00AF1A97 /* NSFileManagerExtensions.swift in Sources */,
 				13C1F5BD19F6466C00149649 /* SRVideoRecorder.swift in Sources */,
+				1361452C1A3F396300097AA3 /* SRRoutePointStruct.swift in Sources */,
 				1379A1591A360530004F0790 /* SRVideoMark.swift in Sources */,
 				137E3B8D19F532550094C5A1 /* SRCommonViewController.swift in Sources */,
 				137E3B9A19F542DB0094C5A1 /* SRVideoWriterViewController.swift in Sources */,
@@ -871,6 +876,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1361452D1A3F402F00097AA3 /* SRRoutePointStruct.swift in Sources */,
 				13557F491A3B227C00E36CE7 /* SRCoreDataManager.swift in Sources */,
 				13557F481A3B226200E36CE7 /* SRCoreDataManagerSpec.swift in Sources */,
 				13557F431A3B169A00E36CE7 /* NSFileManagerExtensions.swift in Sources */,

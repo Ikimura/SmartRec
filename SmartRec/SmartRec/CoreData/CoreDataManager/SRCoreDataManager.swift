@@ -33,6 +33,9 @@ public class SRCoreDataManager: NSObject {
         
         let managedObjectModel = NSManagedObjectModel.mergedModelFromBundles(nil);
         var tempStoreCordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel!);
+        
+        var error: NSError?;
+        
         //for migration
         let options: [String: Bool] = [
             NSMigratePersistentStoresAutomaticallyOption : true,
@@ -43,7 +46,6 @@ public class SRCoreDataManager: NSObject {
         
         let storeURL = (tempURLS[tempURLS.count - 1]).URLByAppendingPathComponent(self.storePath);
         
-        var error: NSError?;
         tempStoreCordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options, error: &error);
         
         if error != nil {
@@ -80,6 +82,22 @@ public class SRCoreDataManager: NSObject {
             if let imageData =  dataStruct.image as NSData! {
                 entity!.thumnailImage = imageData;
             }
+        }
+        
+        self.saveContext(self.mainObjectContext);
+        
+        return entity;
+    }
+    
+    public func insertRoutePointEntity(dataStruct: SRRoutePointStruct) -> NSManagedObject? {
+        var entity: SRRouteMark? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoutePoint, inManagedObjectContext: self.mainObjectContext) as? SRRouteMark;
+        
+        println("SRRoutePOint")
+        if entity != nil {
+            entity!.id = dataStruct.id;
+            entity!.latitude = dataStruct.lat;
+            entity!.longitude = dataStruct.lng;
+            entity!.time = NSDate(timeIntervalSince1970: dataStruct.time);
         }
         
         self.saveContext(self.mainObjectContext);
@@ -144,6 +162,34 @@ public class SRCoreDataManager: NSObject {
                 }
             }
         };
+    }
+    
+    public func addRelationBetweenRoutePoint(routePoint: SRRouteMark, andRoute identifier: String) {
+        
+        mainObjectContext.performBlockAndWait { [weak self] () -> Void in
+            if var blockSelf = self {
+                if var route = blockSelf.checkForExistingEntity(kManagedObjectRoute, withId: identifier, inContext: blockSelf.mainObjectContext) as? SRRoute {
+                    route.addRoutePoint(routePoint);
+                    
+                    blockSelf.saveContext(blockSelf.mainObjectContext);
+                    
+                }
+            }
+        };
+    }
+    
+    public func deleteEntity(entity: NSManagedObject) -> SRResult {
+        var managedContext = entity.managedObjectContext;
+        
+        managedContext?.deleteObject(entity);
+        
+        var error: NSError?;
+        
+        if (managedContext?.save(&error) == true) {
+            return .Success(true);
+        }
+        
+        return .Failure(error!);
     }
     
     //MARK: - internal API

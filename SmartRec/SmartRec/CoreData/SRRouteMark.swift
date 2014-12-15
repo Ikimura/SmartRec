@@ -9,6 +9,7 @@
 import Foundation
 import CoreData
 
+//FIXME:- rename to SRRoutePoint
 public class SRRouteMark: NSManagedObject {
 
     @NSManaged var id: String

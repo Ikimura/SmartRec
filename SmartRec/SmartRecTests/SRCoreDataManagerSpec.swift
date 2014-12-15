@@ -15,30 +15,30 @@ class SRCoreDataManagerSpec: QuickSpec {
     var coredataManager: SRCoreDataManager?;
     var currentVideoMark: SRVideoMarkStruct = SRVideoMarkStruct(id: NSString.randomString(), lng: 27.55, lat: 53.916667, autoSave: false, image: nil);;
     var currentVideoData: SRVideoDataStruct = SRVideoDataStruct(id: NSString.randomString(), fileName: "name", dateSeconds: NSDate().timeIntervalSince1970);
-//    var currentRouteData: SRRouteStruct = 
+    var currentRouteData: SRRouteStruct = SRRouteStruct(id: NSString.randomString(), dateSeconds: NSDate().timeIntervalSince1970);
 
     override func spec() {
         
         
         beforeSuite {
-            self.coredataManager = SRCoreDataManager(storePath: kTestStorePathComponent);
+            self.coredataManager = SRCoreDataManager(storePath: kStorePathComponent);
         }
         
         afterSuite {
             
             self.coredataManager = nil;
             
-            let storeURL: NSURL = NSURL.URL(directoryName: kFileDirectory, fileName: kTestStorePathComponent)!
-            var fileManager: NSFileManager = NSFileManager.defaultManager();
-            
-            fileManager.removeItemAtPath(storeURL.path!, error: nil);
-//
-            var error: NSError?;
-            if let str = NSString(contentsOfURL: storeURL, encoding: NSASCIIStringEncoding, error: &error) as NSString! {
-                if(fileManager.fileExistsAtPath(str)){
-                    fileManager.removeItemAtURL(storeURL, error:nil);
-                }
-            }
+//            let storeURL: NSURL = NSURL.URL(directoryName: kFileDirectory, fileName: kStorePathComponent)!
+//            var fileManager: NSFileManager = NSFileManager.defaultManager();
+//            
+//            fileManager.removeItemAtPath(storeURL.path!, error: nil);
+////
+//            var error: NSError?;
+//            if let str = NSString(contentsOfURL: storeURL, encoding: NSASCIIStringEncoding, error: &error) as NSString! {
+//                if(fileManager.fileExistsAtPath(str)){
+//                    fileManager.removeItemAtURL(storeURL, error:nil);
+//                }
+//            }
         }
         
         afterEach {
@@ -51,10 +51,11 @@ class SRCoreDataManagerSpec: QuickSpec {
                 
                 it("insert SRRoute entity") {
                     //act
-                    let route: NSManagedObject? = self.coredataManager!.insertRouteEntity(SRRouteStruct(id: NSString.randomString(), dateSeconds: NSDate().timeIntervalSince1970));
-//                    let currentID: String = self.currentRouteData.id;
-//                    println("id: ", currentID);
+                    let route: NSManagedObject? = self.coredataManager!.insertRouteEntity(self.currentRouteData);
+                    let currentID: String = self.currentRouteData.id;
+                    println("id: ", currentID);
                     
+                    //asset
                     expect(route).notTo(beNil());
 //                    expect((route as SRRoute).id).notTo(beNil());
                 }
@@ -78,6 +79,27 @@ class SRCoreDataManagerSpec: QuickSpec {
                     expect(videoData).notTo(beNil());
 //                    expect((videoData as SRVideoData).id).to(equal(currentID));
 //                    expect(false).to(beTruthy());
+                }
+                
+                it("delete SRRoute entity") {
+                    //arrange
+                    let route: NSManagedObject? = self.coredataManager!.insertRouteEntity(self.currentRouteData);
+                    let currentID: String = self.currentRouteData.id;
+                    println("id: ", currentID);
+                    
+                    //
+                    expect(route).notTo(beNil());
+                    //act
+                    let result: SRResult = self.coredataManager!.deleteEntity(route!);
+                    
+                    //assert
+                    switch result{
+                    case .Success(let succes):
+                        expect(true).to(beTruthy());
+                    case .Failure(let errString):
+                        expect(false).to(beTruthy());
+                    }
+                    
                 }
                 
                 it("add relation between SRRoute and SRVideoMark") {

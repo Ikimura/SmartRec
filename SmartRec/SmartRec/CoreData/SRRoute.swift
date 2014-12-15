@@ -15,6 +15,7 @@ public class SRRoute: NSManagedObject {
     @NSManaged var duration: NSNumber
     @NSManaged var id: String
     @NSManaged var startDate: NSDate
+    //FIXEME:- rename to routePoints, changed to orderedSet
     @NSManaged var routeMarks: NSSet
     @NSManaged var videoMarks: NSSet
     
@@ -23,5 +24,12 @@ public class SRRoute: NSManagedObject {
         tempSet.addObject(mark);
         
         videoMarks = tempSet;
+    }
+    
+    func addRoutePoint(point: SRRouteMark) {
+        var tempSet: NSMutableSet = NSMutableSet(set: routeMarks);
+        tempSet.addObject(point);
+        
+        routeMarks = tempSet;
     }
 }

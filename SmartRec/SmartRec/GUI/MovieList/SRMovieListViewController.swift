@@ -13,7 +13,8 @@ import CoreData
 class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate {
     
     @IBOutlet private var tableView: UITableView!;
-    
+    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
+
     private lazy var fileManager: NSFileManager = {
         return NSFileManager.defaultManager();
     }();
@@ -156,14 +157,14 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
                         case .Success(let quotient):
                             println("Debug. File deleted!");
                             
-                            let managedObjectContext = deleteItem.managedObjectContext!;
-                            managedObjectContext.deleteObject(deleteItem)
-                            
-                            /*deletes model from the persistent store (SQLite DB) */
-                            var e: NSError?;
-                            if (!managedObjectContext.save(&e)) {
-                                println("cancel error: \(e!.localizedDescription)")
+                            let result = appDelegate.coreDataManager.deleteEntity(deleteItem);
+                            switch result {
+                            case .Success(let quotient):
+                                println("Debug. File deleted!");
+                            case .Failure(let error):
+                                println("Debug. Deleting failed");
                             }
+                            
                         case .Failure(let error):
                             println("Debug. Deleting failed");
                         }
@@ -195,6 +196,5 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
             }
         }
     }
-
 
 }

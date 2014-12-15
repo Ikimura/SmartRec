@@ -50,15 +50,15 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         
         recordManager.startRunnigSession();
         
-        //FIXME: - fix it
-        recordManager.createNewRoute();
-        
         //Update location, speed, timer
         dispatch_async(locationQueue, { () -> Void in
             SRLocationManager.sharedInstance.startMonitoringLocation();
         });
         //start monitoring acceleration
         acceleraometrWidget?.startAccelerationMonitoring();
+        
+        //FIXME: - fix it
+        recordManager.createNewRoute();
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -72,6 +72,9 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         });
         //stop monitoring acceleration
         acceleraometrWidget?.stopAccelerationMonitoring();
+        
+        //FIXME: - fix it
+        recordManager.finishRoute();
     }
     
     deinit {

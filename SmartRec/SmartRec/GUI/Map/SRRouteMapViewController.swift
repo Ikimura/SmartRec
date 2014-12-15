@@ -57,22 +57,27 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
         appDelegate.coreDataManager.fetchEntities(kManagedObjectRoute, withCompletion: { [weak self] (fetchResult: NSAsynchronousFetchResult) -> Void in
             
             if var blockSelf = self {
-                println("Loading indicator hide");
-                
-                blockSelf.hideBusyView();
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    println("Loading indicator hide");
+                    blockSelf.hideBusyView();
+                });
                 
                 if ((fetchResult.finalResult) != nil) {
                     // Update Items
                     blockSelf.results = fetchResult.finalResult;
-                    
+                    println("Results Count: \(blockSelf.results?.count)");
+
                     for route in blockSelf.results! {
                         if let routeItem = route as? SRRoute {
                             //show route
+                            println("Count of route points: \(routeItem.routeMarks.count)");
+                            
                             dispatch_async(dispatch_get_main_queue(), {() -> Void in
                                 blockSelf.makePolylineForRoute(routeItem);
                             });
-                            
-                            println(routeItem.id);
+                            println("Id: \(routeItem.id)");
+                            println("Count of video marks: \(routeItem.videoMarks.count)");
+
                             for (_, routeMark) in enumerate(routeItem.videoMarks) {
                                 if let mark = routeMark as? SRVideoMark {
                                     println(mark.latitude.doubleValue);
@@ -81,8 +86,8 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
                                     //show annotations
                                     var dic: [String: AnyObject!] = [
                                         "id": mark.id,
-                                        "date": mark.videoData?.date.description,
-                                        "fileName": mark.videoData?.fileName,
+                                        "date": mark.videoData!.date.description,
+                                        "fileName": mark.videoData!.fileName,
                                         "lat": mark.latitude.doubleValue,
                                         "lng": mark.longitude.doubleValue,
                                         "photo": mark.thumnailImage];
@@ -115,8 +120,8 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
         var gmsPaths: GMSMutablePath = GMSMutablePath();
 
         //FIXME: - change videoMarks to routeMarks
-        for (_, routeMark) in enumerate(route.videoMarks) {
-            gmsPaths.addCoordinate(CLLocationCoordinate2D(latitude: routeMark.latitude.doubleValue, longitude: routeMark.longitude.doubleValue));
+        for (_, routePoint) in enumerate(route.routeMarks) {
+            gmsPaths.addCoordinate(CLLocationCoordinate2D(latitude: routePoint.latitude.doubleValue, longitude: routePoint.longitude.doubleValue));
         }
         
         var polyline: GMSPolyline = GMSPolyline(path: gmsPaths);

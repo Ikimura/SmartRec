@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SRResult {
+public enum SRResult {
     case Success(AnyObject!)
     case Failure(NSError)
 }
