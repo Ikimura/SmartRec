@@ -1,20 +1,19 @@
 //
-//  SRRouteMark.swift
+//  SRRoutePoint.swift
 //  SmartRec
 //
-//  Created by Artsiom Karseka on 12/8/14.
+//  Created by Artsiom Karseka on 12/16/14.
 //  Copyright (c) 2014 con.epam.evnt. All rights reserved.
 //
 
 import Foundation
 import CoreData
 
-//FIXME:- rename to SRRoutePoint
-public class SRRouteMark: NSManagedObject {
+public class SRRoutePoint: NSManagedObject {
 
     @NSManaged var id: String
     @NSManaged var latitude: NSNumber
     @NSManaged var longitude: NSNumber
-    @NSManaged var time: NSDate
+    @NSManaged var time: NSNumber
 
 }

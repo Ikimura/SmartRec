@@ -17,7 +17,7 @@ let kHighFramRate: Int32 = 30;
 
 let kFileDirectory: NSSearchPathDirectory = .DocumentDirectory;
 
-let kManagedObjectRoutePoint: String = "SRRouteMark";
+let kManagedObjectRoutePoint: String = "SRRoutePoint";
 
 let kManagedObjectVideoMark: String = "SRVideoMark";
 

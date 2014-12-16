@@ -90,14 +90,14 @@ public class SRCoreDataManager: NSObject {
     }
     
     public func insertRoutePointEntity(dataStruct: SRRoutePointStruct) -> NSManagedObject? {
-        var entity: SRRouteMark? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoutePoint, inManagedObjectContext: self.mainObjectContext) as? SRRouteMark;
+        var entity: SRRoutePoint? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoutePoint, inManagedObjectContext: self.mainObjectContext) as? SRRoutePoint;
         
         println("SRRoutePOint")
         if entity != nil {
             entity!.id = dataStruct.id;
             entity!.latitude = dataStruct.lat;
             entity!.longitude = dataStruct.lng;
-            entity!.time = NSDate(timeIntervalSince1970: dataStruct.time);
+            entity!.time = NSNumber(double: dataStruct.time);
         }
         
         self.saveContext(self.mainObjectContext);
@@ -113,7 +113,7 @@ public class SRCoreDataManager: NSObject {
             entity!.id = dataStruct.id;
             entity!.fileName = dataStruct.fileName;
             //FIXME: - maybe change to sec
-            entity!.date = NSDate(timeIntervalSince1970: dataStruct.dateSeconds);
+            entity!.date = NSNumber(double: dataStruct.dateSeconds);
         }
         
         self.saveContext(self.mainObjectContext);
@@ -128,7 +128,7 @@ public class SRCoreDataManager: NSObject {
         if entity != nil {
             entity!.id = dataStruct.id;
             //FIXME: - to nstimeinterval
-            entity!.startDate = NSDate(timeIntervalSince1970: dataStruct.dateSeconds);
+            entity!.startDate = NSNumber(double: dataStruct.dateSeconds);
         }
         
         self.saveContext(self.mainObjectContext);
@@ -144,7 +144,6 @@ public class SRCoreDataManager: NSObject {
                     route.addMark(videoMark);
                     
                     blockSelf.saveContext(blockSelf.mainObjectContext);
-
                 }
             }
         };
@@ -164,7 +163,7 @@ public class SRCoreDataManager: NSObject {
         };
     }
     
-    public func addRelationBetweenRoutePoint(routePoint: SRRouteMark, andRoute identifier: String) {
+    public func addRelationBetweenRoutePoint(routePoint: SRRoutePoint, andRoute identifier: String) {
         
         mainObjectContext.performBlockAndWait { [weak self] () -> Void in
             if var blockSelf = self {

@@ -19,26 +19,25 @@ class SRCoreDataManagerSpec: QuickSpec {
 
     override func spec() {
         
-        
         beforeSuite {
-            self.coredataManager = SRCoreDataManager(storePath: kStorePathComponent);
+            self.coredataManager = SRCoreDataManager(storePath: kTestStorePathComponent);
         }
         
         afterSuite {
             
             self.coredataManager = nil;
             
-//            let storeURL: NSURL = NSURL.URL(directoryName: kFileDirectory, fileName: kStorePathComponent)!
-//            var fileManager: NSFileManager = NSFileManager.defaultManager();
-//            
-//            fileManager.removeItemAtPath(storeURL.path!, error: nil);
-////
-//            var error: NSError?;
-//            if let str = NSString(contentsOfURL: storeURL, encoding: NSASCIIStringEncoding, error: &error) as NSString! {
-//                if(fileManager.fileExistsAtPath(str)){
-//                    fileManager.removeItemAtURL(storeURL, error:nil);
-//                }
-//            }
+            let storeURL: NSURL = NSURL.URL(directoryName: kFileDirectory, fileName: kTestStorePathComponent)!
+            var fileManager: NSFileManager = NSFileManager.defaultManager();
+            
+            fileManager.removeItemAtPath(storeURL.path!, error: nil);
+            
+            var error: NSError?;
+            if let str = NSString(contentsOfURL: storeURL, encoding: NSASCIIStringEncoding, error: &error) as NSString! {
+                if(fileManager.fileExistsAtPath(str)){
+                    fileManager.removeItemAtURL(storeURL, error:nil);
+                }
+            }
         }
         
         afterEach {
@@ -81,7 +80,7 @@ class SRCoreDataManagerSpec: QuickSpec {
 //                    expect(false).to(beTruthy());
                 }
                 
-                it("delete SRRoute entity") {
+                xit("delete SRRoute entity") {
                     //arrange
                     let route: NSManagedObject? = self.coredataManager!.insertRouteEntity(self.currentRouteData);
                     let currentID: String = self.currentRouteData.id;

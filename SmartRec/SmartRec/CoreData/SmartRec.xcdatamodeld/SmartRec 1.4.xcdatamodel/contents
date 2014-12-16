@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="SRRoute" representedClassName="SmartRec.SRRoute" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="routePoints" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="SRRoutePoint" elementID="routeMarks" syncable="YES"/>
+        <relationship name="videoMarks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SRVideoMark" syncable="YES"/>
+    </entity>
+    <entity name="SRRoutePoint" representedClassName="SmartRec.SRRoutePoint" elementID="SRRouteMark" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+    </entity>
+    <entity name="SRVideoData" representedClassName="SmartRec.SRVideoData" elementID="SRNote" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="fileName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="SRVideoMark" representedClassName="SmartRec.SRVideoMark" syncable="YES">
+        <attribute name="autoSaved" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="thumnailImage" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="videoData" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="SRVideoData" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="SRRoute" positionX="144" positionY="-72" width="128" height="133"/>
+        <element name="SRRoutePoint" positionX="144" positionY="144" width="128" height="103"/>
+        <element name="SRVideoData" positionX="-54" positionY="-234" width="128" height="88"/>
+        <element name="SRVideoMark" positionX="-56" positionY="-72" width="128" height="133"/>
+    </elements>
+</model>

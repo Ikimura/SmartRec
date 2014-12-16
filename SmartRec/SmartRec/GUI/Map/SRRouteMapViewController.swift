@@ -70,7 +70,7 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
                     for route in blockSelf.results! {
                         if let routeItem = route as? SRRoute {
                             //show route
-                            println("Count of route points: \(routeItem.routeMarks.count)");
+                            println("Count of route points: \(routeItem.routePoints.count)");
                             
                             dispatch_async(dispatch_get_main_queue(), {() -> Void in
                                 blockSelf.makePolylineForRoute(routeItem);
@@ -118,11 +118,12 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
     
     private func makePolylineForRoute(route: SRRoute){
         var gmsPaths: GMSMutablePath = GMSMutablePath();
-
-        //FIXME: - change videoMarks to routeMarks
-        for (_, routePoint) in enumerate(route.routeMarks) {
-            gmsPaths.addCoordinate(CLLocationCoordinate2D(latitude: routePoint.latitude.doubleValue, longitude: routePoint.longitude.doubleValue));
-        }
+        
+        route.routePoints.enumerateObjectsUsingBlock {[weak self] (element, index, stop) -> Void in
+            if var blockSelf = self {
+                gmsPaths.addCoordinate(CLLocationCoordinate2D(latitude: element.latitude.doubleValue, longitude: element.longitude.doubleValue));
+            }
+        };
         
         var polyline: GMSPolyline = GMSPolyline(path: gmsPaths);
         polyline.strokeColor = UIColor.blueColor();

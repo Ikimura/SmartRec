@@ -96,7 +96,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
             
             if var blockSelf = self {
                 //insert SRVideoMark
-                if let routePoint = blockSelf.appDelegate.coreDataManager.insertRoutePointEntity(blockSelf.currentRoutePointData!) as? SRRouteMark {
+                if let routePoint = blockSelf.appDelegate.coreDataManager.insertRoutePointEntity(blockSelf.currentRoutePointData!) as? SRRoutePoint {
                     //                    link point with route
                     blockSelf.appDelegate.coreDataManager.addRelationBetweenRoutePoint(routePoint, andRoute: blockSelf.route!.id);
                 }
