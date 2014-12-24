@@ -12,7 +12,7 @@ import UIKit
 import Foundation
 import CoreLocation
 
-class SRVideoPlace {
+struct SRVideoPlace {
   
     let videoIdentifier: String;
     let fileName: String;

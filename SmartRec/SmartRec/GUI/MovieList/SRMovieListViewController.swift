@@ -179,20 +179,19 @@ class SRMovieListViewController: SRCommonViewController, UITableViewDelegate, UI
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         
-        var url: NSURL?;
+        var selectedVideoMark: SRVideoMark?;
         if let selectedCell = sender as? SRMovieTableViewCell {
             let indexPath: NSIndexPath = tableView.indexPathForCell(selectedCell)!;
             if let selectedItem = self.fetchedResultController.fetchedObjects![indexPath.row] as? SRVideoMark {
-                if let fileName = selectedItem.videoData?.fileName as String! {
-                    url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(fileName)\(kFileExtension)")!;
-                }
+                selectedVideoMark = selectedItem;
             }
         }
         
         // Get the new view controller using segue.destinationViewController.
-        if segue.identifier == kShowMovieSegueIdentifier {
-            if let showVideoVC = segue.destinationViewController as? SRShowVideoViewController {
-                showVideoVC.fileURL = url!;
+        if segue.identifier == kDisplayVideoRouteDetailsSegueIdentifier_1 {
+            if let routeVideoDetailsVC = segue.destinationViewController as? SRVideoRouteDetailsViewController {
+                routeVideoDetailsVC.route = selectedVideoMark?.route;
+                routeVideoDetailsVC.selectedVideoId = selectedVideoMark?.id;
             }
         }
     }

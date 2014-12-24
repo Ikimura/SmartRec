@@ -8,14 +8,16 @@
 
 
 class SRRouteMarker: GMSMarker {
-    let routePoint: SRVideoPlace;
-    
-    init(routePoint: SRVideoPlace) {
-        self.routePoint = routePoint;
+    let videoPoint: SRVideoPlace;
+    let routeID: String;
+
+    init(videoPoint: SRVideoPlace, routeID: String) {
+        self.videoPoint = videoPoint;
+        self.routeID = routeID;
         
         super.init()
         
-        position = routePoint.coordinate;
+        position = videoPoint.coordinate;
         icon = UIImage(named: "");
         groundAnchor = CGPoint(x: 0.5, y: 1);
         appearAnimation = kGMSMarkerAnimationPop;

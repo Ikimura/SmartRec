@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="GZA-1m-VXD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="GZA-1m-VXD">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -119,8 +119,8 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" id="iqS-fv-drX"/>
                     <connections>
-                        <outlet property="googleMapView" destination="cEd-Pk-g0M" id="1Us-tt-4oA"/>
-                        <segue destination="Kc9-BI-r0t" kind="showDetail" identifier="showVideoDetailItentifier" id="dhw-SC-EG7"/>
+                        <outlet property="googleMapView" destination="cEd-Pk-g0M" id="pgA-hK-g4s"/>
+                        <segue destination="ihn-a7-tWy" kind="show" identifier="displayVideoRouteDetailsSegueIdentifier_2" id="1dE-7r-h7D"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dD3-xQ-DRV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -234,7 +234,7 @@
                                     <outlet property="dateLabel" destination="l81-8F-hr1" id="thj-Uv-LGr"/>
                                     <outlet property="locationLabel" destination="ps3-eb-IDw" id="gQD-kv-wWO"/>
                                     <outlet property="photoImage" destination="yzy-uN-umC" id="dJQ-oE-Bfg"/>
-                                    <segue destination="Kc9-BI-r0t" kind="showDetail" identifier="showVideoIdentifier" id="9gC-Pj-tYq"/>
+                                    <segue destination="ihn-a7-tWy" kind="show" identifier="displayVideoRouteDetailsSegueIdentifier_1" id="u0l-w3-vXz"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -252,6 +252,110 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-222" y="-822"/>
+        </scene>
+        <!--Video Route Details View Controller-->
+        <scene sceneID="5yN-JO-f7o">
+            <objects>
+                <viewController id="ihn-a7-tWy" customClass="SRVideoRouteDetailsViewController" customModule="SmartRec" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8an-JD-iDS"/>
+                        <viewControllerLayoutGuide type="bottom" id="g1O-n8-fIR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KXv-o0-d1K">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e2d-uI-Uxx">
+                                <rect key="frame" x="0.0" y="20" width="600" height="165"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mW9-p8-odH">
+                                        <rect key="frame" x="8" y="8" width="277" height="21"/>
+                                        <color key="backgroundColor" red="0.60000002384185791" green="0.40000000596046448" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="277" id="SiR-Cx-iyB"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aq2-RP-1iW">
+                                        <rect key="frame" x="8" y="37" width="277" height="21"/>
+                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHU-8Z-gqW">
+                                        <rect key="frame" x="8" y="66" width="277" height="21"/>
+                                        <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RDH-bp-GHc">
+                                        <rect key="frame" x="8" y="95" width="277" height="21"/>
+                                        <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ttD-t1-tlQ">
+                                        <rect key="frame" x="8" y="124" width="277" height="21"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="ttD-t1-tlQ" firstAttribute="top" secondItem="RDH-bp-GHc" secondAttribute="bottom" constant="8" id="7V3-8a-2Sb"/>
+                                    <constraint firstItem="mW9-p8-odH" firstAttribute="leading" secondItem="e2d-uI-Uxx" secondAttribute="leading" constant="8" id="7Vm-8Z-MPG"/>
+                                    <constraint firstItem="ttD-t1-tlQ" firstAttribute="leading" secondItem="e2d-uI-Uxx" secondAttribute="leading" constant="8" id="CCL-5K-jpG"/>
+                                    <constraint firstItem="RDH-bp-GHc" firstAttribute="top" secondItem="mHU-8Z-gqW" secondAttribute="bottom" constant="8" id="Dsh-Af-xGk"/>
+                                    <constraint firstItem="ttD-t1-tlQ" firstAttribute="trailing" secondItem="RDH-bp-GHc" secondAttribute="trailing" id="IlL-Ic-q9v"/>
+                                    <constraint firstItem="mHU-8Z-gqW" firstAttribute="leading" secondItem="e2d-uI-Uxx" secondAttribute="leading" constant="8" id="LnG-ns-Ru4"/>
+                                    <constraint firstItem="mW9-p8-odH" firstAttribute="top" secondItem="e2d-uI-Uxx" secondAttribute="top" constant="8" id="Pq1-w2-VtW"/>
+                                    <constraint firstAttribute="height" constant="165" id="SAi-vv-avt"/>
+                                    <constraint firstItem="mHU-8Z-gqW" firstAttribute="top" secondItem="aq2-RP-1iW" secondAttribute="bottom" constant="8" id="TAS-h9-etW"/>
+                                    <constraint firstItem="aq2-RP-1iW" firstAttribute="trailing" secondItem="mHU-8Z-gqW" secondAttribute="trailing" id="aKO-8q-aAT"/>
+                                    <constraint firstItem="aq2-RP-1iW" firstAttribute="leading" secondItem="e2d-uI-Uxx" secondAttribute="leading" constant="8" id="cnn-2Z-HSe"/>
+                                    <constraint firstItem="RDH-bp-GHc" firstAttribute="trailing" secondItem="mHU-8Z-gqW" secondAttribute="trailing" id="n6k-A8-hrv"/>
+                                    <constraint firstItem="mW9-p8-odH" firstAttribute="trailing" secondItem="aq2-RP-1iW" secondAttribute="trailing" id="vTo-Rv-bcf"/>
+                                    <constraint firstItem="RDH-bp-GHc" firstAttribute="leading" secondItem="e2d-uI-Uxx" secondAttribute="leading" constant="8" id="xTZ-Wx-tXs"/>
+                                    <constraint firstItem="aq2-RP-1iW" firstAttribute="top" secondItem="mW9-p8-odH" secondAttribute="bottom" constant="8" id="ySB-mp-nJJ"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6vW-ZE-gqb" customClass="GMSMapView">
+                                <rect key="frame" x="0.0" y="185" width="600" height="415"/>
+                                <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6vW-ZE-gqb" firstAttribute="top" secondItem="e2d-uI-Uxx" secondAttribute="bottom" id="8Uv-kM-9bf"/>
+                            <constraint firstItem="e2d-uI-Uxx" firstAttribute="leading" secondItem="KXv-o0-d1K" secondAttribute="leading" id="DbA-gf-g6T"/>
+                            <constraint firstItem="g1O-n8-fIR" firstAttribute="top" secondItem="6vW-ZE-gqb" secondAttribute="bottom" constant="-49" id="F1y-5x-2co"/>
+                            <constraint firstAttribute="trailing" secondItem="e2d-uI-Uxx" secondAttribute="trailing" id="GL2-jN-a4g"/>
+                            <constraint firstItem="6vW-ZE-gqb" firstAttribute="leading" secondItem="KXv-o0-d1K" secondAttribute="leading" id="P3o-Hh-5kn"/>
+                            <constraint firstItem="e2d-uI-Uxx" firstAttribute="top" secondItem="8an-JD-iDS" secondAttribute="bottom" id="TTt-S5-stb"/>
+                            <constraint firstAttribute="trailing" secondItem="6vW-ZE-gqb" secondAttribute="trailing" id="oJf-cZ-3Wd"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="containerView" destination="e2d-uI-Uxx" id="Znd-Bm-jmH"/>
+                        <outlet property="googleMapView" destination="6vW-ZE-gqb" id="4qN-Ij-BkP"/>
+                        <outlet property="routeStartEndDateLabel" destination="ttD-t1-tlQ" id="D8y-Ge-SME"/>
+                        <outlet property="videFileDurationLabel" destination="RDH-bp-GHc" id="ETT-hj-Qlr"/>
+                        <outlet property="videoFileNameLabel" destination="mW9-p8-odH" id="c64-ZB-7tN"/>
+                        <outlet property="videoMarkDateLabel" destination="mHU-8Z-gqW" id="aSL-CK-YgN"/>
+                        <outlet property="videoMarkLocationLabel" destination="aq2-RP-1iW" id="ydx-CB-Ae2"/>
+                        <outlet property="view" destination="KXv-o0-d1K" id="tVf-wO-xd5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Am-K2-D4v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="663" y="-252"/>
         </scene>
         <!--Show Video View Controller-->
         <scene sceneID="2f0-Ee-aTY">
@@ -284,13 +388,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hh2-Lh-wg0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="667" y="-266"/>
+            <point key="canvasLocation" x="1353" y="-252"/>
         </scene>
     </scenes>
     <resources>
         <image name="image_placeholder" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dhw-SC-EG7"/>
+        <segue reference="u0l-w3-vXz"/>
     </inferredMetricsTieBreakers>
 </document>

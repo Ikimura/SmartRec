@@ -112,7 +112,6 @@ public class SRCoreDataManager: NSObject {
         if entity != nil {
             entity!.id = dataStruct.id;
             entity!.fileName = dataStruct.fileName;
-            //FIXME: - maybe change to sec
             entity!.date = NSNumber(double: dataStruct.dateSeconds);
         }
         
@@ -127,7 +126,6 @@ public class SRCoreDataManager: NSObject {
         println("route")
         if entity != nil {
             entity!.id = dataStruct.id;
-            //FIXME: - to nstimeinterval
             entity!.startDate = NSNumber(double: dataStruct.dateSeconds);
         }
         
@@ -142,6 +140,7 @@ public class SRCoreDataManager: NSObject {
             if var blockSelf = self {
                 if var route = blockSelf.checkForExistingEntity(kManagedObjectRoute, withId: identifier, inContext: blockSelf.mainObjectContext) as? SRRoute {
                     route.addMark(videoMark);
+                    videoMark.route = route;
                     
                     blockSelf.saveContext(blockSelf.mainObjectContext);
                 }
@@ -169,6 +168,7 @@ public class SRCoreDataManager: NSObject {
             if var blockSelf = self {
                 if var route = blockSelf.checkForExistingEntity(kManagedObjectRoute, withId: identifier, inContext: blockSelf.mainObjectContext) as? SRRoute {
                     route.addRoutePoint(routePoint);
+                    routePoint.route = route;
                     
                     blockSelf.saveContext(blockSelf.mainObjectContext);
                     

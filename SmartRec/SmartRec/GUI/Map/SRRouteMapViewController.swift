@@ -9,14 +9,12 @@
 import UIKit
 import CoreData
 
-class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
-    @IBOutlet var googleMapView: GMSMapView!
+class SRRouteMapViewController: SRCommonMapViewController {
     
-    private var myCoordinate: CLLocationCoordinate2D!;
-    private var targetCoordinate: CLLocationCoordinate2D!;
-    
-    private var results: [AnyObject]?;
-    
+    private var routes: [SRRoute]?;
+    private var selectedRoute: SRRoute?;
+    private var selectedVideoMarkId: String?;
+
     private lazy var mapInfoView: SRMarkerInfoView! = {
         if let infoView = UIView.viewFromNibName("SRMarkerInfoView") as? SRMarkerInfoView!  {
             return infoView;
@@ -24,26 +22,17 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
             return nil;
         }
     }();
-    
-    private var videoFileURL: NSURL?;
-    
+        
     //MARK: - life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        //setup Map
+        self.setUpMapViewWith(SRLocationManager.sharedInstance.currentLocation() as CLLocation?);
         
-        //setup amp
-        self.setUpMapView();
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated);
         //load data
         self.loadData();
-    }
-
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated);
     }
     
     //MARK: - private interface
@@ -64,110 +53,61 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
                 
                 if ((fetchResult.finalResult) != nil) {
                     // Update Items
-                    blockSelf.results = fetchResult.finalResult;
-                    println("Results Count: \(blockSelf.results?.count)");
+                    blockSelf.routes = fetchResult.finalResult as [SRRoute]?;
+                    println("Results Count: \(blockSelf.routes?.count)");
 
-                    for route in blockSelf.results! {
-                        if let routeItem = route as? SRRoute {
-                            //show route
-                            println("Count of route points: \(routeItem.routePoints.count)");
-                            
-                            dispatch_async(dispatch_get_main_queue(), {() -> Void in
-                                blockSelf.makePolylineForRoute(routeItem);
-                            });
-                            println("Id: \(routeItem.id)");
-                            println("Count of video marks: \(routeItem.videoMarks.count)");
-
-                            for (_, routeMark) in enumerate(routeItem.videoMarks) {
-                                if let mark = routeMark as? SRVideoMark {
-                                    println(mark.latitude.doubleValue);
-                                    println(mark.longitude.doubleValue);
-                                    
-                                    //show annotations
-                                    var dic: [String: AnyObject!] = [
-                                        "id": mark.id,
-                                        "date": mark.videoData!.date.description,
-                                        "fileName": mark.videoData!.fileName,
-                                        "lat": mark.latitude.doubleValue,
-                                        "lng": mark.longitude.doubleValue,
-                                        "photo": mark.thumnailImage];
-                                    //
-                                    var place: SRVideoPlace = SRVideoPlace(dictionary: dic);
-                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                        blockSelf.showMarker(place);
-                                    });
-                                }
+                    for route in blockSelf.routes! {
+                        //show route
+                        println("Count of route points: \(route.routePoints.count)");
+                        
+                        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+                            blockSelf.makePolylineForRoute(route);
+                        });
+                        println("Id: \(route.id)");
+                        println("Count of video marks: \(route.videoMarks.count)");
+                        
+                        route.videoMarks.enumerateObjectsUsingBlock { (element, index, stop) -> Void in
+                            if let mark = element as? SRVideoMark {
+                                dispatch_async(dispatch_get_main_queue(), {() -> Void in
+//                                    if let blockMark = mark {
+                                        //show annotations
+                                        var dic: [String: AnyObject!] = [
+                                            "id": mark.id,
+                                            "date": mark.videoData!.date.description,
+                                            "fileName": mark.videoData!.fileName,
+                                            "lat": mark.latitude.doubleValue,
+                                            "lng": mark.longitude.doubleValue,
+                                            "photo": mark.thumnailImage];
+                                        //
+                                        var place: SRVideoPlace = SRVideoPlace(dictionary: dic);
+                                        
+                                        var routeMarker = SRRouteMarker(videoPoint: place, routeID: route.id);
+                                        
+                                        blockSelf.showGoogleMapMarker(routeMarker);
+//                                    }
+                                });
                             }
-                        }
+                        };
                     }
                 }
             }
         });
     }
     
-    private func setUpMapView() {
-        if let location = SRLocationManager.sharedInstance.currentLocation() as CLLocation! {
-            googleMapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
-            myCoordinate = location.coordinate;
-        }
-        
-        googleMapView.delegate = self;
-        googleMapView.mapType = kGMSTypeNormal;
-        googleMapView.myLocationEnabled = true
-    }
-    
-    private func makePolylineForRoute(route: SRRoute){
-        var gmsPaths: GMSMutablePath = GMSMutablePath();
-        
-        route.routePoints.enumerateObjectsUsingBlock {[weak self] (element, index, stop) -> Void in
-            if var blockSelf = self {
-                gmsPaths.addCoordinate(CLLocationCoordinate2D(latitude: element.latitude.doubleValue, longitude: element.longitude.doubleValue));
-            }
-        };
-        
-        var polyline: GMSPolyline = GMSPolyline(path: gmsPaths);
-        polyline.strokeColor = UIColor.blueColor();
-        polyline.strokeWidth = 5;
-        polyline.map = googleMapView;
-    }
-    
-    private func showMarker(place: SRVideoPlace) {
-        var marker: SRRouteMarker = SRRouteMarker(routePoint: place);
-        marker.position = CLLocationCoordinate2DMake(place.coordinate.latitude, place.coordinate.longitude);
-        marker.appearAnimation = kGMSMarkerAnimationPop;
-        marker.map = googleMapView;
-    }
-    
     //MARK: - GMSMapViewDelegate
 
-    func mapView(mapView: GMSMapView, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
-        
-    }
-    
-    func mapView(mapView: GMSMapView, didTapInfoWindowOfMarker marker: GMSMarker) {
-        if let routeMarker = marker as? SRRouteMarker {
-            videoFileURL = NSURL.URL(directoryName: kFileDirectory, fileName: "\(routeMarker.routePoint.fileName).mov");
-            println(videoFileURL);
-            self.performSegueWithIdentifier(kShowVideoDetailSegueIdentifier, sender: self);
+    override func mapView(mapView: GMSMapView, didTapInfoWindowOfMarker marker: GMSMarker) {
+        if let tempMarker = marker as? SRRouteMarker {
+            var temp = routes?.filter({ (r: SRRoute) -> Bool in
+                return r.id == tempMarker.routeID;
+            });
+            selectedRoute = temp?.first;
+            selectedVideoMarkId = tempMarker.videoPoint.videoIdentifier;
+            
+            self.performSegueWithIdentifier(kDisplayVideoRouteDetailsSegueIdentifier_2, sender: self);
         }
     }
-    
-    func mapView(mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView! {
-        
-        if let routeMarker = marker as? SRRouteMarker {
-            let anchor = marker.position;
-            
-            mapInfoView.titleLabel.text = routeMarker.routePoint.fileName;
-            mapInfoView.subtitleLabel.text = routeMarker.routePoint.date;
-            
-            if let photo = routeMarker.routePoint.photo {
-                mapInfoView.imageView.image = photo;
-            }
-        }
-        
-        return mapInfoView;
-    }
-    
+
     //FIXME: fix
 //    private func makeRoute() {
 //        var myCoordinateMarker: GMSMarker = GMSMarker(position: myCoordinate!);
@@ -218,9 +158,10 @@ class SRRouteMapViewController: SRCommonViewController, GMSMapViewDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     // Get the new view controller using segue.destinationViewController.
-        if segue.identifier == kShowVideoDetailSegueIdentifier {
-            if let showVideoVC = segue.destinationViewController as? SRShowVideoViewController {
-                showVideoVC.fileURL = videoFileURL!;
+        if segue.identifier == kDisplayVideoRouteDetailsSegueIdentifier_2 {
+            if let routeVideoDetailsVC = segue.destinationViewController as? SRVideoRouteDetailsViewController {
+                routeVideoDetailsVC.route = selectedRoute;
+                routeVideoDetailsVC.selectedVideoId = selectedVideoMarkId;
             }
         }
     }

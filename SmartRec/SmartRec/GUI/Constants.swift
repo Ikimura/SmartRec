@@ -29,6 +29,10 @@ let kMovieListCellIdentifier: String = "movieCellidentifier";
 
 let kShowMovieSegueIdentifier: String = "showVideoIdentifier";
 
+let kDisplayVideoRouteDetailsSegueIdentifier_1: String = "displayVideoRouteDetailsSegueIdentifier_1";
+
+let kDisplayVideoRouteDetailsSegueIdentifier_2: String = "displayVideoRouteDetailsSegueIdentifier_2";
+
 let kShowVideoDetailSegueIdentifier: String = "showVideoDetailItentifier";
 
 let kStorePathComponent: String = "SmartRec.sqlite";
