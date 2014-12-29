@@ -113,6 +113,11 @@ public class SRCoreDataManager: NSObject {
             entity!.id = dataStruct.id;
             entity!.fileName = dataStruct.fileName;
             entity!.date = NSNumber(double: dataStruct.dateSeconds);
+            entity!.fileSize = NSNumber(longLong: dataStruct.fileSize);
+            entity!.duration = NSNumber(double: dataStruct.duration);
+            entity!.frameRate = NSNumber(float: dataStruct.frameRate);
+            entity!.resolutionHeight = NSNumber(int: dataStruct.resHeight);
+            entity!.resolutionWidth = NSNumber(int: dataStruct.resWidth);
         }
         
         self.saveContext(self.mainObjectContext);

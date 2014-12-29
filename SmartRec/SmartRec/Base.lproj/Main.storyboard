@@ -266,7 +266,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e2d-uI-Uxx">
-                                <rect key="frame" x="0.0" y="20" width="600" height="165"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="165"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mW9-p8-odH">
                                         <rect key="frame" x="8" y="8" width="277" height="21"/>
@@ -277,6 +277,38 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKv-LN-KGr">
+                                        <rect key="frame" x="381" y="8" width="211" height="21"/>
+                                        <color key="backgroundColor" red="0.60000002379999995" green="0.40000000600000002" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="277" id="JjP-Gz-PCm"/>
+                                            <constraint firstAttribute="width" constant="211" id="vqd-Fr-b7Y"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="JjP-Gz-PCm"/>
+                                            </mask>
+                                        </variation>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QsN-iY-YhE">
+                                        <rect key="frame" x="381" y="37" width="211" height="21"/>
+                                        <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="211" id="jhu-fE-uIS"/>
+                                            <constraint firstAttribute="width" constant="277" id="qgI-9A-ERD"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="qgI-9A-ERD"/>
+                                            </mask>
+                                        </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aq2-RP-1iW">
                                         <rect key="frame" x="8" y="37" width="277" height="21"/>
@@ -306,14 +338,33 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WKk-53-jme">
+                                        <rect key="frame" x="381" y="66" width="211" height="21"/>
+                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="211" id="Ly3-fw-zQA"/>
+                                            <constraint firstAttribute="width" constant="277" id="UlA-4f-H0L"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="UlA-4f-H0L"/>
+                                            </mask>
+                                        </variation>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="WKk-53-jme" firstAttribute="top" secondItem="QsN-iY-YhE" secondAttribute="bottom" constant="8" id="5sU-Pg-eO9"/>
                                     <constraint firstItem="ttD-t1-tlQ" firstAttribute="top" secondItem="RDH-bp-GHc" secondAttribute="bottom" constant="8" id="7V3-8a-2Sb"/>
                                     <constraint firstItem="mW9-p8-odH" firstAttribute="leading" secondItem="e2d-uI-Uxx" secondAttribute="leading" constant="8" id="7Vm-8Z-MPG"/>
+                                    <constraint firstItem="QsN-iY-YhE" firstAttribute="top" secondItem="bKv-LN-KGr" secondAttribute="bottom" constant="8" id="A2a-st-x0j"/>
                                     <constraint firstItem="ttD-t1-tlQ" firstAttribute="leading" secondItem="e2d-uI-Uxx" secondAttribute="leading" constant="8" id="CCL-5K-jpG"/>
                                     <constraint firstItem="RDH-bp-GHc" firstAttribute="top" secondItem="mHU-8Z-gqW" secondAttribute="bottom" constant="8" id="Dsh-Af-xGk"/>
                                     <constraint firstItem="ttD-t1-tlQ" firstAttribute="trailing" secondItem="RDH-bp-GHc" secondAttribute="trailing" id="IlL-Ic-q9v"/>
+                                    <constraint firstAttribute="trailing" secondItem="WKk-53-jme" secondAttribute="trailing" constant="8" id="Kbj-Bc-QGp"/>
                                     <constraint firstItem="mHU-8Z-gqW" firstAttribute="leading" secondItem="e2d-uI-Uxx" secondAttribute="leading" constant="8" id="LnG-ns-Ru4"/>
                                     <constraint firstItem="mW9-p8-odH" firstAttribute="top" secondItem="e2d-uI-Uxx" secondAttribute="top" constant="8" id="Pq1-w2-VtW"/>
                                     <constraint firstAttribute="height" constant="165" id="SAi-vv-avt"/>
@@ -321,13 +372,16 @@
                                     <constraint firstItem="aq2-RP-1iW" firstAttribute="trailing" secondItem="mHU-8Z-gqW" secondAttribute="trailing" id="aKO-8q-aAT"/>
                                     <constraint firstItem="aq2-RP-1iW" firstAttribute="leading" secondItem="e2d-uI-Uxx" secondAttribute="leading" constant="8" id="cnn-2Z-HSe"/>
                                     <constraint firstItem="RDH-bp-GHc" firstAttribute="trailing" secondItem="mHU-8Z-gqW" secondAttribute="trailing" id="n6k-A8-hrv"/>
+                                    <constraint firstAttribute="trailing" secondItem="bKv-LN-KGr" secondAttribute="trailing" constant="8" id="rUa-WM-u7F"/>
+                                    <constraint firstItem="bKv-LN-KGr" firstAttribute="top" secondItem="e2d-uI-Uxx" secondAttribute="top" constant="8" id="tXS-Oz-ean"/>
                                     <constraint firstItem="mW9-p8-odH" firstAttribute="trailing" secondItem="aq2-RP-1iW" secondAttribute="trailing" id="vTo-Rv-bcf"/>
+                                    <constraint firstAttribute="trailing" secondItem="QsN-iY-YhE" secondAttribute="trailing" constant="8" id="vfW-jh-E1d"/>
                                     <constraint firstItem="RDH-bp-GHc" firstAttribute="leading" secondItem="e2d-uI-Uxx" secondAttribute="leading" constant="8" id="xTZ-Wx-tXs"/>
                                     <constraint firstItem="aq2-RP-1iW" firstAttribute="top" secondItem="mW9-p8-odH" secondAttribute="bottom" constant="8" id="ySB-mp-nJJ"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6vW-ZE-gqb" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="185" width="600" height="415"/>
+                                <rect key="frame" x="0.0" y="229" width="600" height="371"/>
                                 <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
@@ -344,12 +398,15 @@
                     </view>
                     <connections>
                         <outlet property="containerView" destination="e2d-uI-Uxx" id="Znd-Bm-jmH"/>
+                        <outlet property="fileSizeLabel" destination="bKv-LN-KGr" id="Zdk-l0-2zf"/>
                         <outlet property="googleMapView" destination="6vW-ZE-gqb" id="4qN-Ij-BkP"/>
                         <outlet property="routeStartEndDateLabel" destination="ttD-t1-tlQ" id="D8y-Ge-SME"/>
                         <outlet property="videFileDurationLabel" destination="RDH-bp-GHc" id="ETT-hj-Qlr"/>
                         <outlet property="videoFileNameLabel" destination="mW9-p8-odH" id="c64-ZB-7tN"/>
+                        <outlet property="videoFrameRateLabel" destination="WKk-53-jme" id="fJH-MV-d8t"/>
                         <outlet property="videoMarkDateLabel" destination="mHU-8Z-gqW" id="aSL-CK-YgN"/>
                         <outlet property="videoMarkLocationLabel" destination="aq2-RP-1iW" id="ydx-CB-Ae2"/>
+                        <outlet property="videoResolutionLabel" destination="QsN-iY-YhE" id="wuQ-Ho-nTI"/>
                         <outlet property="view" destination="KXv-o0-d1K" id="tVf-wO-xd5"/>
                     </connections>
                 </viewController>

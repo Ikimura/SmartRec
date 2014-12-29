@@ -17,6 +17,9 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
     @IBOutlet weak var videoMarkDateLabel: UILabel!
     @IBOutlet weak var videFileDurationLabel: UILabel!
     @IBOutlet weak var routeStartEndDateLabel: UILabel!
+    @IBOutlet weak var fileSizeLabel: UILabel!
+    @IBOutlet weak var videoResolutionLabel: UILabel!
+    @IBOutlet weak var videoFrameRateLabel: UILabel!
     
     var route: SRRoute?;
     var selectedVideoId: String?;
@@ -55,6 +58,24 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
     
     //MARK: - internal interface
     
+    override func mapView(mapView: GMSMapView!, didTapMarker marker: GMSMarker!) -> Bool {
+        mapView.selectedMarker = marker;
+        
+        if let routeMarker = marker as? SRRouteMarker {
+            let anchor = marker.position;
+            
+            let predicate = NSPredicate(format: "self.videoData.id == %@", routeMarker.videoPoint.videoIdentifier);
+            var temp = route?.videoMarks.filteredOrderedSetUsingPredicate(predicate!);
+            
+            if (temp != nil) {
+                selectedVideoMark = temp?.firstObject as? SRVideoMark;
+                self.updateInformation();
+            } else {
+                print("Error!");
+            }
+        }
+        return true;
+    }
    
     //MARK: - private interface
     
@@ -63,15 +84,17 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
         //TODO:
         //change to geocoding
         videoMarkLocationLabel.text = "\(selectedVideoMark?.longitude.doubleValue), \(selectedVideoMark?.latitude.doubleValue)";
+        //date
         let date: NSDate = NSDate(timeIntervalSinceReferenceDate: selectedVideoMark!.videoData!.date.doubleValue);
         videoMarkDateLabel.text = date.stringFromDateWithStringFormat("M/d/yyyy h:mma Z");
-        //TODO:
         //set file duration
-//        videFileDurationLabel.text
-        
-        //TODO:
-        //set dates of first and last routePoint.date
-//        routeStartEndDateLabel.text = 
+        videFileDurationLabel.text = "Duration: \(selectedVideoMark?.videoData?.duration.doubleValue)";
+        //set size data bytes
+        fileSizeLabel.text = "Size: \(selectedVideoMark?.videoData?.fileSize.integerValue) MB.";
+        //set video resolution
+        videoResolutionLabel.text = "\(selectedVideoMark?.videoData?.resolutionWidth.integerValue)x\(selectedVideoMark?.videoData?.resolutionHeight.integerValue)";
+        //set frame rates
+        videoFrameRateLabel.text = "Frame rate: \(selectedVideoMark?.videoData?.frameRate.floatValue)";
     }
     
 }

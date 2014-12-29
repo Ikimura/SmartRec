@@ -164,6 +164,34 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     
     //MARK: - private methods
     
+    private func prepareVideoData(videoAsset: AVAsset) {
+        var thumbnailImage: UIImage?;
+        //image
+        let maxSize: CGSize = CGSizeMake(kThumbnailWidth, kThumbnailHeight);
+        //get thumbnail image
+        thumbnailImage = videoAsset.thumbnailWithSize(size: maxSize);
+        currentVideoMarkData!.image = UIImageJPEGRepresentation(thumbnailImage, 1.0);
+        
+        //duration
+        currentVideoData!.duration = CMTimeGetSeconds(videoAsset.duration);
+        //frameRate
+        var fps: Float = 0.0;
+        var size: CGSize?;
+        if let videoATrack: AVAssetTrack = videoAsset.tracksWithMediaType(AVMediaTypeVideo).last as? AVAssetTrack {
+            fps = videoATrack.nominalFrameRate;
+            currentVideoData!.frameRate = fps;
+            println("\(currentVideoData!.frameRate)")
+            //videoresolution
+            size = videoATrack.naturalSize;
+            currentVideoData!.resHeight = Int32(size!.height);
+            currentVideoData!.resWidth = Int32(size!.width);
+            println("\(currentVideoData!.resHeight)x\(currentVideoData!.resWidth)")
+            //size in butes
+            currentVideoData!.fileSize = videoATrack.totalSampleDataLength;
+            println("\(currentVideoData!.fileSize)")
+        }
+    }
+    
     private func saveInformationInCoreData(videoData: SRVideoDataStruct, markData: SRVideoMarkStruct) {
         //add object
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] () -> Void in
@@ -239,14 +267,9 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
             println("Debug. Save file");
             
             //get asset by url
-            var thumbnailImage: UIImage?;
-            
             if let urlForAsset = NSURL.URL(directoryName: kFileDirectory, fileName: "\(currentVideoData!.fileName)\(kFileExtension)") as NSURL! {
                 if let sourceAsset = AVAsset.assetWithURL(urlForAsset) as? AVAsset {
-                    let maxSize: CGSize = CGSizeMake(kThumbnailWidth, kThumbnailHeight);
-                    //get thumbnail image
-                    thumbnailImage = sourceAsset.thumbnailWithSize(size: maxSize);
-                    currentVideoMarkData!.image = UIImageJPEGRepresentation(thumbnailImage, 1.0);
+                    self.prepareVideoData(sourceAsset);
                 }
             }
             //save

@@ -63,6 +63,10 @@ class SRCommonMapViewController: SRCommonViewController, GMSMapViewDelegate {
     
     //MARK: - GMSMapViewDelegate
     
+    func mapView(mapView: GMSMapView!, didTapMarker marker: GMSMarker!) -> Bool {
+        return false;
+    }
+    
     func mapView(mapView: GMSMapView, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
         
     }
