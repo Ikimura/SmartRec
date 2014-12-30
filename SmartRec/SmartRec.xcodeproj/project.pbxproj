@@ -29,6 +29,8 @@
 		13361DB319F6917A00F0CB64 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13361DB219F6917A00F0CB64 /* AssetsLibrary.framework */; };
 		1338720C1A1CC9DF00FFC29F /* SRMarkerInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1338720B1A1CC9DF00FFC29F /* SRMarkerInfoView.xib */; };
 		1338720E1A1CC9FF00FFC29F /* SRMarkerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1338720D1A1CC9FF00FFC29F /* SRMarkerInfoView.swift */; };
+		133DBB0D1A52B87D00B763D2 /* SRGoogleGeocodingServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133DBB0C1A52B87D00B763D2 /* SRGoogleGeocodingServiceProtocol.swift */; };
+		133DBB101A52BD1C00B763D2 /* SRGoogleGeocodingDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133DBB0F1A52BD1C00B763D2 /* SRGoogleGeocodingDataProvider.swift */; };
 		13557F331A3B142E00E36CE7 /* SRRouteStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137945941A3B0BFA00AF1A97 /* SRRouteStruct.swift */; };
 		13557F341A3B142E00E36CE7 /* SRVideoDataStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137945951A3B0BFA00AF1A97 /* SRVideoDataStruct.swift */; };
 		13557F351A3B142E00E36CE7 /* SRVideoMarkStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137945961A3B0BFA00AF1A97 /* SRVideoMarkStruct.swift */; };
@@ -200,6 +202,8 @@
 		13361DB219F6917A00F0CB64 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		1338720B1A1CC9DF00FFC29F /* SRMarkerInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SRMarkerInfoView.xib; sourceTree = "<group>"; };
 		1338720D1A1CC9FF00FFC29F /* SRMarkerInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRMarkerInfoView.swift; sourceTree = "<group>"; };
+		133DBB0C1A52B87D00B763D2 /* SRGoogleGeocodingServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRGoogleGeocodingServiceProtocol.swift; sourceTree = "<group>"; };
+		133DBB0F1A52BD1C00B763D2 /* SRGoogleGeocodingDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRGoogleGeocodingDataProvider.swift; sourceTree = "<group>"; };
 		13557F311A3B136000E36CE7 /* SRCoreDataManagerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataManagerSpec.swift; sourceTree = "<group>"; };
 		1359A0D91A00E50C00FC8994 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1359A0DC1A00E88A00FC8994 /* SRLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRLocationManager.swift; sourceTree = "<group>"; };
@@ -355,6 +359,24 @@
 			name = MarkerView;
 			sourceTree = "<group>";
 		};
+		133DBB031A52B70200B763D2 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				133DBB0C1A52B87D00B763D2 /* SRGoogleGeocodingServiceProtocol.swift */,
+			);
+			name = Services;
+			path = ../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/Services;
+			sourceTree = "<group>";
+		};
+		133DBB0E1A52BCB900B763D2 /* DataProviders */ = {
+			isa = PBXGroup;
+			children = (
+				133DBB0F1A52BD1C00B763D2 /* SRGoogleGeocodingDataProvider.swift */,
+			);
+			name = DataProviders;
+			path = ../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/DataProviders;
+			sourceTree = "<group>";
+		};
 		1359A0DB1A00E5C700FC8994 /* LocationManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -387,6 +409,8 @@
 		137E3B6519F52BF00094C5A1 /* SmartRec */ = {
 			isa = PBXGroup;
 			children = (
+				133DBB0E1A52BCB900B763D2 /* DataProviders */,
+				133DBB031A52B70200B763D2 /* Services */,
 				13D786861A1358D700A4DD3C /* CoreData */,
 				1394B1011A0764BC009D0780 /* MotionManager */,
 				1359A0DB1A00E5C700FC8994 /* LocationManager */,
@@ -861,6 +885,7 @@
 				137A70CB1A4B24C30036EFAE /* SRRoute.swift in Sources */,
 				1368F4FE1A4B20F0004D52B1 /* SRVideoRouteDetailsViewController.swift in Sources */,
 				13EBF1EE1A1DC7A900029072 /* UIViewExtensions.swift in Sources */,
+				133DBB0D1A52B87D00B763D2 /* SRGoogleGeocodingServiceProtocol.swift in Sources */,
 				137A70CE1A4B29890036EFAE /* NSDateExtensions.swift in Sources */,
 				1338720E1A1CC9FF00FFC29F /* SRMarkerInfoView.swift in Sources */,
 				13E5AE7719FF7BF900ABFAD8 /* NSURLExtensions.swift in Sources */,
@@ -869,6 +894,7 @@
 				137945971A3B0BFA00AF1A97 /* SRRouteStruct.swift in Sources */,
 				135F445C1A51345100F8DD82 /* SRVideoData.swift in Sources */,
 				13265F5D1A1E10BA00E063CD /* SRVideoPlace.swift in Sources */,
+				133DBB101A52BD1C00B763D2 /* SRGoogleGeocodingDataProvider.swift in Sources */,
 				137E3B8B19F531B20094C5A1 /* SRNavigationController.swift in Sources */,
 				1379459B1A3B0C3E00AF1A97 /* NSFileManagerExtensions.swift in Sources */,
 				13C1F5BD19F6466C00149649 /* SRVideoRecorder.swift in Sources */,

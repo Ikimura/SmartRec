@@ -26,6 +26,10 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
     
     private var selectedVideoMark: SRVideoMark?;
     private var videoURL: NSURL?;
+    private lazy var geocodingProvider: SRGoogleGeocodingDataProvider = {
+        var tempProvider = SRGoogleGeocodingDataProvider();
+        return tempProvider;
+    }();
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,11 +139,40 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
         routeStartEndDateLabel.text = "\(startDateString!) - \(endDateString!)";
     }
     
+    //TDOD: add filed locationDescription in SRVideoMark
+    
     private func updateVideoInformation() {
         videoFileNameLabel.text = selectedVideoMark!.videoData!.fileName;
-        //TODO:
-        //change to geocoding
-        videoMarkLocationLabel.text = "\(selectedVideoMark!.longitude.doubleValue), \(selectedVideoMark!.latitude.doubleValue)";
+        geocodingProvider.geocoding(selectedVideoMark!.latitude.doubleValue, lng: selectedVideoMark!.longitude.doubleValue) { [weak self] (data) -> Void in
+            //parse JSON
+            if var blockSelf = self {
+                
+                //2
+                if let json = data as? NSDictionary {
+                    if let res  = json["results"] as? NSArray {
+                        if let feed = res[1] as? String{
+//                            if let address = feed.objectForKey("formatted_address") {
+                                println(feed);
+//                            }
+                        }
+                    }
+                }
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    //            videoMarkLocationLabel.text = "\(selectedVideoMark!.locationDescription)";
+                });
+            }
+//                if let json = data as? Dictionary {
+//                    if let obj = json["formatted_address"][0].stringValue {
+//                        println("Print: \(obj)");
+//                    }
+//                }
+        }
+        
+//        if (selectedVideoMark?.locationDescription == nil) {
+//            tempProvider.
+//        } else {
+//            videoMarkLocationLabel.text = "\(selectedVideoMark!.locationDescription)";
+//        }
         //date
         let date: NSDate = NSDate(timeIntervalSince1970: selectedVideoMark!.videoData!.date.doubleValue);
         videoMarkDateLabel.text = date.stringFromDateWithStringFormats([kTimeFormat, kDateFormat, kTimeFormat]);
