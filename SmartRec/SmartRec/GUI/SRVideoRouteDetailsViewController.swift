@@ -25,11 +25,12 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
     var selectedVideoId: String?;
     
     private var selectedVideoMark: SRVideoMark?;
-    
+    private var videoURL: NSURL?;
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let predicate = NSPredicate(format: "id == %@", selectedVideoId!);
+        let predicate = NSPredicate(format: "id = %@", selectedVideoId!);
         
         var temMarks = route?.videoMarks.filteredOrderedSetUsingPredicate(predicate!);
         
@@ -45,7 +46,33 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
         
         self.makePolylineForRoute(route!);
         
-        self.updateInformation();
+        route?.videoMarks.enumerateObjectsUsingBlock { [weak self] (element, index, stop) -> Void in
+            if var blockSelf = self {
+                if let mark = element as? SRVideoMark {
+                    dispatch_async(dispatch_get_main_queue(), {() -> Void in
+                        //show annotations
+                        println("Id: \(mark.id)");
+                        var dic: [String: AnyObject!] = [
+                            "id": mark.id,
+                            "date": mark.videoData!.date.description,
+                            "fileName": mark.videoData!.fileName,
+                            "lat": mark.latitude.doubleValue,
+                            "lng": mark.longitude.doubleValue,
+                            "photo": mark.thumnailImage];
+                        //
+                        var place: SRVideoPlace = SRVideoPlace(dictionary: dic);
+                        
+                        var routeMarker = SRRouteMarker(videoPoint: place, routeID: blockSelf.route!.id);
+                        
+                        blockSelf.showGoogleMapMarker(routeMarker);
+                    });
+                }
+            }
+        };
+        
+        self.updateRouteInformation();
+        
+        self.updateVideoInformation();
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -63,38 +90,84 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
         
         if let routeMarker = marker as? SRRouteMarker {
             let anchor = marker.position;
-            
-            let predicate = NSPredicate(format: "self.videoData.id == %@", routeMarker.videoPoint.videoIdentifier);
+            println("Id: \(routeMarker.videoPoint.videoIdentifier)");
+
+            let predicate = NSPredicate(format: "id = %@", routeMarker.videoPoint.videoIdentifier);
             var temp = route?.videoMarks.filteredOrderedSetUsingPredicate(predicate!);
             
-            if (temp != nil) {
+            if (temp != nil && temp?.count != 0) {
                 selectedVideoMark = temp?.firstObject as? SRVideoMark;
-                self.updateInformation();
+                self.updateVideoInformation();
             } else {
                 print("Error!");
             }
         }
         return true;
     }
+    
+    override func mapView(mapView: GMSMapView, didTapInfoWindowOfMarker marker: GMSMarker) {
+        //Show video
+        if let tempMarker = marker as? SRRouteMarker {
+            if let url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(tempMarker.videoPoint.fileName)\(kFileExtension)") as NSURL! {
+                videoURL = url;
+            }
+            self.performSegueWithIdentifier(kShowVideoSegueIdentifier_2, sender: self);
+        }
+    }
    
     //MARK: - private interface
     
-    private func updateInformation() {
-        videoFileNameLabel.text = selectedVideoMark?.videoData?.fileName;
+    private func updateRouteInformation() {
+        //set route start-end dagte time
+        var startDate: NSDate?;
+        if let firstPoint = route!.routePoints.firstObject as? SRRoutePoint {
+            startDate = NSDate(timeIntervalSince1970: firstPoint.time.doubleValue);
+        }
+        
+        var endDate: NSDate?;
+        if let lastPoint = route!.routePoints.lastObject as? SRRoutePoint {
+            endDate = NSDate(timeIntervalSince1970: lastPoint.time.doubleValue);
+        }
+        
+        let startDateString = startDate?.stringFromDateWithStringFormat("ccc, LLL d, h:m:s");
+        let endDateString = endDate?.stringFromDateWithStringFormat("ccc, LLL d, h:m:s");
+        
+        routeStartEndDateLabel.text = "\(startDateString!) - \(endDateString!)";
+    }
+    
+    private func updateVideoInformation() {
+        videoFileNameLabel.text = selectedVideoMark!.videoData!.fileName;
         //TODO:
         //change to geocoding
-        videoMarkLocationLabel.text = "\(selectedVideoMark?.longitude.doubleValue), \(selectedVideoMark?.latitude.doubleValue)";
+        videoMarkLocationLabel.text = "\(selectedVideoMark!.longitude.doubleValue), \(selectedVideoMark!.latitude.doubleValue)";
         //date
-        let date: NSDate = NSDate(timeIntervalSinceReferenceDate: selectedVideoMark!.videoData!.date.doubleValue);
-        videoMarkDateLabel.text = date.stringFromDateWithStringFormat("M/d/yyyy h:mma Z");
+        let date: NSDate = NSDate(timeIntervalSince1970: selectedVideoMark!.videoData!.date.doubleValue);
+        videoMarkDateLabel.text = date.stringFromDateWithStringFormats([kTimeFormat, kDateFormat, kTimeFormat]);
         //set file duration
-        videFileDurationLabel.text = "Duration: \(selectedVideoMark?.videoData?.duration.doubleValue)";
+        let seconds = selectedVideoMark!.videoData!.duration.doubleValue.format(".1");
+        let durationLS = NSLocalizedString("DURATION", comment: "comment");
+        videFileDurationLabel.text = "\(durationLS): \(seconds)";
         //set size data bytes
-        fileSizeLabel.text = "Size: \(selectedVideoMark?.videoData?.fileSize.integerValue) MB.";
+        let mBytes = Double(Double(selectedVideoMark!.videoData!.fileSize.integerValue) / 1000000.0).format(".3");
+        let sizeLS = NSLocalizedString("SIZE", comment: "comment");
+        fileSizeLabel.text = "\(sizeLS): \(mBytes) MB.";
         //set video resolution
-        videoResolutionLabel.text = "\(selectedVideoMark?.videoData?.resolutionWidth.integerValue)x\(selectedVideoMark?.videoData?.resolutionHeight.integerValue)";
+        videoResolutionLabel.text = "\(selectedVideoMark!.videoData!.resolutionWidth.integerValue)x\(selectedVideoMark!.videoData!.resolutionHeight.integerValue)";
         //set frame rates
-        videoFrameRateLabel.text = "Frame rate: \(selectedVideoMark?.videoData?.frameRate.floatValue)";
+        let fps = Double(selectedVideoMark!.videoData!.frameRate.floatValue).format(".2");
+        videoFrameRateLabel.text = "FPS: \(fps)";
     }
+    
+    // MARK: - Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        if segue.identifier == kShowVideoSegueIdentifier_2 {
+            if let showVideoVC = segue.destinationViewController as? SRShowVideoViewController {
+                showVideoVC.fileURL = videoURL!;
+            }
+        }
+    }
+
     
 }

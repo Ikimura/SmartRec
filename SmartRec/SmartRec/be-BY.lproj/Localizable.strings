@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  SmartRec
+
+  Created by Artsiom Karseka on 12/30/14.
+  Copyright (c) 2014 con.epam.evnt. All rights reserved.
+*/
+
+"AT" = "у";
+"TODAY" = "Сення";
+"SIZE" = "Памер";
+"DURATION" = "Працягласць";

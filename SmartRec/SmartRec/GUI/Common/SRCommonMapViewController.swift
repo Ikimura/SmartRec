@@ -63,6 +63,10 @@ class SRCommonMapViewController: SRCommonViewController, GMSMapViewDelegate {
     
     //MARK: - GMSMapViewDelegate
     
+    func mapView(mapView: GMSMapView, didTapInfoWindowOfMarker marker: GMSMarker) {
+        
+    }
+    
     func mapView(mapView: GMSMapView!, didTapMarker marker: GMSMarker!) -> Bool {
         return false;
     }
@@ -87,7 +91,4 @@ class SRCommonMapViewController: SRCommonViewController, GMSMapViewDelegate {
         return mapInfoView;
     }
     
-    func mapView(mapView: GMSMapView, didTapInfoWindowOfMarker marker: GMSMarker) {
-        
-    }
 }

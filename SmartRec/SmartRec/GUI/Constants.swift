@@ -27,7 +27,9 @@ let kManagedObjectRoute: String = "SRRoute";
 
 let kMovieListCellIdentifier: String = "movieCellidentifier";
 
-let kShowMovieSegueIdentifier: String = "showVideoIdentifier";
+let kShowVideoSegueIdentifier_1: String = "showVideoSegueIdentifier_1";
+
+let kShowVideoSegueIdentifier_2: String = "showVideoSegueIdentifier_2";
 
 let kDisplayVideoRouteDetailsSegueIdentifier_1: String = "displayVideoRouteDetailsSegueIdentifier_1";
 
@@ -54,3 +56,7 @@ let kFileExtension: String = ".mov";
 let kLocationTitleNotification: String = "SRLocationManagerDidUpdateLocations";
 
 let kBusyViewNibName: String = "SRBusyView";
+
+let kTimeFormat: String = "h:mm a";
+
+let kDateFormat: String = "cсcc, d LLLL";

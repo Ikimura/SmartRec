@@ -12,8 +12,9 @@ import MediaPlayer
 class SRShowVideoViewController: SRCommonViewController {
     
     @IBOutlet weak var moviePlayerView: UIView!
-    var moviePlayer: MPMoviePlayerController!;
     var fileURL: NSURL!;
+    
+    private var moviePlayer: MPMoviePlayerController!;
 
     override func viewDidLoad() {
         super.viewDidLoad()

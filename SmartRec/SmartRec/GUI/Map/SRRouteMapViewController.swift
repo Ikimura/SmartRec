@@ -14,7 +14,7 @@ class SRRouteMapViewController: SRCommonMapViewController {
     private var routes: [SRRoute]?;
     private var selectedRoute: SRRoute?;
     private var selectedVideoMarkId: String?;
-
+    private var videoURL: NSURL?;
     private lazy var mapInfoView: SRMarkerInfoView! = {
         if let infoView = UIView.viewFromNibName("SRMarkerInfoView") as? SRMarkerInfoView!  {
             return infoView;
@@ -73,22 +73,20 @@ class SRRouteMapViewController: SRCommonMapViewController {
                         route.videoMarks.enumerateObjectsUsingBlock { (element, index, stop) -> Void in
                             if let mark = element as? SRVideoMark {
                                 dispatch_async(dispatch_get_main_queue(), {() -> Void in
-//                                    if let blockMark = mark {
-                                        //show annotations
-                                        var dic: [String: AnyObject!] = [
-                                            "id": mark.id,
-                                            "date": mark.videoData!.date.description,
-                                            "fileName": mark.videoData!.fileName,
-                                            "lat": mark.latitude.doubleValue,
-                                            "lng": mark.longitude.doubleValue,
-                                            "photo": mark.thumnailImage];
-                                        //
-                                        var place: SRVideoPlace = SRVideoPlace(dictionary: dic);
-                                        
-                                        var routeMarker = SRRouteMarker(videoPoint: place, routeID: route.id);
-                                        
-                                        blockSelf.showGoogleMapMarker(routeMarker);
-//                                    }
+                                    //show annotations
+                                    var dic: [String: AnyObject!] = [
+                                        "id": mark.id,
+                                        "date": mark.videoData!.date.description,
+                                        "fileName": mark.videoData!.fileName,
+                                        "lat": mark.latitude.doubleValue,
+                                        "lng": mark.longitude.doubleValue,
+                                        "photo": mark.thumnailImage];
+                                    //
+                                    var place: SRVideoPlace = SRVideoPlace(dictionary: dic);
+                                    
+                                    var routeMarker = SRRouteMarker(videoPoint: place, routeID: route.id);
+                                    
+                                    blockSelf.showGoogleMapMarker(routeMarker);
                                 });
                             }
                         };
@@ -97,77 +95,46 @@ class SRRouteMapViewController: SRCommonMapViewController {
             }
         });
     }
+
+    //TODO: - move in route line tap handler
+    //            var temp = routes?.filter({ (r: SRRoute) -> Bool in
+    //                return r.id == tempMarker.routeID;
+    //            });
+    //            selectedRoute = temp?.first;
+    //            selectedVideoMarkId = tempMarker.videoPoint.videoIdentifier;
+    //
     
     //MARK: - GMSMapViewDelegate
-
+    
     override func mapView(mapView: GMSMapView, didTapInfoWindowOfMarker marker: GMSMarker) {
+        //Show video
         if let tempMarker = marker as? SRRouteMarker {
-            var temp = routes?.filter({ (r: SRRoute) -> Bool in
-                return r.id == tempMarker.routeID;
-            });
-            selectedRoute = temp?.first;
-            selectedVideoMarkId = tempMarker.videoPoint.videoIdentifier;
-            
-            self.performSegueWithIdentifier(kDisplayVideoRouteDetailsSegueIdentifier_2, sender: self);
+            if let url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(tempMarker.videoPoint.fileName)\(kFileExtension)") as NSURL! {
+                videoURL = url;
+            }
+            self.performSegueWithIdentifier(kShowVideoSegueIdentifier_1, sender: self);
         }
     }
-
-    //FIXME: fix
-//    private func makeRoute() {
-//        var myCoordinateMarker: GMSMarker = GMSMarker(position: myCoordinate!);
-//        myCoordinateMarker.map = googleMapView;
-//        
-//        let orLat = String(format: "%.4f", myCoordinate.latitude);
-//        let orLong = String(format: "%.4f", myCoordinate.longitude);
-//
-//        let dLat = String(format: "%.4f", targetCoordinate.latitude);
-//        let drLong = String(format: "%.4f", targetCoordinate.longitude);
-//
-//        var getString: String = "origin=\(orLat),\(orLong)&destination=\(dLat),\(drLong)&sensor=true&units=imperial";
-//        
-//        getString = getString.stringByAddingPercentEscapesUsingEncoding(NSASCIIStringEncoding)!;
-//        
-//        var stringURL: String = "\(kGoogleMapsAPIURL)?\(getString)";
-//        
-//        var request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: stringURL)!);
-//        request.HTTPMethod = "GET";
-//        
-//        var operation: AFHTTPRequestOperation = AFHTTPRequestOperationManager().HTTPRequestOperationWithRequest(request, success: { (operation: AFHTTPRequestOperation!, responseObject: AnyObject!) -> Void in
-//            
-//            var routes: AnyObject! = responseObject["routes"];
-//            var c = routes.count;
-//            if let temp1 = routes as? [AnyObject] {
-//                
-//                var tempRoute: AnyObject! = temp1[0];
-//                var route: AnyObject! = tempRoute.objectForKey("overview_polyline")!;
-//                var overview_route: String! = route.objectForKey("points") as? String;
-//                let path: GMSPath = GMSPath(fromEncodedPath: overview_route);
-//
-//                var polyline: GMSPolyline = GMSPolyline(path: path);
-//                polyline.strokeWidth = 3;
-//                polyline.strokeColor = UIColor.blueColor();
-//                polyline.map = self.googleMapView;
-//            
-//                println("asd");
-//            }
-//
-//            }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-//                println("error");
-//        });
-//        
-//        operation.start();
-//    }
     
+    //FIXME: - fix
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//    // Get the new view controller using segue.destinationViewController.
+//        if segue.identifier == kDisplayVideoRouteDetailsSegueIdentifier_2 {
+//            if let routeVideoDetailsVC = segue.destinationViewController as? SRVideoRouteDetailsViewController {
+//                routeVideoDetailsVC.route = selectedRoute;
+//                routeVideoDetailsVC.selectedVideoId = selectedVideoMarkId;
+//            }
+//        }
+//    }
+
     // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-        if segue.identifier == kDisplayVideoRouteDetailsSegueIdentifier_2 {
-            if let routeVideoDetailsVC = segue.destinationViewController as? SRVideoRouteDetailsViewController {
-                routeVideoDetailsVC.route = selectedRoute;
-                routeVideoDetailsVC.selectedVideoId = selectedVideoMarkId;
+        // Get the new view controller using segue.destinationViewController.
+        if segue.identifier == kShowVideoSegueIdentifier_1 {
+            if let showVideoVC = segue.destinationViewController as? SRShowVideoViewController {
+                showVideoVC.fileURL = videoURL!;
             }
         }
     }
-
 }

@@ -171,7 +171,6 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         //get thumbnail image
         thumbnailImage = videoAsset.thumbnailWithSize(size: maxSize);
         currentVideoMarkData!.image = UIImageJPEGRepresentation(thumbnailImage, 1.0);
-        
         //duration
         currentVideoData!.duration = CMTimeGetSeconds(videoAsset.duration);
         //frameRate
