@@ -30,6 +30,10 @@ class SRRouteMapViewController: SRCommonMapViewController {
 
         //setup Map
         self.setUpMapViewWith(SRLocationManager.sharedInstance.currentLocation() as CLLocation?);
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated);
         
         //load data
         self.loadData();
