@@ -63,6 +63,10 @@ class SRCommonMapViewController: SRCommonViewController, GMSMapViewDelegate {
     
     //MARK: - GMSMapViewDelegate
     
+    func mapView(mapView: GMSMapView, didTapOverlay overlay:GMSOverlay) {
+
+    }
+    
     func mapView(mapView: GMSMapView, didTapInfoWindowOfMarker marker: GMSMarker) {
         
     }

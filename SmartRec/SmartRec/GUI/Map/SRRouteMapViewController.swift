@@ -95,16 +95,21 @@ class SRRouteMapViewController: SRCommonMapViewController {
             }
         });
     }
-
-    //TODO: - move in route line tap handler
-    //            var temp = routes?.filter({ (r: SRRoute) -> Bool in
-    //                return r.id == tempMarker.routeID;
-    //            });
-    //            selectedRoute = temp?.first;
-    //            selectedVideoMarkId = tempMarker.videoPoint.videoIdentifier;
-    //
     
     //MARK: - GMSMapViewDelegate
+    
+    override func mapView(mapView: GMSMapView, didTapOverlay overlay:GMSOverlay) {
+        print("didTapOverlay");
+        if let selectedOverlay = overlay as? GMSPolyline {
+            //TODO: subclass GMSPolyline
+            //FIXME: - detecting selected route line
+         /*
+            Find route, that according to selectedOverlay
+            
+            self.performSegueWithIdentifier(kShowVideoSegueIdentifier_2, sender: self);
+            */
+        }
+    }
     
     override func mapView(mapView: GMSMapView, didTapInfoWindowOfMarker marker: GMSMarker) {
         //Show video
@@ -115,26 +120,24 @@ class SRRouteMapViewController: SRCommonMapViewController {
             self.performSegueWithIdentifier(kShowVideoSegueIdentifier_1, sender: self);
         }
     }
-    
-    //FIXME: - fix
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//    // Get the new view controller using segue.destinationViewController.
-//        if segue.identifier == kDisplayVideoRouteDetailsSegueIdentifier_2 {
-//            if let routeVideoDetailsVC = segue.destinationViewController as? SRVideoRouteDetailsViewController {
-//                routeVideoDetailsVC.route = selectedRoute;
-//                routeVideoDetailsVC.selectedVideoId = selectedVideoMarkId;
-//            }
-//        }
-//    }
 
     // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
-        if segue.identifier == kShowVideoSegueIdentifier_1 {
+        
+        switch (segue.identifier!) {
+        case kShowVideoSegueIdentifier_1:
             if let showVideoVC = segue.destinationViewController as? SRShowVideoViewController {
                 showVideoVC.fileURL = videoURL!;
             }
+        case kDisplayVideoRouteDetailsSegueIdentifier_2:
+            if let routeVideoDetailsVC = segue.destinationViewController as? SRVideoRouteDetailsViewController {
+                routeVideoDetailsVC.route = selectedRoute;
+                routeVideoDetailsVC.selectedVideoId = selectedVideoMarkId;
+            }
+        default:
+            println("Segue \(segue.identifier)");
         }
     }
 }
