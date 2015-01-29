@@ -43,12 +43,13 @@ class SRCommonMapViewController: SRCommonViewController, GMSMapViewDelegate {
                     }
                 }
             };
+            var polyline: SRMapPolyline = SRMapPolyline(path: gmsPaths);
+            polyline.tappable = true;
+            polyline.routeID = tempRoute.id;
+            polyline.strokeColor = UIColor.blueColor();
+            polyline.strokeWidth = 5;
+            polyline.map = googleMapView;
         }
-        
-        var polyline: GMSPolyline = GMSPolyline(path: gmsPaths);
-        polyline.strokeColor = UIColor.blueColor();
-        polyline.strokeWidth = 5;
-        polyline.map = googleMapView;
     }
     
     func showGoogleMapMarker(marker: GMSMarker) {

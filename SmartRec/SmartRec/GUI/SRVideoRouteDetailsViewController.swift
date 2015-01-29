@@ -34,18 +34,20 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let predicate = NSPredicate(format: "id = %@", selectedVideoId!);
-        
-        var temMarks = route?.videoMarks.filteredOrderedSetUsingPredicate(predicate!);
-        
         var location: CLLocation?;
-        if (temMarks != nil) {
-            if var temp = temMarks?.firstObject as? SRVideoMark {
-                selectedVideoMark = temp;
-                location = CLLocation(latitude: selectedVideoMark!.latitude.doubleValue, longitude: selectedVideoMark!.longitude.doubleValue);
+        if selectedVideoMark != nil {
+            let predicate = NSPredicate(format: "id = %@", selectedVideoId!);
+            
+            var temMarks = route?.videoMarks.filteredOrderedSetUsingPredicate(predicate!);
+            
+            if (temMarks != nil) {
+                if var temp = temMarks?.firstObject as? SRVideoMark {
+                    selectedVideoMark = temp;
+                    location = CLLocation(latitude: selectedVideoMark!.latitude.doubleValue, longitude: selectedVideoMark!.longitude.doubleValue);
+                }
             }
+            self.updateVideoInformation();
         }
-        
         self.setUpMapViewWith(location);
         
         self.makePolylineForRoute(route!);
@@ -75,8 +77,6 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
         };
         
         self.updateRouteInformation();
-        
-        self.updateVideoInformation();
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -158,7 +158,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
                     }
                 }
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    //            videoMarkLocationLabel.text = "\(selectedVideoMark!.locationDescription)";
+                    videoMarkLocationLabel.text = "";
                 });
             }
 //                if let json = data as? Dictionary {

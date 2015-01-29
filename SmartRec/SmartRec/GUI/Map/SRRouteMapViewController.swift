@@ -100,14 +100,22 @@ class SRRouteMapViewController: SRCommonMapViewController {
     
     override func mapView(mapView: GMSMapView, didTapOverlay overlay:GMSOverlay) {
         print("didTapOverlay");
-        if let selectedOverlay = overlay as? GMSPolyline {
-            //TODO: subclass GMSPolyline
-            //FIXME: - detecting selected route line
-         /*
-            Find route, that according to selectedOverlay
+        if let selectedOverlay = overlay as? SRMapPolyline {
             
-            self.performSegueWithIdentifier(kShowVideoSegueIdentifier_2, sender: self);
-            */
+            routes?.filter({ [weak self] (route: SRRoute) -> Bool in
+                    if (route.id == selectedOverlay.routeID) {
+                        if var blockSelf = self {
+                            blockSelf.selectedRoute = route;
+                            blockSelf.performSegueWithIdentifier(kDisplayVideoRouteDetailsSegueIdentifier_2, sender: blockSelf);
+                        }
+
+                        return true;
+                        
+                    } else {
+                        return false;
+                    }
+            });
+
         }
     }
     
@@ -134,7 +142,6 @@ class SRRouteMapViewController: SRCommonMapViewController {
         case kDisplayVideoRouteDetailsSegueIdentifier_2:
             if let routeVideoDetailsVC = segue.destinationViewController as? SRVideoRouteDetailsViewController {
                 routeVideoDetailsVC.route = selectedRoute;
-                routeVideoDetailsVC.selectedVideoId = selectedVideoMarkId;
             }
         default:
             println("Segue \(segue.identifier)");
