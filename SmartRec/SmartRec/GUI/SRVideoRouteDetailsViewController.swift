@@ -158,7 +158,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
                     }
                 }
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    videoMarkLocationLabel.text = "";
+                    blockSelf.videoMarkLocationLabel.text = "";
                 });
             }
 //                if let json = data as? Dictionary {

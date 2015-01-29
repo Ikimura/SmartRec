@@ -23,7 +23,14 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
     private var currentRecorder: SRVideoRecorder!;
     private var isRecording: Bool!;
-    private var needToDeleteRoute: Bool = true;
+    private var needToDeleteRoute: Bool
+        { get {
+            if (route?.routePoints == nil || route?.videoMarks == nil || route?.routePoints.count == 0){
+                return true;
+            }
+            return false;
+        }
+    };
     private var route: SRRoute?;
     private lazy var fileManager: NSFileManager = {
         return NSFileManager.defaultManager();
@@ -65,6 +72,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     
     //FIXME: - move in route manager that should be contain this logic
     func createNewRoute() {
+        
         let identifier = String.randomString();
         println(identifier);
         
@@ -82,9 +90,11 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
 
     func finishRoute() {
         if (needToDeleteRoute == true) {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {[weak self] () -> Void in
+            dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {[weak self] () -> Void in
                 if var blockSelf = self {
-                    blockSelf.appDelegate.coreDataManager.deleteEntity(blockSelf.route!);
+                    if (blockSelf.route != nil) {
+                        blockSelf.appDelegate.coreDataManager.deleteEntity(blockSelf.route!);
+                    }
                 }
             });
         }
@@ -110,8 +120,6 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         let date = NSDate();
         let fileName = String.stringFromDate(date, withFormat: kFileNameFormat);
         let filePath = "\(fileName)\(kFileExtension)";
-        //mark that we will have not empty route
-        needToDeleteRoute = false;
         
         currentVideoData = SRVideoDataStruct(id: String.randomString(), fileName: fileName, dateSeconds: date.timeIntervalSince1970);
 
