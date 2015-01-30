@@ -24,7 +24,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
     var route: SRRoute?;
     var selectedVideoId: String?;
     
-    private var selectedVideoMark: SRVideoMark?;
+    private var selectedVideoMark: SRRouteVideoPoint?;
     private var videoURL: NSURL?;
     private lazy var geocodingProvider: SRGoogleGeocodingDataProvider = {
         var tempProvider = SRGoogleGeocodingDataProvider();
@@ -41,7 +41,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
             var temMarks = route?.videoMarks.filteredOrderedSetUsingPredicate(predicate!);
             
             if (temMarks != nil) {
-                if var temp = temMarks?.firstObject as? SRVideoMark {
+                if var temp = temMarks?.firstObject as? SRRouteVideoPoint {
                     selectedVideoMark = temp;
                     location = CLLocation(latitude: selectedVideoMark!.latitude.doubleValue, longitude: selectedVideoMark!.longitude.doubleValue);
                 }
@@ -52,29 +52,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
         
         self.makePolylineForRoute(route!);
         
-        route?.videoMarks.enumerateObjectsUsingBlock { [weak self] (element, index, stop) -> Void in
-            if var blockSelf = self {
-                if let mark = element as? SRVideoMark {
-                    dispatch_async(dispatch_get_main_queue(), {() -> Void in
-                        //show annotations
-                        println("Id: \(mark.id)");
-                        var dic: [String: AnyObject!] = [
-                            "id": mark.id,
-                            "date": mark.videoData!.date.description,
-                            "fileName": mark.videoData!.fileName,
-                            "lat": mark.latitude.doubleValue,
-                            "lng": mark.longitude.doubleValue,
-                            "photo": mark.thumnailImage];
-                        //
-                        var place: SRVideoPlace = SRVideoPlace(dictionary: dic);
-                        
-                        var routeMarker = SRRouteMarker(videoPoint: place, routeID: blockSelf.route!.id);
-                        
-                        blockSelf.showGoogleMapMarker(routeMarker);
-                    });
-                }
-            }
-        };
+        self.markVideoMarkersForRoute(route!);
         
         self.updateRouteInformation();
     }
@@ -92,7 +70,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
     override func mapView(mapView: GMSMapView!, didTapMarker marker: GMSMarker!) -> Bool {
         mapView.selectedMarker = marker;
         
-        if let routeMarker = marker as? SRRouteMarker {
+        if let routeMarker = marker as? SRVideoMapMarker {
             let anchor = marker.position;
             println("Id: \(routeMarker.videoPoint.videoIdentifier)");
 
@@ -100,7 +78,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
             var temp = route?.videoMarks.filteredOrderedSetUsingPredicate(predicate!);
             
             if (temp != nil && temp?.count != 0) {
-                selectedVideoMark = temp?.firstObject as? SRVideoMark;
+                selectedVideoMark = temp?.firstObject as? SRRouteVideoPoint;
                 self.updateVideoInformation();
             } else {
                 print("Error!");
@@ -111,7 +89,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
     
     override func mapView(mapView: GMSMapView, didTapInfoWindowOfMarker marker: GMSMarker) {
         //Show video
-        if let tempMarker = marker as? SRRouteMarker {
+        if let tempMarker = marker as? SRVideoMapMarker {
             if let url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(tempMarker.videoPoint.fileName)\(kFileExtension)") as NSURL! {
                 videoURL = url;
             }
@@ -139,7 +117,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
         routeStartEndDateLabel.text = "\(startDateString!) - \(endDateString!)";
     }
     
-    //TDOD: add filed locationDescription in SRVideoMark
+    //TDOD: add filed locationDescription in SRRouteVideoPoint
     
     private func updateVideoInformation() {
         videoFileNameLabel.text = selectedVideoMark!.videoData!.fileName;

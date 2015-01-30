@@ -40,6 +40,9 @@ class SRCommonMapViewController: SRCommonViewController, GMSMapViewDelegate {
                 if var blockSelf = self {
                     if let routePoint = element as? SRRoutePoint {
                         gmsPaths.addCoordinate(CLLocationCoordinate2D(latitude: routePoint.latitude.doubleValue, longitude: routePoint.longitude.doubleValue));
+                        //display markers for points
+                        //TODO: forme SRPointMapMarker
+                        blockSelf.showGoogleMapMarker(SRPointMapMarker(routeID: tempRoute.id));
                     }
                 }
             };
@@ -52,7 +55,34 @@ class SRCommonMapViewController: SRCommonViewController, GMSMapViewDelegate {
         }
     }
     
-    func showGoogleMapMarker(marker: GMSMarker) {
+    func markVideoMarkersForRoute(route: AnyObject) {
+        if var tempRoute = route as? SRRoute {
+            tempRoute.videoMarks.enumerateObjectsUsingBlock { [weak self] (element, index, stop) -> Void in
+                if let mark = element as? SRRouteVideoPoint {
+                    dispatch_async(dispatch_get_main_queue(), {() -> Void in
+                        //show annotations
+                        var dic: [String: AnyObject!] = [
+                            "id": mark.id,
+                            "date": mark.videoData!.date.description,
+                            "fileName": mark.videoData!.fileName,
+                            "lat": mark.latitude.doubleValue,
+                            "lng": mark.longitude.doubleValue,
+                            "photo": mark.thumnailImage];
+                        //
+                        var place: SRVideoPlace = SRVideoPlace(dictionary: dic);
+                        
+                        var routeMarker = SRVideoMapMarker(videoPoint: place, routeID: route.id);
+                        
+                        if var blockSelf = self {
+                            blockSelf.showGoogleMapMarker(routeMarker);
+                        }
+                    });
+                }
+            };
+        }
+    }
+    
+    func showGoogleMapMarker(marker: SRBaseMapMarker) {
         marker.appearAnimation = kGMSMarkerAnimationPop;
         marker.map = googleMapView;
     }
@@ -82,7 +112,7 @@ class SRCommonMapViewController: SRCommonViewController, GMSMapViewDelegate {
     
     func mapView(mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView! {
         
-        if let routeMarker = marker as? SRRouteMarker {
+        if let routeMarker = marker as? SRVideoMapMarker {
             let anchor = marker.position;
             
             mapInfoView.titleLabel.text = routeMarker.videoPoint.fileName;

@@ -72,7 +72,7 @@ class SRCoreDataSpec: QuickSpec {
                 
                 it("SRVideoMark should not be nil") {
                     let entity = NSEntityDescription.entityForName(kManagedObjectVideoMark, inManagedObjectContext: self.managedObjectContext!);
-                    let videoMark = SRVideoMark(entity: entity!, insertIntoManagedObjectContext: self.managedObjectContext);
+                    let videoMark = SRRouteVideoPoint(entity: entity!, insertIntoManagedObjectContext: self.managedObjectContext);
                     expect(videoMark).notTo(beNil());
                 }
             }

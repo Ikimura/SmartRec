@@ -7,15 +7,13 @@
 //
 
 
-class SRRouteMarker: GMSMarker {
+class SRVideoMapMarker: SRBaseMapMarker {
     let videoPoint: SRVideoPlace;
-    let routeID: String;
-
+    
     init(videoPoint: SRVideoPlace, routeID: String) {
         self.videoPoint = videoPoint;
-        self.routeID = routeID;
         
-        super.init()
+        super.init(routeID: routeID);
         
         position = videoPoint.coordinate;
         icon = UIImage(named: "");

@@ -71,7 +71,7 @@ public class SRCoreDataManager: NSObject {
     //MARK: - new public API
     
     public func insertVideoMarkEntity(dataStruct: SRVideoMarkStruct) -> NSManagedObject? {
-        var entity: SRVideoMark? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoMark, inManagedObjectContext: self.mainObjectContext) as? SRVideoMark;
+        var entity: SRRouteVideoPoint? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoMark, inManagedObjectContext: self.mainObjectContext) as? SRRouteVideoPoint;
         
         println("SRVideoMark")
         if entity != nil {
@@ -139,7 +139,7 @@ public class SRCoreDataManager: NSObject {
         return entity;
     }
     
-    public func addRelationBetweenVideoMark(videoMark: SRVideoMark, andRute identifier: String) {
+    public func addRelationBetweenVideoMark(videoMark: SRRouteVideoPoint, andRute identifier: String) {
         
         mainObjectContext.performBlockAndWait { [weak self] () -> Void in
             if var blockSelf = self {
@@ -157,7 +157,7 @@ public class SRCoreDataManager: NSObject {
         
         mainObjectContext.performBlockAndWait{ [weak self] () -> Void in
             if var blockSelf = self {
-                if var videoMark = blockSelf.checkForExistingEntity(kManagedObjectVideoMark, withId: identifier, inContext: blockSelf.mainObjectContext) as? SRVideoMark {
+                if var videoMark = blockSelf.checkForExistingEntity(kManagedObjectVideoMark, withId: identifier, inContext: blockSelf.mainObjectContext) as? SRRouteVideoPoint {
                     if let videoData = blockSelf.insertVideoDataEntity(videoData) as? SRVideoData {
                         videoMark.videoData = videoData;
                         blockSelf.saveContext(blockSelf.mainObjectContext);

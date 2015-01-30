@@ -204,11 +204,11 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] () -> Void in
             if var blockSelf = self {
                 //insert SRVideoMark
-                if let videoMark = blockSelf.appDelegate.coreDataManager.insertVideoMarkEntity(markData) as? SRVideoMark {
+                if let videoMark = blockSelf.appDelegate.coreDataManager.insertVideoMarkEntity(markData) as? SRRouteVideoPoint {
                     println("For save data: \(videoData.fileName)");
 //                    link SRVideoData with SRVodeoMark
                     blockSelf.appDelegate.coreDataManager.addRelationBetweenVideoData(videoData, andRouteMark: videoMark.id);
-//                    link SRVideoMark with SRRoute
+//                    link SRRouteVideoPoint with SRRoute
                     blockSelf.appDelegate.coreDataManager.addRelationBetweenVideoMark(videoMark, andRute: blockSelf.route!.id);
                 }
             }

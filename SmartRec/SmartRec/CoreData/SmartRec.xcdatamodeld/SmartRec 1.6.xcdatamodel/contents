@@ -6,7 +6,7 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <relationship name="routePoints" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="SRRoutePoint" inverseName="route" inverseEntity="SRRoutePoint" elementID="routeMarks" syncable="YES"/>
-        <relationship name="videoMarks" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="SRVideoMark" inverseName="route" inverseEntity="SRVideoMark" syncable="YES"/>
+        <relationship name="videoMarks" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="SRRouteVideoPoint" syncable="YES"/>
     </entity>
     <entity name="SRRoutePoint" representedClassName="SmartRec.SRRoutePoint" elementID="SRRouteMark" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
@@ -14,6 +14,11 @@
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <relationship name="route" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SRRoute" inverseName="routePoints" inverseEntity="SRRoute" syncable="YES"/>
+    </entity>
+    <entity name="SRRouteVideoPoint" representedClassName="SmartRec.SRRouteVideoPoint" parentEntity="SRRoutePoint" syncable="YES">
+        <attribute name="autoSaved" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="thumnailImage" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="videoData" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="SRVideoData" syncable="YES"/>
     </entity>
     <entity name="SRVideoData" representedClassName="SmartRec.SRVideoData" elementID="SRNote" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -25,19 +30,10 @@
         <attribute name="resolutionHeight" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="resolutionWidth" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
-    <entity name="SRVideoMark" representedClassName="SmartRec.SRVideoMark" syncable="YES">
-        <attribute name="autoSaved" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="thumnailImage" optional="YES" attributeType="Binary" syncable="YES"/>
-        <relationship name="route" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SRRoute" inverseName="videoMarks" inverseEntity="SRRoute" syncable="YES"/>
-        <relationship name="videoData" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="SRVideoData" syncable="YES"/>
-    </entity>
     <elements>
         <element name="SRRoute" positionX="144" positionY="-72" width="128" height="133"/>
-        <element name="SRRoutePoint" positionX="144" positionY="144" width="128" height="118"/>
-        <element name="SRVideoData" positionX="-54" positionY="-234" width="128" height="163"/>
-        <element name="SRVideoMark" positionX="-56" positionY="-72" width="128" height="148"/>
+        <element name="SRRoutePoint" positionX="-225" positionY="-153" width="128" height="118"/>
+        <element name="SRVideoData" positionX="-468" positionY="-10" width="128" height="163"/>
+        <element name="SRRouteVideoPoint" positionX="-225" positionY="14" width="128" height="88"/>
     </elements>
 </model>

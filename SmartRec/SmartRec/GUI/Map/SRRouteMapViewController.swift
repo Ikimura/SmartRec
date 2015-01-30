@@ -70,26 +70,7 @@ class SRRouteMapViewController: SRCommonMapViewController {
                         println("Id: \(route.id)");
                         println("Count of video marks: \(route.videoMarks.count)");
                         
-                        route.videoMarks.enumerateObjectsUsingBlock { (element, index, stop) -> Void in
-                            if let mark = element as? SRVideoMark {
-                                dispatch_async(dispatch_get_main_queue(), {() -> Void in
-                                    //show annotations
-                                    var dic: [String: AnyObject!] = [
-                                        "id": mark.id,
-                                        "date": mark.videoData!.date.description,
-                                        "fileName": mark.videoData!.fileName,
-                                        "lat": mark.latitude.doubleValue,
-                                        "lng": mark.longitude.doubleValue,
-                                        "photo": mark.thumnailImage];
-                                    //
-                                    var place: SRVideoPlace = SRVideoPlace(dictionary: dic);
-                                    
-                                    var routeMarker = SRRouteMarker(videoPoint: place, routeID: route.id);
-                                    
-                                    blockSelf.showGoogleMapMarker(routeMarker);
-                                });
-                            }
-                        };
+                        blockSelf.markVideoMarkersForRoute(route);
                     }
                 }
             }
@@ -121,7 +102,7 @@ class SRRouteMapViewController: SRCommonMapViewController {
     
     override func mapView(mapView: GMSMapView, didTapInfoWindowOfMarker marker: GMSMarker) {
         //Show video
-        if let tempMarker = marker as? SRRouteMarker {
+        if let tempMarker = marker as? SRVideoMapMarker {
             if let url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(tempMarker.videoPoint.fileName)\(kFileExtension)") as NSURL! {
                 videoURL = url;
             }

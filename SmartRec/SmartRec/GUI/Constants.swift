@@ -19,7 +19,7 @@ let kFileDirectory: NSSearchPathDirectory = .DocumentDirectory;
 
 let kManagedObjectRoutePoint: String = "SRRoutePoint";
 
-let kManagedObjectVideoMark: String = "SRVideoMark";
+let kManagedObjectVideoMark: String = "SRRouteVideoPoint";
 
 let kManagedObjectVideoData: String = "SRVideoData";
 
