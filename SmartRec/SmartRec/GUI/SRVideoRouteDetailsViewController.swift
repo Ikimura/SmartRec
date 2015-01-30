@@ -118,52 +118,48 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
     }
     
     //TDOD: add filed locationDescription in SRRouteVideoPoint
-    
+
     private func updateVideoInformation() {
-        videoFileNameLabel.text = selectedVideoMark!.videoData!.fileName;
-        geocodingProvider.geocoding(selectedVideoMark!.latitude.doubleValue, lng: selectedVideoMark!.longitude.doubleValue) { [weak self] (data) -> Void in
-            //parse JSON
-            if var blockSelf = self {
-                
-                //2
-                if let json = data as? NSDictionary {
-                    if let res  = json["results"] as? NSArray {
-                        if let feed = res[1] as? String{
-//                            if let address = feed.objectForKey("formatted_address") {
-                                println(feed);
-//                            }
-                        }
-                    }
-                }
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    blockSelf.videoMarkLocationLabel.text = "";
-                });
-            }
-//                if let json = data as? Dictionary {
-//                    if let obj = json["formatted_address"][0].stringValue {
-//                        println("Print: \(obj)");
-//                    }
-//                }
-        }
         
-//        if (selectedVideoMark?.locationDescription == nil) {
-//            tempProvider.
-//        } else {
-//            videoMarkLocationLabel.text = "\(selectedVideoMark!.locationDescription)";
-//        }
+        //if (selectedVideoMark?.locationDescription == nil) {
+            geocodingProvider.geocoding(selectedVideoMark!.latitude.doubleValue, lng: selectedVideoMark!.longitude.doubleValue) { [weak self] (data) -> Void in
+                //parse JSON
+                if var blockSelf = self {
+                    
+                    var responseDict: NSDictionary = data as NSDictionary;
+                    var results: NSArray = responseDict["results"] as NSArray
+                    var item: NSDictionary = results[0] as NSDictionary
+                    
+                    var googleAddress = item["formatted_address"] as NSString;
+                    
+                    //location description
+                     blockSelf.videoMarkLocationLabel.text = googleAddress;
+                    
+                    //TODO: update core data entity
+                }
+            }
+       // }
+
+        
+        videoFileNameLabel.text = selectedVideoMark!.videoData!.fileName;
+        
         //date
         let date: NSDate = NSDate(timeIntervalSince1970: selectedVideoMark!.videoData!.date.doubleValue);
         videoMarkDateLabel.text = date.stringFromDateWithStringFormats([kTimeFormat, kDateFormat, kTimeFormat]);
+        
         //set file duration
         let seconds = selectedVideoMark!.videoData!.duration.doubleValue.format(".1");
         let durationLS = NSLocalizedString("DURATION", comment: "comment");
         videFileDurationLabel.text = "\(durationLS): \(seconds)";
+        
         //set size data bytes
         let mBytes = Double(Double(selectedVideoMark!.videoData!.fileSize.integerValue) / 1000000.0).format(".3");
         let sizeLS = NSLocalizedString("SIZE", comment: "comment");
         fileSizeLabel.text = "\(sizeLS): \(mBytes) MB.";
+        
         //set video resolution
         videoResolutionLabel.text = "\(selectedVideoMark!.videoData!.resolutionWidth.integerValue)x\(selectedVideoMark!.videoData!.resolutionHeight.integerValue)";
+        
         //set frame rates
         let fps = Double(selectedVideoMark!.videoData!.frameRate.floatValue).format(".2");
         videoFrameRateLabel.text = "FPS: \(fps)";
