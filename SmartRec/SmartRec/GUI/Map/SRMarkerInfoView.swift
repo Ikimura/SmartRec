@@ -8,17 +8,10 @@
 
 import UIKit
 
-class SRMarkerInfoView: UIView {
+class SRMarkerInfoView: SRSimpleMarkerView {
 
-    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
-        
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder);
-        
-        self.layer.cornerRadius = 5;
-    }
 
     /*
     // Only override drawRect: if you perform custom drawing.

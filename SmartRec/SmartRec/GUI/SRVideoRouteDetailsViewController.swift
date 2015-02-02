@@ -96,6 +96,19 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
             self.performSegueWithIdentifier(kShowVideoSegueIdentifier_2, sender: self);
         }
     }
+    
+    override func mapView(mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView! {
+        var mapInfoView = UIView.viewFromNibName("SRSimpleMarkerView") as? SRSimpleMarkerView!;
+
+        if let routeMarker = marker as? SRVideoMapMarker {
+            let anchor = marker.position;
+            if let photo = routeMarker.videoPoint.photo {
+                mapInfoView!.imageView.image = photo;
+            }
+        }
+        
+        return mapInfoView
+    }
    
     //MARK: - private interface
     

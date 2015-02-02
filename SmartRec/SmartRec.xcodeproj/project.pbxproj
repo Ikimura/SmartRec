@@ -95,6 +95,9 @@
 		13AC35F31A7FCFE50092BC9E /* SRVideoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35EE1A7FCF010092BC9E /* SRVideoData.swift */; };
 		13AC35F41A7FCFE50092BC9E /* SRRouteVideoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35EC1A7FCF000092BC9E /* SRRouteVideoPoint.swift */; };
 		13AC35F51A7FCFE50092BC9E /* SRRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35EA1A7FCF000092BC9E /* SRRoutePoint.swift */; };
+		13AC35FA1A7FE2A30092BC9E /* SRSimpleMarkerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13AC35F91A7FE2A30092BC9E /* SRSimpleMarkerView.xib */; };
+		13AC35FD1A7FE4700092BC9E /* SRSimpleMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35FB1A7FE2E80092BC9E /* SRSimpleMarkerView.swift */; };
+		13AC35FE1A7FE48C0092BC9E /* SRSimpleMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35FB1A7FE2E80092BC9E /* SRSimpleMarkerView.swift */; };
 		13B425A31A7BE1EC007E3615 /* SRBaseMapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B425A21A7BE1EC007E3615 /* SRBaseMapMarker.swift */; };
 		13B425A51A7BE32D007E3615 /* SRPointMapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B425A41A7BE32D007E3615 /* SRPointMapMarker.swift */; };
 		13B660E81A236D0100EDA68A /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B660E11A236CD700EDA68A /* Quick.framework */; };
@@ -252,6 +255,8 @@
 		13AC35EC1A7FCF000092BC9E /* SRRouteVideoPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRRouteVideoPoint.swift; path = ../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/CoreData/SRRouteVideoPoint.swift; sourceTree = "<group>"; };
 		13AC35EE1A7FCF010092BC9E /* SRVideoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRVideoData.swift; path = ../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/CoreData/SRVideoData.swift; sourceTree = "<group>"; };
 		13AC35F01A7FCF010092BC9E /* SRRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRRoute.swift; path = ../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/CoreData/SRRoute.swift; sourceTree = "<group>"; };
+		13AC35F91A7FE2A30092BC9E /* SRSimpleMarkerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SRSimpleMarkerView.xib; path = ../../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/GUI/Map/SRSimpleMarkerView.xib; sourceTree = "<group>"; };
+		13AC35FB1A7FE2E80092BC9E /* SRSimpleMarkerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRSimpleMarkerView.swift; path = ../../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/GUI/Map/SRSimpleMarkerView.swift; sourceTree = "<group>"; };
 		13B425A21A7BE1EC007E3615 /* SRBaseMapMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRBaseMapMarker.swift; path = ../../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/GUI/Map/SRBaseMapMarker.swift; sourceTree = "<group>"; };
 		13B425A41A7BE32D007E3615 /* SRPointMapMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRPointMapMarker.swift; path = ../../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/GUI/Map/SRPointMapMarker.swift; sourceTree = "<group>"; };
 		13B660CA1A236CCD00EDA68A /* Nimble.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nimble.xcodeproj; path = ../../Vendor/Nimble/Nimble.xcodeproj; sourceTree = "<group>"; };
@@ -327,6 +332,7 @@
 		1304A2761A16226C004CBD9B /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				13AC35F81A7FE2880092BC9E /* SimpleMarkerView */,
 				1340DAD01A7A0F2F005C67D0 /* Overlay */,
 				13265F591A1E0D3D00E063CD /* Markers */,
 				133872051A1CBD0500FFC29F /* MarkerView */,
@@ -583,6 +589,15 @@
 				13AC35E41A7FCD1E0092BC9E /* SRRouteFunctionality.swift */,
 			);
 			name = CoreData;
+			sourceTree = "<group>";
+		};
+		13AC35F81A7FE2880092BC9E /* SimpleMarkerView */ = {
+			isa = PBXGroup;
+			children = (
+				13AC35F91A7FE2A30092BC9E /* SRSimpleMarkerView.xib */,
+				13AC35FB1A7FE2E80092BC9E /* SRSimpleMarkerView.swift */,
+			);
+			name = SimpleMarkerView;
 			sourceTree = "<group>";
 		};
 		13B660CB1A236CCD00EDA68A /* Products */ = {
@@ -859,6 +874,7 @@
 				13BCBB291A28996600E823F9 /* SRBusyView.xib in Resources */,
 				137E3B7019F52BF00094C5A1 /* Images.xcassets in Resources */,
 				13E537A21A30BCBD000A27E6 /* SRGSensorView.xib in Resources */,
+				13AC35FA1A7FE2A30092BC9E /* SRSimpleMarkerView.xib in Resources */,
 				131874AC1A52983A00FA5826 /* Localizable.strings in Resources */,
 				1304A27C1A1622F0004CBD9B /* GoogleMaps.bundle in Resources */,
 				1338720C1A1CC9DF00FFC29F /* SRMarkerInfoView.xib in Resources */,
@@ -912,6 +928,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13AC35FD1A7FE4700092BC9E /* SRSimpleMarkerView.swift in Sources */,
 				13AC35F11A7FCF010092BC9E /* SRRoute.swift in Sources */,
 				1368F4FE1A4B20F0004D52B1 /* SRVideoRouteDetailsViewController.swift in Sources */,
 				13EBF1EE1A1DC7A900029072 /* UIViewExtensions.swift in Sources */,
@@ -963,6 +980,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13AC35FE1A7FE48C0092BC9E /* SRSimpleMarkerView.swift in Sources */,
 				13AC35F21A7FCFE50092BC9E /* SRRoute.swift in Sources */,
 				13AC35F31A7FCFE50092BC9E /* SRVideoData.swift in Sources */,
 				13AC35F41A7FCFE50092BC9E /* SRRouteVideoPoint.swift in Sources */,
