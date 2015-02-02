@@ -121,7 +121,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
 
     private func updateVideoInformation() {
         
-        //if (selectedVideoMark?.locationDescription == nil) {
+        if (selectedVideoMark?.locationDescription == nil) {
             geocodingProvider.geocoding(selectedVideoMark!.latitude.doubleValue, lng: selectedVideoMark!.longitude.doubleValue) { [weak self] (data) -> Void in
                 //parse JSON
                 if var blockSelf = self {
@@ -133,13 +133,20 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
                     var googleAddress = item["formatted_address"] as NSString;
                     
                     //location description
-                     blockSelf.videoMarkLocationLabel.text = googleAddress;
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        blockSelf.videoMarkLocationLabel.text = googleAddress;
+                    })
                     
-                    //TODO: update core data entity
+                    blockSelf.selectedVideoMark?.locationDescription =  googleAddress;
+                    
+                    var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
+                    
+                    appDelegate.coreDataManager.updateEntity(blockSelf.selectedVideoMark!);
                 }
             }
-       // }
-
+        } else {
+            videoMarkLocationLabel.text = selectedVideoMark!.locationDescription;
+        }
         
         videoFileNameLabel.text = selectedVideoMark!.videoData!.fileName;
         

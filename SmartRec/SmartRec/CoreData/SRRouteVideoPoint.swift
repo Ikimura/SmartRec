@@ -2,7 +2,7 @@
 //  SRRouteVideoPoint.swift
 //  SmartRec
 //
-//  Created by Artsiom Karseka on 1/30/15.
+//  Created by Artsiom Karseka on 2/2/15.
 //  Copyright (c) 2015 con.epam.evnt. All rights reserved.
 //
 

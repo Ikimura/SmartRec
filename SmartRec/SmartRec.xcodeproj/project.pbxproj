@@ -85,14 +85,16 @@
 		137E3BA019F5538E0094C5A1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 137E3B9F19F5538E0094C5A1 /* AVFoundation.framework */; };
 		138532BA19FA490D00430319 /* SRVideoCaptureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138532B919FA490D00430319 /* SRVideoCaptureManager.swift */; };
 		1394B1001A075D71009D0780 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1394B0FF1A075D71009D0780 /* CoreMotion.framework */; };
-		13B425971A7BDB62007E3615 /* SRVideoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B425961A7BDB62007E3615 /* SRVideoData.swift */; };
-		13B425991A7BDB63007E3615 /* SRRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B425981A7BDB63007E3615 /* SRRoute.swift */; };
-		13B4259B1A7BDB63007E3615 /* SRRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B4259A1A7BDB63007E3615 /* SRRoutePoint.swift */; };
-		13B4259D1A7BDB63007E3615 /* SRRouteVideoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B4259C1A7BDB63007E3615 /* SRRouteVideoPoint.swift */; };
-		13B4259E1A7BDF8A007E3615 /* SRRouteVideoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B4259C1A7BDB63007E3615 /* SRRouteVideoPoint.swift */; };
-		13B4259F1A7BDF8A007E3615 /* SRRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B4259A1A7BDB63007E3615 /* SRRoutePoint.swift */; };
-		13B425A01A7BDF8A007E3615 /* SRRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B425981A7BDB63007E3615 /* SRRoute.swift */; };
-		13B425A11A7BDF8A007E3615 /* SRVideoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B425961A7BDB62007E3615 /* SRVideoData.swift */; };
+		13AC35E51A7FCD1E0092BC9E /* SRRouteFunctionality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35E41A7FCD1E0092BC9E /* SRRouteFunctionality.swift */; };
+		13AC35E61A7FCD830092BC9E /* SRRouteFunctionality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35E41A7FCD1E0092BC9E /* SRRouteFunctionality.swift */; };
+		13AC35EB1A7FCF000092BC9E /* SRRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35EA1A7FCF000092BC9E /* SRRoutePoint.swift */; };
+		13AC35ED1A7FCF000092BC9E /* SRRouteVideoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35EC1A7FCF000092BC9E /* SRRouteVideoPoint.swift */; };
+		13AC35EF1A7FCF010092BC9E /* SRVideoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35EE1A7FCF010092BC9E /* SRVideoData.swift */; };
+		13AC35F11A7FCF010092BC9E /* SRRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35F01A7FCF010092BC9E /* SRRoute.swift */; };
+		13AC35F21A7FCFE50092BC9E /* SRRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35F01A7FCF010092BC9E /* SRRoute.swift */; };
+		13AC35F31A7FCFE50092BC9E /* SRVideoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35EE1A7FCF010092BC9E /* SRVideoData.swift */; };
+		13AC35F41A7FCFE50092BC9E /* SRRouteVideoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35EC1A7FCF000092BC9E /* SRRouteVideoPoint.swift */; };
+		13AC35F51A7FCFE50092BC9E /* SRRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35EA1A7FCF000092BC9E /* SRRoutePoint.swift */; };
 		13B425A31A7BE1EC007E3615 /* SRBaseMapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B425A21A7BE1EC007E3615 /* SRBaseMapMarker.swift */; };
 		13B425A51A7BE32D007E3615 /* SRPointMapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B425A41A7BE32D007E3615 /* SRPointMapMarker.swift */; };
 		13B660E81A236D0100EDA68A /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B660E11A236CD700EDA68A /* Quick.framework */; };
@@ -244,10 +246,12 @@
 		13A4FDD41A237B0B00201DD5 /* SRSingletonLocationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSingletonLocationSpec.swift; sourceTree = "<group>"; };
 		13A4FDE11A237D0300201DD5 /* SRUIViewExtensionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRUIViewExtensionSpec.swift; sourceTree = "<group>"; };
 		13A4FDE61A23840D00201DD5 /* SRCoreDataSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataSpec.swift; sourceTree = "<group>"; };
-		13B425961A7BDB62007E3615 /* SRVideoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRVideoData.swift; path = ../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/CoreData/SRVideoData.swift; sourceTree = "<group>"; };
-		13B425981A7BDB63007E3615 /* SRRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRRoute.swift; path = ../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/CoreData/SRRoute.swift; sourceTree = "<group>"; };
-		13B4259A1A7BDB63007E3615 /* SRRoutePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRRoutePoint.swift; path = ../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/CoreData/SRRoutePoint.swift; sourceTree = "<group>"; };
-		13B4259C1A7BDB63007E3615 /* SRRouteVideoPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRRouteVideoPoint.swift; path = ../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/CoreData/SRRouteVideoPoint.swift; sourceTree = "<group>"; };
+		13AC35E41A7FCD1E0092BC9E /* SRRouteFunctionality.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRRouteFunctionality.swift; path = ../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/Extensions/SRRouteFunctionality.swift; sourceTree = "<group>"; };
+		13AC35E71A7FCE710092BC9E /* SmartRec 1.7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SmartRec 1.7.xcdatamodel"; sourceTree = "<group>"; };
+		13AC35EA1A7FCF000092BC9E /* SRRoutePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRRoutePoint.swift; path = ../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/CoreData/SRRoutePoint.swift; sourceTree = "<group>"; };
+		13AC35EC1A7FCF000092BC9E /* SRRouteVideoPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRRouteVideoPoint.swift; path = ../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/CoreData/SRRouteVideoPoint.swift; sourceTree = "<group>"; };
+		13AC35EE1A7FCF010092BC9E /* SRVideoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRVideoData.swift; path = ../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/CoreData/SRVideoData.swift; sourceTree = "<group>"; };
+		13AC35F01A7FCF010092BC9E /* SRRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRRoute.swift; path = ../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/CoreData/SRRoute.swift; sourceTree = "<group>"; };
 		13B425A21A7BE1EC007E3615 /* SRBaseMapMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRBaseMapMarker.swift; path = ../../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/GUI/Map/SRBaseMapMarker.swift; sourceTree = "<group>"; };
 		13B425A41A7BE32D007E3615 /* SRPointMapMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRPointMapMarker.swift; path = ../../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/GUI/Map/SRPointMapMarker.swift; sourceTree = "<group>"; };
 		13B660CA1A236CCD00EDA68A /* Nimble.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nimble.xcodeproj; path = ../../Vendor/Nimble/Nimble.xcodeproj; sourceTree = "<group>"; };
@@ -573,6 +577,14 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
+		13AC35DB1A7FCCDA0092BC9E /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				13AC35E41A7FCD1E0092BC9E /* SRRouteFunctionality.swift */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
 		13B660CB1A236CCD00EDA68A /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -625,10 +637,10 @@
 			children = (
 				13CA8BD01A14973400E8C6D8 /* CoreDataManager */,
 				13D786871A1358E700A4DD3C /* SmartRec.xcdatamodeld */,
-				13B4259C1A7BDB63007E3615 /* SRRouteVideoPoint.swift */,
-				13B4259A1A7BDB63007E3615 /* SRRoutePoint.swift */,
-				13B425981A7BDB63007E3615 /* SRRoute.swift */,
-				13B425961A7BDB62007E3615 /* SRVideoData.swift */,
+				13AC35F01A7FCF010092BC9E /* SRRoute.swift */,
+				13AC35EE1A7FCF010092BC9E /* SRVideoData.swift */,
+				13AC35EC1A7FCF000092BC9E /* SRRouteVideoPoint.swift */,
+				13AC35EA1A7FCF000092BC9E /* SRRoutePoint.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -636,6 +648,7 @@
 		13E5AE7519FF7B6700ABFAD8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				13AC35DB1A7FCCDA0092BC9E /* CoreData */,
 				1379459A1A3B0C3E00AF1A97 /* NSFileManagerExtensions.swift */,
 				13E5AE7619FF7BF900ABFAD8 /* NSURLExtensions.swift */,
 				13F985761A13912400E9B958 /* AVAssetExtensions.swift */,
@@ -899,6 +912,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13AC35F11A7FCF010092BC9E /* SRRoute.swift in Sources */,
 				1368F4FE1A4B20F0004D52B1 /* SRVideoRouteDetailsViewController.swift in Sources */,
 				13EBF1EE1A1DC7A900029072 /* UIViewExtensions.swift in Sources */,
 				133DBB0D1A52B87D00B763D2 /* SRGoogleGeocodingServiceProtocol.swift in Sources */,
@@ -906,19 +920,18 @@
 				1338720E1A1CC9FF00FFC29F /* SRMarkerInfoView.swift in Sources */,
 				13E5AE7719FF7BF900ABFAD8 /* NSURLExtensions.swift in Sources */,
 				13265F5B1A1E0DA100E063CD /* SRVideoMapMarker.swift in Sources */,
-				13B425991A7BDB63007E3615 /* SRRoute.swift in Sources */,
+				13AC35EB1A7FCF000092BC9E /* SRRoutePoint.swift in Sources */,
 				137E3B9719F5420C0094C5A1 /* SRTabBarViewController.swift in Sources */,
+				13AC35ED1A7FCF000092BC9E /* SRRouteVideoPoint.swift in Sources */,
 				137945971A3B0BFA00AF1A97 /* SRRouteStruct.swift in Sources */,
-				13B4259D1A7BDB63007E3615 /* SRRouteVideoPoint.swift in Sources */,
 				13BFF4211A7942EF00A5D3A9 /* SRMapPolyline.swift in Sources */,
 				13B425A51A7BE32D007E3615 /* SRPointMapMarker.swift in Sources */,
 				13B425A31A7BE1EC007E3615 /* SRBaseMapMarker.swift in Sources */,
-				13B4259B1A7BDB63007E3615 /* SRRoutePoint.swift in Sources */,
 				13265F5D1A1E10BA00E063CD /* SRVideoPlace.swift in Sources */,
+				13AC35EF1A7FCF010092BC9E /* SRVideoData.swift in Sources */,
 				133DBB101A52BD1C00B763D2 /* SRGoogleGeocodingDataProvider.swift in Sources */,
 				137E3B8B19F531B20094C5A1 /* SRNavigationController.swift in Sources */,
 				1379459B1A3B0C3E00AF1A97 /* NSFileManagerExtensions.swift in Sources */,
-				13B425971A7BDB62007E3615 /* SRVideoData.swift in Sources */,
 				13C1F5BD19F6466C00149649 /* SRVideoRecorder.swift in Sources */,
 				1361452C1A3F396300097AA3 /* SRRoutePointStruct.swift in Sources */,
 				137E3B8D19F532550094C5A1 /* SRCommonViewController.swift in Sources */,
@@ -941,6 +954,7 @@
 				1318DEC41A1F54AD007B0F54 /* StringExtensions.swift in Sources */,
 				13F985771A13912400E9B958 /* AVAssetExtensions.swift in Sources */,
 				137945991A3B0BFA00AF1A97 /* SRVideoMarkStruct.swift in Sources */,
+				13AC35E51A7FCD1E0092BC9E /* SRRouteFunctionality.swift in Sources */,
 				1304A2781A16226C004CBD9B /* SRRouteMapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -949,10 +963,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B4259E1A7BDF8A007E3615 /* SRRouteVideoPoint.swift in Sources */,
-				13B4259F1A7BDF8A007E3615 /* SRRoutePoint.swift in Sources */,
-				13B425A01A7BDF8A007E3615 /* SRRoute.swift in Sources */,
-				13B425A11A7BDF8A007E3615 /* SRVideoData.swift in Sources */,
+				13AC35F21A7FCFE50092BC9E /* SRRoute.swift in Sources */,
+				13AC35F31A7FCFE50092BC9E /* SRVideoData.swift in Sources */,
+				13AC35F41A7FCFE50092BC9E /* SRRouteVideoPoint.swift in Sources */,
+				13AC35F51A7FCFE50092BC9E /* SRRoutePoint.swift in Sources */,
+				13AC35E61A7FCD830092BC9E /* SRRouteFunctionality.swift in Sources */,
 				1361452D1A3F402F00097AA3 /* SRRoutePointStruct.swift in Sources */,
 				13557F491A3B227C00E36CE7 /* SRCoreDataManager.swift in Sources */,
 				13557F481A3B226200E36CE7 /* SRCoreDataManagerSpec.swift in Sources */,
@@ -1209,6 +1224,7 @@
 		13D786871A1358E700A4DD3C /* SmartRec.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				13AC35E71A7FCE710092BC9E /* SmartRec 1.7.xcdatamodel */,
 				135F44521A51329600F8DD82 /* SmartRec 1.6.xcdatamodel */,
 				137C53621A4B0DF8004DC22A /* SmartRec 1.5.xcdatamodel */,
 				133460D41A40915C004137BD /* SmartRec 1.4.xcdatamodel */,
@@ -1217,7 +1233,7 @@
 				136895671A1A1E8D00D37A14 /* SmartRec 1.1.xcdatamodel */,
 				13D786881A1358E700A4DD3C /* SmartRec.xcdatamodel */,
 			);
-			currentVersion = 135F44521A51329600F8DD82 /* SmartRec 1.6.xcdatamodel */;
+			currentVersion = 13AC35E71A7FCE710092BC9E /* SmartRec 1.7.xcdatamodel */;
 			path = SmartRec.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

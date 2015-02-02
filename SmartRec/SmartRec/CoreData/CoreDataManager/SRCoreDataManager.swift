@@ -182,6 +182,18 @@ public class SRCoreDataManager: NSObject {
         };
     }
     
+    public func updateEntity(entity: NSManagedObject) -> SRResult {
+        var managedContext = entity.managedObjectContext;
+                
+        var error: NSError?;
+        
+        if (managedContext?.save(&error) == true) {
+            return .Success(true);
+        }
+        
+        return .Failure(error!);
+    }
+    
     public func deleteEntity(entity: NSManagedObject) -> SRResult {
         var managedContext = entity.managedObjectContext;
         
