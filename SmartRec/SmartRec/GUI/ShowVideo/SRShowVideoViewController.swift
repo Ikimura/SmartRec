@@ -12,14 +12,14 @@ import MediaPlayer
 class SRShowVideoViewController: SRCommonViewController {
     
     @IBOutlet weak var moviePlayerView: UIView!
-    var fileURL: NSURL!;
+    var fileURLToShow: NSURL!;
     
     private var moviePlayer: MPMoviePlayerController!;
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        moviePlayer =  MPMoviePlayerController(contentURL: fileURL);
+        moviePlayer =  MPMoviePlayerController(contentURL: fileURLToShow);
 
         moviePlayer.view.frame = UIScreen.mainScreen().bounds;
         view.addSubview(moviePlayer.view);

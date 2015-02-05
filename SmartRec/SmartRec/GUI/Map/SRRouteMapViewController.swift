@@ -27,7 +27,7 @@ class SRRouteMapViewController: SRCommonMapViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         //setup Map
         self.setUpMapViewWith(SRLocationManager.sharedInstance.currentLocation() as CLLocation?);
     }
@@ -109,6 +109,15 @@ class SRRouteMapViewController: SRCommonMapViewController {
             self.performSegueWithIdentifier(kShowVideoSegueIdentifier_1, sender: self);
         }
     }
+    
+    // MARK: - parent override
+    
+    override func prepareItemToShare() {
+        if (videoURL != nil) {
+            self.fileURL = videoURL;
+            self.shareVideoItem();
+        }
+    }
 
     // MARK: - Navigation
     
@@ -118,7 +127,7 @@ class SRRouteMapViewController: SRCommonMapViewController {
         switch (segue.identifier!) {
         case kShowVideoSegueIdentifier_1:
             if let showVideoVC = segue.destinationViewController as? SRShowVideoViewController {
-                showVideoVC.fileURL = videoURL!;
+                showVideoVC.fileURLToShow = videoURL!;
             }
         case kDisplayVideoRouteDetailsSegueIdentifier_2:
             if let routeVideoDetailsVC = segue.destinationViewController as? SRVideoRouteDetailsViewController {

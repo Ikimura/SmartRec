@@ -85,6 +85,7 @@
 		137E3BA019F5538E0094C5A1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 137E3B9F19F5538E0094C5A1 /* AVFoundation.framework */; };
 		138532BA19FA490D00430319 /* SRVideoCaptureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138532B919FA490D00430319 /* SRVideoCaptureManager.swift */; };
 		1394B1001A075D71009D0780 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1394B0FF1A075D71009D0780 /* CoreMotion.framework */; };
+		139814431A82821F0030B485 /* SRAirDropSharingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139814421A82821F0030B485 /* SRAirDropSharingProtocol.swift */; };
 		13AC35E51A7FCD1E0092BC9E /* SRRouteFunctionality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35E41A7FCD1E0092BC9E /* SRRouteFunctionality.swift */; };
 		13AC35E61A7FCD830092BC9E /* SRRouteFunctionality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35E41A7FCD1E0092BC9E /* SRRouteFunctionality.swift */; };
 		13AC35EB1A7FCF000092BC9E /* SRRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AC35EA1A7FCF000092BC9E /* SRRoutePoint.swift */; };
@@ -246,6 +247,7 @@
 		137E3B9F19F5538E0094C5A1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		138532B919FA490D00430319 /* SRVideoCaptureManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRVideoCaptureManager.swift; sourceTree = "<group>"; };
 		1394B0FF1A075D71009D0780 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		139814421A82821F0030B485 /* SRAirDropSharingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAirDropSharingProtocol.swift; sourceTree = "<group>"; };
 		13A4FDD41A237B0B00201DD5 /* SRSingletonLocationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSingletonLocationSpec.swift; sourceTree = "<group>"; };
 		13A4FDE11A237D0300201DD5 /* SRUIViewExtensionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRUIViewExtensionSpec.swift; sourceTree = "<group>"; };
 		13A4FDE61A23840D00201DD5 /* SRCoreDataSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataSpec.swift; sourceTree = "<group>"; };
@@ -358,6 +360,15 @@
 			path = ShowVideo;
 			sourceTree = "<group>";
 		};
+		131792FD1A82728A00448AD7 /* AirDrop */ = {
+			isa = PBXGroup;
+			children = (
+				139814421A82821F0030B485 /* SRAirDropSharingProtocol.swift */,
+			);
+			name = AirDrop;
+			path = ../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/AirDrop;
+			sourceTree = "<group>";
+		};
 		13265F591A1E0D3D00E063CD /* Markers */ = {
 			isa = PBXGroup;
 			children = (
@@ -436,6 +447,7 @@
 		137E3B6519F52BF00094C5A1 /* SmartRec */ = {
 			isa = PBXGroup;
 			children = (
+				131792FD1A82728A00448AD7 /* AirDrop */,
 				133DBB0E1A52BCB900B763D2 /* DataProviders */,
 				133DBB031A52B70200B763D2 /* Services */,
 				13D786861A1358D700A4DD3C /* CoreData */,
@@ -957,6 +969,7 @@
 				13D786891A1358E700A4DD3C /* SmartRec.xcdatamodeld in Sources */,
 				1313411219F78D68003BF084 /* SRShowVideoViewController.swift in Sources */,
 				137E3B9019F532A90094C5A1 /* SRMovieListViewController.swift in Sources */,
+				139814431A82821F0030B485 /* SRAirDropSharingProtocol.swift in Sources */,
 				13E537A01A30BCBD000A27E6 /* SRGSensor.swift in Sources */,
 				13CA8BD61A14A3BA00E8C6D8 /* SRCoreDataManager.swift in Sources */,
 				137E3B6919F52BF00094C5A1 /* AppDelegate.swift in Sources */,

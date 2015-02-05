@@ -109,6 +109,15 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
         
         return mapInfoView
     }
+    
+    override func prepareItemToShare() {
+        if (self.selectedVideoMark != nil) {
+            if let itemURL = NSURL.URL(directoryName: kFileDirectory, fileName: "\(selectedVideoMark!.videoData!.fileName)\(kFileExtension)") as NSURL! {
+                self.fileURL = itemURL;
+                self.shareVideoItem();
+            }
+        }
+    }
    
     //MARK: - private interface
     
@@ -191,7 +200,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
         // Get the new view controller using segue.destinationViewController.
         if segue.identifier == kShowVideoSegueIdentifier_2 {
             if let showVideoVC = segue.destinationViewController as? SRShowVideoViewController {
-                showVideoVC.fileURL = videoURL!;
+                showVideoVC.fileURLToShow = videoURL!;
             }
         }
     }

@@ -8,11 +8,13 @@
 
 import UIKit
 
-class SRCommonViewController: UIViewController {
+class SRCommonViewController: UIViewController, SRAirDropSharingProtocol {
     
     private var busyView: SRBusyView?;
     private var busyCounter: Int = 0;
     
+    var fileURL: NSURL?;
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -46,4 +48,37 @@ class SRCommonViewController: UIViewController {
         }
     }
 
+    //pragma mark - handler
+    
+    @IBAction func shareItemDidTap(sender: AnyObject) {
+        self.prepareItemToShare();
+    }
+    
+    func prepareItemToShare() {
+        
+    }
+    
+    //pragma mark - SRAirDropSharingProtocol
+    
+    func shareVideoItem() {
+        var objectsToShare = [self.fileURL!];
+        
+        var controller = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil);
+        var excludedActivities = [
+            UIActivityTypePostToTwitter, UIActivityTypePostToFacebook,
+            UIActivityTypePostToWeibo, UIActivityTypeMessage, UIActivityTypeMail,
+            UIActivityTypePrint, UIActivityTypeCopyToPasteboard,
+            UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,
+            UIActivityTypeAddToReadingList, UIActivityTypePostToFlickr,
+            UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo
+        ];
+        
+        controller.excludedActivityTypes = excludedActivities;
+        
+        // Present the controller
+        self.presentViewController(controller, animated: true, completion: nil);
+
+    }
+    
+    
 }
