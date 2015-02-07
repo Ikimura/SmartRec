@@ -20,7 +20,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
     @IBOutlet weak var fileSizeLabel: UILabel!
     @IBOutlet weak var videoResolutionLabel: UILabel!
     @IBOutlet weak var videoFrameRateLabel: UILabel!
-    
+    @IBOutlet weak var detailsViewTopConstraint: NSLayoutConstraint!
     var route: SRRoute?;
     var selectedVideoId: String?;
     
@@ -30,12 +30,14 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
         var tempProvider = SRGoogleGeocodingDataProvider();
         return tempProvider;
     }();
+    private var isDetailsViewShowed: Bool = false;
 
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad();
         
         var location: CLLocation?;
-        if selectedVideoMark != nil {
+        if selectedVideoId != nil {
+
             let predicate = NSPredicate(format: "id = %@", selectedVideoId!);
             
             var temMarks = route?.videoMarks.filteredOrderedSetUsingPredicate(predicate!);
@@ -46,8 +48,14 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
                     location = CLLocation(latitude: selectedVideoMark!.latitude.doubleValue, longitude: selectedVideoMark!.longitude.doubleValue);
                 }
             }
+            
+            //update info in view
             self.updateVideoInformation();
+            
+            //show view
+            self.showHideDetailsView(true, animated: false);
         }
+        
         self.setUpMapViewWith(location);
         
         self.makePolylineForRoute(route!);
@@ -57,15 +65,15 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
         self.updateRouteInformation();
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated);
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated);
-    }
-    
     //MARK: - internal interface
+    
+    override func mapView(mapView: GMSMapView, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
+        if isDetailsViewShowed != true {
+            super.mapView(mapView, didTapAtCoordinate: coordinate);
+        }
+        
+        self.showHideDetailsView(false, animated: true);
+    }
     
     override func mapView(mapView: GMSMapView!, didTapMarker marker: GMSMarker!) -> Bool {
         mapView.selectedMarker = marker;
@@ -79,11 +87,18 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
             
             if (temp != nil && temp?.count != 0) {
                 selectedVideoMark = temp?.firstObject as? SRRouteVideoPoint;
+                //update info in view
                 self.updateVideoInformation();
+                
+                //show view
+                self.showHideDetailsView(true, animated: true);
+                
             } else {
+                
                 print("Error!");
             }
         }
+        
         return true;
     }
     
@@ -93,6 +108,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
             if let url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(tempMarker.videoPoint.fileName)\(kFileExtension)") as NSURL! {
                 videoURL = url;
             }
+            
             self.performSegueWithIdentifier(kShowVideoSegueIdentifier_2, sender: self);
         }
     }
@@ -103,6 +119,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
         if let routeMarker = marker as? SRVideoMapMarker {
             let anchor = marker.position;
             if let photo = routeMarker.videoPoint.photo {
+                
                 mapInfoView!.imageView.image = photo;
             }
         }
@@ -113,6 +130,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
     override func prepareItemToShare() {
         if (self.selectedVideoMark != nil) {
             if let itemURL = NSURL.URL(directoryName: kFileDirectory, fileName: "\(selectedVideoMark!.videoData!.fileName)\(kFileExtension)") as NSURL! {
+                
                 self.fileURL = itemURL;
                 self.shareVideoItem();
             }
@@ -120,6 +138,34 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
     }
    
     //MARK: - private interface
+    
+    private func showHideDetailsView(show: Bool, animated: Bool) {
+
+        println(self.containerView.frame.size.height)
+        println(self.detailsViewTopConstraint.constant)
+
+        if (animated == true) {
+            self.view.layoutIfNeeded();
+
+            detailsViewTopConstraint.constant = show == true ? 0 : -(containerView.frame.size.height + kNavigationBarHeight);
+            isDetailsViewShowed = show;
+
+            UIView.animateWithDuration(0.33, animations: { [weak self]() -> Void in
+                if var strongSelf = self {        
+                    strongSelf.view.layoutIfNeeded();
+                    println(strongSelf.containerView.frame.size.height)
+                    println(strongSelf.detailsViewTopConstraint.constant)
+                }
+            });
+            
+        } else {
+            
+            detailsViewTopConstraint.constant = show == true ? 0 : -(containerView.frame.size.height + kNavigationBarHeight);
+            isDetailsViewShowed = show;
+            println(containerView.frame.size.height)
+            println(detailsViewTopConstraint.constant)
+        }
+    }
     
     private func updateRouteInformation() {
         //set route start-end dagte time

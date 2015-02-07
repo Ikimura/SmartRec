@@ -64,3 +64,6 @@ let kDateFormat: String = "cсcc, d LLLL";
 let kGoogleGeocodingAPIKey: String = "AIzaSyATG64jFQRawzRDrRTvO9gdTlWCBHHgKkM";
 
 let kGoogleGeocodingAPIURL: String = "https://maps.googleapis.com/maps/api/geocode/json?";
+
+let kNavigationBarHeight: CGFloat = 64;
+

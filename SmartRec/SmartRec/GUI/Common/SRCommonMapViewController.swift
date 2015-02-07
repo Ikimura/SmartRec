@@ -20,6 +20,20 @@ class SRCommonMapViewController: SRCommonViewController, GMSMapViewDelegate {
         }
     }();
     
+    //MARK: - nav bar behavior
+    
+    func toggle(sender: AnyObject) {
+        navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: true) //or animated: false
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return navigationController?.navigationBarHidden == true;
+    }
+    
+    override func preferredStatusBarUpdateAnimation() -> UIStatusBarAnimation {
+        return UIStatusBarAnimation.Fade;
+    }
+    
     //MARK: - internal interface
     
     func setUpMapViewWith(location: CLLocation?) {
@@ -107,7 +121,7 @@ class SRCommonMapViewController: SRCommonViewController, GMSMapViewDelegate {
     }
     
     func mapView(mapView: GMSMapView, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
-        
+        self.toggle(mapView);
     }
     
     func mapView(mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView! {

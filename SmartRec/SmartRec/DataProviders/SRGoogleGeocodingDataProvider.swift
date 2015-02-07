@@ -24,8 +24,9 @@ class SRGoogleGeocodingDataProvider: SRGoogleGeocodingServiceProtocol {
         println("Debug: \(urlString)");
         
         manager.GET(urlString, parameters: nil, success: { (operation: AFHTTPRequestOperation!, responseObject: AnyObject!) -> Void in
-            println("JSON: \(responseObject)");
+            
             complitionBlock(data: responseObject);
+            
         }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
             println("Error: \(error)");
         }
