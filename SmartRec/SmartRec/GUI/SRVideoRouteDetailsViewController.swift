@@ -26,8 +26,8 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
     
     private var selectedVideoMark: SRRouteVideoPoint?;
     private var videoURL: NSURL?;
-    private lazy var geocodingProvider: SRGoogleGeocodingDataProvider = {
-        var tempProvider = SRGoogleGeocodingDataProvider();
+    private lazy var googleServicesProvider: SRGoogleServicesDataProvider = {
+        var tempProvider = SRGoogleServicesDataProvider();
         return tempProvider;
     }();
     private var isDetailsViewShowed: Bool = false;
@@ -48,6 +48,9 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
                     location = CLLocation(latitude: selectedVideoMark!.latitude.doubleValue, longitude: selectedVideoMark!.longitude.doubleValue);
                 }
             }
+            
+            googleServicesProvider.nearbySearchPlaces(location!.coordinate.latitude, lng: location!.coordinate.longitude, radius: 3000, types: ["cafe", "food"], keyword: nil, name: nil, complitionBlock: { (data) -> Void in
+            })
             
             //update info in view
             self.updateVideoInformation();
@@ -140,10 +143,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
     //MARK: - private interface
     
     private func showHideDetailsView(show: Bool, animated: Bool) {
-
-        println(self.containerView.frame.size.height)
-        println(self.detailsViewTopConstraint.constant)
-
+        
         if (animated == true) {
             self.view.layoutIfNeeded();
 
@@ -153,8 +153,6 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
             UIView.animateWithDuration(0.33, animations: { [weak self]() -> Void in
                 if var strongSelf = self {        
                     strongSelf.view.layoutIfNeeded();
-                    println(strongSelf.containerView.frame.size.height)
-                    println(strongSelf.detailsViewTopConstraint.constant)
                 }
             });
             
@@ -162,8 +160,6 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
             
             detailsViewTopConstraint.constant = show == true ? 0 : -(containerView.frame.size.height + kNavigationBarHeight);
             isDetailsViewShowed = show;
-            println(containerView.frame.size.height)
-            println(detailsViewTopConstraint.constant)
         }
     }
     
@@ -190,7 +186,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
     private func updateVideoInformation() {
         
         if (selectedVideoMark?.locationDescription == nil) {
-            geocodingProvider.geocoding(selectedVideoMark!.latitude.doubleValue, lng: selectedVideoMark!.longitude.doubleValue) { [weak self] (data) -> Void in
+            googleServicesProvider.geocoding(selectedVideoMark!.latitude.doubleValue, lng: selectedVideoMark!.longitude.doubleValue) { [weak self] (data) -> Void in
                 //parse JSON
                 if var blockSelf = self {
                     

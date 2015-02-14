@@ -69,9 +69,15 @@ let kTimeFormat: String = "h:mm a";
 
 let kDateFormat: String = "cсcc, d LLLL";
 
-let kGoogleGeocodingAPIKey: String = "AIzaSyATG64jFQRawzRDrRTvO9gdTlWCBHHgKkM";
+let kGoogleServicesAPIKey: String = "AIzaSyDkaCDkatCMTXFFbC_cdRnkBC2KsGL7C3Q";
+
+let kGooglePlaceAPIKey: String = "AIzaSyDkaCDkatCMTXFFbC_cdRnkBC2KsGL7C3Q";
 
 let kGoogleGeocodingAPIURL: String = "https://maps.googleapis.com/maps/api/geocode/json?";
+
+let kGoogleNearbySearchAPIURL: String = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
+
+let kGooglePlaceDetailsAPIURL: String = "https://maps.googleapis.com/maps/api/place/details/json?";
 
 let kNavigationBarHeight: CGFloat = 64;
 
