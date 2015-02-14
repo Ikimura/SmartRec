@@ -11,17 +11,21 @@ import AVFoundation
 import CoreData
 
 protocol SRVideoCaptureManagerDelegate {
-    func videoCaptureManagerCanGetPreviewView(captureSession: AVCaptureSession);
+    
     func videoCaptureManagerDidEndVideoPartRecording(captureManager: SRVideoCaptureManager);
     func videoCaptureManagerDidFinishedRecording(captureManager: SRVideoCaptureManager);
+    
+    func videoCaptureManagerWillUpdateCaptureSession();
+    func videoCaptureManagerDidUpdateCaptureSession(captureSession: AVCaptureSession);
 }
 
-class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
+class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManagerDelegate {
     
     var delegate: SRVideoCaptureManagerDelegate?;
     
     private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
-    private var currentRecorder: SRVideoRecorder!;
+    private var settingsManager: SRSettingsManager!;
+    private var currentRecorder: SRVideoRecorder?;
     private var isRecording: Bool!;
     private var needToDeleteRoute: Bool
         { get {
@@ -40,7 +44,6 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     private var currentVideoMarkData: SRVideoMarkStruct?;
     private var currentRouteData: SRRouteStruct?;
     private var currentRoutePointData: SRRoutePointStruct?;
-    
     private var previousPoint: CLLocationCoordinate2D?;
     //MARK: - life cycle
     
@@ -49,14 +52,11 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         
         isRecording = false;
         
-        //firstly init Recorder with capture session
-        var duration: Float64 = kVideoDuration;
-        var frameRate: Int32 = kHighFramRate;
-        var sessionPreset = AVCaptureSessionPreset1280x720;
-        var videoOrientation: AVCaptureVideoOrientation = .Portrait;
+        settingsManager = SRSettingsManager();
+        settingsManager.delegate = self;
         
-        currentRecorder = SRVideoRecorder(duration: duration, frameRate: frameRate, orientation: videoOrientation);
-        currentRecorder.setDelegate(self, callbackQueue:dispatch_get_main_queue());
+        //firstly init Recorder with capture session
+        self.setUpRecorder();
 
         //get notifications about position changing
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdatedLocations:", name: kLocationTitleNotification, object: nil);
@@ -117,6 +117,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     //MARK:- inerface
     
     func startRecordingVideo() {
+        
         let date = NSDate();
         let fileName = String.stringFromDate(date, withFormat: kFileNameFormat);
         let filePath = "\(fileName)\(kFileExtension)";
@@ -138,8 +139,8 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         if let outputURL = NSURL.URL(directoryName: kFileDirectory, fileName: filePath) as NSURL! {
             println(outputURL);
             isRecording = true;
-            currentRecorder.url = outputURL;
-            currentRecorder.startRecording();
+            currentRecorder?.url = outputURL;
+            currentRecorder?.startRecording();
         }
         
         println(SRLocationManager.sharedInstance.currentLocation()?.coordinate.latitude);
@@ -155,22 +156,37 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
     
     func stopRecordingVideo() {
         isRecording = false;
-        currentRecorder.stopRecording();
+        currentRecorder?.stopRecording();
     }
     
     func startRunnigSession() {
-        currentRecorder.startRunning();
+        currentRecorder?.startRunning();
     }
     
     func stopRunnigSession() {
         if isRecording == true {
             isRecording = !isRecording;
-            currentRecorder.stopRecording();
+            currentRecorder?.stopRecording();
         }
-        currentRecorder.stopRunning();
+        currentRecorder?.stopRunning();
     }
     
     //MARK: - private methods
+    
+    private func setUpRecorder() {
+        
+        if(currentRecorder != nil) {
+            currentRecorder = nil;
+        }
+        
+        var duration: Float64 = settingsManager.videoDuration.doubleValue;
+        var frameRate: Int32 = settingsManager.frameRate.intValue;
+        var sessionPreset = SRVideoQuality(rawValue: settingsManager.videoQuality.intValue)!;
+        var videoOrientation: AVCaptureVideoOrientation = .Portrait;
+        
+        currentRecorder = SRVideoRecorder(duration: duration, frameRate: frameRate, quality: sessionPreset,  orientation: videoOrientation);
+        currentRecorder?.setDelegate(self, callbackQueue:dispatch_get_main_queue());
+    }
     
     private func prepareVideoData(videoAsset: AVAsset) {
         var thumbnailImage: UIImage?;
@@ -223,6 +239,22 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
             println("Debug. File deleted!");
         case .Failure(let error):
             println("Debug. Deleting failed");
+        }
+    }
+    
+    //MARK: - SRSettingsManagerDelegate
+
+    func settingsDidChange() {
+        
+        if (currentRecorder?.isRunning == true || currentRecorder?.isInterrupted == true ) {
+            self.stopRunnigSession();
+            
+            self.setUpRecorder();
+            
+            self.startRunnigSession();
+            
+        } else {
+            self.setUpRecorder();
         }
     }
     
@@ -300,8 +332,13 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate {
         }
     }
     
-    func captureVideoRecordingPreviewView(captureRecorder: SRVideoRecorder) {
-        println("captureVideoRecordingPreviewView");
-        delegate?.videoCaptureManagerCanGetPreviewView(currentRecorder.captureSession);
+    func captureVideoRecordingWillUpdateCurrentSession(captureRecorder: SRVideoRecorder) {
+        println("captureVideoRecordingWillUpdateCurrentSession");
+        delegate?.videoCaptureManagerWillUpdateCaptureSession();
+    }
+    
+    func captureVideoRecordingDidUpdateCurrentSession(captureRecorder: SRVideoRecorder) {
+        println("captureVideoRecordingDidStartRunnigSession");
+        delegate?.videoCaptureManagerDidUpdateCaptureSession(currentRecorder!.captureSession);
     }
 }

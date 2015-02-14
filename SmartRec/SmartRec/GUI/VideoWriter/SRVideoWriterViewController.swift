@@ -30,23 +30,25 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         recordManager = SRVideoCaptureManager();
         recordManager.delegate = self;
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name: UIApplicationDidEnterBackgroundNotification, object: UIApplication.sharedApplication());
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: UIApplication.sharedApplication());
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdatedLocations:", name: kLocationTitleNotification, object: nil)
-
-        acceleraometrWidget = SRGSensor(delta: 0.05, frequancy: 1/50, allowView: true);
         
         locationQueue = dispatch_queue_create("con.epam.evnt.SmartRec.locations", DISPATCH_QUEUE_SERIAL);
+        
+        acceleraometrWidget = SRGSensor(delta: 0.05, frequancy: 1/50, allowView: true);
+
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
         
         //add constraints
-        self.setUpView();
+        self.setUpWidgetView();
         
         recordManager.startRunnigSession();
         
@@ -98,7 +100,7 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     
     //MARK: - private methods
     
-    private func setUpView() {
+    private func setUpWidgetView() {
         acceleraometrWidget!.widgetView.setTranslatesAutoresizingMaskIntoConstraints(false);
         
         view.addSubview(acceleraometrWidget!.widgetView);
@@ -190,11 +192,23 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         });
     }
     
-    func videoCaptureManagerCanGetPreviewView(captureSession: AVCaptureSession) {
-        NSLog("captureVideoRecordingPreviewView - delegate");
+    func videoCaptureManagerWillUpdateCaptureSession() {
+        NSLog("videoCaptureManagerWillUpdateCaptureSession - delegate");
+        
+        if (previewView != nil) {
+            
+            previewView?.removeFromSuperview();
+            previewView = nil;
+        }
+        
+        self.showBusyView();
+    }
+    
+    func videoCaptureManagerDidUpdateCaptureSession(captureSession: AVCaptureSession) {
+        NSLog("videoCaptureManagerDidUpdateCaptureSession - delegate");
 
         if previewView == nil {
-            
+        
             var previewLayer: AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession);
             
             previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
@@ -208,6 +222,8 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
             previewView?.layer.addSublayer(previewLayer);
             
             view.insertSubview(previewView!, atIndex: 0);
+            
+            self.hideBusyView();
         }
     }
     
@@ -237,7 +253,7 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         NSLog("applicationDidEnterBackground notif");
         self.stopRecording();
         self.stopTimer();
-
+        
         dispatch_async(locationQueue, { () -> Void in
             SRLocationManager.sharedInstance.stopMonitoringLocation();
         });

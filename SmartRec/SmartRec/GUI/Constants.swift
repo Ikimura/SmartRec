@@ -9,11 +9,19 @@
 import Foundation
 import QuartzCore
 
-let kVideoDuration: Float64 = 10;
+let kDefaultVideoDuration: Float64 = 10;
 
 let kLowFramRate: Int32 = 15;
 
-let kHighFramRate: Int32 = 30;
+let kDefaultFramRate: Int32 = 30;
+
+let kDefaultVideoQuality: Int32 = 1;
+
+let kFrameRateSettingsKey: String = "frameRateSettingKey";
+
+let kQualitySettingsKey: String = "qualitySettingsKey";
+
+let kDurationSettingsKey: String = "durationSettingsKey";
 
 let kFileDirectory: NSSearchPathDirectory = .DocumentDirectory;
 

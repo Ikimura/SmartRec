@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         coreDataManager = SRCoreDataManager(storePath: kStorePathComponent);
         
+        self.synchronizeUserDefaults();
+        
         GMSServices.provideAPIKey(kGoogleMapsAPIKey);
         SRLocationManager.sharedInstance;
         
@@ -50,6 +52,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    //MARK: - private
+    
+    private func synchronizeUserDefaults() {
+        
+        if let settingsBundle = NSBundle.mainBundle().pathForResource("Settings", ofType: "bundle") {
+            
+            let settings = NSDictionary(contentsOfFile: settingsBundle.stringByAppendingPathComponent("Root.plist"));
+            let preferences = settings?.objectForKey("PreferenceSpecifiers") as NSArray;
+            
+            let defaultsToRegister = NSMutableDictionary(capacity: preferences.count);
+            let defaults = NSUserDefaults.standardUserDefaults();
+            
+            defaults.registerDefaults(defaultsToRegister);
+            
+            defaults.synchronize();
+        }
+    }
 
 }
 

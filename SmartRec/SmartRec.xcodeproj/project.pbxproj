@@ -22,6 +22,8 @@
 		130CECF91A86223A0017048F /* SRAirDropSharingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130CECF81A86223A0017048F /* SRAirDropSharingProtocol.swift */; };
 		1313411219F78D68003BF084 /* SRShowVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1313411119F78D68003BF084 /* SRShowVideoViewController.swift */; };
 		1313411419F78DAE003BF084 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1313411319F78DAE003BF084 /* MediaPlayer.framework */; };
+		1317BE141A8A5500008DC6D5 /* SRSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1317BE131A8A5500008DC6D5 /* SRSettingsManager.swift */; };
+		1317BE161A8A5925008DC6D5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1317BE151A8A5925008DC6D5 /* Settings.bundle */; };
 		1318749E1A5289BC00FA5826 /* DoubleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1318749D1A5289BC00FA5826 /* DoubleExtensions.swift */; };
 		131874AC1A52983A00FA5826 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 131874AE1A52983A00FA5826 /* Localizable.strings */; };
 		1318DEC41A1F54AD007B0F54 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1318DEC31A1F54AD007B0F54 /* StringExtensions.swift */; };
@@ -201,6 +203,8 @@
 		1313411119F78D68003BF084 /* SRShowVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRShowVideoViewController.swift; sourceTree = "<group>"; };
 		1313411319F78DAE003BF084 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		1313C37D1A1F5ECD0079D288 /* SmartRec 1. 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SmartRec 1. 2.xcdatamodel"; sourceTree = "<group>"; };
+		1317BE131A8A5500008DC6D5 /* SRSettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSettingsManager.swift; sourceTree = "<group>"; };
+		1317BE151A8A5925008DC6D5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = /Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/Settings.bundle; sourceTree = "<absolute>"; };
 		1318749D1A5289BC00FA5826 /* DoubleExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DoubleExtensions.swift; path = ../../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/Extensions/DoubleExtensions.swift; sourceTree = "<group>"; };
 		131874AF1A52984B00FA5826 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		131874B01A52985700FA5826 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -369,6 +373,15 @@
 			path = ShowVideo;
 			sourceTree = "<group>";
 		};
+		1317BE0A1A8A54E3008DC6D5 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				1317BE131A8A5500008DC6D5 /* SRSettingsManager.swift */,
+			);
+			name = Settings;
+			path = ../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/Settings;
+			sourceTree = "<group>";
+		};
 		13265F591A1E0D3D00E063CD /* Markers */ = {
 			isa = PBXGroup;
 			children = (
@@ -447,6 +460,7 @@
 		137E3B6519F52BF00094C5A1 /* SmartRec */ = {
 			isa = PBXGroup;
 			children = (
+				1317BE0A1A8A54E3008DC6D5 /* Settings */,
 				130CECF71A86223A0017048F /* AirDrop */,
 				133DBB0E1A52BCB900B763D2 /* DataProviders */,
 				133DBB031A52B70200B763D2 /* Services */,
@@ -469,6 +483,7 @@
 		137E3B6619F52BF00094C5A1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1317BE151A8A5925008DC6D5 /* Settings.bundle */,
 				137E3B6C19F52BF00094C5A1 /* Main.storyboard */,
 				137E3B7119F52BF00094C5A1 /* LaunchScreen.xib */,
 				137E3B6F19F52BF00094C5A1 /* Images.xcassets */,
@@ -883,6 +898,7 @@
 			files = (
 				137E3B6E19F52BF00094C5A1 /* Main.storyboard in Resources */,
 				137E3B7319F52BF00094C5A1 /* LaunchScreen.xib in Resources */,
+				1317BE161A8A5925008DC6D5 /* Settings.bundle in Resources */,
 				13BCBB291A28996600E823F9 /* SRBusyView.xib in Resources */,
 				137E3B7019F52BF00094C5A1 /* Images.xcassets in Resources */,
 				13E537A21A30BCBD000A27E6 /* SRGSensorView.xib in Resources */,
@@ -942,6 +958,7 @@
 			files = (
 				13AC35FD1A7FE4700092BC9E /* SRSimpleMarkerView.swift in Sources */,
 				13AC35F11A7FCF010092BC9E /* SRRoute.swift in Sources */,
+				1317BE141A8A5500008DC6D5 /* SRSettingsManager.swift in Sources */,
 				1368F4FE1A4B20F0004D52B1 /* SRVideoRouteDetailsViewController.swift in Sources */,
 				13EBF1EE1A1DC7A900029072 /* UIViewExtensions.swift in Sources */,
 				133DBB0D1A52B87D00B763D2 /* SRGoogleGeocodingServiceProtocol.swift in Sources */,
