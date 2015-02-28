@@ -49,9 +49,6 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
                 }
             }
             
-            googleServicesProvider.nearbySearchPlaces(location!.coordinate.latitude, lng: location!.coordinate.longitude, radius: 3000, types: ["cafe", "food"], keyword: nil, name: nil, complitionBlock: { (data) -> Void in
-            })
-            
             //update info in view
             self.updateVideoInformation();
             

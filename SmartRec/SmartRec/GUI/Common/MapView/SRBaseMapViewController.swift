@@ -10,9 +10,15 @@ import Foundation
 
 class SRBaseMapViewController: SRCommonViewController, SRBaseMapViewDataSource, SRBaseMapViewDelegate {
     
-
+    @IBOutlet var mapView: SRBaseMapView?;
+    
     override func viewDidLoad() {
         super.viewDidLoad();
+        
+        self.mapView?.dataSource = self;
+        self.mapView?.delegate = self;
+        
+        self.mapView?.setUpMapView();
     }
     
     override func viewWillAppear(animated: Bool) {

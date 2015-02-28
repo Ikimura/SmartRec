@@ -8,37 +8,41 @@
 
 import Foundation
 
+@IBDesignable
+
 class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCalloutViewDelegate {
+    
+    var dataSource: SRBaseMapViewDataSource?;
+    var delegate: SRBaseMapViewDelegate?;
+    var mapMarkers: [GMSMarker]?;
+    
+    @IBOutlet var googleMapView: GMSMapView!;
     
     private let verticalOffsetForCallout: CGFloat = 39;
     private lazy var calloutView: SRCalloutView! = {
         if let infoView = UIView.viewFromNibName("SRCalloutView") as? SRCalloutView!  {
+            infoView.delegate = self;
+            self.googleMapView.addSubview(infoView);
+            
             return infoView;
         } else {
             return nil;
         }
     }();
     private var emptyCalloutView: UIView?
-
-    var dataSource: SRBaseMapViewDataSource?;
-    var delegate: SRBaseMapViewDelegate?;
-    var mapMarkers: [GMSMarker]?;
-    
-    @IBOutlet var googleMapView: GMSMapView!
     
     override func awakeFromNib() {
         super.awakeFromNib();
         
         self.emptyCalloutView = UIView(frame: CGRectZero);
-
-        self.seteUpMapView();
     }
     
-    func seteUpMapView() {
+    func setUpMapView() {
         
-        var coordinate: CLLocationCoordinate2D? = dataSource?.initialLocation();
-        
-        googleMapView.camera = GMSCameraPosition(target: coordinate!, zoom: 15, bearing: 0, viewingAngle: 0);
+        if let coordinate: CLLocationCoordinate2D = dataSource?.initialLocation() {
+            
+            googleMapView.camera = GMSCameraPosition.cameraWithLatitude(coordinate.latitude, longitude: coordinate.longitude, zoom: 10.0);
+        }
         
         googleMapView.delegate = self;
         googleMapView.mapType = kGMSTypeNormal;
@@ -62,15 +66,16 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
     func makerAtIndex(index: Int) -> GMSMarker {
         
         var marker: GMSMarker = GMSMarker();
-        if var icon: UIImage = dataSource?.iconForMarkerAtIndex(index) as UIImage! {
+        if var icon: UIImage = dataSource!.iconForMarkerAtIndex(index) as UIImage! {
             marker.icon = icon;
         }
         
-        if var identifier: AnyObject = dataSource?.identifierForMarkerAtIndex(index) as AnyObject! {
-            marker.userData = identifier;
+        if var identifier: AnyObject = dataSource!.identifierForMarkerAtIndex(index) as NSNumber! {
+            
+            marker.userData = identifier.integerValue;
         }
         
-        marker.title = dataSource?.titleForMarkerAtIndex(index);
+        marker.title = dataSource!.titleForMarkerAtIndex(index);
         marker.position = dataSource!.locationForMarkerAtIndex(index)!;
         
         return marker;
@@ -80,7 +85,7 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
     
     func calloutViewAccessoryControlTapped(view: SRCalloutView, control: UIControl) {
         
-        delegate?.calloutAccessoryControlTappedByIdentifier(googleMapView.selectedMarker.userData);
+        delegate?.calloutAccessoryControlTappedByIdentifier(googleMapView.selectedMarker?.userData as NSNumber);
     }
     
     //MARK: SRBaseMapViewProtocol
@@ -90,35 +95,37 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
         self.hideCalloutView();
         
         var markers = self.mapMarkers;
-        
         var temp: [GMSMarker] = [];
         
-        var predicateTemplate: NSPredicate = NSPredicate(format: "self.userData like $identifier")!;
-        var count = dataSource?.numberOfMarkers();
+        var count = dataSource!.numberOfMarkers();
         
         for var i = 0; i < count; i++ {
             
-            var identifier = "none";
-            if var id: String = dataSource?.identifierForMarkerAtIndex(i) as? String {
+            var identifier: NSNumber?;
+            
+            if var id: NSNumber = dataSource!.identifierForMarkerAtIndex(i) as? NSNumber {
                 identifier = id;
             }
-                        
-            var marker: GMSMarker? = markers!.filter({ (m: GMSMarker!) -> Bool in
-                return m.userData as String == identifier;
-            }).first;
             
-            if marker == nil {
-                marker = self.makerAtIndex(i);
-                marker!.map = googleMapView;
+            if identifier != nil {
+                
+                var marker: GMSMarker? = markers!.filter({ (m: GMSMarker!) -> Bool in
+                    return (m.userData as NSNumber).integerValue == identifier?.integerValue;
+                }).first;
+                
+                if (marker == nil) {
+                    marker = self.makerAtIndex(i);
+                    marker!.map = googleMapView;
+                }
+                
+                if var icon = dataSource!.iconForMarkerAtIndex(i) as UIImage! {
+                    marker?.icon = icon;
+                }
+                
+                marker!.position = dataSource!.locationForMarkerAtIndex(i)!;
+                
+                temp.append(marker!);
             }
-            
-            if var icon = dataSource?.iconForMarkerAtIndex(i) as UIImage! {
-                marker?.icon = icon;
-            }
-            
-            marker!.position = dataSource!.locationForMarkerAtIndex(i)!;
-            
-            temp.append(marker!);
         }
         
         for marker in markers! {
@@ -132,13 +139,12 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
         }
         
         self.updateCalloutViewPosition(true);
-        
         self.mapMarkers = temp;
     }
     
     func setupMapIfNeed() {
         if (googleMapView == nil) {
-            self.seteUpMapView();
+            self.setUpMapView();
         }
     }
     
@@ -163,7 +169,7 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
         var visibleAccessory: Bool = self.accessoryForMarker(marker);
         self.calloutView.setAccessory(visibleAccessory);
         
-        if (visibleAccessory == true) {
+        if (visibleAccessory) {
             if var accessoryImage = self.accessoryImageForMarker(marker) as UIImage! {
                 self.calloutView.accessoryButton.setImage(accessoryImage, forState: .Normal);
             }
@@ -173,7 +179,7 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
     }
     
     func mapView(mapView: GMSMapView!, didChangeCameraPosition position: GMSCameraPosition!) {
-        if (mapView.selectedMarker != nil /*&& self.calloutView.hidden != true*/) {
+        if (mapView.selectedMarker != nil && !self.calloutView.hidden) {
             self.updateCalloutViewPosition(false);
         }
     }
@@ -189,8 +195,8 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
     //MARK: - CalloutView
     
     func hideCalloutView() {
-        googleMapView.selectedMarker = nil;
-        self.hideCalloutView();
+        googleMapView?.selectedMarker = nil;
+        calloutView.hideCallout();
     }
     
     func updateCalloutViewPosition(animated: Bool) {
@@ -205,9 +211,7 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
         var point = googleMapView.projection.pointForCoordinate(anchor);
 
         var offset = verticalOffsetForCallout;
-        
         offset = dataSource!.verticalOffsetForCalloutView();
-        
         point.y -= offset;
         
         return point;

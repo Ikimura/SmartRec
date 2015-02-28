@@ -44,19 +44,19 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
         }
     }
     
-    func nearbySearchPlaces(lat: Double, lng: Double, radius: Int, types:[String], keyword: String?, name: String?, complitionBlock: (data: [SRGooglePlace]) -> Void ) {
-        
-        var urlString = "\(kGoogleNearbySearchAPIURL)location=\(lat),\(lng)&radius;=\(radius)&types;=";
+    func nearbySearchPlaces(lat: Double, lng: Double, radius: Int, types:[String], keyword: String?, name: String?, complitionBlock: (data: [SRGooglePlace]) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
+    
+        var urlString = "\(kGoogleNearbySearchAPIURL)location=\(lat),\(lng)&radius=\(radius)&types=";
         
         for type in types {
             urlString += type + "|";
         }
         
         if (keyword != nil) {
-            urlString += "&keyword;=\(keyword!)";
+            urlString += "&keyword=\(keyword!)";
         }
         
-        urlString += "&key;=\(kGooglePlaceAPIKey)";
+        urlString += "&key=\(kGooglePlaceAPIKey)";
         urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
 
         println("Debug: \(urlString)");
@@ -95,12 +95,14 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
             complitionBlock(data: places!);
             
             }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                
                 println("Error: \(error)");
+                errorComplitionBlock(error: error);
         }
     }
     
-    func placeDetails(placeId: String, complitionBlock: (data: NSDictionary?) -> Void ) {
-
+    func placeDetails(placeId: String, complitionBlock: (data: NSDictionary?) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
+        
         var urlString = "\(kGooglePlaceDetailsAPIURL)plcaeid=\(placeId)&key;=\(kGooglePlaceAPIKey)";
         urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
 
@@ -141,7 +143,9 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
             complitionBlock(data: result);
             
             }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+
                 println("Error: \(error)");
+                errorComplitionBlock(error: error);
         }
     }
 

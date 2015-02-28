@@ -35,6 +35,10 @@ let kManagedObjectRoute: String = "SRRoute";
 
 let kMovieListCellIdentifier: String = "movieCellidentifier";
 
+let kTupesListCellIdentifier: String = "types_cell_identifier";
+
+let kShowPlaceOnMapSegueIdentifier: String = "showPlacesSegueIdentifier";
+
 let kShowVideoSegueIdentifier_1: String = "showVideoSegueIdentifier_1";
 
 let kShowVideoSegueIdentifier_2: String = "showVideoSegueIdentifier_2";
@@ -71,7 +75,7 @@ let kDateFormat: String = "cсcc, d LLLL";
 
 let kGoogleServicesAPIKey: String = "AIzaSyDkaCDkatCMTXFFbC_cdRnkBC2KsGL7C3Q";
 
-let kGooglePlaceAPIKey: String = "AIzaSyDkaCDkatCMTXFFbC_cdRnkBC2KsGL7C3Q";
+let kGooglePlaceAPIKey: String = "AIzaSyBybv9qsXroiUUuHqoWvEbGjX381wTkzZ8";
 
 let kGoogleGeocodingAPIURL: String = "https://maps.googleapis.com/maps/api/geocode/json?";
 

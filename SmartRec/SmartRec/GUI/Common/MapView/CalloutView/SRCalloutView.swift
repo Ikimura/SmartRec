@@ -32,6 +32,11 @@ class SRCalloutView : UIView, UITextViewDelegate {
         self.autoresizingMask = .None;
         self.hidden = true;
         
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib();
+        
         self.initImages();
     }
     

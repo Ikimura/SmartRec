@@ -43,6 +43,11 @@ public class SRLocationManager : NSObject, CLLocationManagerDelegate {
     }
     
     public func currentLocation() -> CLLocation? {
+
+        if (currrentLocation == nil) {
+            return  CLLocation(latitude: 53.6884000, longitude: 23.8258000);
+        }
+        
         return currrentLocation;
     }
     

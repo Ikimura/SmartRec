@@ -10,8 +10,8 @@ import Foundation
 
 protocol SRGoogleSearchServiceProtocol {
     
-    func nearbySearchPlaces(lat: Double, lng: Double, radius: Int, types:[String], keyword: String?, name: String?, complitionBlock: (data: [SRGooglePlace]) -> Void );
+    func nearbySearchPlaces(lat: Double, lng: Double, radius: Int, types:[String], keyword: String?, name: String?, complitionBlock: (data: [SRGooglePlace]) -> Void, errorComplitionBlock: (error: NSError) -> Void);
     
-    func placeDetails(placeId: String, complitionBlock: (data: NSDictionary?) -> Void );
+    func placeDetails(placeId: String, complitionBlock: (data: NSDictionary?) -> Void, errorComplitionBlock: (error: NSError) -> Void);
     
 }
