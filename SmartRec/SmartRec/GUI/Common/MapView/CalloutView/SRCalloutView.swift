@@ -14,10 +14,6 @@ protocol SRCalloutViewDelegate {
 }
 
 class SRCalloutView : UIView, UITextViewDelegate {
-    
-    private let MaxWidth: CGFloat = 200;
-    private let MaxHeight: CGFloat = 55;
-    private let MinHeight: CGFloat = 50;
 
     var delegate: SRCalloutViewDelegate?;
     
@@ -31,7 +27,6 @@ class SRCalloutView : UIView, UITextViewDelegate {
         
         self.autoresizingMask = .None;
         self.hidden = true;
-        
     }
     
     override func awakeFromNib() {
@@ -46,19 +41,25 @@ class SRCalloutView : UIView, UITextViewDelegate {
         self.accessoryButton.hidden != accessory;
     }
     
-    func showCalloutWithPosition(position: CGPoint){
+    func showCalloutWithPosition(position: CGPoint) {
+        
         self.hidden = false;
         self.setPosition(position, animated: false);
+        
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.alpha = 1.0;
         });
     }
     
     func hideCallout() {
+        
         UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
             self.alpha = 0.0;
+            
             }) { (finished: Bool) -> Void in
-                if (finished == true) {
+                
+                if (finished) {
                     self.hidden = true;
                 }
         };

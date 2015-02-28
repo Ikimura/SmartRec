@@ -18,13 +18,13 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
     
     @IBOutlet var googleMapView: GMSMapView!;
     
-    private let verticalOffsetForCallout: CGFloat = 39;
     private lazy var calloutView: SRCalloutView! = {
         if let infoView = UIView.viewFromNibName("SRCalloutView") as? SRCalloutView!  {
+            
             infoView.delegate = self;
             self.googleMapView.addSubview(infoView);
-            
             return infoView;
+            
         } else {
             return nil;
         }
@@ -206,12 +206,12 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
         }
     }
     
-    func calloutViewPositionWithMarker(marker: GMSMarker) -> CGPoint{
+    func calloutViewPositionWithMarker(marker: GMSMarker) -> CGPoint {
+        
         let anchor: CLLocationCoordinate2D = marker.position;
         var point = googleMapView.projection.pointForCoordinate(anchor);
 
-        var offset = verticalOffsetForCallout;
-        offset = dataSource!.verticalOffsetForCalloutView();
+        var offset = dataSource!.verticalOffsetForCalloutView();
         point.y -= offset;
         
         return point;

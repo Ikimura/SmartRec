@@ -7,22 +7,22 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="1" customClass="SRCalloutView" customModule="SmartRec" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="128" height="44"/>
+            <rect key="frame" x="0.0" y="0.0" width="130" height="50"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OF0-FA-CBJ">
-                    <rect key="frame" x="0.0" y="0.0" width="64" height="44"/>
+                    <rect key="frame" x="0.0" y="0.0" width="65" height="50"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MbR-cR-htn">
-                    <rect key="frame" x="64" y="0.0" width="64" height="44"/>
+                    <rect key="frame" x="65" y="0.0" width="65" height="50"/>
                 </imageView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0N-fL-ukT">
-                    <rect key="frame" x="10" y="10" width="87" height="16"/>
+                    <rect key="frame" x="10" y="2" width="88" height="38"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wmg-Mk-fXg">
-                    <rect key="frame" x="97" y="7" width="22" height="22"/>
+                    <rect key="frame" x="98" y="10" width="22" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="22" id="657-tg-FdO"/>
                         <constraint firstAttribute="height" constant="22" id="BCe-En-PGq"/>
@@ -35,8 +35,9 @@
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="MbR-cR-htn" secondAttribute="trailing" id="4M2-MY-ck1"/>
+                <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="j0N-fL-ukT" secondAttribute="bottom" constant="10" id="9vg-AF-lD5"/>
                 <constraint firstItem="MbR-cR-htn" firstAttribute="leading" secondItem="OF0-FA-CBJ" secondAttribute="trailing" id="DYc-IS-csm"/>
-                <constraint firstAttribute="trailing" secondItem="Wmg-Mk-fXg" secondAttribute="trailing" constant="9" id="Dxh-bV-xgc"/>
+                <constraint firstAttribute="trailing" secondItem="Wmg-Mk-fXg" secondAttribute="trailing" constant="10" id="Dxh-bV-xgc"/>
                 <constraint firstAttribute="bottom" secondItem="MbR-cR-htn" secondAttribute="bottom" id="E9x-Zi-sgM"/>
                 <constraint firstItem="MbR-cR-htn" firstAttribute="top" secondItem="1" secondAttribute="top" id="EhN-Ui-XBM"/>
                 <constraint firstAttribute="centerY" secondItem="j0N-fL-ukT" secondAttribute="centerY" constant="4" id="JZk-ZS-lJd"/>
@@ -44,6 +45,7 @@
                 <constraint firstItem="j0N-fL-ukT" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="10" id="ZLM-Z1-SOY"/>
                 <constraint firstItem="MbR-cR-htn" firstAttribute="width" secondItem="OF0-FA-CBJ" secondAttribute="width" id="glV-mc-5Gf"/>
                 <constraint firstAttribute="bottom" secondItem="OF0-FA-CBJ" secondAttribute="bottom" id="kTC-xb-7x5"/>
+                <constraint firstItem="j0N-fL-ukT" firstAttribute="top" relation="lessThanOrEqual" secondItem="1" secondAttribute="top" constant="10" id="ne3-VT-qAV"/>
                 <constraint firstItem="OF0-FA-CBJ" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="rHD-MX-utx"/>
                 <constraint firstItem="OF0-FA-CBJ" firstAttribute="top" secondItem="1" secondAttribute="top" id="rj9-s0-TSJ"/>
                 <constraint firstItem="Wmg-Mk-fXg" firstAttribute="leading" secondItem="j0N-fL-ukT" secondAttribute="trailing" id="t0N-LN-eRW"/>

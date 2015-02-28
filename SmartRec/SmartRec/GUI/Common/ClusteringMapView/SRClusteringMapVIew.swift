@@ -159,6 +159,7 @@ class SRClusteringMapView: SRBaseMapView {
         var mapM = Array<GMSMarker>();
         
         for var i = 0; i < self.markerClusters?.count; i++ {
+            
             if var cluster = self.markerClusters?[i] as SRMarkersCluster! {
                 var clusterLocation: CLLocationCoordinate2D = cluster.clusterLocation!;
                 
@@ -185,24 +186,24 @@ class SRClusteringMapView: SRBaseMapView {
                     mapM.append(marker!);
                 }
             }
-            
-            for var i = 0; i < mapM.count; i++ {
-                self.mapMarkers?.append(mapM[i]);
-            }
-            
-            self.hideCalloutViewIfNeed();
         }
+        
+        for var i = 0; i < mapM.count; i++ {
+            self.mapMarkers?.append(mapM[i]);
+        }
+        self.hideCalloutViewIfNeed();
     }
     
     private func hideCalloutViewIfNeed() {
-        if (self.googleMapView.selectedMarker == nil) {
-            return;
+        
+        if (googleMapView.selectedMarker == nil) {
             
+            return;
         } else {
             
-            if let data = self.googleMapView.selectedMarker.userData as? NSNumber {
+            if let data = googleMapView.selectedMarker.userData as? NSNumber {
                 
-                if (contains(self.mapMarkers!, self.googleMapView.selectedMarker)) {
+                if (!contains(mapMarkers!, googleMapView.selectedMarker)) {
                     self.hideCalloutView();
                 }
             }

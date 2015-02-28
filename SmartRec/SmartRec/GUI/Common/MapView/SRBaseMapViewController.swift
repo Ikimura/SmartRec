@@ -12,6 +12,8 @@ class SRBaseMapViewController: SRCommonViewController, SRBaseMapViewDataSource, 
     
     @IBOutlet var mapView: SRBaseMapView?;
     
+    private let verticalOffsetForCallout: CGFloat = 35;
+
     override func viewDidLoad() {
         super.viewDidLoad();
         
@@ -52,7 +54,7 @@ class SRBaseMapViewController: SRCommonViewController, SRBaseMapViewDataSource, 
     }
     
     func verticalOffsetForCalloutView() -> CGFloat {
-        return 0;
+        return verticalOffsetForCallout;
     }
     
     //MARK: - SRBaseMapViewDelegate
