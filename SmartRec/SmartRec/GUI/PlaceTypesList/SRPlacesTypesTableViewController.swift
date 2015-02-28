@@ -41,11 +41,11 @@ class SRPlacesTypesTableViewController: SRCommonViewController, UITableViewDeleg
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell : SRPlacesTypesTableViewCell? = tableView.dequeueReusableCellWithIdentifier(kTupesListCellIdentifier) as? SRPlacesTypesTableViewCell;
+        var cell : SRPlacesTypesTableViewCell? = tableView.dequeueReusableCellWithIdentifier(kTypesListCellIdentifier) as? SRPlacesTypesTableViewCell;
             
         if (cell == nil) {
             
-            cell = SRPlacesTypesTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: kTupesListCellIdentifier);
+            cell = SRPlacesTypesTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: kTypesListCellIdentifier);
         }
         var tuple: (String, String) = typesDataSource!.typeAtIndex(indexPath.row)!;
 

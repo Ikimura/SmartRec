@@ -64,7 +64,7 @@ class SRClusteringMapView: SRBaseMapView {
     }
     
     //MARK: - private
-    //FIXMEL: last checl
+    
     private func createDistanceBetweenMarkerMap() {
         self.distanceBetweenLocationCache = nil;
 

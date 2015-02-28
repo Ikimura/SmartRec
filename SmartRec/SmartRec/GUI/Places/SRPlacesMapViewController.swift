@@ -13,15 +13,81 @@ class SRPlacesMapViewController: SRBaseMapViewController {
     var placesTypes: [(name: String, value: String)]?;
     
     private var googlePlaces: [SRGooglePlace]?;
+    private var rightBarButtonItem: UIBarButtonItem?;
     private lazy var googleServicesProvider: SRGoogleServicesDataProvider = {
         var tempProvider = SRGoogleServicesDataProvider();
         return tempProvider;
     }();
     
+    private lazy var placesListViewController: SRPlacesListViewController = {
+        
+        var tempVC = SRPlacesListViewController();
+        tempVC.placesList = self.googlePlaces;
+        tempVC.types = self.placesTypes;
+        
+        self.addChildViewController(tempVC);
+        
+        return tempVC;
+    }();
+    
     override func viewDidLoad() {
         super.viewDidLoad();
         
+        self.setUpNavigationBar();
         self.loadPlacesWithTypes(placesTypes!, coordinates: self.initialLocation());
+    }
+    
+    private func setUpNavigationBar() {
+        
+        if (self.navigationController != nil) {
+            
+            var searchButton = UIBarButtonItem(title: "List", style: .Plain, target: self, action: "didSelectRightButton:");
+            self.navigationItem.rightBarButtonItem = searchButton;
+            
+            searchButton.possibleTitles = NSSet(array: ["Map"]);
+            rightBarButtonItem = searchButton;
+        }
+    }
+    
+    func didSelectRightButton(sender: UIBarButtonItem) {
+        
+        var placesListVC = placesListViewController;
+        
+        var rect = self.view.bounds;
+        rect.origin.y = rect.size.height;
+        
+        var newFrame: CGRect?;
+        var present: Bool = true;
+        
+        if (placesListVC.view.superview != nil) {
+            
+            sender.title = "List";
+            present = false;
+            newFrame = rect;
+            
+        } else {
+            
+            sender.title = "Map";
+            present = true;
+            self.view.addSubview(placesListVC.view);
+            placesListVC.view.frame = rect;
+            newFrame = self.view.bounds;
+        }
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            placesListVC.view.frame = newFrame!;
+            
+            }) { (finished: Bool) -> Void in
+            
+                if (finished) {
+                    
+                    if (!present) {
+                        
+                        placesListVC.view.removeFromSuperview();
+                    }
+                }
+        }
     }
     
     //MARK: - data update
@@ -33,7 +99,7 @@ class SRPlacesMapViewController: SRBaseMapViewController {
             strinTypes.append(types[i].1);
         }
         
-        googleServicesProvider.nearbySearchPlaces(coordinates.latitude, lng: coordinates.longitude, radius: 500, types: strinTypes, keyword: nil, name: nil, complitionBlock: { [weak self] (data) -> Void in
+        googleServicesProvider.nearbySearchPlaces(coordinates.latitude, lng: coordinates.longitude, radius: 1000, types: strinTypes, keyword: nil, name: nil, complitionBlock: { [weak self] (data) -> Void in
             
             if var strongSelf = self {
                 

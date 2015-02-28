@@ -93,6 +93,11 @@
 		608153C11A9E639D0033FF09 /* SRPlacesTypesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608153C01A9E639D0033FF09 /* SRPlacesTypesDataSource.swift */; };
 		609A9A5E1A9F944D00BC8D43 /* SRPlacesTypesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609A9A5D1A9F944D00BC8D43 /* SRPlacesTypesTableViewCell.swift */; };
 		60B94B081AA1D19F00BBDAA1 /* SRCalloutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60B94B071AA1D19F00BBDAA1 /* SRCalloutView.xib */; };
+		60B94B1C1AA2141D00BBDAA1 /* SRPlacesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B94B1B1AA2141D00BBDAA1 /* SRPlacesSearchViewController.swift */; };
+		60B94B2A1AA220D900BBDAA1 /* SmartRec.SRPlacesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60B94B221AA220D900BBDAA1 /* SmartRec.SRPlacesListViewController.xib */; };
+		60B94B2C1AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60B94B261AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib */; };
+		60B94B301AA2211500BBDAA1 /* SRPlacesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B94B2F1AA2211500BBDAA1 /* SRPlacesListViewController.swift */; };
+		60B94B321AA2281300BBDAA1 /* SRPlacesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B94B311AA2281300BBDAA1 /* SRPlacesListTableViewCell.swift */; };
 		60BE86D51A9BBE220070833C /* SRRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3162D1A9BBC4500D5DEE4 /* SRRoute.swift */; };
 		60BE86D61A9BBE220070833C /* SRRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3162E1A9BBC4500D5DEE4 /* SRRoutePoint.swift */; };
 		60BE86D71A9BBE220070833C /* SRRouteVideoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3162F1A9BBC4500D5DEE4 /* SRRouteVideoPoint.swift */; };
@@ -277,6 +282,11 @@
 		608153C01A9E639D0033FF09 /* SRPlacesTypesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesTypesDataSource.swift; sourceTree = "<group>"; };
 		609A9A5D1A9F944D00BC8D43 /* SRPlacesTypesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesTypesTableViewCell.swift; sourceTree = "<group>"; };
 		60B94B071AA1D19F00BBDAA1 /* SRCalloutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SRCalloutView.xib; path = SmartRec/GUI/Common/MapView/CalloutView/SRCalloutView.xib; sourceTree = SOURCE_ROOT; };
+		60B94B1B1AA2141D00BBDAA1 /* SRPlacesSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesSearchViewController.swift; sourceTree = "<group>"; };
+		60B94B221AA220D900BBDAA1 /* SmartRec.SRPlacesListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SmartRec.SRPlacesListViewController.xib; path = BranchList/SmartRec.SRPlacesListViewController.xib; sourceTree = "<group>"; };
+		60B94B261AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SRPlacesListTableViewCell.xib; sourceTree = "<group>"; };
+		60B94B2F1AA2211500BBDAA1 /* SRPlacesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesListViewController.swift; sourceTree = "<group>"; };
+		60B94B311AA2281300BBDAA1 /* SRPlacesListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesListTableViewCell.swift; sourceTree = "<group>"; };
 		60BE86E91A9BC45E0070833C /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		60BE86EB1A9BC4720070833C /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		60C316011A9BBB2E00D5DEE4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -571,9 +581,11 @@
 		137E3B8819F5313B0094C5A1 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
-				608153BD1A9E62CE0033FF09 /* PlaceTypesList */,
-				608153B61A9E59580033FF09 /* Places */,
 				1368F4FC1A4B208B004D52B1 /* SRVideoRouteDetailsViewController.swift */,
+				60B94B1E1AA220A600BBDAA1 /* PlacesList */,
+				60B94B171AA2130700BBDAA1 /* PlaceSearchController */,
+				608153BD1A9E62CE0033FF09 /* PlaceTypesList */,
+				608153B61A9E59580033FF09 /* PlacesMap */,
 				13BCBB241A28996600E823F9 /* CustomControls */,
 				1304A2761A16226C004CBD9B /* Map */,
 				1313411019F78D23003BF084 /* ShowVideo */,
@@ -796,12 +808,13 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		608153B61A9E59580033FF09 /* Places */ = {
+		608153B61A9E59580033FF09 /* PlacesMap */ = {
 			isa = PBXGroup;
 			children = (
 				608153B71A9E59780033FF09 /* SRPlacesMapView.swift */,
 				608153B91A9E5A210033FF09 /* SRPlacesMapViewController.swift */,
 			);
+			name = PlacesMap;
 			path = Places;
 			sourceTree = "<group>";
 		};
@@ -829,6 +842,34 @@
 				609A9A5D1A9F944D00BC8D43 /* SRPlacesTypesTableViewCell.swift */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		60B94B171AA2130700BBDAA1 /* PlaceSearchController */ = {
+			isa = PBXGroup;
+			children = (
+				60B94B1B1AA2141D00BBDAA1 /* SRPlacesSearchViewController.swift */,
+			);
+			path = PlaceSearchController;
+			sourceTree = "<group>";
+		};
+		60B94B1E1AA220A600BBDAA1 /* PlacesList */ = {
+			isa = PBXGroup;
+			children = (
+				60B94B231AA220D900BBDAA1 /* cell */,
+				60B94B221AA220D900BBDAA1 /* SmartRec.SRPlacesListViewController.xib */,
+				60B94B2F1AA2211500BBDAA1 /* SRPlacesListViewController.swift */,
+			);
+			path = PlacesList;
+			sourceTree = "<group>";
+		};
+		60B94B231AA220D900BBDAA1 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				60B94B311AA2281300BBDAA1 /* SRPlacesListTableViewCell.swift */,
+				60B94B261AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib */,
+			);
+			name = cell;
+			path = BranchList/cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -992,8 +1033,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				137E3B6E19F52BF00094C5A1 /* Main.storyboard in Resources */,
+				60B94B2C1AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib in Resources */,
 				137E3B7319F52BF00094C5A1 /* LaunchScreen.xib in Resources */,
 				13BCBB291A28996600E823F9 /* SRBusyView.xib in Resources */,
+				60B94B2A1AA220D900BBDAA1 /* SmartRec.SRPlacesListViewController.xib in Resources */,
 				60C316021A9BBB2E00D5DEE4 /* Settings.bundle in Resources */,
 				137E3B7019F52BF00094C5A1 /* Images.xcassets in Resources */,
 				13E537A21A30BCBD000A27E6 /* SRGSensorView.xib in Resources */,
@@ -1092,6 +1135,7 @@
 				60C3161E1A9BBBCB00D5DEE4 /* SRBaceMapView.swift in Sources */,
 				13E537A01A30BCBD000A27E6 /* SRGSensor.swift in Sources */,
 				13CA8BD61A14A3BA00E8C6D8 /* SRCoreDataManager.swift in Sources */,
+				60B94B1C1AA2141D00BBDAA1 /* SRPlacesSearchViewController.swift in Sources */,
 				137E3B6919F52BF00094C5A1 /* AppDelegate.swift in Sources */,
 				60C316391A9BBC5D00D5DEE4 /* DoubleExtensions.swift in Sources */,
 				60C316231A9BBBE300D5DEE4 /* SRCalloutView.swift in Sources */,
@@ -1100,12 +1144,14 @@
 				1359A0DD1A00E88A00FC8994 /* SRLocationManager.swift in Sources */,
 				60C3161F1A9BBBCB00D5DEE4 /* SRBaseMapViewController.swift in Sources */,
 				13E537A11A30BCBD000A27E6 /* SRGSensorView.swift in Sources */,
+				60B94B321AA2281300BBDAA1 /* SRPlacesListTableViewCell.swift in Sources */,
 				137945981A3B0BFA00AF1A97 /* SRVideoDataStruct.swift in Sources */,
 				137E3B9219F533A90094C5A1 /* SRMovieTableViewCell.swift in Sources */,
 				130A5B8D19F7CECB004515A7 /* Constants.swift in Sources */,
 				13BCBB331A28998200E823F9 /* SRBusyView.swift in Sources */,
 				1318DEC41A1F54AD007B0F54 /* StringExtensions.swift in Sources */,
 				13F985771A13912400E9B958 /* AVAssetExtensions.swift in Sources */,
+				60B94B301AA2211500BBDAA1 /* SRPlacesListViewController.swift in Sources */,
 				60C316311A9BBC4500D5DEE4 /* SRRoute.swift in Sources */,
 				137945991A3B0BFA00AF1A97 /* SRVideoMarkStruct.swift in Sources */,
 				60C316321A9BBC4500D5DEE4 /* SRRoutePoint.swift in Sources */,

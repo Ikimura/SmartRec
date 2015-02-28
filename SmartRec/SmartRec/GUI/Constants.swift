@@ -35,7 +35,9 @@ let kManagedObjectRoute: String = "SRRoute";
 
 let kMovieListCellIdentifier: String = "movieCellidentifier";
 
-let kTupesListCellIdentifier: String = "types_cell_identifier";
+let kTypesListCellIdentifier: String = "types_cell_identifier";
+
+let kPlacesListCellIdentifier: String = "places_list_cell_identifier";
 
 let kShowPlaceOnMapSegueIdentifier: String = "showPlacesSegueIdentifier";
 
