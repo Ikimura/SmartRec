@@ -83,6 +83,8 @@ let kGoogleGeocodingAPIURL: String = "https://maps.googleapis.com/maps/api/geoco
 
 let kGoogleNearbySearchAPIURL: String = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
 
+let kGoogleTextSearchAPIURL: String = "https://maps.googleapis.com/maps/api/place/textsearch/json?";
+
 let kGooglePlaceDetailsAPIURL: String = "https://maps.googleapis.com/maps/api/place/details/json?";
 
 let kNavigationBarHeight: CGFloat = 64;

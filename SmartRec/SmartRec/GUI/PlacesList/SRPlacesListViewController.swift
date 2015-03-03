@@ -19,7 +19,6 @@ class SRPlacesListViewController : SRCommonViewController, UITableViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad();
         
-        //FIXME: - move to constatnt check xib
         self.tableView.registerNib(UINib(nibName: "SRPlacesListTableViewCell", bundle: nil), forCellReuseIdentifier: kPlacesListCellIdentifier);
         
         var inset: UIEdgeInsets = UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController!.navigationBar.frame), 0, 0, 0);
@@ -38,13 +37,32 @@ class SRPlacesListViewController : SRCommonViewController, UITableViewDataSource
         
         var cell: SRPlacesListTableViewCell? = tableView.dequeueReusableCellWithIdentifier(kPlacesListCellIdentifier) as? SRPlacesListTableViewCell;
         
-        var place: SRGooglePlace = placesList![indexPath.row];
-        cell!.nameLabel.text = "\(place.name!),";
-        cell!.phoneLabel.text = place.formattedPhoneNumber;
-        cell!.addressLabel.text = place.formatedAddres;
+        cell?.imageView?.cancelImageRequestOperation();
         
-//        cell!.cityStateZipLabel.text = "\(place.city), \(place.state) \(place.zipCode)";
-//        cell!.distanceLabel.text = place.distance;
+        var place: SRGooglePlace = placesList![indexPath.row];
+        cell!.nameLabel.text = "\(place.name!)";
+        
+        if (place.formattedPhoneNumber != nil) {
+            
+            cell!.phoneLabel.text = place.formattedPhoneNumber;
+            
+        } else {
+            cell!.phoneLabel.text = nil;
+        }
+        
+        cell!.addressLabel.text = place.vicinity;
+        cell!.cityStateZipLabel.text = nil;
+        if (place.distance != nil) {
+            
+            cell!.distanceLabel.text = "\(place.distance), m";
+            
+        } else {
+            
+            cell!.distanceLabel.text = nil;
+            cell!.locationImage.image = nil;
+        }
+        
+        cell!.iconImage.setImageWithURL(place.iconURL, placeholderImage: UIImage(named: "image_placeholder"));
         
         return cell!;
     }

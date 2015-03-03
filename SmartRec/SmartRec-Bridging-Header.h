@@ -4,3 +4,4 @@
 
 #import <GoogleMaps/GoogleMaps.h>
 #import <AFNetworking/AFNetworking.h>
+#import "UIImageView+AFNetworking.h"

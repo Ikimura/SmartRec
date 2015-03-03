@@ -10,19 +10,27 @@ import UIKit
 
 class SRPlacesSearchViewController: UISearchController, UISearchResultsUpdating, UITableViewDataSource, UITableViewDelegate {
     
-    private var places: [SRGooglePlace]?;
+    private var places: [SRGooglePlace] = [];
     private var searchTimer: NSTimer?;
     private var tableView: UITableView?;
+    private lazy var googleServicesProvider: SRGoogleServicesDataProvider = {
+        var tempProvider = SRGoogleServicesDataProvider();
+        return tempProvider;
+    }();
     
     private let searchTimeInterval: NSTimeInterval = 0.3;
     
-    override init() {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nil, bundle: nil);
         
+    }
+    
+    override init() {
         var searchResultsTableViewController: UITableViewController = UITableViewController();
-        tableView = searchResultsTableViewController.tableView;
+        self.tableView = searchResultsTableViewController.tableView;
         
         super.init(searchResultsController: searchResultsTableViewController);
-        
+        self.tableView = searchResultsTableViewController.tableView;
         self.searchBar.tintColor = UIColor(red: 26.0/255.0, green: 70.0/255.0, blue: 98.0/255.0, alpha: 1.0);
         
         self.searchResultsUpdater = self;
@@ -30,13 +38,15 @@ class SRPlacesSearchViewController: UISearchController, UISearchResultsUpdating,
         searchResultsTableViewController.tableView.dataSource = self;
         searchResultsTableViewController.tableView.delegate = self;
     }
-
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder);
+    
+    required init(coder:NSCoder) {
+        super.init(coder:coder)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.tableView?.registerNib(UINib(nibName: "SRPlacesListTableViewCell", bundle: nil), forCellReuseIdentifier: kPlacesListCellIdentifier);
 
         // Do any additional setup after loading the view.
     }
@@ -47,15 +57,39 @@ class SRPlacesSearchViewController: UISearchController, UISearchResultsUpdating,
     }
     
     private func searchPlacesByText(searchText: String) {
-     //TODO: create google service
-        /*
-        [[BCDataProvider sharedProvider] placeSearchWithQuery:self.searchBar.text completion:^(NSArray *listOfPlace) {
-        self.listOfPlace = listOfPlace;
-        [self.tableView reloadData];
-        } error:^(NSError *error) {
-        [[[UIAlertView alloc] initWithTitle:nil message:@"Error!" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil] show];
-        }];
-        */
+        
+        var coordinate = SRLocationManager.sharedInstance.currentLocation()?.coordinate;
+        
+        googleServicesProvider.placeTextSearch(self.searchBar.text, lat: coordinate?.latitude, lng: coordinate?.longitude, radius: 1000, types: nil, complitionBlock: { [weak self] (data) -> Void in
+            
+            if var strongSelf = self {
+                
+                strongSelf.places = data;
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    strongSelf.tableView!.reloadData();
+                })
+            }
+            
+        }) { [weak self] (error) -> Void in
+            
+            if var strongSelf = self {
+                
+                if let userInfo = error.userInfo as NSDictionary! {
+                    
+                    strongSelf.showAlertWith("Error Occuried", message: userInfo["NSLocalizedDescription"] as String);
+                }
+            }
+        }
+    }
+    
+    private func showAlertWith(title: String, message: String) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert);
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     //MARK: - Search Timer
@@ -92,23 +126,41 @@ class SRPlacesSearchViewController: UISearchController, UISearchResultsUpdating,
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return places!.count;
+        return places.count;
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         //Cell
-        var cell : UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("simpleCell") as? UITableViewCell;
+        var cell: SRPlacesListTableViewCell? = tableView.dequeueReusableCellWithIdentifier(kPlacesListCellIdentifier) as? SRPlacesListTableViewCell;
         
-        if (cell == nil) {
+        cell?.imageView?.cancelImageRequestOperation();
+        
+        var place: SRGooglePlace = places[indexPath.row];
+        cell!.nameLabel.text = "\(place.name!)";
+        
+        if (place.formattedPhoneNumber != nil) {
             
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "simpleCell");
+            cell!.phoneLabel.text = place.formattedPhoneNumber;
+            
+        } else {
+            cell!.phoneLabel.text = nil;
         }
         
-        var place: SRGooglePlace = places![indexPath.row];
+        cell!.addressLabel.text = place.formatedAddres;
         
-        cell?.textLabel?.text = place.name;
-        cell?.detailTextLabel?.text = place.vicinity;
+        cell!.cityStateZipLabel.text = nil;
+        if (place.distance != nil) {
+            
+            cell!.distanceLabel.text = "\(place.distance), m";
+            
+        } else {
+            
+            cell!.distanceLabel.text = nil;
+            cell!.locationImage.image = nil;
+        }
+        
+        cell!.iconImage.setImageWithURL(place.iconURL, placeholderImage: UIImage(named: "image_placeholder"));
         
         return cell!;
     }

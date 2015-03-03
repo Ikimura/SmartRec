@@ -13,5 +13,7 @@ protocol SRGoogleSearchServiceProtocol {
     func nearbySearchPlaces(lat: Double, lng: Double, radius: Int, types:[String], keyword: String?, name: String?, complitionBlock: (data: [SRGooglePlace]) -> Void, errorComplitionBlock: (error: NSError) -> Void);
     
     func placeDetails(placeId: String, complitionBlock: (data: NSDictionary?) -> Void, errorComplitionBlock: (error: NSError) -> Void);
-    
+ 
+    func placeTextSearch(textQeury: String, lat: Double?, lng: Double?, radius: Int?, types:[String]?, complitionBlock: (data: [SRGooglePlace]!) -> Void, errorComplitionBlock: (error: NSError) -> Void);
+
 }

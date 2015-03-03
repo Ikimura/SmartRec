@@ -101,10 +101,81 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
         }
     }
     
+    func placeTextSearch(textQeury: String, lat: Double?, lng: Double?, radius: Int?, types:[String]?, complitionBlock: (data: [SRGooglePlace]!) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
+        
+        let formattedText = textQeury.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding);
+        
+        var urlString = "\(kGoogleTextSearchAPIURL)query=\(formattedText!)&sensor=true";
+        
+        if (lat != nil && lng != nil) {
+            
+            urlString += "&location=\(lat!),\(lng!)";
+        }
+        
+        if (types != nil) {
+            
+            urlString += "&types=";
+            
+            for type in types! {
+                urlString += type + "|";
+            }
+        }
+        
+        if (radius != nil) {
+            
+            urlString += "&radius=\(radius!)";
+        }
+        
+        urlString += "&key=\(kGooglePlaceAPIKey)";
+        urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!;
+        
+        println("Debug: \(urlString)");
+        
+        var requesOperationManager: AFHTTPRequestOperationManager = AFHTTPRequestOperationManager();
+        let serializer = AFJSONResponseSerializer();
+        requesOperationManager.responseSerializer = serializer;
+        
+        requesOperationManager.GET(urlString, parameters: nil, success: { (operation: AFHTTPRequestOperation!, responseObject: AnyObject!) -> Void in
+            
+            var status = responseObject["status"] as? String;
+            var responsStatus: SRResponseStatus = SRResponseStatus(rawValue: status!)!;
+            
+            var places: [SRGooglePlace]?;
+            
+            switch (responsStatus) {
+            case .OK:
+                if var results = responseObject["results"] as? Array<NSDictionary> {
+                    places = SRGooglePlace.fillPropertiesFromNearbySearchDectionary(results);
+                }
+            case .ZERO_RESULTS:
+                places = [];
+            case .INVALID_REQUEST:
+                fallthrough;
+            case .REQUEST_DENIED:
+                fallthrough;
+            case .OVER_QUERY_LIMIT:
+                places = [];
+                if let errorMessage = responseObject["error_message"] as? String {
+                    println(errorMessage);
+                }
+            default:
+                break;
+            }
+            
+            complitionBlock(data: places!);
+            
+            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                
+                println("Error: \(error)");
+                errorComplitionBlock(error: error);
+        }
+    }
+
+    
     func placeDetails(placeId: String, complitionBlock: (data: NSDictionary?) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
         
         var urlString = "\(kGooglePlaceDetailsAPIURL)plcaeid=\(placeId)&key;=\(kGooglePlaceAPIKey)";
-        urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!;
 
         println("Debug: \(urlString)");
         

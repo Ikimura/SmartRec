@@ -21,8 +21,10 @@ extension SRGooglePlace {
             var placeId = result["place_id"] as String;
             var name = result["name"] as? String;
             var iconURLString = result["icon"] as String;
+            iconURLString = iconURLString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!;
             var vicinity = result["vicinity"] as? String;
             var types: [String] = result["types"] as [String];
+            var formattedAddress = result["formatted_address"] as? String;
             
             var lat: Double?;
             var lng: Double?;
@@ -35,7 +37,7 @@ extension SRGooglePlace {
                 }
             }
             
-            var place: SRGooglePlace = SRGooglePlace(placeId: placeId, lng: lng!, lat: lat!, iconURL: NSURL(string: iconURLString), name: name, types: types, vicinity: vicinity, formatedAddres: nil, formattedPhoneNumber: nil);
+            var place: SRGooglePlace = SRGooglePlace(placeId: placeId, lng: lng!, lat: lat!, iconURL: NSURL(string: iconURLString), name: name, types: types, vicinity: vicinity, formatedAddres: formattedAddress, formattedPhoneNumber: nil, distance: nil);
             
             places.append(place);
         }

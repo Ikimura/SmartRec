@@ -15,4 +15,7 @@ class SRPlacesListTableViewCell: UITableViewCell {
     @IBOutlet var addressLabel: UILabel!;
     @IBOutlet var cityStateZipLabel: UILabel!;
     @IBOutlet var distanceLabel: UILabel!;
+    @IBOutlet var iconImage: UIImageView!;
+    @IBOutlet var locationImage: UIImageView!;
+
 }

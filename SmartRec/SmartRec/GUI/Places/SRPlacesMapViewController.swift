@@ -8,17 +8,18 @@
 
 import Foundation
 //FIXME: Add search Controller
-class SRPlacesMapViewController: SRBaseMapViewController {
+class SRPlacesMapViewController: SRBaseMapViewController, UISearchControllerDelegate {
 
     var placesTypes: [(name: String, value: String)]?;
     
     private var googlePlaces: [SRGooglePlace]?;
     private var rightBarButtonItem: UIBarButtonItem?;
+    private var searchController: SRPlacesSearchViewController?;
+    
     private lazy var googleServicesProvider: SRGoogleServicesDataProvider = {
         var tempProvider = SRGoogleServicesDataProvider();
         return tempProvider;
     }();
-    
     private lazy var placesListViewController: SRPlacesListViewController = {
         
         var tempVC = SRPlacesListViewController();
@@ -29,6 +30,14 @@ class SRPlacesMapViewController: SRBaseMapViewController {
         
         return tempVC;
     }();
+    
+    required override init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder);
+        
+        self.searchController = SRPlacesSearchViewController();
+        self.searchController!.delegate = self;
+        self.searchController!.hidesNavigationBarDuringPresentation = false;
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -46,6 +55,8 @@ class SRPlacesMapViewController: SRBaseMapViewController {
             
             searchButton.possibleTitles = NSSet(array: ["Map"]);
             rightBarButtonItem = searchButton;
+            
+            self.navigationItem.titleView = self.searchController!.searchBar;
         }
     }
     
@@ -124,6 +135,21 @@ class SRPlacesMapViewController: SRBaseMapViewController {
                 }
             }
         }
+    }
+    
+    //MARK: - UISearchControllerDelegate
+    
+    func willPresentSearchController(searchController: UISearchController) {
+        
+        self.navigationItem.setHidesBackButton(true, animated: false);
+        //TODO: - Add right button "show"
+        self.navigationItem.setRightBarButtonItem(nil, animated: true);
+    }
+    
+    func willDismissSearchController(searchController: UISearchController) {
+        
+        self.navigationItem.setHidesBackButton(false, animated: false);
+        self.navigationItem.setRightBarButtonItem(self.rightBarButtonItem, animated: true);
     }
     
     //MARK: - Utils
