@@ -18,12 +18,19 @@ extension SRGooglePlace {
         
         for result in results{
             
-            var placeId = result["place_id"] as String;
+            var placeId = result["place_id"] as? String;
             var name = result["name"] as? String;
-            var iconURLString = result["icon"] as String;
-            iconURLString = iconURLString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!;
+            
+            var iconURL: NSURL?;
+            
+            if var iconURLString = result["icon"] as? String {
+                
+                iconURLString = iconURLString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!;
+                iconURL = NSURL(string: iconURLString);
+            }
+            
             var vicinity = result["vicinity"] as? String;
-            var types: [String] = result["types"] as [String];
+            var types = result["types"] as? [String];
             var formattedAddress = result["formatted_address"] as? String;
             
             var lat: Double?;
@@ -37,7 +44,20 @@ extension SRGooglePlace {
                 }
             }
             
-            var place: SRGooglePlace = SRGooglePlace(placeId: placeId, lng: lng!, lat: lat!, iconURL: NSURL(string: iconURLString), name: name, types: types, vicinity: vicinity, formatedAddres: formattedAddress, formattedPhoneNumber: nil, distance: nil);
+            var photosRefs: [String] = [];
+            
+            if let photos = result["photos"] as? Array<NSDictionary> {
+                
+                for photo in photos {
+                    
+                    if let photoRef = photo["photo_reference"] as? String {
+                        
+                        photosRefs.append(photoRef);
+                    }
+                }
+            }
+            
+            var place: SRGooglePlace = SRGooglePlace(placeId: placeId!, lng: lng!, lat: lat!, iconURL: iconURL, name: name, types: types, vicinity: vicinity, formatedAddres: formattedAddress, formattedPhoneNumber: nil, distance: nil, photoReferences: photosRefs, website: nil);
             
             places.append(place);
         }

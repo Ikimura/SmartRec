@@ -87,5 +87,7 @@ let kGoogleTextSearchAPIURL: String = "https://maps.googleapis.com/maps/api/plac
 
 let kGooglePlaceDetailsAPIURL: String = "https://maps.googleapis.com/maps/api/place/details/json?";
 
+let kGooglePlacePhotoAPIURL: String = "https://maps.googleapis.com/maps/api/place/photo?";
+
 let kNavigationBarHeight: CGFloat = 64;
 

@@ -20,6 +20,8 @@ struct SRGooglePlace {
     var formatedAddres: String?;
     var formattedPhoneNumber: String?;
     var distance: Double?;
+    var photoReferences: [String]?;
+    var website: String?;
     
     mutating func fillDetailsPropertiesForPlace(results: NSDictionary) {
         
@@ -27,6 +29,7 @@ struct SRGooglePlace {
         
         formattedPhoneNumber = results["formatted_phone_number"] as? String;
         
+        website = results["website"] as? String;
     }
     
     mutating func addDistance(newDistance: Double) {

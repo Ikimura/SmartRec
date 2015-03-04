@@ -112,7 +112,7 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
             urlString += "&location=\(lat!),\(lng!)";
         }
         
-        if (types != nil) {
+        if (types != nil && types?.count != 0) {
             
             urlString += "&types=";
             

@@ -13,7 +13,14 @@ class SRNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         // Do any additional setup after loading the view.
+        self.applyDefaultStyle();
+    }
+    
+    func applyDefaultStyle() {
+        
+        self.navigationBar.setBackgroundImage(UIImage(named: "navigation_bar_bg_def"), forBarMetrics: .Default);
     }
 
     override func didReceiveMemoryWarning() {
