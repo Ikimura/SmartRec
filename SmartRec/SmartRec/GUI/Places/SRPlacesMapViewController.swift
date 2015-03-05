@@ -21,23 +21,21 @@ struct RestorationKeys {
     static let searchBarIsFirstResponder = "SearchBarIsFirstResponderKey"
 }
 
+enum SRControllerMode: String {
+    
+    case Map = "Map";
+    case List = "List";
+}
 
-class SRPlacesMapViewController: SRBaseMapViewController, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
+class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewControllerDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
 
     var placesTypes: [(name: String, value: String)]?;
     
-    private var googlePlaces: [SRGooglePlace]?;
+    private var googlePlaces: [SRGooglePlace] = [];
     private var rightBarButtonItem: UIBarButtonItem?;
     private lazy var googleServicesProvider: SRGoogleServicesDataProvider = {
         var tempProvider = SRGoogleServicesDataProvider();
         return tempProvider;
-    }();
-    private lazy var placesListViewController: SRPlacesListViewController = {
-        
-        var tempVC = SRPlacesListViewController();
-        self.addChildViewController(tempVC);
-
-        return tempVC;
     }();
     
     //MARK:- searController
@@ -76,7 +74,9 @@ class SRPlacesMapViewController: SRBaseMapViewController, UISearchBarDelegate, U
     }
     
     private func setUpSearchController() {
+        
         resultsTableController = SRPlacesListViewController()
+        resultsTableController.delegate = self;
         
         searchController = UISearchController(searchResultsController: resultsTableController);
         searchController.searchResultsUpdater = self;
@@ -106,48 +106,63 @@ class SRPlacesMapViewController: SRBaseMapViewController, UISearchBarDelegate, U
         }
     }
     
-    //FIXME: - logic for search controller
+    //MARK: - Handler
+    
+    private func toggleController(mode: SRControllerMode) {
+        
+        let resultsController = searchController.searchResultsController as SRPlacesListViewController;
+        
+        switch (mode) {
+        case .Map:
+            rightBarButtonItem?.title = "List";
+            
+            if (resultsController.placesList.count != 0) {
+                
+                self.googlePlaces = resultsController.placesList;
+                self.refreshData();
+            }
+
+            searchController.active = false;
+            
+        case .List:
+            
+            rightBarButtonItem?.title = "Map";
+            
+            searchController.active = true;
+            
+            resultsController.placesList = self.googlePlaces;
+            
+            resultsController.view.hidden = false;
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                resultsController.tableView.reloadData();
+            });
+
+        default:
+            println("No such Mode!!!");
+        }
+        
+    }
+    
     func didSelectRightButton(sender: UIBarButtonItem) {
         
-        var placesListVC = placesListViewController;
-        placesListVC.placesList = self.googlePlaces!;
-        placesListVC.types = self.placesTypes;
-        
-        var rect = self.view.bounds;
-        rect.origin.y = rect.size.height;
-        
-        var newFrame: CGRect?;
-        var present: Bool = true;
-        
-        if (placesListVC.view.superview != nil) {
+        if (searchController.active) {
             
-            sender.title = "List";
-            present = false;
-            newFrame = rect;
+            self.toggleController(SRControllerMode(rawValue: "Map")!);
             
         } else {
-            
-            sender.title = "Map";
-            present = true;
-            self.view.addSubview(placesListVC.view);
-            placesListVC.view.frame = rect;
-            newFrame = self.view.bounds;
+
+            self.toggleController(SRControllerMode(rawValue: "List")!);
         }
+    }
+    
+    //MARK: - SRPlacesListViewControllerDelegate
+    
+    func placesListController(controller: SRPlacesListViewController, didSelectPlace place: SRGooglePlace) {
         
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            
-            placesListVC.view.frame = newFrame!;
-            
-            }) { (finished: Bool) -> Void in
-            
-                if (finished) {
-                    
-                    if (!present) {
-                        
-                        placesListVC.view.removeFromSuperview();
-                    }
-                }
-        }
+        println("place_id: \(place.placeId)");
+        
+        fatalError("Not implemeted");
     }
     
     // MARK: UISearchBarDelegate
@@ -158,24 +173,14 @@ class SRPlacesMapViewController: SRBaseMapViewController, UISearchBarDelegate, U
     
     // MARK: UISearchControllerDelegate
     
-    func presentSearchController(searchController: UISearchController) {
-        //NSLog(__FUNCTION__)
-    }
-    
-    func willPresentSearchController(searchController: UISearchController) {
-        //NSLog(__FUNCTION__)
-    }
-    
     func didPresentSearchController(searchController: UISearchController) {
         //NSLog(__FUNCTION__)
-    }
-    
-    func willDismissSearchController(searchController: UISearchController) {
-        //NSLog(__FUNCTION__)
+        rightBarButtonItem?.title = "Map";
     }
     
     func didDismissSearchController(searchController: UISearchController) {
         //NSLog(__FUNCTION__)
+        rightBarButtonItem?.title = "List";
     }
     
     // MARK: UISearchResultsUpdating
@@ -188,7 +193,10 @@ class SRPlacesMapViewController: SRBaseMapViewController, UISearchBarDelegate, U
         let whitespaceCharacterSet = NSCharacterSet.whitespaceCharacterSet()
         let strippedString = searchController.searchBar.text.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
         
-        self.loadPlacesWithTypes(nil, textSearch: strippedString, coordinates: coordinate, radius: 1000, isQeurySearch: true);
+        if (strippedString.utf16Count != 0) {
+            
+            self.loadPlacesWithTypes(nil, textSearch: strippedString, coordinates: coordinate, radius: 1000, isQeurySearch: true);
+        }
     }
     
     // MARK: UIStateRestoration
@@ -240,6 +248,14 @@ class SRPlacesMapViewController: SRBaseMapViewController, UISearchBarDelegate, U
     
     //MARK: - data update
     
+    private func refreshData() {
+        
+        if let baseView = self.view as? SRBaseMapView {
+            
+            baseView.reloadMarkersList();
+        }
+    }
+    
     private func loadPlacesWithTypes(types: [(name: String, value: String)]?, textSearch: String?, coordinates: CLLocationCoordinate2D?, radius: Int?, isQeurySearch: Bool) {
         
         var complitionBlock = { [weak self](data: [SRGooglePlace]!) -> () in
@@ -259,12 +275,10 @@ class SRPlacesMapViewController: SRBaseMapViewController, UISearchBarDelegate, U
                 } else {
                     
                     strongSelf.googlePlaces = data;
-                    if let baseView = strongSelf.view as? SRBaseMapView {
-                        baseView.reloadMarkersList();
-                    }
+                    strongSelf.refreshData();
                 }
                 
-                if (strongSelf.googlePlaces?.count == 0 && !isQeurySearch) {
+                if (strongSelf.googlePlaces.count == 0 && !isQeurySearch) {
                     //TODO: change to localized strings
                     strongSelf.showAlertWith("Attention", message: "No Data Available");
                 }
@@ -326,21 +340,14 @@ class SRPlacesMapViewController: SRBaseMapViewController, UISearchBarDelegate, U
     
     override func numberOfMarkers() -> Int {
         
-        var count = 0;
-        
-        if self.googlePlaces != nil {
-            
-            count = self.googlePlaces!.count;
-        }
-        
-        return count;
+        return self.googlePlaces.count;
     }
     
     override func titleForMarkerAtIndex(index: Int) -> String? {
         
         var title = "";
         
-        if let place = self.googlePlaces?[index] as SRGooglePlace! {
+        if let place = self.googlePlaces[index] as SRGooglePlace! {
             
             title = place.name!;
         }
@@ -350,7 +357,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, UISearchBarDelegate, U
     
     override func locationForMarkerAtIndex(index: Int) -> CLLocationCoordinate2D? {
         
-        let place = self.googlePlaces?[index] as SRGooglePlace!;
+        let place = self.googlePlaces[index] as SRGooglePlace!;
         var coordinate = CLLocationCoordinate2DMake(place.lat, place.lng);
         
         return coordinate;
@@ -366,8 +373,8 @@ class SRPlacesMapViewController: SRBaseMapViewController, UISearchBarDelegate, U
         if let number = identifier as? NSNumber {
             
             var index = number.integerValue;
-            //TODO: - show information
             
+            fatalError("Not emplemented");
         }
     }
 }

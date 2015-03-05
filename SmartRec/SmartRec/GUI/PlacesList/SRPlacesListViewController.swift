@@ -8,11 +8,17 @@
 
 import Foundation
 
+protocol SRPlacesListViewControllerDelegate {
+
+    func placesListController(controller: SRPlacesListViewController, didSelectPlace place: SRGooglePlace);
+}
+
 class SRPlacesListViewController : SRCommonViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet var tableView: UITableView!;    
     var placesList: [SRGooglePlace] = [];
     var types: [(name: String, value: String)]?;
+    var delegate: SRPlacesListViewControllerDelegate?;
     
     //MARK: - Life cycle
     
@@ -83,6 +89,8 @@ class SRPlacesListViewController : SRCommonViewController, UITableViewDataSource
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true);
         
-        //TODO: - show information
+        var place = placesList[indexPath.row];
+        
+        delegate?.placesListController(self, didSelectPlace: place);
     }
 }

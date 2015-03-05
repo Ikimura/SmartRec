@@ -12,7 +12,6 @@ class SRNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
         // Do any additional setup after loading the view.
         self.applyDefaultStyle();
@@ -20,6 +19,9 @@ class SRNavigationController: UINavigationController {
     
     func applyDefaultStyle() {
         
+        self.navigationBar.shadowImage = UIImage();
+        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        self.navigationBar.tintColor = UIColor.whiteColor();
         self.navigationBar.setBackgroundImage(UIImage(named: "navigation_bar_bg_def"), forBarMetrics: .Default);
     }
 
