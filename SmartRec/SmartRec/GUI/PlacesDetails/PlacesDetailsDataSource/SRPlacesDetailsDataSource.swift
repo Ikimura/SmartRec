@@ -51,7 +51,7 @@ class SRPlacesDetailsDataSource : SRPlacesDetailsDataSourceProtocol {
     }
     
     func numberOfSections() -> Int {
-        var sections = 0;
+        var sections = 1;
         
         if (placeToDetaile != nil) {
             
@@ -70,13 +70,11 @@ class SRPlacesDetailsDataSource : SRPlacesDetailsDataSourceProtocol {
         
         var items = 0;
         
-        if (index == 0) {
-            
-            items = 1;
-            
-        } else if (index == 1) {
-            
-            items = placeToDetaile!.photoReferences!.count;
+        switch (index) {
+        case 0, 1: items = 1;
+        case 2: items = placeToDetaile!.photoReferences!.count;
+        default:
+            fatalError("Wrong Section Index");
         }
         
         return items;
@@ -86,7 +84,7 @@ class SRPlacesDetailsDataSource : SRPlacesDetailsDataSourceProtocol {
         
         switch (indexPath.section) {
         case 0: return placeToDetaile!;
-        case 1: return placeToDetaile!.photoReferences![indexPath.row];
+        case 2: return placeToDetaile!.photoReferences![indexPath.row];
         default:
             fatalError("Wrong section number");
         }

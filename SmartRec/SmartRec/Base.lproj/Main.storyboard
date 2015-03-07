@@ -315,11 +315,45 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="NTT-2o-oKO" id="aaU-el-Vp3"/>
+                        <segue destination="dEb-yD-Skl" kind="show" identifier="selectAppointmentDateSegue" id="DHy-sX-Rdv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EmW-0X-rdd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1511" y="707"/>
+        </scene>
+        <!--Appointment Date View Controller-->
+        <scene sceneID="fWO-h8-1cK">
+            <objects>
+                <viewController id="dEb-yD-Skl" customClass="SRAppointmentDateViewController" customModule="SmartRec" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="508-2y-1oI"/>
+                        <viewControllerLayoutGuide type="bottom" id="rBZ-tJ-wV8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="l7D-J5-w47">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N8m-qB-I2C">
+                                <rect key="frame" x="0.0" y="128" width="600" height="352"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="rBZ-tJ-wV8" firstAttribute="top" secondItem="N8m-qB-I2C" secondAttribute="bottom" constant="120" id="Rni-ch-Czm"/>
+                            <constraint firstItem="N8m-qB-I2C" firstAttribute="top" secondItem="508-2y-1oI" secondAttribute="bottom" constant="64" id="bIJ-ex-ycP"/>
+                            <constraint firstItem="N8m-qB-I2C" firstAttribute="leading" secondItem="l7D-J5-w47" secondAttribute="leading" id="eBM-0h-jGc"/>
+                            <constraint firstAttribute="trailing" secondItem="N8m-qB-I2C" secondAttribute="trailing" id="nmi-15-D9y"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="dateTimPickerView" destination="N8m-qB-I2C" id="4Wd-Lw-xFU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2Uq-TF-vot" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2265" y="707"/>
         </scene>
         <!--Map-->
         <scene sceneID="xhV-Va-Zf1">

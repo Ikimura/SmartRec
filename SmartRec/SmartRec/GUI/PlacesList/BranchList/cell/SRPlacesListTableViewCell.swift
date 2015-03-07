@@ -17,5 +17,6 @@ class SRPlacesListTableViewCell: UITableViewCell {
     @IBOutlet var distanceLabel: UILabel!;
     @IBOutlet var iconImage: UIImageView!;
     @IBOutlet var locationImage: UIImageView!;
+    @IBOutlet var rightIndicator: UIImageView!;
 
 }

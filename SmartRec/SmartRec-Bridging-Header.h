@@ -5,3 +5,5 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import <AFNetworking/AFNetworking.h>
 #import "UIImageView+AFNetworking.h"
+#import "MGConferenceDatePicker.h"
+#import "MGConferenceDatePickerDelegate.h"

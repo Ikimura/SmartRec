@@ -25,6 +25,7 @@ class SRPlacesTypesTableViewController: SRCommonViewController, UITableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad();
         
+        self.title = "Types";
     }
     
     override func viewWillAppear(animated: Bool) {

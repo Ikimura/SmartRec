@@ -116,6 +116,7 @@
                 <outlet property="locationImage" destination="1KX-oy-rZf" id="e6l-aB-lpx"/>
                 <outlet property="nameLabel" destination="tgw-8I-D8w" id="Zrl-IQ-NPf"/>
                 <outlet property="phoneLabel" destination="gpA-Qn-RGI" id="Hch-yV-xpQ"/>
+                <outlet property="rightIndicator" destination="Fw0-8L-f2t" id="MgW-uw-WGW"/>
             </connections>
             <point key="canvasLocation" x="393" y="292.5"/>
         </tableViewCell>

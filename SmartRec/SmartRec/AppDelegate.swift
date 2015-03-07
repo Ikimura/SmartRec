@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey(kGoogleMapsAPIKey);
         SRLocationManager.sharedInstance;
         
+        UIApplication.sharedApplication().statusBarStyle = .LightContent;
+        
         return true;
     }
 

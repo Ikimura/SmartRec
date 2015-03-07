@@ -41,9 +41,13 @@ let kGalaryCellIdentifier: String = "galary_сell_identifier";
 
 let kPlacesListCellIdentifier: String = "places_list_cell_identifier";
 
+let kContinueCellIdentifier: String = "continue_cell_identifier";
+
 let kShowPlaceOnMapSegueIdentifier: String = "showPlacesSegueIdentifier";
 
 let kShowPlaceDetailsSegueIdentifier: String = "showPlaceDetailsSegueIdentifier";
+
+let kSelectAppontmentDateSegueIdentifier: String = "selectAppointmentDateSegue";
 
 let kShowVideoSegueIdentifier_1: String = "showVideoSegueIdentifier_1";
 

@@ -37,7 +37,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         var tempProvider = SRGoogleServicesDataProvider();
         return tempProvider;
     }();
-    private var selectedIndex: Int?;
+    private var selectedData: Any?;
     
     //MARK:- searController
     private var restoredState = SearchControllerRestorableState();
@@ -161,9 +161,8 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
     
     func placesListController(controller: SRPlacesListViewController, didSelectPlace place: SRGooglePlace) {
         
-        println("place_id: \(place.placeId)");
-        
-        fatalError("Not implemeted");
+        selectedData = place;
+        performSegueWithIdentifier(kShowPlaceDetailsSegueIdentifier, sender: controller);
     }
     
     // MARK: UISearchBarDelegate
@@ -374,7 +373,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         
         if let number = identifier as? NSNumber {
             
-            selectedIndex = number.integerValue;
+            selectedData = number.integerValue;
             performSegueWithIdentifier(kShowPlaceDetailsSegueIdentifier, sender: self);
         }
     }
@@ -389,7 +388,10 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         switch (sender) {
             
         case is SRPlacesMapViewController:
-            selectedPlace = googlePlaces[self.selectedIndex!];
+            selectedPlace = googlePlaces[selectedData as Int];
+            
+        case is SRPlacesListViewController:
+            selectedPlace = selectedData as? SRGooglePlace;
             
         default:
             fatalError("Unknown Sender");

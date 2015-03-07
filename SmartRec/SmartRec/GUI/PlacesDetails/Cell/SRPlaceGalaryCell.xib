@@ -13,14 +13,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="place_holder" translatesAutoresizingMaskIntoConstraints="NO" id="wVs-Pj-lpF">
-                        <rect key="frame" x="0.0" y="0.0" width="44" height="159.5"/>
+                        <rect key="frame" x="15" y="0.0" width="160" height="159.5"/>
                     </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="wVs-Pj-lpF" firstAttribute="top" secondItem="LR9-B1-5FO" secondAttribute="top" id="ApY-tp-yTZ"/>
-                    <constraint firstItem="wVs-Pj-lpF" firstAttribute="leading" secondItem="LR9-B1-5FO" secondAttribute="leading" id="FTi-sm-6IF"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wVs-Pj-lpF" secondAttribute="trailing" id="PeL-66-BaH"/>
+                    <constraint firstItem="wVs-Pj-lpF" firstAttribute="leading" secondItem="LR9-B1-5FO" secondAttribute="leading" constant="15" id="FTi-sm-6IF"/>
                     <constraint firstAttribute="bottom" secondItem="wVs-Pj-lpF" secondAttribute="bottom" id="VQN-7T-Iey"/>
+                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="wVs-Pj-lpF" secondAttribute="trailing" constant="145" id="x13-UP-fNG"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

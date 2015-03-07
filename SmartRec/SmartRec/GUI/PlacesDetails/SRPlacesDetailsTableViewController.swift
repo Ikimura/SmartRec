@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDataSource, UITableViewDelegate {
+class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDataSource, UITableViewDelegate, SRContinueTableViewCellDelegate {
 
     @IBOutlet var tableView: UITableView?;
     var place: SRGooglePlace?;
@@ -20,8 +20,11 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad();
         
+        self.title = "Details";
+        
         tableView?.registerNib(UINib(nibName: "SRPlacesListTableViewCell", bundle: nil), forCellReuseIdentifier: kPlacesListCellIdentifier);
         tableView?.registerNib(UINib(nibName: "SRPlaceGalaryCell", bundle: nil), forCellReuseIdentifier: kGalaryCellIdentifier);
+        tableView?.registerNib(UINib(nibName: "SRContinueTableViewCell", bundle: nil), forCellReuseIdentifier: kContinueCellIdentifier);
 
         dataSource = SRPlacesDetailsDataSource(placeToDetaile: place!);
         
@@ -42,16 +45,13 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        if (indexPath.section == 0) {
-            
-            return 80;
-            
-        } else if (indexPath.section == 1) {
-            
-            return 120;
+        switch (indexPath.section) {
+        case 0: return 103;
+        case 1: return 64;
+        case 2: return 120;
+        default:
+            fatalError("Wrong Section Index");
         }
-        
-        return 0;
     }
     
     //MARK: - UITableViewDataSource
@@ -74,32 +74,48 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
         
         var cell: UITableViewCell?;
         
-        var item = dataSource!.itemAtIndexPath(indexPath);
-        
-        switch (item) {
+        if (indexPath.section == 1) {
+            var cCell = tableView.dequeueReusableCellWithIdentifier(kContinueCellIdentifier) as? SRContinueTableViewCell;
+            cCell?.delegate = self;
             
-        case let place as SRGooglePlace:
+            cell = cCell;
             
-            var dCell = tableView.dequeueReusableCellWithIdentifier(kPlacesListCellIdentifier) as? SRPlacesListTableViewCell;
-            dCell!.iconImage.cancelImageRequestOperation();
-
-            self.fillCell(dCell!, withData: place);
-            cell = dCell;
+        } else {
             
-        case is String:
+            var item = dataSource!.itemAtIndexPath(indexPath);
             
-            var gCell = tableView.dequeueReusableCellWithIdentifier(kGalaryCellIdentifier) as? SRPlaceGalaryCell;
-            gCell!.photoImageView.cancelImageRequestOperation();
-            
-            self.fillCell(gCell!, withData: item);
-            cell = gCell;
-            
-            println(item);
-        default:
-            fatalError("No Such Item");
+            switch (item) {
+                
+            case let place as SRGooglePlace:
+                
+                var dCell = tableView.dequeueReusableCellWithIdentifier(kPlacesListCellIdentifier) as? SRPlacesListTableViewCell;
+                dCell!.iconImage.cancelImageRequestOperation();
+                
+                self.fillCell(dCell!, withData: place);
+                cell = dCell;
+                
+            case is String:
+                
+                var gCell = tableView.dequeueReusableCellWithIdentifier(kGalaryCellIdentifier) as? SRPlaceGalaryCell;
+                gCell!.photoImageView.cancelImageRequestOperation();
+                
+                self.fillCell(gCell!, withData: item);
+                cell = gCell;
+                
+                println(item);
+            default:
+                fatalError("No Such Item");
+            }
         }
 
         return cell!;
+    }
+    
+    //MARK: - SRContinueTableViewCellDelegate
+    
+    func didSendCellContinueEvent(sender: AnyObject) {
+        
+        self.performSegueWithIdentifier(kSelectAppontmentDateSegueIdentifier, sender: sender);
     }
     
     //MARK: - Utils
@@ -131,6 +147,7 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
             var dist = Double(place.distance!);
             var strDist = dist.format(".3");            
             detCell.distanceLabel.text = "\(strDist), km";
+            detCell.rightIndicator.image = nil;
             
         case var galaryCell as SRPlaceGalaryCell:
             var photoReference = data as String;
@@ -145,4 +162,15 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
             fatalError("No Such Cell");
         }
     }
+    
+    //MARK: - Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        
+        if (segue.identifier == kSelectAppontmentDateSegueIdentifier) {
+            
+        }
+    }
+
 }
