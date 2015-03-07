@@ -37,6 +37,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         var tempProvider = SRGoogleServicesDataProvider();
         return tempProvider;
     }();
+    private var selectedIndex: Int?;
     
     //MARK:- searController
     private var restoredState = SearchControllerRestorableState();
@@ -370,11 +371,38 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
     //MARK: - SRBaseMapViewDelegate
     
     override func calloutAccessoryControlTappedByIdentifier(identifier: AnyObject) {
+        
         if let number = identifier as? NSNumber {
             
-            var index = number.integerValue;
+            selectedIndex = number.integerValue;
+            performSegueWithIdentifier(kShowPlaceDetailsSegueIdentifier, sender: self);
+        }
+    }
+    
+    //MARK: - Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        
+        var selectedPlace: SRGooglePlace?;
+        
+        switch (sender) {
             
-            fatalError("Not emplemented");
+        case is SRPlacesMapViewController:
+            selectedPlace = googlePlaces[self.selectedIndex!];
+            
+        default:
+            fatalError("Unknown Sender");
+        }
+        
+        if (segue.identifier == kShowPlaceDetailsSegueIdentifier) {
+            
+            if let navigationVC = segue.destinationViewController as? UINavigationController {
+                
+                if let placeDetailsVC = navigationVC.viewControllers[0] as? SRPlacesDetailsTableViewController {
+                    placeDetailsVC.place = selectedPlace;
+                }
+            }
         }
     }
 }

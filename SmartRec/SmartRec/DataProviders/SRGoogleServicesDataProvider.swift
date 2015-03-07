@@ -174,7 +174,7 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
     
     func placeDetails(placeId: String, complitionBlock: (data: NSDictionary?) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
         
-        var urlString = "\(kGooglePlaceDetailsAPIURL)plcaeid=\(placeId)&key;=\(kGooglePlaceAPIKey)";
+        var urlString = "\(kGooglePlaceDetailsAPIURL)reference=\(placeId)&key=\(kGooglePlaceAPIKey)";
         urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!;
 
         println("Debug: \(urlString)");

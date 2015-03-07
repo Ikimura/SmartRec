@@ -1,0 +1,94 @@
+//
+//  SRPlacesDetailsDataSource.swift
+//  SmartRec
+//
+//  Created by Artsiom Karseka on 3/7/15.
+//  Copyright (c) 2015 con.epam.evnt. All rights reserved.
+//
+
+import Foundation
+
+protocol SRPlacesDetailsDataSourceProtocol {
+    
+    func loadData(complitionBlock:() -> Void, errorBlock:(error: NSError?) -> Void);
+    func numberOfSections() -> Int;
+    func numberItemsInSection(index: Int) -> Int;
+    func itemAtIndexPath(indexPath: NSIndexPath) -> Any;
+}
+
+class SRPlacesDetailsDataSource : SRPlacesDetailsDataSourceProtocol {
+    
+    private var placeToDetaile: SRGooglePlace?;
+    private lazy var googleServicesProvider: SRGoogleServicesDataProvider = {
+        var tempProvider = SRGoogleServicesDataProvider();
+        return tempProvider;
+    }();
+    
+    convenience init(placeToDetaile: SRGooglePlace) {
+        self.init();
+        
+        self.placeToDetaile = placeToDetaile;
+    }
+    
+    //MARK: - public interface
+    
+    func loadData(complitionBlock:() -> Void, errorBlock:(error: NSError?) -> Void) {
+    
+        googleServicesProvider.placeDetails(placeToDetaile!.reference, complitionBlock: { [weak self] (data) -> Void in
+            
+            if var strongSelf = self {
+                
+                strongSelf.placeToDetaile!.fillDetailsPropertiesForPlace(data!);
+                
+                complitionBlock();
+            }
+            
+        }) { (error) -> Void in
+            
+            errorBlock(error: error);
+            println(error);
+        }
+    }
+    
+    func numberOfSections() -> Int {
+        var sections = 0;
+        
+        if (placeToDetaile != nil) {
+            
+            sections++;
+        }
+        
+        if (placeToDetaile?.photoReferences?.count != 0) {
+            
+            sections++;
+        }
+        
+        return sections;
+    }
+    
+    func numberItemsInSection(index: Int) -> Int {
+        
+        var items = 0;
+        
+        if (index == 0) {
+            
+            items = 1;
+            
+        } else if (index == 1) {
+            
+            items = placeToDetaile!.photoReferences!.count;
+        }
+        
+        return items;
+    }
+    
+    func itemAtIndexPath(indexPath: NSIndexPath) -> Any {
+        
+        switch (indexPath.section) {
+        case 0: return placeToDetaile!;
+        case 1: return placeToDetaile!.photoReferences![indexPath.row];
+        default:
+            fatalError("Wrong section number");
+        }
+    }
+}

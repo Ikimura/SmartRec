@@ -68,15 +68,15 @@ class SRPlacesListViewController : SRCommonViewController, UITableViewDataSource
         }
         
         cell!.cityStateZipLabel.text = nil;
-        if (place.distance != nil) {
+        
+        if (place.distance == nil) {
             
-            cell!.distanceLabel.text = "\(place.distance), m";
-            
-        } else {
-            
-            cell!.distanceLabel.text = nil;
-            cell!.locationImage.image = nil;
+            place.addDistance(CLLocation.distanceBetweenLocation(CLLocationCoordinate2DMake(place.lat, place.lng), secondLocation: SRLocationManager.sharedInstance.currentLocation()!.coordinate));
         }
+        var dist = Double(place.distance!);
+        var strDist = dist.format(".3");
+        
+        cell!.distanceLabel.text = "\(strDist), km";
         
         cell!.iconImage.setImageWithURL(place.iconURL, placeholderImage: UIImage(named: "image_placeholder"));
         

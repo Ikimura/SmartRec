@@ -92,6 +92,11 @@
 		608153BF1A9E62F30033FF09 /* SRPlacesTypesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608153BE1A9E62F30033FF09 /* SRPlacesTypesTableViewController.swift */; };
 		608153C11A9E639D0033FF09 /* SRPlacesTypesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608153C01A9E639D0033FF09 /* SRPlacesTypesDataSource.swift */; };
 		609A9A5E1A9F944D00BC8D43 /* SRPlacesTypesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609A9A5D1A9F944D00BC8D43 /* SRPlacesTypesTableViewCell.swift */; };
+		60AEE92A1AAAF87100B1975F /* SRPlacesDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AEE9291AAAF87100B1975F /* SRPlacesDetailsTableViewController.swift */; };
+		60AEE92D1AAAF99400B1975F /* SRPlacesDetailsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AEE92C1AAAF99400B1975F /* SRPlacesDetailsDataSource.swift */; };
+		60AEE9301AAB2BFE00B1975F /* SRPlaceGalaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AEE92F1AAB2BFE00B1975F /* SRPlaceGalaryCell.swift */; };
+		60AEE9321AAB2C5500B1975F /* SRPlaceGalaryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60AEE9311AAB2C5500B1975F /* SRPlaceGalaryCell.xib */; };
+		60AEE9341AAB4CE700B1975F /* CLLocationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AEE9331AAB4CE700B1975F /* CLLocationExtensions.swift */; };
 		60B94B081AA1D19F00BBDAA1 /* SRCalloutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60B94B071AA1D19F00BBDAA1 /* SRCalloutView.xib */; };
 		60B94B2A1AA220D900BBDAA1 /* SmartRec.SRPlacesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60B94B221AA220D900BBDAA1 /* SmartRec.SRPlacesListViewController.xib */; };
 		60B94B2C1AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60B94B261AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib */; };
@@ -280,6 +285,11 @@
 		608153BE1A9E62F30033FF09 /* SRPlacesTypesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesTypesTableViewController.swift; sourceTree = "<group>"; };
 		608153C01A9E639D0033FF09 /* SRPlacesTypesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesTypesDataSource.swift; sourceTree = "<group>"; };
 		609A9A5D1A9F944D00BC8D43 /* SRPlacesTypesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesTypesTableViewCell.swift; sourceTree = "<group>"; };
+		60AEE9291AAAF87100B1975F /* SRPlacesDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesDetailsTableViewController.swift; sourceTree = "<group>"; };
+		60AEE92C1AAAF99400B1975F /* SRPlacesDetailsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesDetailsDataSource.swift; sourceTree = "<group>"; };
+		60AEE92F1AAB2BFE00B1975F /* SRPlaceGalaryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlaceGalaryCell.swift; sourceTree = "<group>"; };
+		60AEE9311AAB2C5500B1975F /* SRPlaceGalaryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SRPlaceGalaryCell.xib; sourceTree = "<group>"; };
+		60AEE9331AAB4CE700B1975F /* CLLocationExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLLocationExtensions.swift; sourceTree = "<group>"; };
 		60B94B071AA1D19F00BBDAA1 /* SRCalloutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SRCalloutView.xib; path = SmartRec/GUI/Common/MapView/CalloutView/SRCalloutView.xib; sourceTree = SOURCE_ROOT; };
 		60B94B221AA220D900BBDAA1 /* SmartRec.SRPlacesListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SmartRec.SRPlacesListViewController.xib; path = BranchList/SmartRec.SRPlacesListViewController.xib; sourceTree = "<group>"; };
 		60B94B261AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SRPlacesListTableViewCell.xib; sourceTree = "<group>"; };
@@ -580,6 +590,7 @@
 			isa = PBXGroup;
 			children = (
 				1368F4FC1A4B208B004D52B1 /* SRVideoRouteDetailsViewController.swift */,
+				60AEE9201AAAF47D00B1975F /* PlacesDetails */,
 				60B94B1E1AA220A600BBDAA1 /* PlacesList */,
 				608153BD1A9E62CE0033FF09 /* PlaceTypesList */,
 				608153B61A9E59580033FF09 /* PlacesMap */,
@@ -767,6 +778,7 @@
 				13F985761A13912400E9B958 /* AVAssetExtensions.swift */,
 				13EBF1ED1A1DC7A900029072 /* UIViewExtensions.swift */,
 				1318DEC31A1F54AD007B0F54 /* StringExtensions.swift */,
+				60AEE9331AAB4CE700B1975F /* CLLocationExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -839,6 +851,34 @@
 				609A9A5D1A9F944D00BC8D43 /* SRPlacesTypesTableViewCell.swift */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		60AEE9201AAAF47D00B1975F /* PlacesDetails */ = {
+			isa = PBXGroup;
+			children = (
+				60AEE92E1AAB2BE100B1975F /* Cell */,
+				60AEE92B1AAAF97200B1975F /* DataSource */,
+				60AEE9291AAAF87100B1975F /* SRPlacesDetailsTableViewController.swift */,
+			);
+			path = PlacesDetails;
+			sourceTree = "<group>";
+		};
+		60AEE92B1AAAF97200B1975F /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				60AEE92C1AAAF99400B1975F /* SRPlacesDetailsDataSource.swift */,
+			);
+			name = DataSource;
+			path = PlacesDetailsDataSource;
+			sourceTree = "<group>";
+		};
+		60AEE92E1AAB2BE100B1975F /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				60AEE92F1AAB2BFE00B1975F /* SRPlaceGalaryCell.swift */,
+				60AEE9311AAB2C5500B1975F /* SRPlaceGalaryCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		60B94B1E1AA220A600BBDAA1 /* PlacesList */ = {
@@ -1021,6 +1061,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60AEE9321AAB2C5500B1975F /* SRPlaceGalaryCell.xib in Resources */,
 				137E3B6E19F52BF00094C5A1 /* Main.storyboard in Resources */,
 				60B94B2C1AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib in Resources */,
 				137E3B7319F52BF00094C5A1 /* LaunchScreen.xib in Resources */,
@@ -1096,9 +1137,11 @@
 				1338720E1A1CC9FF00FFC29F /* SRMarkerInfoView.swift in Sources */,
 				60C316111A9BBB6D00D5DEE4 /* SRMapPolyline.swift in Sources */,
 				13E5AE7719FF7BF900ABFAD8 /* NSURLExtensions.swift in Sources */,
+				60AEE92A1AAAF87100B1975F /* SRPlacesDetailsTableViewController.swift in Sources */,
 				60C316161A9BBBA400D5DEE4 /* SRCommonMapViewController.swift in Sources */,
 				13265F5B1A1E0DA100E063CD /* SRVideoMapMarker.swift in Sources */,
 				60C3163B1A9BBC5D00D5DEE4 /* SRRouteFunctionality.swift in Sources */,
+				60AEE92D1AAAF99400B1975F /* SRPlacesDetailsDataSource.swift in Sources */,
 				60C316421A9BBC9600D5DEE4 /* SRSettingsManager.swift in Sources */,
 				137E3B9719F5420C0094C5A1 /* SRTabBarViewController.swift in Sources */,
 				60C316281A9BBC0A00D5DEE4 /* SRGoogleSearchServiceProtocol.swift in Sources */,
@@ -1113,6 +1156,7 @@
 				1379459B1A3B0C3E00AF1A97 /* NSFileManagerExtensions.swift in Sources */,
 				608153C11A9E639D0033FF09 /* SRPlacesTypesDataSource.swift in Sources */,
 				13C1F5BD19F6466C00149649 /* SRVideoRecorder.swift in Sources */,
+				60AEE9341AAB4CE700B1975F /* CLLocationExtensions.swift in Sources */,
 				137E3B8D19F532550094C5A1 /* SRCommonViewController.swift in Sources */,
 				137E3B9A19F542DB0094C5A1 /* SRVideoWriterViewController.swift in Sources */,
 				13D786891A1358E700A4DD3C /* SmartRec.xcdatamodeld in Sources */,
@@ -1133,6 +1177,7 @@
 				60C3161F1A9BBBCB00D5DEE4 /* SRBaseMapViewController.swift in Sources */,
 				13E537A11A30BCBD000A27E6 /* SRGSensorView.swift in Sources */,
 				60B94B321AA2281300BBDAA1 /* SRPlacesListTableViewCell.swift in Sources */,
+				60AEE9301AAB2BFE00B1975F /* SRPlaceGalaryCell.swift in Sources */,
 				137945981A3B0BFA00AF1A97 /* SRVideoDataStruct.swift in Sources */,
 				137E3B9219F533A90094C5A1 /* SRMovieTableViewCell.swift in Sources */,
 				130A5B8D19F7CECB004515A7 /* Constants.swift in Sources */,

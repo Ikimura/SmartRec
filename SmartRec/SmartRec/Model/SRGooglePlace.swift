@@ -11,6 +11,7 @@ import Foundation
 struct SRGooglePlace {
     
     var placeId: String;
+    var reference: String;
     var lng: Double;
     var lat: Double;
     var iconURL: NSURL?;
@@ -19,20 +20,30 @@ struct SRGooglePlace {
     var vicinity: String?;
     var formatedAddres: String?;
     var formattedPhoneNumber: String?;
-    var distance: Double?;
+    var internalPhoneNumber: String?;
+    var distance: CGFloat?;
     var photoReferences: [String]?;
     var website: String?;
+    var zipCity: String?;
+
     
     mutating func fillDetailsPropertiesForPlace(results: NSDictionary) {
         
         formatedAddres = results["formatted_address"] as? String;
         
         formattedPhoneNumber = results["formatted_phone_number"] as? String;
+        internalPhoneNumber = results["international_phone_number"] as? String;
         
         website = results["website"] as? String;
+        
+        if let address_components = results["address_components"] as? Array<NSDictionary> {
+            
+            let postal_component = address_components[address_components.count - 1];
+            zipCity = postal_component["long_name"] as? String;
+        }
     }
     
-    mutating func addDistance(newDistance: Double) {
+    mutating func addDistance(newDistance: CGFloat) {
         
         distance = newDistance;
     }

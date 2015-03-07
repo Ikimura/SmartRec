@@ -37,9 +37,13 @@ let kMovieListCellIdentifier: String = "movieCellidentifier";
 
 let kTypesListCellIdentifier: String = "types_cell_identifier";
 
+let kGalaryCellIdentifier: String = "galary_сell_identifier";
+
 let kPlacesListCellIdentifier: String = "places_list_cell_identifier";
 
 let kShowPlaceOnMapSegueIdentifier: String = "showPlacesSegueIdentifier";
+
+let kShowPlaceDetailsSegueIdentifier: String = "showPlaceDetailsSegueIdentifier";
 
 let kShowVideoSegueIdentifier_1: String = "showVideoSegueIdentifier_1";
 
@@ -88,6 +92,10 @@ let kGoogleTextSearchAPIURL: String = "https://maps.googleapis.com/maps/api/plac
 let kGooglePlaceDetailsAPIURL: String = "https://maps.googleapis.com/maps/api/place/details/json?";
 
 let kGooglePlacePhotoAPIURL: String = "https://maps.googleapis.com/maps/api/place/photo?";
+
+let kGooglePhotoMaxHeight: Int = 160;
+
+let kGooglePhotoMaxWidth: Int = 320;
 
 let kNavigationBarHeight: CGFloat = 64;
 

@@ -19,8 +19,6 @@ class SRClusteringMapView: SRBaseMapView {
     
     private var distanceBetweenLocationCache: Array<Array<CGFloat>>?;
     
-    let M_PI_180: CGFloat = CGFloat(M_PI / 180);
-
     override func awakeFromNib() {
         super.awakeFromNib();
         
@@ -82,7 +80,7 @@ class SRClusteringMapView: SRBaseMapView {
                 
                 let secondLocation: CLLocationCoordinate2D = self.dataSource!.locationForMarkerAtIndex(j)!
                 
-                let distance: CGFloat = self.distanceBetweenLocation(firstLocation, secondLocation: secondLocation);
+                let distance: CGFloat = CLLocation.distanceBetweenLocation(firstLocation, secondLocation: secondLocation);
                 distanceCache[j] = distance;
 
             }
@@ -109,7 +107,7 @@ class SRClusteringMapView: SRBaseMapView {
         
         let loc2: CLLocationCoordinate2D = self.googleMapView.projection.coordinateForPoint(CGPointMake(CGRectGetMaxX(self.googleMapView.bounds), CGRectGetMaxY(self.googleMapView.bounds)));
         
-        let defaultDistanceBetweenLocation: CGFloat = self.distanceBetweenLocation(loc1, secondLocation: loc2) / 10;
+        let defaultDistanceBetweenLocation: CGFloat = CLLocation.distanceBetweenLocation(loc1, secondLocation: loc2) / 10;
         
         var count = self.dataSource!.numberOfMarkers();
         
@@ -273,22 +271,6 @@ class SRClusteringMapView: SRBaseMapView {
             
             return outputImgae;
         }
-    }
-    
-    private func distanceBetweenLocation(firstLocation: CLLocationCoordinate2D, secondLocation: CLLocationCoordinate2D) -> CGFloat {
-        
-        let R: CGFloat = 6371; // Radius of the Earth in km
-        let dLat: CGFloat = CGFloat(secondLocation.latitude - firstLocation.latitude) * M_PI_180;
-        let dLon: CGFloat = CGFloat(secondLocation.longitude - firstLocation.longitude) * M_PI_180;
-
-        var a: CGFloat = sin(dLat / 2.0) * sin(dLat / 2.0);
-        a = a + cos(CGFloat(firstLocation.latitude) * M_PI_180) * cos(CGFloat(secondLocation.latitude) * M_PI_180) * sin(dLon / 2.0) * sin(dLon / 2.0);
-        
-        let c: CGFloat = 2 * atan2(sqrt(a), sqrt(1 - a));
-        
-        let distanse: CGFloat = R * c;
-        
-        return distanse;
     }
 
     private func distanceBetweenLocationFromCache(index1: Int, index2: Int) -> CGFloat {
