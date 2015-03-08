@@ -47,7 +47,11 @@ let kShowPlaceOnMapSegueIdentifier: String = "showPlacesSegueIdentifier";
 
 let kShowPlaceDetailsSegueIdentifier: String = "showPlaceDetailsSegueIdentifier";
 
-let kSelectAppontmentDateSegueIdentifier: String = "selectAppointmentDateSegue";
+let kSelectAppointmentDateSegueIdentifier: String = "selectAppointmentDateSegueIdentifier";
+
+let kRouteToPlaceSegueIdentifier: String = "routeToPlaceSegueIdentifier";
+
+let kConfirmationSegueIdentifier: String = "confirmationSegueIdentifier";
 
 let kShowVideoSegueIdentifier_1: String = "showVideoSegueIdentifier_1";
 
@@ -96,6 +100,8 @@ let kGoogleTextSearchAPIURL: String = "https://maps.googleapis.com/maps/api/plac
 let kGooglePlaceDetailsAPIURL: String = "https://maps.googleapis.com/maps/api/place/details/json?";
 
 let kGooglePlacePhotoAPIURL: String = "https://maps.googleapis.com/maps/api/place/photo?";
+
+let kGoogleDirectionAPIURL: String = "http://maps.googleapis.com/maps/api/directions/json?";
 
 let kGooglePhotoMaxHeight: Int = 160;
 

@@ -14,6 +14,7 @@ class SRAppointmentDateViewController: SRCommonViewController, MGConferenceDateP
     
     var appointmentDate: NSDate?;
     var datePicker: MGConferenceDatePicker?;
+    var detailedPlace: SRGooglePlace?;
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -65,8 +66,27 @@ class SRAppointmentDateViewController: SRCommonViewController, MGConferenceDateP
             constant: 0.0));
     }
     
+    //MARK: - MGConferenceDatePickerDelegate
+    
     func conferenceDatePicker(datePicker: MGConferenceDatePicker, saveDate date: NSDate) {
         appointmentDate = date;
     }
 
+    //MARK: - Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        appointmentDate = datePicker?.valueOfSelectedDate();
+        
+        if segue.identifier == kConfirmationSegueIdentifier {
+            
+            if let confVC = segue.destinationViewController as? SRAppointmentConfirmationViewController {
+                
+                var appointment = SRAppointment(place: detailedPlace!, dateInSeconds: appointmentDate!.timeIntervalSince1970, locationTrack: false, description: "", calendarId: nil);
+                
+                confVC.appointment = appointment;
+            }
+            
+        }
+    }
 }

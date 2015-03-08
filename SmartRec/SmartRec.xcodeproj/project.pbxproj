@@ -144,6 +144,10 @@
 		60C3163F1A9BBC7900D5DEE4 /* SRGooglePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3163D1A9BBC7900D5DEE4 /* SRGooglePlace.swift */; };
 		60C316401A9BBC7900D5DEE4 /* SRRoutePointStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3163E1A9BBC7900D5DEE4 /* SRRoutePointStruct.swift */; };
 		60C316421A9BBC9600D5DEE4 /* SRSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C316411A9BBC9600D5DEE4 /* SRSettingsManager.swift */; };
+		60C3C7CC1AAC4E2B001DF083 /* SRAppointmentConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3C7CB1AAC4E2B001DF083 /* SRAppointmentConfirmationViewController.swift */; };
+		60C3C7CE1AAC4EA2001DF083 /* SRAppointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3C7CD1AAC4EA2001DF083 /* SRAppointment.swift */; };
+		60C3C7D11AAC949D001DF083 /* SRPlaceRouteMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3C7D01AAC949D001DF083 /* SRPlaceRouteMapViewController.swift */; };
+		60C3C7D31AACA9C7001DF083 /* GMSPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3C7D21AACA9C7001DF083 /* GMSPathExtensions.swift */; };
 		9246CE854797EB575F7D3CF9 /* libPods-SmartRec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 629E0BE8345E5875EE1D9C09 /* libPods-SmartRec.a */; };
 /* End PBXBuildFile section */
 
@@ -336,6 +340,10 @@
 		60C3163D1A9BBC7900D5DEE4 /* SRGooglePlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRGooglePlace.swift; sourceTree = "<group>"; };
 		60C3163E1A9BBC7900D5DEE4 /* SRRoutePointStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRRoutePointStruct.swift; sourceTree = "<group>"; };
 		60C316411A9BBC9600D5DEE4 /* SRSettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRSettingsManager.swift; path = SmartRec/Settings/SRSettingsManager.swift; sourceTree = SOURCE_ROOT; };
+		60C3C7CB1AAC4E2B001DF083 /* SRAppointmentConfirmationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAppointmentConfirmationViewController.swift; sourceTree = "<group>"; };
+		60C3C7CD1AAC4EA2001DF083 /* SRAppointment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAppointment.swift; sourceTree = "<group>"; };
+		60C3C7D01AAC949D001DF083 /* SRPlaceRouteMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlaceRouteMapViewController.swift; sourceTree = "<group>"; };
+		60C3C7D21AACA9C7001DF083 /* GMSPathExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMSPathExtensions.swift; sourceTree = "<group>"; };
 		629E0BE8345E5875EE1D9C09 /* libPods-SmartRec.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SmartRec.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEEFD9D2BCFD05A6A3E5D224 /* Pods-SmartRec.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRec.release.xcconfig"; path = "Pods/Target Support Files/Pods-SmartRec/Pods-SmartRec.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -602,6 +610,8 @@
 			isa = PBXGroup;
 			children = (
 				1368F4FC1A4B208B004D52B1 /* SRVideoRouteDetailsViewController.swift */,
+				60C3C7CF1AAC9384001DF083 /* PlaceRoute */,
+				60C3C7C21AAC4DD9001DF083 /* ConfirmationViewController */,
 				60AEE93A1AAB5FD600B1975F /* AppointmentDateTimeSelector */,
 				60AEE9201AAAF47D00B1975F /* PlacesDetails */,
 				60B94B1E1AA220A600BBDAA1 /* PlacesList */,
@@ -647,6 +657,7 @@
 				137945941A3B0BFA00AF1A97 /* SRRouteStruct.swift */,
 				137945951A3B0BFA00AF1A97 /* SRVideoDataStruct.swift */,
 				137945961A3B0BFA00AF1A97 /* SRVideoMarkStruct.swift */,
+				60C3C7CD1AAC4EA2001DF083 /* SRAppointment.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -792,6 +803,7 @@
 				13EBF1ED1A1DC7A900029072 /* UIViewExtensions.swift */,
 				1318DEC31A1F54AD007B0F54 /* StringExtensions.swift */,
 				60AEE9331AAB4CE700B1975F /* CLLocationExtensions.swift */,
+				60C3C7D21AACA9C7001DF083 /* GMSPathExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -932,6 +944,23 @@
 			);
 			name = cell;
 			path = BranchList/cell;
+			sourceTree = "<group>";
+		};
+		60C3C7C21AAC4DD9001DF083 /* ConfirmationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				60C3C7CB1AAC4E2B001DF083 /* SRAppointmentConfirmationViewController.swift */,
+			);
+			path = ConfirmationViewController;
+			sourceTree = "<group>";
+		};
+		60C3C7CF1AAC9384001DF083 /* PlaceRoute */ = {
+			isa = PBXGroup;
+			children = (
+				60C3C7D01AAC949D001DF083 /* SRPlaceRouteMapViewController.swift */,
+			);
+			name = PlaceRoute;
+			path = MapRoute;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1194,6 +1223,7 @@
 				60AEE9341AAB4CE700B1975F /* CLLocationExtensions.swift in Sources */,
 				137E3B8D19F532550094C5A1 /* SRCommonViewController.swift in Sources */,
 				137E3B9A19F542DB0094C5A1 /* SRVideoWriterViewController.swift in Sources */,
+				60C3C7CC1AAC4E2B001DF083 /* SRAppointmentConfirmationViewController.swift in Sources */,
 				13D786891A1358E700A4DD3C /* SmartRec.xcdatamodeld in Sources */,
 				1313411219F78D68003BF084 /* SRShowVideoViewController.swift in Sources */,
 				137E3B9019F532A90094C5A1 /* SRMovieListViewController.swift in Sources */,
@@ -1201,6 +1231,7 @@
 				60C316131A9BBB6D00D5DEE4 /* SRSimpleMarkerView.swift in Sources */,
 				60C316121A9BBB6D00D5DEE4 /* SRPointMapMarker.swift in Sources */,
 				60C3161E1A9BBBCB00D5DEE4 /* SRBaceMapView.swift in Sources */,
+				60C3C7D11AAC949D001DF083 /* SRPlaceRouteMapViewController.swift in Sources */,
 				13E537A01A30BCBD000A27E6 /* SRGSensor.swift in Sources */,
 				13CA8BD61A14A3BA00E8C6D8 /* SRCoreDataManager.swift in Sources */,
 				137E3B6919F52BF00094C5A1 /* AppDelegate.swift in Sources */,
@@ -1215,6 +1246,7 @@
 				60AEE9301AAB2BFE00B1975F /* SRPlaceGalaryCell.swift in Sources */,
 				137945981A3B0BFA00AF1A97 /* SRVideoDataStruct.swift in Sources */,
 				137E3B9219F533A90094C5A1 /* SRMovieTableViewCell.swift in Sources */,
+				60C3C7CE1AAC4EA2001DF083 /* SRAppointment.swift in Sources */,
 				60AEE93F1AAB683400B1975F /* SRContinueTableViewCell.swift in Sources */,
 				130A5B8D19F7CECB004515A7 /* Constants.swift in Sources */,
 				13BCBB331A28998200E823F9 /* SRBusyView.swift in Sources */,
@@ -1223,6 +1255,7 @@
 				60B94B301AA2211500BBDAA1 /* SRPlacesListViewController.swift in Sources */,
 				60C316311A9BBC4500D5DEE4 /* SRRoute.swift in Sources */,
 				137945991A3B0BFA00AF1A97 /* SRVideoMarkStruct.swift in Sources */,
+				60C3C7D31AACA9C7001DF083 /* GMSPathExtensions.swift in Sources */,
 				60AEE9391AAB54F700B1975F /* MGConferenceDatePicker.m in Sources */,
 				60C316321A9BBC4500D5DEE4 /* SRRoutePoint.swift in Sources */,
 				608153B81A9E59780033FF09 /* SRPlacesMapView.swift in Sources */,

@@ -115,16 +115,23 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
     
     func didSendCellContinueEvent(sender: AnyObject) {
         
-        self.performSegueWithIdentifier(kSelectAppontmentDateSegueIdentifier, sender: sender);
+        self.performSegueWithIdentifier(kSelectAppointmentDateSegueIdentifier, sender: sender);
     }
     
-    //MARK: - Utils
+    //MARK: - Handler
     
     @IBAction func done(sender: AnyObject) {
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    @IBAction func route(sender: AnyObject) {
+        
+        self.performSegueWithIdentifier(kRouteToPlaceSegueIdentifier, sender: sender);
+    }
+    
+    //MARK: - Utils
+
     func fillCell(cell: UITableViewCell, withData data: Any) {
         
         switch (cell) {
@@ -168,8 +175,18 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         
-        if (segue.identifier == kSelectAppontmentDateSegueIdentifier) {
+        if (segue.identifier == kSelectAppointmentDateSegueIdentifier) {
             
+        } else if (segue.identifier == kRouteToPlaceSegueIdentifier) {
+            
+            if let navVC = segue.destinationViewController as? UINavigationController {
+                
+                if let destVC = navVC.viewControllers[0] as? SRPlaceRouteMapViewController {
+                    
+                    destVC.myCoordinate = SRLocationManager.sharedInstance.currentLocation()!.coordinate;
+                    destVC.targetCoordinate = CLLocationCoordinate2DMake(place!.lat, place!.lng);
+                }
+            }
         }
     }
 

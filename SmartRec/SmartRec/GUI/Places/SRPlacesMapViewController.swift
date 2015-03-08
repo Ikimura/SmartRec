@@ -55,7 +55,6 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         super.viewDidLoad();
         
         self.setUpSearchController();
-        self.setUpNavigationBar();
         self.loadPlacesWithTypes(placesTypes, textSearch: nil, coordinates: self.initialLocation(), radius: 1000, isQeurySearch: false);
     }
     
@@ -95,7 +94,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         definesPresentationContext = true;
     }
     
-    private func setUpNavigationBar() {
+     override func setUpNavigationBar() {
         
         if (self.navigationController != nil) {
             
@@ -312,16 +311,6 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
             googleServicesProvider.nearbySearchPlaces(coordinates!.latitude, lng: coordinates!.longitude, radius: radius!, types: stringTypes, keyword: nil, name: nil, complitionBlock: complitionBlock, errorComplitionBlock: errorBlock);
         }
         
-    }
-    
-    //MARK: - Utils
-    
-    private func showAlertWith(title: String, message: String) {
-        
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert);
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     //MARK: - SRBaseMapViewDataSource
