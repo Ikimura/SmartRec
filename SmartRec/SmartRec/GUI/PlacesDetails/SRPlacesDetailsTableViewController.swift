@@ -41,6 +41,10 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
         });
     }
     
+    override func setUpNavigationBar() {
+        
+    }
+    
     //MARK: - UITableViewDelegate
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -141,19 +145,23 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
             var place = data as SRGooglePlace;
             
             detCell.nameLabel.text = place.name;
-            detCell.addressLabel.text = place.formatedAddres != nil ? place.formatedAddres : place.vicinity;
+            detCell.addressLabel.text = place.formattedAddress != nil ? place.formattedAddress : place.vicinity;
             detCell.cityStateZipLabel.text = place.zipCity;
             
             detCell.iconImage.setImageWithURL(place.iconURL, placeholderImage: UIImage(named: "image_placeholder"));
             detCell.phoneLabel.text = place.internalPhoneNumber != nil ? place.internalPhoneNumber : place.formattedPhoneNumber;
             
-            if (place.distance == nil) {
+            if (place.distance != nil) {
                 
-                place.addDistance(CLLocation.distanceBetweenLocation(CLLocationCoordinate2DMake(place.lat, place.lng), secondLocation: SRLocationManager.sharedInstance.currentLocation()!.coordinate));
+                var dist = Double(place.distance!);
+                var strDist = dist.format(".3");
+                detCell.distanceLabel.text = "\(strDist), km";
+                
+            } else {
+                
+                detCell.distanceLabel.text = nil;
             }
-            var dist = Double(place.distance!);
-            var strDist = dist.format(".3");            
-            detCell.distanceLabel.text = "\(strDist), km";
+
             detCell.rightIndicator.image = nil;
             
         case var galaryCell as SRPlaceGalaryCell:
@@ -176,6 +184,11 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
         // Get the new view controller using segue.destinationViewController.
         
         if (segue.identifier == kSelectAppointmentDateSegueIdentifier) {
+            
+            if let destVC = segue.destinationViewController as? SRAppointmentDateViewController {
+                
+                destVC.detailedPlace = dataSource!.itemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? SRGooglePlace;
+            }
             
         } else if (segue.identifier == kRouteToPlaceSegueIdentifier) {
             

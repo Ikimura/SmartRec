@@ -2,6 +2,7 @@ platform :ios, "8.0"
 
 target "SmartRec" do
 pod 'AFNetworking', '~> 2.3'
+pod 'RESideMenu', '~> 4.0.7'
 end
 
 target "SmartRec" do

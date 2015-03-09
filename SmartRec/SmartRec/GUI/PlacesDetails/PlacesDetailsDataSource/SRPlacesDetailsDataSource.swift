@@ -39,6 +39,7 @@ class SRPlacesDetailsDataSource : SRPlacesDetailsDataSourceProtocol {
             if var strongSelf = self {
                 
                 strongSelf.placeToDetaile!.fillDetailsPropertiesForPlace(data!);
+                strongSelf.placeToDetaile!.addDistance(CLLocation.distanceBetweenLocation(CLLocationCoordinate2DMake(strongSelf.placeToDetaile!.lat, strongSelf.placeToDetaile!.lng), secondLocation: SRLocationManager.sharedInstance.currentLocation()!.coordinate));
                 
                 complitionBlock();
             }

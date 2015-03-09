@@ -31,6 +31,7 @@ class SRCommonViewController: UIViewController, SRAirDropSharingProtocol {
     
     func setUpNavigationBar() {
         
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu_btn"), style: .Plain, target: self, action: "menuAction:");
     }
     
     func showAlertWith(title: String, message: String) {
@@ -72,6 +73,11 @@ class SRCommonViewController: UIViewController, SRAirDropSharingProtocol {
     
     func prepareItemToShare() {
         
+    }
+    
+    func menuAction(sender: AnyObject) {
+        
+        self.presentLeftMenuViewController(self);
     }
     
     //pragma mark - SRAirDropSharingProtocol

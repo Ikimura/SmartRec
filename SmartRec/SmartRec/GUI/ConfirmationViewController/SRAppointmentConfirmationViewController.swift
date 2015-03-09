@@ -17,7 +17,10 @@ class SRAppointmentConfirmationViewController: SRCommonViewController {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var phoneLabel: UILabel!
     @IBOutlet weak var descriptionTextField: UITextField!
+    @IBOutlet weak var webSiteLabel: UILabel!
     
+    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
+
     //MARK: - life cycle
     
     override func viewDidLoad() {
@@ -39,8 +42,9 @@ class SRAppointmentConfirmationViewController: SRCommonViewController {
     private func configureUI() {
         
         nameLabel.text = appointment!.place.name!;
-        addressLabel.text = appointment!.place.formatedAddres!;
-        phoneLabel.text = appointment!.place.formattedPhoneNumber!;
+        addressLabel.text = appointment!.place.formattedAddress!;
+        phoneLabel.text = appointment!.place.formattedPhoneNumber;
+        webSiteLabel.text = appointment!.place.website;
     }
     
     //Mark: - handlers
@@ -67,13 +71,20 @@ class SRAppointmentConfirmationViewController: SRCommonViewController {
     
     @IBAction func trackLocationDidTap(sender: AnyObject) {
         
-        fatalError("Location Tracking Is Not Implemented!");
+        var btn = sender as UIButton;
+        btn.selected = !btn.selected;
+        
+        appointment!.locationTrack = !appointment!.locationTrack;
     }
     
     @IBAction func finishDidTap(sender: AnyObject) {
         
-        //TODO: before save check description text field
-        fatalError("Save Logic Is Not Emplemeted");
+        if (descriptionTextField.text.utf16Count > 0) {
+            
+            appointment?.description = descriptionTextField.text;
+        }
+        
+        appDelegate.coreDataManager.insertAppointmentEntity(appointment!);
     }
     
     //MARK: - Utils
@@ -92,7 +103,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController {
                 
                 var event = EKEvent(eventStore: store);
                 event.title = "CitiGuide. Visit \(strongSelf.appointment!.place.name!)";
-                event.location = strongSelf.appointment!.place.formatedAddres;
+                event.location = strongSelf.appointment!.place.formattedAddress;
                 
                 if (strongSelf.appointment?.description != "") {
                     

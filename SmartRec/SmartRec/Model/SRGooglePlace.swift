@@ -18,7 +18,7 @@ struct SRGooglePlace {
     var name: String?;
     var types: [String]?;
     var vicinity: String?;
-    var formatedAddres: String?;
+    var formattedAddress: String?;
     var formattedPhoneNumber: String?;
     var internalPhoneNumber: String?;
     var distance: CGFloat?;
@@ -29,7 +29,7 @@ struct SRGooglePlace {
     
     mutating func fillDetailsPropertiesForPlace(results: NSDictionary) {
         
-        formatedAddres = results["formatted_address"] as? String;
+        formattedAddress = results["formatted_address"] as? String;
         
         formattedPhoneNumber = results["formatted_phone_number"] as? String;
         internalPhoneNumber = results["international_phone_number"] as? String;

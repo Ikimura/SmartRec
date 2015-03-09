@@ -70,6 +70,57 @@ public class SRCoreDataManager: NSObject {
 
     //MARK: - new public API
     
+    func insertAppointmentEntity(appintmentData: SRAppointment) -> NSManagedObject? {
+        
+        var entity: SRCoreDataAppointment? = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataAppointment", inManagedObjectContext: self.mainObjectContext) as? SRCoreDataAppointment;
+        
+        var placeEntity: SRCoreDataPlace? = self.checkForExistingEntity("SRCoreDataPlace", withFieldName: "placeId", andFieldValue: appintmentData.place.placeId, inContext: self.mainObjectContext) as? SRCoreDataPlace;
+        
+        if (placeEntity == nil) {
+            
+            placeEntity = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataPlace", inManagedObjectContext: self.mainObjectContext) as? SRCoreDataPlace;
+        }
+        
+        if (entity != nil && placeEntity != nil) {
+            
+            placeEntity!.reference = appintmentData.place.reference;
+            placeEntity!.placeId = appintmentData.place.placeId;
+            placeEntity!.name = appintmentData.place.name!;
+            placeEntity!.lat = NSNumber(double: appintmentData.place.lat);
+            placeEntity!.lng = NSNumber(double: appintmentData.place.lng);
+            placeEntity!.iconURL = appintmentData.place.iconURL!.absoluteString!;
+            placeEntity!.vicinity = appintmentData.place.vicinity!;
+            placeEntity!.formattedAddress = appintmentData.place.formattedAddress!;
+            
+            if (appintmentData.place.formattedPhoneNumber != nil) {
+                placeEntity!.formattedPhoneNumber = appintmentData.place.formattedPhoneNumber!;
+            }
+            
+            if (appintmentData.place.internalPhoneNumber != nil) {
+                placeEntity!.internalPhoneNumber = appintmentData.place.internalPhoneNumber!;
+            }
+            
+            if (appintmentData.place.distance != nil) {
+                placeEntity!.distance = appintmentData.place.distance!;
+            }
+            
+            if (appintmentData.calendarId != nil) {
+                entity!.calendarId = appintmentData.calendarId!;
+            }
+            
+            entity!.locationTrack = NSNumber(bool: appintmentData.locationTrack);
+            entity!.fireData = NSDate(timeIntervalSince1970: appintmentData.dateInSeconds);
+            entity!.note = appintmentData.description;
+            entity?.place = placeEntity!;
+            
+            placeEntity?.addAppointment(entity!);
+        }
+        
+        self.saveContext(self.mainObjectContext);
+        
+        return entity;
+    }
+    
     public func insertVideoMarkEntity(dataStruct: SRVideoMarkStruct) -> NSManagedObject? {
         var entity: SRRouteVideoPoint? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoMark, inManagedObjectContext: self.mainObjectContext) as? SRRouteVideoPoint;
         
@@ -234,6 +285,27 @@ public class SRCoreDataManager: NSObject {
     }
     
     //MARK: - private methods
+    
+    private func checkForExistingEntity(name: String, withFieldName fieldName: String, andFieldValue fieldValue: String, inContext context: NSManagedObjectContext) -> NSManagedObject? {
+        
+        var fetchRequest: NSFetchRequest = NSFetchRequest();
+        let entity: NSEntityDescription = NSEntityDescription.entityForName(name, inManagedObjectContext: context)!;
+        
+        fetchRequest.entity = entity;
+        
+        let predicate: NSPredicate = NSPredicate(format: "%@ == %@", fieldName, fieldValue)!;
+        fetchRequest.predicate = predicate;
+        
+        var error: NSError?;
+        
+        var res: AnyObject? = context.executeFetchRequest(fetchRequest, error: &error)?.first;
+        
+        if error != nil {
+            println(error);
+        }
+        
+        return res as? NSManagedObject;
+    }
     
     private func checkForExistingEntity(name: String, withId identifier: String, inContext context: NSManagedObjectContext) -> NSManagedObject? {
         var fetchRequest: NSFetchRequest = NSFetchRequest();

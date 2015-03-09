@@ -64,7 +64,7 @@ class SRPlacesListViewController : SRCommonViewController, UITableViewDataSource
             cell!.addressLabel.text = place.vicinity;
             
         } else {
-            cell!.addressLabel.text = place.formatedAddres;
+            cell!.addressLabel.text = place.formattedAddress;
         }
         
         cell!.cityStateZipLabel.text = nil;

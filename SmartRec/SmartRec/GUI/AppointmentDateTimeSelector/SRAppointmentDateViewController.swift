@@ -23,6 +23,10 @@ class SRAppointmentDateViewController: SRCommonViewController, MGConferenceDateP
         self.setUpDatePicker();
     }
     
+    override func setUpNavigationBar() {
+        
+    }
+    
     private func setUpDatePicker() {
         datePicker = MGConferenceDatePicker(frame: self.view.bounds);
         datePicker!.delegate = self;

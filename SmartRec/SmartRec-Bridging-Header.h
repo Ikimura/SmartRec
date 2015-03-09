@@ -7,3 +7,4 @@
 #import "UIImageView+AFNetworking.h"
 #import "MGConferenceDatePicker.h"
 #import "MGConferenceDatePickerDelegate.h"
+#import <RESideMenu/RESideMenu.h>

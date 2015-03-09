@@ -57,7 +57,7 @@ extension SRGooglePlace {
                 }
             }
             
-            var place: SRGooglePlace = SRGooglePlace(placeId: placeId!, reference: reference!, lng: lng!, lat: lat!, iconURL: iconURL, name: name, types: types, vicinity: vicinity, formatedAddres: formattedAddress, formattedPhoneNumber: nil, internalPhoneNumber: nil, distance: nil, photoReferences: photosRefs, website: nil, zipCity: nil);
+            var place: SRGooglePlace = SRGooglePlace(placeId: placeId!, reference: reference!, lng: lng!, lat: lat!, iconURL: iconURL, name: name, types: types, vicinity: vicinity, formattedAddress: formattedAddress, formattedPhoneNumber: nil, internalPhoneNumber: nil, distance: nil, photoReferences: photosRefs, website: nil, zipCity: nil);
             
             places.append(place);
         }
