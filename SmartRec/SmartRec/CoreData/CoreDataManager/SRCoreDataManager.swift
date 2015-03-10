@@ -89,7 +89,12 @@ public class SRCoreDataManager: NSObject {
             placeEntity!.lat = NSNumber(double: appintmentData.place.lat);
             placeEntity!.lng = NSNumber(double: appintmentData.place.lng);
             placeEntity!.iconURL = appintmentData.place.iconURL!.absoluteString!;
-            placeEntity!.vicinity = appintmentData.place.vicinity!;
+            
+            if (appintmentData.place.vicinity != nil) {
+                
+                placeEntity!.vicinity = appintmentData.place.vicinity!;
+            }
+
             placeEntity!.formattedAddress = appintmentData.place.formattedAddress!;
             
             if (appintmentData.place.formattedPhoneNumber != nil) {
@@ -109,7 +114,9 @@ public class SRCoreDataManager: NSObject {
             }
             
             entity!.locationTrack = NSNumber(bool: appintmentData.locationTrack);
-            entity!.fireData = NSDate(timeIntervalSince1970: appintmentData.dateInSeconds);
+            let fireDate = NSDate(timeIntervalSince1970: appintmentData.dateInSeconds);
+            entity!.fireDate = fireDate;
+            entity!.sortDate = NSCalendar.currentCalendar().startOfDayForDate(fireDate);
             entity!.note = appintmentData.description;
             entity?.place = placeEntity!;
             

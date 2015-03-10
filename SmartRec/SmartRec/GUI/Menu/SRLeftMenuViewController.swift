@@ -41,10 +41,16 @@ class SRLeftMenuViewController: SRCommonViewController {
                 switch (btn.tag) {
                     
                 case 0:
-                    controlIdentifier = "contentViewController";
+                    controlIdentifier = "typesViewController";
                     
                 case 1:
-                    controlIdentifier = "SRAppointmentsHistory";
+                    controlIdentifier = "appointmentsHistory";
+                    
+                case 2:
+                    controlIdentifier = "videoRecorder";
+                    
+                case 3:
+                    controlIdentifier = "recordedVideosHistory";
                     
                 default:
                     fatalError("No Such Menu Point");
@@ -54,7 +60,7 @@ class SRLeftMenuViewController: SRCommonViewController {
                 menuItemInstancesByTag[btn.tag] = contentController;
             }
             
-            self.sideMenuViewController.setContentViewController(contentController, animated: true);
+            self.sideMenuViewController.setContentViewController(SRNavigationController(rootViewController: contentController!), animated: true);
             self.sideMenuViewController.hideMenuViewController();
         }
     }

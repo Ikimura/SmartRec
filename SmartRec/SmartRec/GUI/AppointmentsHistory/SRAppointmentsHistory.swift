@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SRAppointmentsHistory: SRCommonViewController, SRAppointmentsDataSourceDelegate, UITableViewDelegate, UITableViewDataSource {
+class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITableViewDelegate, UITableViewDataSource {
 
     private lazy var dataSource: SRAppointmentsDataSourceProtocol = {
         var temp = SRAppointmentsDataSource();
@@ -24,9 +24,20 @@ class SRAppointmentsHistory: SRCommonViewController, SRAppointmentsDataSourceDel
     override func viewDidLoad() {
         super.viewDidLoad();
         
-        self.tableView.registerNib(UINib(nibName: "SRPlacesListTableViewCell", bundle: nil), forCellReuseIdentifier: kPlacesListCellIdentifier);
+        dataSource.rebuildDataSet();
         
-        fatalError("Update Data Source?");
+        if (self.navigationController != nil) {
+            
+            var inset: UIEdgeInsets = UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController!.navigationBar.frame), 0, 0, 0);
+            tableView.scrollIndicatorInsets = inset;
+            tableView.contentInset = inset;
+        }
+    }
+    
+    override func setUpNavigationBar() {
+        super.setUpNavigationBar();
+        
+        self.title = "History";
     }
     
     //MARK: - UITableViewDelegate
@@ -36,12 +47,11 @@ class SRAppointmentsHistory: SRCommonViewController, SRAppointmentsDataSourceDel
         fatalError("Show Details");
     }
     
-    
     //MARK: - UITableViewDataSource
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        fatalError("Retorurn Date in Human readable formate");
+        return dataSource.titleForHeaderInSection(section);
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -56,13 +66,16 @@ class SRAppointmentsHistory: SRCommonViewController, SRAppointmentsDataSourceDel
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell: SRPlacesListTableViewCell? = tableView.dequeueReusableCellWithIdentifier(kPlacesListCellIdentifier) as? SRPlacesListTableViewCell;
+        var cell: UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("appHistory") as? UITableViewCell;
         
         cell?.imageView?.cancelImageRequestOperation();
         
         if var appintment: SRCoreDataAppointment = dataSource.objectAtIndexPath(indexPath) as? SRCoreDataAppointment {
             
-            fatalError("Not Emplemented");
+            cell?.textLabel?.text = appintment.place.name;
+            cell?.detailTextLabel?.text = "\(appintment.fireDate)";
+            
+            //TODO: use custom cell
         }
         
         return cell!;
@@ -70,13 +83,8 @@ class SRAppointmentsHistory: SRCommonViewController, SRAppointmentsDataSourceDel
     
     //MARK: - SRAppointmentsDataSourceDelegate
     
-    func dataSourceWillChangeContent(dataSource: SRAppointmentsDataSourceProtocol) {
-        
-        println("dataSourceWillChangeContent");
-    }
+    func dataSourceDidChangeDataSet(dataSource: SRDataSource) {
     
-    func dataSourceDidChangeContent(dataSource: SRAppointmentsDataSourceProtocol) {
-        
         println("dataSourceDidChangeContent");
         
         dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in

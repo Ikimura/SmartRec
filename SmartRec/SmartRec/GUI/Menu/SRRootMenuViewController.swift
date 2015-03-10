@@ -14,7 +14,7 @@ class SRRootMenuViewController : RESideMenu {
         super.awakeFromNib();
 
         self.leftMenuViewController = self.storyboard?.instantiateViewControllerWithIdentifier("leftMenuController") as UIViewController;
-        self.contentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("contentViewController") as UIViewController;
+        self.contentViewController = SRNavigationController(rootViewController: self.storyboard?.instantiateViewControllerWithIdentifier("typesViewController") as UIViewController);
     }
     
     override func viewDidLoad() {
