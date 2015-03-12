@@ -12,7 +12,8 @@ class SRCommonViewController: UIViewController, SRAirDropSharingProtocol {
     
     private var busyView: SRBusyView?;
     private var busyCounter: Int = 0;
-    
+    let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
+
     var fileURL: NSURL?;
 
     override func viewDidLoad() {

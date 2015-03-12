@@ -71,7 +71,7 @@ class SRPlacesListViewController : SRCommonViewController, UITableViewDataSource
         
         if (place.distance == nil) {
             
-            place.addDistance(CLLocation.distanceBetweenLocation(CLLocationCoordinate2DMake(place.lat, place.lng), secondLocation: SRLocationManager.sharedInstance.currentLocation()!.coordinate));
+            place.addDistance(CLLocation.distanceBetweenLocation(CLLocationCoordinate2DMake(place.lat, place.lng), secondLocation: appDelegate.currentLocation().coordinate));
         }
         var dist = Double(place.distance!);
         var strDist = dist.format(".3");

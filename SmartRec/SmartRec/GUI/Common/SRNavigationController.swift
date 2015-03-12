@@ -22,7 +22,10 @@ class SRNavigationController: UINavigationController {
         self.navigationBar.shadowImage = UIImage();
         self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.navigationBar.tintColor = UIColor.whiteColor();
-        self.navigationBar.setBackgroundImage(UIImage(named: "navigation_bar_bg_def"), forBarMetrics: .Default);
+        self.navigationBar.barTintColor = UIColor(red: 0.0, green: 132.0 / 255.0, blue: 216.0 / 255.0, alpha: 1.0);
+        self.navigationBar.opaque = true;
+        self.navigationBar.translucent = false;
+        // s etBackgroundImage(UIImage(named: "navigation_bar_bg_def"), forBarMetrics: .Default);
     }
 
     override func didReceiveMemoryWarning() {

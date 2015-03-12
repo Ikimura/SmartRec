@@ -23,7 +23,8 @@ class SRPlacesDetailsDataSource : SRPlacesDetailsDataSourceProtocol {
         var tempProvider = SRGoogleServicesDataProvider();
         return tempProvider;
     }();
-    
+    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
+
     convenience init(placeToDetaile: SRGooglePlace) {
         self.init();
         
@@ -39,7 +40,7 @@ class SRPlacesDetailsDataSource : SRPlacesDetailsDataSourceProtocol {
             if var strongSelf = self {
                 
                 strongSelf.placeToDetaile!.fillDetailsPropertiesForPlace(data!);
-                strongSelf.placeToDetaile!.addDistance(CLLocation.distanceBetweenLocation(CLLocationCoordinate2DMake(strongSelf.placeToDetaile!.lat, strongSelf.placeToDetaile!.lng), secondLocation: SRLocationManager.sharedInstance.currentLocation()!.coordinate));
+                strongSelf.placeToDetaile!.addDistance(CLLocation.distanceBetweenLocation(CLLocationCoordinate2DMake(strongSelf.placeToDetaile!.lat, strongSelf.placeToDetaile!.lng), secondLocation: strongSelf.appDelegate.currentLocation().coordinate));
                 
                 complitionBlock();
             }

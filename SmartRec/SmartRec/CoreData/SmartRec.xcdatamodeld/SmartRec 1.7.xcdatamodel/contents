@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="SRCoreDataAppointment" representedClassName="SmartRec.SRCoreDataAppointment" syncable="YES">
         <attribute name="calendarId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="completed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="fireDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationTrack" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortDate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -55,8 +57,8 @@
         <attribute name="resolutionWidth" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="SRCoreDataAppointment" positionX="-333" positionY="167" width="128" height="135"/>
-        <element name="SRCoreDataPlace" positionX="-144" positionY="146" width="128" height="238"/>
+        <element name="SRCoreDataAppointment" positionX="-333" positionY="167" width="128" height="165"/>
+        <element name="SRCoreDataPlace" positionX="-144" positionY="146" width="128" height="240"/>
         <element name="SRRoute" positionX="144" positionY="-72" width="128" height="133"/>
         <element name="SRRoutePoint" positionX="-225" positionY="-153" width="128" height="133"/>
         <element name="SRRouteVideoPoint" positionX="-225" positionY="14" width="128" height="88"/>

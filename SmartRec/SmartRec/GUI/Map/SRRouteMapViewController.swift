@@ -29,7 +29,7 @@ class SRRouteMapViewController: SRCommonMapViewController {
         super.viewDidLoad()
         
         //setup Map
-        self.setUpMapViewWith(SRLocationManager.sharedInstance.currentLocation() as CLLocation?);
+        self.setUpMapViewWith(appDelegate.currentLocation() as CLLocation?);
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -42,7 +42,6 @@ class SRRouteMapViewController: SRCommonMapViewController {
     //MARK: - private interface
     
     private func loadData() {
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         
         println("Loading indicator show");
         self.showBusyView();

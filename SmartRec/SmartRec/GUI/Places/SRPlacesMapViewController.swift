@@ -38,7 +38,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         return tempProvider;
     }();
     private var selectedData: Any?;
-    
+
     //MARK:- searController
     private var restoredState = SearchControllerRestorableState();
     // Search controller to help us with filtering.
@@ -186,7 +186,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         
-        var coordinate = SRLocationManager.sharedInstance.currentLocation()?.coordinate;
+        var coordinate = appDelegate.currentLocation().coordinate;
 
         // Strip out all the leading and trailing spaces.
         let whitespaceCharacterSet = NSCharacterSet.whitespaceCharacterSet()
@@ -317,14 +317,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
     
     override func initialLocation() -> CLLocationCoordinate2D {
         
-        if let location: CLLocationCoordinate2D = SRLocationManager.sharedInstance.currentLocation()?.coordinate {
-            
-            return location;
-            
-        } else {
-            //GRODNO
-            return CLLocationCoordinate2DMake(53.6884000, 23.8258000);
-        }
+        return appDelegate.currentLocation().coordinate;
     }
     
     override func numberOfMarkers() -> Int {

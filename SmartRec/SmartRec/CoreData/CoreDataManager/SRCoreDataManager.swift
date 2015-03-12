@@ -70,11 +70,11 @@ public class SRCoreDataManager: NSObject {
 
     //MARK: - new public API
     
-    func insertAppointmentEntity(appintmentData: SRAppointment) -> NSManagedObject? {
+    func insertAppointmentEntity(appintmentData: SRAppointment, complitionBlock:(error: NSError?) -> Void) {
         
         var entity: SRCoreDataAppointment? = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataAppointment", inManagedObjectContext: self.mainObjectContext) as? SRCoreDataAppointment;
         
-        var placeEntity: SRCoreDataPlace? = self.checkForExistingEntity("SRCoreDataPlace", withFieldName: "placeId", andFieldValue: appintmentData.place.placeId, inContext: self.mainObjectContext) as? SRCoreDataPlace;
+        var placeEntity: SRCoreDataPlace? = self.checkForExistingEntity("SRCoreDataPlace", withFieldName: "placeId", andFieldValue: appintmentData.place.placeId) as? SRCoreDataPlace;
         
         if (placeEntity == nil) {
             
@@ -118,14 +118,15 @@ public class SRCoreDataManager: NSObject {
             entity!.fireDate = fireDate;
             entity!.sortDate = NSCalendar.currentCalendar().startOfDayForDate(fireDate);
             entity!.note = appintmentData.description;
-            entity?.place = placeEntity!;
+            entity!.place = placeEntity!;
+            entity!.id = "\(placeEntity!.placeId)\(appintmentData.dateInSeconds)";
+            entity!.completed = NSNumber(bool: false);
             
             placeEntity?.addAppointment(entity!);
         }
         
         self.saveContext(self.mainObjectContext);
-        
-        return entity;
+        complitionBlock(error: nil);
     }
     
     public func insertVideoMarkEntity(dataStruct: SRVideoMarkStruct) -> NSManagedObject? {
@@ -293,10 +294,10 @@ public class SRCoreDataManager: NSObject {
     
     //MARK: - private methods
     
-    private func checkForExistingEntity(name: String, withFieldName fieldName: String, andFieldValue fieldValue: String, inContext context: NSManagedObjectContext) -> NSManagedObject? {
+    func checkForExistingEntity(name: String, withFieldName fieldName: String, andFieldValue fieldValue: String) -> NSManagedObject? {
         
         var fetchRequest: NSFetchRequest = NSFetchRequest();
-        let entity: NSEntityDescription = NSEntityDescription.entityForName(name, inManagedObjectContext: context)!;
+        let entity: NSEntityDescription = NSEntityDescription.entityForName(name, inManagedObjectContext: mainObjectContext)!;
         
         fetchRequest.entity = entity;
         
@@ -305,7 +306,7 @@ public class SRCoreDataManager: NSObject {
         
         var error: NSError?;
         
-        var res: AnyObject? = context.executeFetchRequest(fetchRequest, error: &error)?.first;
+        var res: AnyObject? = mainObjectContext.executeFetchRequest(fetchRequest, error: &error)?.first;
         
         if error != nil {
             println(error);

@@ -53,8 +53,12 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         recordManager.startRunnigSession();
         
         //Update location, speed, timer
-        dispatch_async(locationQueue, { () -> Void in
-            SRLocationManager.sharedInstance.startMonitoringLocation();
+        dispatch_async(locationQueue, { [weak self]() -> Void in
+            
+            if let strongSelf = self {
+                
+                strongSelf.appDelegate.startMonitoringLocation();
+            }
         });
         //start monitoring acceleration
         acceleraometrWidget?.startAccelerationMonitoring();
@@ -69,8 +73,12 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         recordManager.stopRunnigSession();
         
         //stup location updating
-        dispatch_async(locationQueue, { () -> Void in
-            SRLocationManager.sharedInstance.stopMonitoringLocation();
+        dispatch_async(locationQueue, { [weak self]() -> Void in
+            
+            if let strongSelf = self {
+                
+                strongSelf.appDelegate.stopMonitoringLocation();
+            }
         });
         //stop monitoring acceleration
         acceleraometrWidget?.stopAccelerationMonitoring();
@@ -254,8 +262,12 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         self.stopRecording();
         self.stopTimer();
         
-        dispatch_async(locationQueue, { () -> Void in
-            SRLocationManager.sharedInstance.stopMonitoringLocation();
+        dispatch_async(locationQueue, { [weak self]() -> Void in
+            
+            if let strongSlef = self {
+                
+                strongSlef.appDelegate.stopMonitoringLocation();
+            }
         });
         //stop monitoring acceleration
         acceleraometrWidget?.stopAccelerationMonitoring();

@@ -13,7 +13,6 @@ import CoreData
 class SRMovieListViewController: SRCommonViewController, SRDataSourceDelegate, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate {
     
     @IBOutlet private var tableView: UITableView!;
-    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
 
     private lazy var fileManager: NSFileManager = {
         return NSFileManager.defaultManager();

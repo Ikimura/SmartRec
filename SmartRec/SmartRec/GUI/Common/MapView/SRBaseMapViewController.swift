@@ -13,7 +13,7 @@ class SRBaseMapViewController: SRCommonViewController, SRBaseMapViewDataSource, 
     @IBOutlet var mapView: SRBaseMapView?;
     
     private let verticalOffsetForCallout: CGFloat = 35;
-
+    
     override func viewDidLoad() {
         super.viewDidLoad();
         
@@ -30,7 +30,8 @@ class SRBaseMapViewController: SRCommonViewController, SRBaseMapViewDataSource, 
     //MARK: - SRBaseMapViewDataSource
     
     func initialLocation() -> CLLocationCoordinate2D {
-        return SRLocationManager.sharedInstance.currentLocation()!.coordinate;
+        
+        return appDelegate.currentLocation().coordinate;
     }
     
     func numberOfMarkers() -> Int {

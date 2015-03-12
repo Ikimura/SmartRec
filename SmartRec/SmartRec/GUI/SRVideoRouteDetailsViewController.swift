@@ -200,9 +200,7 @@ class SRVideoRouteDetailsViewController: SRCommonMapViewController {
                     
                     blockSelf.selectedVideoMark?.locationDescription =  googleAddress;
                     
-                    var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
-                    
-                    appDelegate.coreDataManager.updateEntity(blockSelf.selectedVideoMark!);
+                    blockSelf.appDelegate.coreDataManager.updateEntity(blockSelf.selectedVideoMark!);
                 }
             }
         } else {

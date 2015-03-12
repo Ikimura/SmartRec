@@ -109,3 +109,5 @@ let kGooglePhotoMaxWidth: Int = 320;
 
 let kNavigationBarHeight: CGFloat = 64;
 
+let kLocRadius: Double = 1500.0;
+

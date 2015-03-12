@@ -13,4 +13,10 @@ public protocol SRAirDropSharingProtocol {
     var fileURL: NSURL? {get set}
     
     func shareVideoItem();
+
+}
+
+public protocol SRSocialSharingProtocol {
+    
+    func shareAppointmetnt();
 }

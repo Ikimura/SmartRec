@@ -81,6 +81,23 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
         return cell!;
     }
     
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        
+        return true;
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if (editingStyle == .Delete) {
+            
+            //Delete the row from the data source
+            if let deleteItem = dataSource.objectAtIndexPath(indexPath) as? SRCoreDataAppointment {
+                
+                let result = appDelegate.coreDataManager.deleteEntity(deleteItem);
+            }
+        }
+    }
+    
     //MARK: - SRAppointmentsDataSourceDelegate
     
     func dataSourceDidChangeDataSet(dataSource: SRDataSource) {

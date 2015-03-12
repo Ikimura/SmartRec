@@ -9,18 +9,16 @@
 import UIKit
 import EventKit
 
-class SRAppointmentConfirmationViewController: SRCommonViewController {
+class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialSharingProtocol, UITextViewDelegate {
     
     var appointment: SRAppointment?;
    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var phoneLabel: UILabel!
-    @IBOutlet weak var descriptionTextField: UITextField!
-    @IBOutlet weak var webSiteLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var notesTextView: UITextView!
     
-    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
-
     //MARK: - life cycle
     
     override func viewDidLoad() {
@@ -44,13 +42,13 @@ class SRAppointmentConfirmationViewController: SRCommonViewController {
         nameLabel.text = appointment!.place.name!;
         addressLabel.text = appointment!.place.formattedAddress!;
         phoneLabel.text = appointment!.place.formattedPhoneNumber;
-        webSiteLabel.text = appointment!.place.website;
+        dateLabel.text = "\(NSDate(timeIntervalSince1970: appointment!.dateInSeconds))";
     }
     
     //Mark: - handlers
     
     func didTapShare(sender: AnyObject) {
-        fatalError("Sharing Is Not Implemented");
+        self.shareAppointmetnt();
     }
     
     @IBAction func addToCalendatDidTap(sender: AnyObject) {
@@ -79,12 +77,25 @@ class SRAppointmentConfirmationViewController: SRCommonViewController {
     
     @IBAction func finishDidTap(sender: AnyObject) {
         
-        if (descriptionTextField.text.utf16Count > 0) {
+        if (notesTextView.text.utf16Count > 0) {
             
-            appointment?.description = descriptionTextField.text;
+            appointment?.description = notesTextView.text;
         }
         
-        appDelegate.coreDataManager.insertAppointmentEntity(appointment!);
+        appDelegate.coreDataManager.insertAppointmentEntity(appointment!, complitionBlock: { [weak self](error) -> Void in
+            
+            if let strongSelf = self {
+                
+                if (error == nil) {
+                    
+                    //TODO: roll back to root vc
+                    
+                } else {
+                    
+                    strongSelf.showAlertWith("Error", message: "\(error)");
+                }
+            }
+        });
     }
     
     //MARK: - Utils
@@ -162,4 +173,46 @@ class SRAppointmentConfirmationViewController: SRCommonViewController {
         });
     }
     
+    //MARK: - UITextViewDelegate
+    
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        textView.text = "";
+        println("textViewShouldBeginEditing");
+        return true;
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        
+        println("shouldChangeTextInRange");
+        
+        if (textView.text.utf16Count == 0) {
+            
+            textView.text = "Leave your notes...";
+        }
+        
+        return true;
+    }
+    
+    //MARK: - SRSocialSharingProtocol
+
+    func shareAppointmetnt() {
+        
+        var controller = UIActivityViewController(activityItems: [appointment!.place.name!, appointment!.description],
+                                          applicationActivities: nil);
+        
+//        var excludedActivities = [
+//            UIActivityTypeAirDrop,
+//            UIActivityTypePostToWeibo, UIActivityTypeMessage,
+//            UIActivityTypePrint, UIActivityTypeCopyToPasteboard,
+//            UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,
+//            UIActivityTypeAddToReadingList, UIActivityTypePostToFlickr,
+//            UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo
+//        ];
+//        
+//        controller.excludedActivityTypes = excludedActivities;
+        
+        // Present the controller
+        self.presentViewController(controller, animated: true, completion: nil);
+    }
+
 }

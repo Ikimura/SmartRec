@@ -126,8 +126,8 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
 
         //create route point
         currentRoutePointData = SRRoutePointStruct(id: String.randomString(),
-            lng: SRLocationManager.sharedInstance.currentLocation()!.coordinate.longitude,
-            lat: SRLocationManager.sharedInstance.currentLocation()!.coordinate.latitude,
+            lng: appDelegate.currentLocation().coordinate.longitude,
+            lat: appDelegate.currentLocation().coordinate.latitude,
             time: date.timeIntervalSince1970
         );
         
@@ -143,12 +143,12 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
             currentRecorder?.startRecording();
         }
         
-        println(SRLocationManager.sharedInstance.currentLocation()?.coordinate.latitude);
-        println(SRLocationManager.sharedInstance.currentLocation()?.coordinate.longitude);
+        println(appDelegate.currentLocation().coordinate.latitude);
+        println(appDelegate.currentLocation().coordinate.longitude);
         
         currentVideoMarkData = SRVideoMarkStruct(id: String.randomString(),
-            lng: SRLocationManager.sharedInstance.currentLocation()!.coordinate.longitude,
-            lat: SRLocationManager.sharedInstance.currentLocation()!.coordinate.latitude,
+            lng: appDelegate.currentLocation().coordinate.longitude,
+            lat: appDelegate.currentLocation().coordinate.latitude,
             autoSave: false,
             image: nil
         );

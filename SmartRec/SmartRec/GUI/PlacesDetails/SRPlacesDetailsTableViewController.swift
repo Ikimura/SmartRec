@@ -14,7 +14,7 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
     var place: SRGooglePlace?;
     
     private var dataSource: SRPlacesDetailsDataSourceProtocol?;
-
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -196,7 +196,7 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
                 
                 if let destVC = navVC.viewControllers[0] as? SRPlaceRouteMapViewController {
                     
-                    destVC.myCoordinate = SRLocationManager.sharedInstance.currentLocation()!.coordinate;
+                    destVC.myCoordinate = appDelegate.currentLocation().coordinate;
                     destVC.targetCoordinate = CLLocationCoordinate2DMake(place!.lat, place!.lng);
                 }
             }

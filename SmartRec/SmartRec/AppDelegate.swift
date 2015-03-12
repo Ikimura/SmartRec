@@ -11,24 +11,48 @@ import CoreData
 
 @UIApplicationMain
 
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
     var window: UIWindow?
     
     var coreDataManager: SRCoreDataManager!;
-
+    var eventsTracker: SRAppointmentsTracker!;
+    var locationManager: CLLocationManager!;
+    
+    private var currrentLocation: CLLocation?;
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
         
-        coreDataManager = SRCoreDataManager(storePath: kStorePathComponent);
-        
+        //Appearnces
+        UINavigationBar.appearance().shadowImage = UIImage();
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+
+        UIApplication.sharedApplication().statusBarStyle = .LightContent;
+
+        //sync defaults
         self.synchronizeUserDefaults();
         
+        //register google service
         GMSServices.provideAPIKey(kGoogleMapsAPIKey);
-        SRLocationManager.sharedInstance;
         
-        UIApplication.sharedApplication().statusBarStyle = .LightContent;
+        //init
+        coreDataManager = SRCoreDataManager(storePath: kStorePathComponent);
+        eventsTracker = SRAppointmentsTracker();
         
+        //init location service
+        
+        locationManager = CLLocationManager();
+        //TODO: kCLLocationAccuracyHundredMeterscon.epam.evnt.
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+        //TODO: 100
+        locationManager.distanceFilter = 1;
+        locationManager.delegate = self;
+        
+        if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
+            
+            locationManager.requestWhenInUseAuthorization();
+        }
+
         return true;
     }
 
@@ -53,8 +77,100 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        println("Received Local Notification:")
+
+        if let region = notification.region as CLRegion! {
+            
+            println(region.identifier);
+        }
+    }
+    
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
+        
+        var uuid: String? = nil;
+        
+        if let region = notification.region as CLRegion! {
+            
+            println(region.identifier);
+            
+            uuid = notification.userInfo!["uuid"] as? String
+            println(uuid);
+        }
+        
+        if (identifier == "MARK_ARRIVED" && uuid != nil) {
+
+            println("MARK_ARRIVED action");
+            SRCoreDataAppointment.markArrivedAppointmnetWithId(uuid!);
+            
+        } else if identifier == "SHOW_APPOINTMENT" {
+            
+            println("showAppointment action");
+        }
+        
+        completionHandler();
+    }
+    
+    //MARK: - internal
+    
+    func currentLocation() -> CLLocation {
+        
+        if (self.currrentLocation == nil) {
+            
+            //GRODNO
+            return  CLLocation(latitude: 53.6884000, longitude: 23.8258000);
+        }
+        
+        return self.currrentLocation!;
+    }
+    
+    func startMonitoringLocation() {
+        self.locationManager.startUpdatingLocation();
+        //        locationManager.startMonitoringSignificantLocationChanges();
+    }
+    
+    func stopMonitoringLocation() {
+        self.locationManager.stopUpdatingLocation();
+        //        locationManager.stopMonitoringSignificantLocationChanges();
+    }
 
     //MARK: - private
+    
+    private func setupNotificationSettings() {
+        // Specify the notification types.
+        var notificationTypes: UIUserNotificationType = .Alert | .Sound;
+        
+        var markArrivedAction = UIMutableUserNotificationAction();
+        markArrivedAction.identifier = "MARK_ARRIVED";
+        markArrivedAction.title = "Mark arrived";
+        markArrivedAction.activationMode = .Background;
+        markArrivedAction.destructive = false;
+        markArrivedAction.authenticationRequired = true;
+        
+        
+        var showAction = UIMutableUserNotificationAction();
+        showAction.identifier = "SHOW_APPOINTMENT";
+        showAction.title = "Show";
+        showAction.activationMode = .Foreground;
+        showAction.destructive = false;
+        showAction.authenticationRequired = true;
+        
+        let actionsArray = NSArray(objects: markArrivedAction, showAction);
+        let actionsArrayMinimal = NSArray(objects: markArrivedAction);
+        
+        // Specify the category related to the above actions.
+        var appointmentsReminderCategory = UIMutableUserNotificationCategory()
+        appointmentsReminderCategory.identifier = "APPOINTMENTS_REMINDER_CATEGORY";
+        appointmentsReminderCategory.setActions(actionsArray, forContext: UIUserNotificationActionContext.Default)
+        appointmentsReminderCategory.setActions(actionsArrayMinimal, forContext: UIUserNotificationActionContext.Minimal)
+
+        let categoriesForSettings = NSSet(objects: appointmentsReminderCategory);
+        
+        let newNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: categoriesForSettings)
+
+        UIApplication.sharedApplication().registerUserNotificationSettings(newNotificationSettings)
+    }
     
     private func synchronizeUserDefaults() {
         
@@ -70,6 +186,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             defaults.synchronize();
         }
+    }
+    
+    //MARK: - CLLocationManagerDelegate
+    
+    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        switch status {
+        case .AuthorizedWhenInUse, .AuthorizedAlways:
+            //start update location
+            self.startMonitoringLocation();
+
+            let notificationSettings: UIUserNotificationSettings! = UIApplication.sharedApplication().currentUserNotificationSettings();
+            
+            if (notificationSettings.types == UIUserNotificationType.None){
+                //setup notifications
+                self.setupNotificationSettings();
+            }
+            
+            //schedule notifications
+            eventsTracker.scheduleLocationNotificationIfNeeded();
+            
+            NSLog("\(status)");
+        default:
+            NSLog("\(status)");
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        currrentLocation = locations[0] as? CLLocation;
+        //post notification
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(kLocationTitleNotification, object: nil, userInfo: ["location": locations[0] as CLLocation]);
+    }
+    
+    func locationManagerDidPauseLocationUpdates(manager: CLLocationManager!) {
+        
+    }
+    
+    func locationManagerDidResumeLocationUpdates(manager: CLLocationManager!) {
+        
+    }
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        NSLog("\(error)");
     }
 
 }

@@ -14,7 +14,7 @@
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxa-0C-9up">
                         <rect key="frame" x="15" y="10" width="290" height="44"/>
-                        <color key="backgroundColor" red="0.25098039220000001" green="0.64313725489999995" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.51764705882352935" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="44" id="vzp-yg-n4m"/>
                         </constraints>
