@@ -67,7 +67,7 @@ class SRPlacesListViewController : SRCommonViewController, UITableViewDataSource
             cell!.addressLabel.text = place.formattedAddress;
         }
         
-        cell!.cityStateZipLabel.text = nil;
+//        cell!.cityStateZipLabel.text = nil;
         
         if (place.distance == nil) {
             

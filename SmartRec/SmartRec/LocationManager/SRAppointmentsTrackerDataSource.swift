@@ -25,6 +25,8 @@ class SRAppointmentsTrackerDataSource : SRAppointmentsDataSource {
         
         predicates.append(NSPredicate(format: "locationTrack == true")!);
         
+        predicates.append(NSPredicate(format: "completed == false")!);
+        
         let trackDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate());
         predicates.append(NSPredicate(format: "sortDate == %@", trackDate)!);
         

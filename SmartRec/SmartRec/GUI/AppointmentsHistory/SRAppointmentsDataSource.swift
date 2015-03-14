@@ -32,6 +32,7 @@ class SRAppointmentsDataSource : SRCoreDataDataSource, SRAppointmentsDataSourceP
         
         var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "SRCoreDataAppointment");
         fetchRequest.sortDescriptors = self.sortDescriptor();
+        fetchRequest.predicate = self.compoundPredicate();
         
         return fetchRequest;
     }
@@ -39,6 +40,15 @@ class SRAppointmentsDataSource : SRCoreDataDataSource, SRAppointmentsDataSourceP
     override func sectionNameKeyPath() -> String {
         
         return "sortDate";
+    }
+    
+    private func compoundPredicate() -> NSPredicate {
+        
+        var predicates: [AnyObject] = [];
+        
+        predicates.append(NSPredicate(format: "completed == false")!);
+        
+        return NSCompoundPredicate(type: .AndPredicateType, subpredicates: predicates);
     }
     
     //MARK: - SRAppointmentsDataSourceProtocol

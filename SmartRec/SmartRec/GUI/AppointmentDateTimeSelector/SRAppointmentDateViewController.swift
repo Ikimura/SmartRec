@@ -73,7 +73,10 @@ class SRAppointmentDateViewController: SRCommonViewController, MGConferenceDateP
     //MARK: - MGConferenceDatePickerDelegate
     
     func conferenceDatePicker(datePicker: MGConferenceDatePicker, saveDate date: NSDate) {
+        println("conferenceDatePicker");
         appointmentDate = date;
+        println("Selected Date \(appointmentDate)");
+
     }
 
     //MARK: - Navigation
@@ -81,16 +84,19 @@ class SRAppointmentDateViewController: SRCommonViewController, MGConferenceDateP
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         appointmentDate = datePicker?.valueOfSelectedDate();
+        println("Selected Date \(appointmentDate)");
         
         if segue.identifier == kConfirmationSegueIdentifier {
             
             if let confVC = segue.destinationViewController as? SRAppointmentConfirmationViewController {
                 
-                var appointment = SRAppointment(place: detailedPlace!, dateInSeconds: appointmentDate!.timeIntervalSince1970, locationTrack: false, description: "", calendarId: nil);
+                var id = "\(detailedPlace!.placeId)\(appointmentDate!.timeIntervalSince1970)";
                 
-                confVC.appointment = appointment;
+                var appointment = SRAppointment(id: id, place: detailedPlace!, dateInSeconds: appointmentDate!.timeIntervalSince1970, locationTrack: false, description: "", calendarId: nil);
+                
+                confVC.presantationType = .Confirmation;
+                confVC.appointment = appDelegate.coreDataManager.fillAppointmentPropertiesWith(appointment);
             }
-            
         }
     }
 }

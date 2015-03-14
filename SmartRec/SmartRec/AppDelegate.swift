@@ -40,7 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         eventsTracker = SRAppointmentsTracker();
         
         //init location service
-        
         locationManager = CLLocationManager();
         //TODO: kCLLocationAccuracyHundredMeterscon.epam.evnt.
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
@@ -68,6 +67,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        
+        println("applicationWillEnterForeground");
+        //TODO: delete appointments
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
@@ -79,8 +81,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        
         println("Received Local Notification:")
-
         if let region = notification.region as CLRegion! {
             
             println(region.identifier);
@@ -93,20 +95,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         if let region = notification.region as CLRegion! {
             
-            println(region.identifier);
-            
             uuid = notification.userInfo!["uuid"] as? String
-            println(uuid);
         }
         
         if (identifier == "MARK_ARRIVED" && uuid != nil) {
 
-            println("MARK_ARRIVED action");
             SRCoreDataAppointment.markArrivedAppointmnetWithId(uuid!);
             
         } else if identifier == "SHOW_APPOINTMENT" {
             
             println("showAppointment action");
+            NSNotificationCenter.defaultCenter().postNotificationName("SHOW_APPOINTMENT", object: nil, userInfo: ["uuid": uuid!]);
         }
         
         completionHandler();
@@ -148,7 +147,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         markArrivedAction.destructive = false;
         markArrivedAction.authenticationRequired = true;
         
-        
         var showAction = UIMutableUserNotificationAction();
         showAction.identifier = "SHOW_APPOINTMENT";
         showAction.title = "Show";
@@ -157,7 +155,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         showAction.authenticationRequired = true;
         
         let actionsArray = NSArray(objects: markArrivedAction, showAction);
-        let actionsArrayMinimal = NSArray(objects: markArrivedAction);
+        let actionsArrayMinimal = NSArray(objects: markArrivedAction, showAction);
         
         // Specify the category related to the above actions.
         var appointmentsReminderCategory = UIMutableUserNotificationCategory()

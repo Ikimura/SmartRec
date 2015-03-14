@@ -10,6 +10,7 @@ import Foundation
 
 struct SRAppointment {
 
+    var id: String;
     var place: SRGooglePlace;
     var dateInSeconds: Double;
     var locationTrack: Bool;

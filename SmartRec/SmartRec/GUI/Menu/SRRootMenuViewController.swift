@@ -9,12 +9,13 @@
 import Foundation
 
 class SRRootMenuViewController : RESideMenu {
-    
+
     override func awakeFromNib() {
         super.awakeFromNib();
 
         self.leftMenuViewController = self.storyboard?.instantiateViewControllerWithIdentifier("leftMenuController") as UIViewController;
         self.contentViewController = SRNavigationController(rootViewController: self.storyboard?.instantiateViewControllerWithIdentifier("typesViewController") as UIViewController);
+        
     }
     
     override func viewDidLoad() {
@@ -28,4 +29,6 @@ class SRRootMenuViewController : RESideMenu {
         self.contentViewShadowRadius = 5;
         self.contentViewShadowEnabled = true;
     }
+    
+
 }

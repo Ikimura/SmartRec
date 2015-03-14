@@ -49,8 +49,7 @@ class SRAppointmentsTracker : SRDataSourceDelegate {
 //                if ( !contains(scheduledAppointments, appointment.id)) {
                 
                     var locNotification = UILocalNotification();
-                    locNotification.alertBody = "You have arrived!";
-                    locNotification.alertAction = "Show";
+                    locNotification.alertBody = "You have arrived to \(appointment.place.name)!";
                     locNotification.regionTriggersOnce = false;
                     locNotification.category = "APPOINTMENTS_REMINDER_CATEGORY";
                     locNotification.userInfo = ["uuid": appointment.id];

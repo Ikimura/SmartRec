@@ -13,7 +13,7 @@ class SRPlacesListTableViewCell: UITableViewCell {
     @IBOutlet var nameLabel: UILabel!;
     @IBOutlet var phoneLabel: UILabel!;
     @IBOutlet var addressLabel: UILabel!;
-    @IBOutlet var cityStateZipLabel: UILabel!;
+//    @IBOutlet var cityStateZipLabel: UILabel!;
     @IBOutlet var distanceLabel: UILabel!;
     @IBOutlet var iconImage: UIImageView!;
     @IBOutlet var locationImage: UIImageView!;

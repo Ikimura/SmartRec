@@ -32,6 +32,7 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
             tableView.scrollIndicatorInsets = inset;
             tableView.contentInset = inset;
         }
+        self.automaticallyAdjustsScrollViewInsets = false;
     }
     
     override func setUpNavigationBar() {
@@ -44,7 +45,13 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        fatalError("Show Details");
+        var event: AnyObject = dataSource.objectAtIndexPath(indexPath);
+        
+        var detailsVC = self.storyboard?.instantiateViewControllerWithIdentifier("confirmationVC") as?SRAppointmentConfirmationViewController;
+        detailsVC!.presantationType = .Detailes;
+        detailsVC!.appointment = event as? SRCoreDataAppointment;
+        
+        self.navigationController?.pushViewController(detailsVC!, animated: true);
     }
     
     //MARK: - UITableViewDataSource

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -34,15 +34,6 @@
                         <rect key="frame" x="64" y="38" width="35.5" height="18"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="222" id="hB7-R5-3zT"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="htX-nL-qEZ">
-                        <rect key="frame" x="64" y="80" width="208" height="18"/>
-                        <constraints>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="222" id="Epf-Sh-Lhx"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -91,9 +82,7 @@
                     <constraint firstItem="Fw0-8L-f2t" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gpA-Qn-RGI" secondAttribute="trailing" constant="10" id="9XY-y5-xIH"/>
                     <constraint firstItem="gpA-Qn-RGI" firstAttribute="leading" secondItem="b6s-Ns-9UV" secondAttribute="trailing" constant="5" id="A7B-Ok-qIc"/>
                     <constraint firstItem="2U4-6v-OkH" firstAttribute="leading" secondItem="fch-ED-Eqb" secondAttribute="leading" constant="15" id="Avo-Xb-NO6"/>
-                    <constraint firstItem="htX-nL-qEZ" firstAttribute="top" secondItem="gpA-Qn-RGI" secondAttribute="bottom" constant="2" id="BUW-fr-g5Z"/>
                     <constraint firstAttribute="trailing" secondItem="2U4-6v-OkH" secondAttribute="trailing" constant="15" id="EN4-8l-ry7"/>
-                    <constraint firstItem="Fw0-8L-f2t" firstAttribute="leading" relation="lessThanOrEqual" secondItem="htX-nL-qEZ" secondAttribute="trailing" constant="10" id="Hjt-N6-fdj"/>
                     <constraint firstItem="RkR-hK-Pqk" firstAttribute="leading" secondItem="1KX-oy-rZf" secondAttribute="trailing" constant="5" id="IKM-dj-cLl"/>
                     <constraint firstAttribute="trailing" secondItem="Fw0-8L-f2t" secondAttribute="trailing" constant="15" id="QAw-w3-VPV"/>
                     <constraint firstItem="b6s-Ns-9UV" firstAttribute="leading" secondItem="fch-ED-Eqb" secondAttribute="leading" constant="15" id="Yn3-Bh-ABx"/>
@@ -104,13 +93,11 @@
                     <constraint firstItem="tgw-8I-D8w" firstAttribute="leading" secondItem="b6s-Ns-9UV" secondAttribute="trailing" constant="5" id="wiK-Gc-SDw"/>
                     <constraint firstItem="HWL-CL-4ZC" firstAttribute="leading" secondItem="b6s-Ns-9UV" secondAttribute="trailing" constant="5" id="xjO-ow-sNc"/>
                     <constraint firstItem="gpA-Qn-RGI" firstAttribute="top" secondItem="HWL-CL-4ZC" secondAttribute="bottom" constant="2" id="xjs-OP-BK9"/>
-                    <constraint firstItem="htX-nL-qEZ" firstAttribute="leading" secondItem="b6s-Ns-9UV" secondAttribute="trailing" constant="5" id="zdk-7Y-Pd3"/>
                     <constraint firstItem="HWL-CL-4ZC" firstAttribute="top" secondItem="tgw-8I-D8w" secondAttribute="bottom" constant="3" id="zlm-Ze-9GO"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="addressLabel" destination="HWL-CL-4ZC" id="2dh-Ho-8af"/>
-                <outlet property="cityStateZipLabel" destination="htX-nL-qEZ" id="bS5-Gi-2Dv"/>
                 <outlet property="distanceLabel" destination="RkR-hK-Pqk" id="D1F-qU-7U0"/>
                 <outlet property="iconImage" destination="b6s-Ns-9UV" id="FlT-L5-EEH"/>
                 <outlet property="locationImage" destination="1KX-oy-rZf" id="e6l-aB-lpx"/>

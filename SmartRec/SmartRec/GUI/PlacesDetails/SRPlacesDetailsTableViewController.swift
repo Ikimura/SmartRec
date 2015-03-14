@@ -146,7 +146,7 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
             
             detCell.nameLabel.text = place.name;
             detCell.addressLabel.text = place.formattedAddress != nil ? place.formattedAddress : place.vicinity;
-            detCell.cityStateZipLabel.text = place.zipCity;
+//            detCell.cityStateZipLabel.text = place.zipCity;
             
             detCell.iconImage.setImageWithURL(place.iconURL, placeholderImage: UIImage(named: "image_placeholder"));
             detCell.phoneLabel.text = place.internalPhoneNumber != nil ? place.internalPhoneNumber : place.formattedPhoneNumber;

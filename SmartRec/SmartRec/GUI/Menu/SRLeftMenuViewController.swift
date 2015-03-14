@@ -25,10 +25,10 @@ class SRLeftMenuViewController: SRCommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad();
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showAppointmentDetails:", name: "SHOW_APPOINTMENT", object: nil);
+
     }
-    
-    //FIXME:
-    
+        
     @IBAction func menuButtonDidTap(sender: AnyObject) {
         
         if let btn = sender as? UIButton {
@@ -63,5 +63,28 @@ class SRLeftMenuViewController: SRCommonViewController {
             self.sideMenuViewController.setContentViewController(SRNavigationController(rootViewController: contentController!), animated: true);
             self.sideMenuViewController.hideMenuViewController();
         }
+    }
+    
+    func showAppointmentDetails(notification: NSNotification) {
+        
+        if let userInfo: [NSObject: AnyObject?] = notification.userInfo as [NSObject: AnyObject?]! {
+            
+            if let id = userInfo["uuid"] as? String {
+                
+                if var event  = appDelegate.coreDataManager.checkForExistingEntity("SRCoreDataAppointment", withId: id, inContext: appDelegate.coreDataManager.mainObjectContext) as? SRCoreDataAppointment {
+                    
+                    var detailsVC = self.storyboard?.instantiateViewControllerWithIdentifier("confirmationVC") as?SRAppointmentConfirmationViewController;
+                    detailsVC!.presantationType = .Notification;
+                    detailsVC!.appointment = event;
+                    
+                    self.presentViewController(SRNavigationController(rootViewController: detailsVC!), animated: true, completion: nil);
+                }
+            }
+        }
+    }
+    
+    deinit {
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self);
     }
 }

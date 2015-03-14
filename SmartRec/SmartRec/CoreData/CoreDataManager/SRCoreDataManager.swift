@@ -70,11 +70,11 @@ public class SRCoreDataManager: NSObject {
 
     //MARK: - new public API
     
-    func insertAppointmentEntity(appintmentData: SRAppointment, complitionBlock:(error: NSError?) -> Void) {
+    func fillAppointmentPropertiesWith(appintmentData: SRAppointment) -> SRCoreDataAppointment? {
         
         var entity: SRCoreDataAppointment? = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataAppointment", inManagedObjectContext: self.mainObjectContext) as? SRCoreDataAppointment;
         
-        var placeEntity: SRCoreDataPlace? = self.checkForExistingEntity("SRCoreDataPlace", withFieldName: "placeId", andFieldValue: appintmentData.place.placeId) as? SRCoreDataPlace;
+        var placeEntity: SRCoreDataPlace? = self.checkForExistingEntity("SRCoreDataPlace", withId: appintmentData.place.placeId, inContext: self.mainObjectContext) as? SRCoreDataPlace;
         
         if (placeEntity == nil) {
             
@@ -89,6 +89,11 @@ public class SRCoreDataManager: NSObject {
             placeEntity!.lat = NSNumber(double: appintmentData.place.lat);
             placeEntity!.lng = NSNumber(double: appintmentData.place.lng);
             placeEntity!.iconURL = appintmentData.place.iconURL!.absoluteString!;
+            
+            if (appintmentData.place.photoReferences?.count != 0) {
+                
+                placeEntity?.photorReference = appintmentData.place.photoReferences![0];
+            }
             
             if (appintmentData.place.vicinity != nil) {
                 
@@ -109,9 +114,18 @@ public class SRCoreDataManager: NSObject {
                 placeEntity!.distance = appintmentData.place.distance!;
             }
             
+            if (appintmentData.place.website != nil) {
+                placeEntity!.website = appintmentData.place.website!;
+            }
+            
+//            if (appintmentData.place.zipCity != nil) {
+//                placeEntity!.zipCity = appintmentData.place.zipCity!;
+//            }
+            
             if (appintmentData.calendarId != nil) {
                 entity!.calendarId = appintmentData.calendarId!;
             }
+            
             
             entity!.locationTrack = NSNumber(bool: appintmentData.locationTrack);
             let fireDate = NSDate(timeIntervalSince1970: appintmentData.dateInSeconds);
@@ -119,14 +133,17 @@ public class SRCoreDataManager: NSObject {
             entity!.sortDate = NSCalendar.currentCalendar().startOfDayForDate(fireDate);
             entity!.note = appintmentData.description;
             entity!.place = placeEntity!;
-            entity!.id = "\(placeEntity!.placeId)\(appintmentData.dateInSeconds)";
+            println("\(appintmentData.id)");
+            entity!.id = "\(appintmentData.id)";
             entity!.completed = NSNumber(bool: false);
             
             placeEntity?.addAppointment(entity!);
         }
         
-        self.saveContext(self.mainObjectContext);
-        complitionBlock(error: nil);
+        return entity;
+        
+//        self.saveContext(self.mainObjectContext);
+//        complitionBlock(entity: entity!, error: nil);
     }
     
     public func insertVideoMarkEntity(dataStruct: SRVideoMarkStruct) -> NSManagedObject? {
@@ -254,6 +271,7 @@ public class SRCoreDataManager: NSObject {
     }
     
     public func deleteEntity(entity: NSManagedObject) -> SRResult {
+        
         var managedContext = entity.managedObjectContext;
         
         managedContext?.deleteObject(entity);
@@ -294,34 +312,22 @@ public class SRCoreDataManager: NSObject {
     
     //MARK: - private methods
     
-    func checkForExistingEntity(name: String, withFieldName fieldName: String, andFieldValue fieldValue: String) -> NSManagedObject? {
-        
-        var fetchRequest: NSFetchRequest = NSFetchRequest();
-        let entity: NSEntityDescription = NSEntityDescription.entityForName(name, inManagedObjectContext: mainObjectContext)!;
-        
-        fetchRequest.entity = entity;
-        
-        let predicate: NSPredicate = NSPredicate(format: "%@ == %@", fieldName, fieldValue)!;
-        fetchRequest.predicate = predicate;
-        
-        var error: NSError?;
-        
-        var res: AnyObject? = mainObjectContext.executeFetchRequest(fetchRequest, error: &error)?.first;
-        
-        if error != nil {
-            println(error);
-        }
-        
-        return res as? NSManagedObject;
-    }
-    
-    private func checkForExistingEntity(name: String, withId identifier: String, inContext context: NSManagedObjectContext) -> NSManagedObject? {
+    func checkForExistingEntity(name: String, withId identifier: String, inContext context: NSManagedObjectContext) -> NSManagedObject? {
         var fetchRequest: NSFetchRequest = NSFetchRequest();
         let entity: NSEntityDescription = NSEntityDescription.entityForName(name, inManagedObjectContext: context)!;
         
         fetchRequest.entity = entity;
         
-        let predicate: NSPredicate = NSPredicate(format: "id == %@", identifier)!;
+        var predicate: NSPredicate?
+        if (name == "SRCoreDataPlace") {
+            
+            predicate = NSPredicate(format: "placeId == %@", identifier)!;
+
+        } else {
+            
+            predicate = NSPredicate(format: "id == %@", identifier)!;
+        }
+        
         fetchRequest.predicate = predicate;
         
         var error: NSError?;

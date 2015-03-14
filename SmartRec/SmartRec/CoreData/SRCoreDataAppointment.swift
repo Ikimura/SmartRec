@@ -11,7 +11,7 @@ import CoreData
 
 class SRCoreDataAppointment: NSManagedObject {
 
-    @NSManaged var calendarId: String
+    @NSManaged var calendarId: String?
     @NSManaged var fireDate: NSDate
     @NSManaged var id: String
     @NSManaged var locationTrack: NSNumber

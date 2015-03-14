@@ -13,7 +13,8 @@ extension SRCoreDataAppointment {
     class func markArrivedAppointmnetWithId(id: String) {
         
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
-        if var event: SRCoreDataAppointment? = appDelegate.coreDataManager.checkForExistingEntity("SRCoreDataAppointment", withFieldName: "id", andFieldValue: id) as? SRCoreDataAppointment {
+
+        if var event: SRCoreDataAppointment? = appDelegate.coreDataManager.checkForExistingEntity("SRCoreDataAppointment", withId: id, inContext: appDelegate.coreDataManager.mainObjectContext) as? SRCoreDataAppointment {
             
             event!.completed = NSNumber(bool: true);
             
@@ -29,9 +30,5 @@ extension SRCoreDataAppointment {
                 println("OK!");
             }
         }
-        
-        
-
     }
-    
 }

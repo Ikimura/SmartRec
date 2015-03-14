@@ -24,7 +24,7 @@ struct SRGooglePlace {
     var distance: CGFloat?;
     var photoReferences: [String]?;
     var website: String?;
-    var zipCity: String?;
+//    var zipCity: String?;
 
     
     mutating func fillDetailsPropertiesForPlace(results: NSDictionary) {
@@ -36,11 +36,11 @@ struct SRGooglePlace {
         
         website = results["website"] as? String;
         
-        if let address_components = results["address_components"] as? Array<NSDictionary> {
-            
-            let postal_component = address_components[address_components.count - 1];
-            zipCity = postal_component["long_name"] as? String;
-        }
+//        if let address_components = results["address_components"] as? Array<NSDictionary> {
+//            
+//            let postal_component = address_components[address_components.count - 1];
+//            zipCity = postal_component["long_name"] as? String;
+//        }
     }
     
     mutating func addDistance(newDistance: CGFloat) {
