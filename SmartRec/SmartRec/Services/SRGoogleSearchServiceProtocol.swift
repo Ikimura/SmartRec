@@ -16,6 +16,6 @@ protocol SRGoogleSearchServiceProtocol {
  
     func placeTextSearch(textQeury: String, lat: Double?, lng: Double?, radius: Int?, types:[String]?, complitionBlock: (data: [SRGooglePlace]!) -> Void, errorComplitionBlock: (error: NSError) -> Void);
     
-    func googleDirectionFrom(origin: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, mode: String, complitionBlock: (path: GMSPath, metric: (distance: String, duration: String)) -> Void, errorComplitionBlock: (error: NSError) -> Void);
+    func googleDirectionFrom(origin: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, mode: String, complitionBlock: (path: GMSPath, metrics: Dictionary<String, String>) -> Void, errorComplitionBlock: (error: NSError) -> Void);
 
 }

@@ -127,7 +127,7 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
         }
         
         urlString += "&key=\(kGooglePlaceAPIKey)";
-        urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!;
+        urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;
         
         println("Debug: \(urlString)");
         
@@ -174,7 +174,7 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
     func placeDetails(placeId: String, complitionBlock: (data: NSDictionary?) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
         
         var urlString = "\(kGooglePlaceDetailsAPIURL)reference=\(placeId)&key=\(kGooglePlaceAPIKey)";
-        urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!;
+        urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;
 
         println("Debug: \(urlString)");
         
@@ -219,10 +219,10 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
         }
     }
     
-    func googleDirectionFrom(origin: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, mode: String, complitionBlock: (path: GMSPath, metric: (distance: String, duration: String)) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
+    func googleDirectionFrom(origin: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, mode: String, complitionBlock: (path: GMSPath, metrics: Dictionary<String, String>) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
         
         var urlString = "\(kGoogleDirectionAPIURL)origin=\(origin.latitude),\(origin.longitude)&destination=\(destination.latitude),\(destination.longitude)&units=metric&mode=\(mode)";
-        urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!;
+        urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;
         
         println("Debug: \(urlString)");
         
@@ -236,8 +236,9 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
             var responsStatus: SRResponseStatus = SRResponseStatus(rawValue: status!)!;
             
             var path: GMSPath?;
-            var metric: (distance: String, duration: String)?;
-
+            var metrics: Dictionary<String, String>?;
+            var id: String?;
+            
             switch (responsStatus) {
             case .OK:
                 println("OK");
@@ -246,7 +247,7 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
                     
                     var data = GMSPath.parsePathsFromResponse(routes);
                     path = data.0;
-                    metric = data.1;
+                    metrics = data.1;
                 }
 
             case .INVALID_REQUEST:
@@ -267,7 +268,7 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
                 break;
             }
 
-            complitionBlock(path: path!, metric: metric!);
+            complitionBlock(path: path!, metrics: metrics!);
             
             }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 

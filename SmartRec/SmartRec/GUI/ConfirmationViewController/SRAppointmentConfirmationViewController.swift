@@ -285,21 +285,20 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
     //MARK: - UITextViewDelegate
     
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
-        textView.text = "";
-        println("textViewShouldBeginEditing");
+        
+        notesTextView.text = "";
+        notesTextView.textColor = UIColor(red: 0.0 / 255.0, green: 132.0 / 255.0, blue: 216.0 / 255.0, alpha: 1.0);
+        
         return true;
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textViewDidChange(textView: UITextView) {
         
-        println("shouldChangeTextInRange");
-        
-        if (textView.text.utf16Count == 0) {
-            
-            textView.text = "Leave your notes...";
+        if (notesTextView.text.utf16Count == 0) {
+            notesTextView.textColor = UIColor.lightGrayColor();
+            notesTextView.text = "Leave your notes...";
+            notesTextView.resignFirstResponder();
         }
-        
-        return true;
     }
     
     //MARK: - SRSocialSharingProtocol

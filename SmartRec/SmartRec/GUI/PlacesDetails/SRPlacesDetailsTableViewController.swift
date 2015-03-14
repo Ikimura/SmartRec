@@ -168,7 +168,7 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
             var photoReference = data as String;
             
             var urlString = "\(kGooglePlacePhotoAPIURL)maxheight=\(kGooglePhotoMaxHeight)&photoreference=\(photoReference)&key=\(kGooglePlaceAPIKey)";
-            urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!;
+            urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;
             
             let photoURL = NSURL(string: urlString);
             galaryCell.photoImageView.setImageWithURL(photoURL, placeholderImage: UIImage(named: "image_placeholder"));

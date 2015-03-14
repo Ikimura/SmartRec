@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import CoreData
 
-class SRMovieListViewController: SRCommonViewController, SRDataSourceDelegate, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate {
+class SRMovieListViewController: SRCommonViewController, SRDataSourceDelegate, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet private var tableView: UITableView!;
 
@@ -50,47 +50,9 @@ class SRMovieListViewController: SRCommonViewController, SRDataSourceDelegate, U
         
         self.title = "My Videos";
         
-        let rigthBatItem = UIBarButtonItem(image: UIImage(named: "map_annotation_conf"), style: .Plain, target: self, action: "didTapMap:");
-        
-        self.navigationItem.rightBarButtonItem = rigthBatItem;
-    }
-    
-    //MARK: - NSFetchedResultsControllerDelegate
-    
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        self.tableView.beginUpdates();
-    }
-
-    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
-        println("didChangeSection - list controller");
-
-        switch type {
-        case .Insert: self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade);
-        case .Delete: self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade);
-        default:
-            println("Error!");
-        }
-    }
-
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        println("didChangeObject - list controller");
-
-        let tblView = self.tableView;
-        
-        switch type {
-        case .Insert: tblView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade);
-        case .Delete: tblView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade);
-        case .Update: tblView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade);
-        case .Move:
-            tblView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade);
-            tblView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade);
-        default:
-            println("Error!");
-        }
-    }
-    
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        self.tableView.endUpdates();
+//        let rigthBatItem = UIBarButtonItem(image: UIImage(named: "map_annotation_conf"), style: .Plain, target: self, action: "didTapMap:");
+//        
+//        self.navigationItem.rightBarButtonItem = rigthBatItem;
     }
 
     //MARK: - UITableViewDataSource
@@ -214,9 +176,11 @@ class SRMovieListViewController: SRCommonViewController, SRDataSourceDelegate, U
         
         // Get the new view controller using segue.destinationViewController.
         if segue.identifier == kDisplayVideoRouteDetailsSegueIdentifier_1 {
-            if let routeVideoDetailsVC = segue.destinationViewController as? SRVideoRouteDetailsViewController {
+            
+            if let routeVideoDetailsVC = segue.destinationViewController as? SRRouteMapViewController {
+                
                 routeVideoDetailsVC.route = selectedVideoMark?.route;
-                routeVideoDetailsVC.selectedVideoId = selectedVideoMark?.id;
+                routeVideoDetailsVC.selectedVideoMark = selectedVideoMark;
             }
         }
     }

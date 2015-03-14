@@ -26,12 +26,8 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
         
         dataSource.rebuildDataSet();
         
-        if (self.navigationController != nil) {
-            
-            var inset: UIEdgeInsets = UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController!.navigationBar.frame), 0, 0, 0);
-            tableView.scrollIndicatorInsets = inset;
-            tableView.contentInset = inset;
-        }
+        tableView?.registerNib(UINib(nibName: "SRAppointmentHistoryCell", bundle: nil), forCellReuseIdentifier: "appHistory");
+
         self.automaticallyAdjustsScrollViewInsets = false;
     }
     
@@ -45,6 +41,8 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        tableView.deselectRowAtIndexPath(indexPath, animated: false);
+        
         var event: AnyObject = dataSource.objectAtIndexPath(indexPath);
         
         var detailsVC = self.storyboard?.instantiateViewControllerWithIdentifier("confirmationVC") as?SRAppointmentConfirmationViewController;
@@ -55,6 +53,11 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
     }
     
     //MARK: - UITableViewDataSource
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        return 73.0;
+    }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
@@ -73,16 +76,47 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell: UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("appHistory") as? UITableViewCell;
+        var cell: SRAppointmentHistoryCell? = tableView.dequeueReusableCellWithIdentifier("appHistory") as? SRAppointmentHistoryCell;
         
-        cell?.imageView?.cancelImageRequestOperation();
+        cell?.iconImage?.cancelImageRequestOperation();
         
-        if var appintment: SRCoreDataAppointment = dataSource.objectAtIndexPath(indexPath) as? SRCoreDataAppointment {
+        if var appointment: SRCoreDataAppointment = dataSource.objectAtIndexPath(indexPath) as? SRCoreDataAppointment {
             
-            cell?.textLabel?.text = appintment.place.name;
-            cell?.detailTextLabel?.text = "\(appintment.fireDate)";
+            cell!.nameLabel?.text = appointment.place.name;
+            cell!.dateLabel?.text = "\(appointment.fireDate)";
             
-            //TODO: use custom cell
+            var iconURLString = appointment.place.iconURL;
+            iconURLString = iconURLString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;
+            
+            let iconURL = NSURL(string: iconURLString);
+
+            cell!.iconImage.setImageWithURL(iconURL, placeholderImage: UIImage(named: "image_placeholder"));
+
+            cell!.indicatorImageView.tintColor = UIColor.greenColor();
+            if (appointment.completed.boolValue) {
+                
+                //TODO: resources
+                cell!.indicatorImageView.image = UIImage(named: "cell_indicator_sel");
+        
+            } else if( NSDate().timeIntervalSince1970 > appointment.fireDate.timeIntervalSince1970){
+                
+                //TODO: resources
+//                cell!.indicatorImageView.image = nil;
+                cell!.indicatorImageView.image = UIImage(named: "cell_indicator_sel");
+        
+            } else {
+                
+                cell!.indicatorImageView.image = UIImage(named: "cell_indicator_def");
+            }
+        
+            if (appointment.locationTrack.boolValue) {
+                
+                cell!.mapIndicatorImageView.image = UIImage(named: "map_annotation_conf");
+        
+            } else {
+        
+                cell!.mapIndicatorImageView.image = nil;
+            }
         }
         
         return cell!;

@@ -8,8 +8,9 @@
 
 import UIKit
 
-class SRMarkerInfoView: SRSimpleMarkerView {
+class SRMarkerInfoView: UIView {
 
+    @IBOutlet weak var pictureImageView: UIImageView!;
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
 

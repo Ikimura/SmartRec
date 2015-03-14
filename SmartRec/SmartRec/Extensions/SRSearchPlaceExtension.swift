@@ -25,7 +25,7 @@ extension SRGooglePlace {
             
             if var iconURLString = result["icon"] as? String {
                 
-                iconURLString = iconURLString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!;
+                iconURLString = iconURLString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;
                 iconURL = NSURL(string: iconURLString);
             }
             

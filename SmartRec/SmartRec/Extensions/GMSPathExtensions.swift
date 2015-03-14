@@ -10,15 +10,14 @@ import Foundation
 
 extension GMSPath {
     
-    class func parsePathsFromResponse(results: Array<NSDictionary>) -> (path: GMSPath, metric: (distance: String, duration: String)) {
+    class func parsePathsFromResponse(results: Array<NSDictionary>) -> (path: GMSPath, metrics: Dictionary<String, String>) {
         
         println("results = \(results.count)")
         
         var path: GMSPath?;
-        var metric: (distance: String, duration: String)?;
         
         let route = results[0];
-            
+        var id = route["summary"] as? String;
         var legs = route["legs"] as? Array<NSDictionary>;
             
         var firstLeg = legs![0];
@@ -28,13 +27,17 @@ extension GMSPath {
         var distString = distanceDict!["text"] as? String;
         var durString = durationDict!["text"] as? String;
         
-        metric = (distance: distString!, duration: durString!);
+        var metrics: Dictionary<String, String> = [
+            "distance": distString!,
+            "duration": durString!,
+            "id": id!
+        ];
         
         var polyline = route["overview_polyline"] as? NSDictionary;
         var overview_route = polyline!["points"] as? String;
         
         path = GMSPath(fromEncodedPath: overview_route!);
         
-        return (path!, metric!);
+        return (path!, metrics);
     }
 }

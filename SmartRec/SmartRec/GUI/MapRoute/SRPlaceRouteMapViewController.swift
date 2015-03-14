@@ -8,13 +8,11 @@
 
 import Foundation
 
-class SRPlaceRouteMapViewController: SRCommonViewController {
+class SRPlaceRouteMapViewController: SRCommonRouteMapViewController {
     
     var targetCoordinate: CLLocationCoordinate2D?;
     var myCoordinate: CLLocationCoordinate2D?;
- 
-    @IBOutlet var mapView: GMSMapView!;
-
+    
     private lazy var googleServicesProvider: SRGoogleServicesDataProvider = {
         var tempProvider = SRGoogleServicesDataProvider();
         return tempProvider;
@@ -34,13 +32,6 @@ class SRPlaceRouteMapViewController: SRCommonViewController {
         self.loadRoute(pathMode);
     }
     
-    //MARK: - Configure
-    
-    func setUpMap(targetCoordinate: CLLocationCoordinate2D) {
-        
-        let camera = GMSCameraPosition.cameraWithLatitude(targetCoordinate.latitude, longitude: targetCoordinate.longitude, zoom: 13)
-        self.mapView.camera = camera;
-    }
     
     //MARK: - Override
     
@@ -58,7 +49,7 @@ class SRPlaceRouteMapViewController: SRCommonViewController {
         var targetCoordinateMarker: GMSMarker = GMSMarker(position: targetCoordinate!);
         targetCoordinateMarker.map = mapView;
         
-        var complitionBlock = { [weak self] (path: GMSPath, metric: (distance: String, duration: String)) -> Void in
+        var complitionBlock = { [weak self] (path: GMSPath, metrics: Dictionary<String, String>) -> Void in
             
             if let strongSelf = self {
                 
@@ -71,9 +62,9 @@ class SRPlaceRouteMapViewController: SRCommonViewController {
                     strongSelf.drivingPath = path;
                 }
                 
-                strongSelf.showRouteData(metric.0, duration: metric.1);
+                strongSelf.showRouteData(metrics["distance"]!, duration: metrics["duration"]!);
                 
-                strongSelf.makeRoute(path, colored: UIColor.redColor());
+                strongSelf.makeRoute(path, id: metrics["id"]!, strokeWidth: 3, colored: UIColor.redColor());
             }
         };
         
@@ -91,27 +82,6 @@ class SRPlaceRouteMapViewController: SRCommonViewController {
                 println(error);
             }
         }
-    }
-    
-    func makeRoute(path: GMSPath, colored color: UIColor) {
-        
-        var polyline = GMSPolyline(path: path);
-        polyline.strokeWidth = 3;
-        polyline.strokeColor = color;
-        
-        polyline.map = mapView;
-        
-        self.zoomToMarkersWithPath(path);
-    }
-    
-    func zoomToMarkersWithPath(path: GMSPath) {
-        
-        let coordinateBounds = GMSCoordinateBounds(path: path);
-        let mapInsets = UIEdgeInsetsMake(110, 20, 60, 20);
-        
-        let camera = GMSCameraUpdate.fitBounds(coordinateBounds, withEdgeInsets: mapInsets);
-        
-        mapView.animateWithCameraUpdate(camera);
     }
     
     //MARK: - private
