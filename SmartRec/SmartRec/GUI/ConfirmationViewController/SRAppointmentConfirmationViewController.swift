@@ -65,7 +65,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
             nameLabel.text = appointment!.place.name;
             addressLabel.text = appointment!.place.formattedAddress;
             
-            var strDist = appointment!.place.distance.doubleValue.format(".3");
+            var strDist = appointment!.place.distance?.doubleValue.format(".3");
             addressLabel.text = addressLabel.text! + ", distance: \(strDist) km.";
             
             if var phoneNumber = appointment!.place.internalPhoneNumber as String! {
@@ -272,7 +272,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
     
     private func loadPlaceImage() {
         
-        if let photoReference = appointment!.place.photorReference as String! {
+        if let photoReference = appointment!.place.photoReference as String! {
             
             var urlString = "\(kGooglePlacePhotoAPIURL)maxheight=\(kGooglePhotoMaxHeight)&photoreference=\(photoReference)&key=\(kGooglePlaceAPIKey)";
             urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;

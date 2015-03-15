@@ -9,20 +9,20 @@
 import UIKit
 import CoreData
 
-public class SRCoreDataManager: NSObject {
+class SRCoreDataManager: NSObject {
     
     private var storePath: String!;
     
     //MARK: - lazy properties
     
-    internal lazy var masterObjectContext: NSManagedObjectContext = {
+    lazy var masterObjectContext: NSManagedObjectContext = {
         var tempMaster = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType);
         tempMaster.persistentStoreCoordinator = self.storeCoordinator;
         
         return tempMaster;
     }();
     
-    public lazy var mainObjectContext: NSManagedObjectContext = {
+    lazy var mainObjectContext: NSManagedObjectContext = {
         var tempMain = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType);
         tempMain.persistentStoreCoordinator = self.storeCoordinator;
         
@@ -57,7 +57,7 @@ public class SRCoreDataManager: NSObject {
     
     //MARK: - life cycle
     
-    public init(storePath: String) {
+    init(storePath: String) {
         super.init();
         
         self.storePath = storePath;
@@ -92,7 +92,7 @@ public class SRCoreDataManager: NSObject {
             
             if (appintmentData.place.photoReferences?.count != 0) {
                 
-                placeEntity?.photorReference = appintmentData.place.photoReferences![0];
+                placeEntity?.photoReference = appintmentData.place.photoReferences![0];
             }
             
             if (appintmentData.place.vicinity != nil) {
@@ -146,7 +146,7 @@ public class SRCoreDataManager: NSObject {
 //        complitionBlock(entity: entity!, error: nil);
     }
     
-    public func insertVideoMarkEntity(dataStruct: SRVideoMarkStruct) -> NSManagedObject? {
+    func insertVideoMarkEntity(dataStruct: SRVideoMarkStruct) -> NSManagedObject? {
         var entity: SRRouteVideoPoint? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoMark, inManagedObjectContext: self.mainObjectContext) as? SRRouteVideoPoint;
         
         println("SRVideoMark")
@@ -156,7 +156,7 @@ public class SRCoreDataManager: NSObject {
             entity!.longitude = dataStruct.lng;
             entity!.autoSaved = dataStruct.autoSave;
             if let imageData =  dataStruct.image as NSData! {
-                entity!.thumnailImage = imageData;
+                entity!.thumbnailImage = imageData;
             }
         }
         
@@ -165,7 +165,7 @@ public class SRCoreDataManager: NSObject {
         return entity;
     }
     
-    public func insertRoutePointEntity(dataStruct: SRRoutePointStruct) -> NSManagedObject? {
+    func insertRoutePointEntity(dataStruct: SRRoutePointStruct) -> NSManagedObject? {
         var entity: SRRoutePoint? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoutePoint, inManagedObjectContext: self.mainObjectContext) as? SRRoutePoint;
         
         println("SRRoutePOint")
@@ -173,7 +173,7 @@ public class SRCoreDataManager: NSObject {
             entity!.id = dataStruct.id;
             entity!.latitude = dataStruct.lat;
             entity!.longitude = dataStruct.lng;
-            entity!.time = NSNumber(double: dataStruct.time);
+            entity!.time = NSDate(timeIntervalSince1970: dataStruct.time);
         }
         
         self.saveContext(self.mainObjectContext);
@@ -181,14 +181,14 @@ public class SRCoreDataManager: NSObject {
         return entity;
     }
     
-    public func insertVideoDataEntity(dataStruct: SRVideoDataStruct) -> NSManagedObject? {
+    func insertVideoDataEntity(dataStruct: SRVideoDataStruct) -> NSManagedObject? {
         var entity: SRVideoData? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoData, inManagedObjectContext: self.mainObjectContext) as? SRVideoData;
         
         println("SRVideoData")
         if entity != nil {
             entity!.id = dataStruct.id;
             entity!.fileName = dataStruct.fileName;
-            entity!.date = NSNumber(double: dataStruct.dateSeconds);
+            entity!.date = NSDate(timeIntervalSince1970: dataStruct.dateSeconds);
             entity!.fileSize = NSNumber(longLong: dataStruct.fileSize);
             entity!.duration = NSNumber(double: dataStruct.duration);
             entity!.frameRate = NSNumber(float: dataStruct.frameRate);
@@ -201,7 +201,7 @@ public class SRCoreDataManager: NSObject {
         return entity;
     }
     
-    public func insertRouteEntity(dataStruct: SRRouteStruct) -> NSManagedObject? {
+    func insertRouteEntity(dataStruct: SRRouteStruct) -> NSManagedObject? {
         var entity: SRRoute? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoute, inManagedObjectContext: self.mainObjectContext) as? SRRoute;
         
         println("route")
@@ -215,7 +215,7 @@ public class SRCoreDataManager: NSObject {
         return entity;
     }
     
-    public func addRelationBetweenVideoMark(videoMark: SRRouteVideoPoint, andRute identifier: String) {
+    func addRelationBetweenVideoMark(videoMark: SRRouteVideoPoint, andRute identifier: String) {
         
         mainObjectContext.performBlockAndWait { [weak self] () -> Void in
             if var blockSelf = self {
@@ -229,7 +229,7 @@ public class SRCoreDataManager: NSObject {
         };
     }
 
-    public func addRelationBetweenVideoData(videoData: SRVideoDataStruct, andRouteMark identifier: String) {
+    func addRelationBetweenVideoData(videoData: SRVideoDataStruct, andRouteMark identifier: String) {
         
         mainObjectContext.performBlockAndWait{ [weak self] () -> Void in
             if var blockSelf = self {
@@ -243,7 +243,7 @@ public class SRCoreDataManager: NSObject {
         };
     }
     
-    public func addRelationBetweenRoutePoint(routePoint: SRRoutePoint, andRoute identifier: String) {
+    func addRelationBetweenRoutePoint(routePoint: SRRoutePoint, andRoute identifier: String) {
         
         mainObjectContext.performBlockAndWait { [weak self] () -> Void in
             if var blockSelf = self {
@@ -258,7 +258,7 @@ public class SRCoreDataManager: NSObject {
         };
     }
     
-    public func updateEntity(entity: NSManagedObject) -> SRResult {
+    func updateEntity(entity: NSManagedObject) -> SRResult {
         var managedContext = entity.managedObjectContext;
                 
         var error: NSError?;
@@ -270,7 +270,7 @@ public class SRCoreDataManager: NSObject {
         return .Failure(error!);
     }
     
-    public func deleteEntity(entity: NSManagedObject) -> SRResult {
+    func deleteEntity(entity: NSManagedObject) -> SRResult {
         
         var managedContext = entity.managedObjectContext;
         
@@ -287,7 +287,7 @@ public class SRCoreDataManager: NSObject {
     
     //MARK: - internal API
 
-    internal func fetchEntities(name: String, withCompletion completion:((fetchResult: NSAsynchronousFetchResult) -> Void))  {
+    func fetchEntities(name: String, withCompletion completion:((fetchResult: NSAsynchronousFetchResult) -> Void))  {
         
         // Initialize Fetch Request
         var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: name);

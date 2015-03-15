@@ -12,10 +12,10 @@ extension SRRoute {
     
     func addMark(mark: SRRouteVideoPoint) {
         
-        var tempSet: NSMutableOrderedSet = NSMutableOrderedSet(orderedSet: videoMarks);
+        var tempSet: NSMutableOrderedSet = NSMutableOrderedSet(orderedSet: videoPoints);
         tempSet.addObject(mark);
         
-        videoMarks = tempSet;
+        videoPoints = tempSet;
     }
     
     func addRoutePoint(point: SRRoutePoint) {

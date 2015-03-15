@@ -149,7 +149,7 @@ class SRRouteMapViewController: SRCommonRouteMapViewController, SRVideoInfoViewD
             println("Id: \(routeMarker.videoPoint.videoIdentifier)");
             
             let predicate = NSPredicate(format: "id = %@", routeMarker.videoPoint.videoIdentifier);
-            var temp = route?.videoMarks.filteredOrderedSetUsingPredicate(predicate!);
+            var temp = route?.videoPoints.filteredOrderedSetUsingPredicate(predicate!);
             
             if (temp != nil && temp?.count != 0) {
                 
@@ -236,12 +236,12 @@ class SRRouteMapViewController: SRCommonRouteMapViewController, SRVideoInfoViewD
         //set route start-end dagte time
         var startDate: NSDate?;
         if let firstPoint = route!.routePoints.firstObject as? SRRoutePoint {
-            startDate = NSDate(timeIntervalSince1970: firstPoint.time.doubleValue);
+            startDate = firstPoint.time;
         }
         
         var endDate: NSDate?;
         if let lastPoint = route!.routePoints.lastObject as? SRRoutePoint {
-            endDate = NSDate(timeIntervalSince1970: lastPoint.time.doubleValue);
+            endDate = lastPoint.time;
         }
         
         let startDateString = startDate?.stringFromDateWithStringFormat("ccc, LLL d, h:m:s");
@@ -283,7 +283,7 @@ class SRRouteMapViewController: SRCommonRouteMapViewController, SRVideoInfoViewD
         videoInfoView.videoFileNameLabel.text = selectedVideoMark!.videoData!.fileName;
         
         //date
-        let date: NSDate = NSDate(timeIntervalSince1970: selectedVideoMark!.videoData!.date.doubleValue);
+        let date: NSDate = selectedVideoMark!.videoData!.date;
         videoInfoView.videoMarkDateLabel.text = date.stringFromDateWithStringFormats([kTimeFormat, kDateFormat, kTimeFormat]);
         
         //set file duration
@@ -316,7 +316,7 @@ class SRRouteMapViewController: SRCommonRouteMapViewController, SRVideoInfoViewD
         
         if var tempRoute = route as? SRRoute {
             
-            tempRoute.videoMarks.enumerateObjectsUsingBlock { [weak self] (element, index, stop) -> Void in
+            tempRoute.videoPoints.enumerateObjectsUsingBlock { [weak self] (element, index, stop) -> Void in
                 
                 if let mark = element as? SRRouteVideoPoint {
                     
@@ -328,7 +328,7 @@ class SRRouteMapViewController: SRCommonRouteMapViewController, SRVideoInfoViewD
                             "fileName": mark.videoData!.fileName,
                             "lat": mark.latitude.doubleValue,
                             "lng": mark.longitude.doubleValue,
-                            "photo": mark.thumnailImage];
+                            "photo": mark.thumbnailImage];
                         //
                         var place: SRVideoPlace = SRVideoPlace(dictionary: dic);
                         

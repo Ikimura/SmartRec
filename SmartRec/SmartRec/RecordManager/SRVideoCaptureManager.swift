@@ -29,7 +29,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
     private var isRecording: Bool!;
     private var needToDeleteRoute: Bool
         { get {
-            if (route?.routePoints == nil || route?.videoMarks == nil || route?.routePoints.count == 0){
+            if (route?.routePoints == nil || route?.videoPoints == nil || route?.routePoints.count == 0){
                 return true;
             }
             return false;

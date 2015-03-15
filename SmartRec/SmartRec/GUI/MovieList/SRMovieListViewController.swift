@@ -82,7 +82,7 @@ class SRMovieListViewController: SRCommonViewController, SRDataSourceDelegate, U
                 cell.dateLabel.text = videoDataItem.fileName;
             }
 
-            if let image = UIImage(data: item.thumnailImage)? {
+            if let image = UIImage(data: item.thumbnailImage)? {
                 cell.photoImage.image = image;
             } else {
                 println("No Image");
