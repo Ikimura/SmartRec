@@ -53,9 +53,7 @@ let kRouteToPlaceSegueIdentifier: String = "routeToPlaceSegueIdentifier";
 
 let kConfirmationSegueIdentifier: String = "confirmationSegueIdentifier";
 
-let kShowVideoSegueIdentifier_1: String = "showVideoSegueIdentifier_1";
-
-let kShowVideoSegueIdentifier_2: String = "showVideoSegueIdentifier_2";
+let kShowVideoSegueIdentifier: String = "showVideoSegueIdentifier";
 
 let kDisplayVideoRouteDetailsSegueIdentifier_1: String = "displayVideoRouteDetailsSegueIdentifier_1";
 

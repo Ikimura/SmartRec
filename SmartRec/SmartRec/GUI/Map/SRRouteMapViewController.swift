@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class SRRouteMapViewController: SRCommonRouteMapViewController, SRVideoInfoViewDelegate {
+class SRRouteMapViewController: SRCommonRouteMapViewController {
     
     var route: SRRoute?;
     var selectedVideoMark: SRRouteVideoPoint?;
@@ -31,8 +31,6 @@ class SRRouteMapViewController: SRCommonRouteMapViewController, SRVideoInfoViewD
     private lazy var videoInfoView: SRVideoInfoView! = {
         
         if let videoInfoView = UIView.viewFromNibName("SRVideoInfoView") as? SRVideoInfoView!  {
-            
-            videoInfoView.delegate = self;
             
             return videoInfoView;
         } else {
@@ -60,46 +58,8 @@ class SRRouteMapViewController: SRCommonRouteMapViewController, SRVideoInfoViewD
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
         
-        //load data
-//        self.loadData();
     }
     
-    //MARK: - private interface
-    
-//    private func loadData() {
-//        
-//        println("Loading indicator show");
-//        self.showBusyView();
-//        
-//        appDelegate.coreDataManager.fetchEntities(kManagedObjectRoute, withCompletion: { [weak self] (fetchResult: NSAsynchronousFetchResult) -> Void in
-//            
-//            if var blockSelf = self {
-//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                    println("Loading indicator hide");
-//                    blockSelf.hideBusyView();
-//                });
-//                
-//                if ((fetchResult.finalResult) != nil) {
-//                    // Update Items
-//                    blockSelf.routes = fetchResult.finalResult as [SRRoute]?;
-//                    println("Results Count: \(blockSelf.routes?.count)");
-//
-//                    for route in blockSelf.routes! {
-//                        //show route
-//                        println("Count of route points: \(route.routePoints.count)");
-//                        
-//                        dispatch_async(dispatch_get_main_queue(), {() -> Void in
-//                            blockSelf.makePolylineForRoute(route);
-//                        });
-//                        println("Id: \(route.id)");
-//                        println("Count of video marks: \(route.videoMarks.count)");
-//                        
-//                        blockSelf.markVideoMarkersForRoute(route);
-//                    }
-//                }
-//            }
-//        });
-//    }
     
     //MARK: - GMSMapViewDelegate
     
@@ -110,7 +70,7 @@ class SRRouteMapViewController: SRCommonRouteMapViewController, SRVideoInfoViewD
             if let url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(tempMarker.videoPoint.fileName)\(kFileExtension)") as NSURL! {
                 videoURL = url;
             }
-            self.performSegueWithIdentifier(kShowVideoSegueIdentifier_1, sender: self);
+            self.performSegueWithIdentifier(kShowVideoSegueIdentifier, sender: self);
         }
     }
     
@@ -303,12 +263,6 @@ class SRRouteMapViewController: SRCommonRouteMapViewController, SRVideoInfoViewD
         let fps = Double(selectedVideoMark!.videoData!.frameRate.floatValue).format(".2");
         videoInfoView.videoFrameRateLabel.text = "FPS: \(fps)";
     }
-    
-    //MARK: - SRVideoInfoViewDelegate
-    
-    func videoInfoViewDidTapShowButton(view: SRVideoInfoView) {
-        self.performSegueWithIdentifier("kShowVideoSegueIdentifier_1", sender: self);
-    }
 
     //MARK: - Private
     
@@ -352,7 +306,7 @@ class SRRouteMapViewController: SRCommonRouteMapViewController, SRVideoInfoViewD
             tempRoute.routePoints.enumerateObjectsUsingBlock {[weak self] (element, index, stop) -> Void in
                 
                 if var blockSelf = self {
-                    
+
                     if let routePoint = element as? SRRoutePoint {
                         
                         gmsPaths.addCoordinate(CLLocationCoordinate2D(latitude: routePoint.latitude.doubleValue, longitude: routePoint.longitude.doubleValue));
@@ -363,6 +317,7 @@ class SRRouteMapViewController: SRCommonRouteMapViewController, SRVideoInfoViewD
             };
             
             self.makeRoute(gmsPaths, id: tempRoute.id, strokeWidth: 5, colored: UIColor.blueColor());
+            self.markVideoMarkersForRoute(tempRoute);
         }
     }
     
@@ -387,7 +342,8 @@ class SRRouteMapViewController: SRCommonRouteMapViewController, SRVideoInfoViewD
         
         switch (segue.identifier!) {
             
-        case kShowVideoSegueIdentifier_1:
+        case kShowVideoSegueIdentifier:
+            
             if let showVideoVC = segue.destinationViewController as? SRShowVideoViewController {
                 showVideoVC.fileURLToShow = videoURL!;
             }

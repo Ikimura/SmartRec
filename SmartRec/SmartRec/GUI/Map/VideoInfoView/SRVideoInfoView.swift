@@ -8,11 +8,6 @@
 
 import Foundation
 
-protocol SRVideoInfoViewDelegate {
-    
-    func videoInfoViewDidTapShowButton(view: SRVideoInfoView);
-}
-
 class SRVideoInfoView : UIVisualEffectView {
     
     @IBOutlet weak var videoFileNameLabel: UILabel!
@@ -23,6 +18,5 @@ class SRVideoInfoView : UIVisualEffectView {
     @IBOutlet weak var fileSizeLabel: UILabel!
     @IBOutlet weak var videoResolutionLabel: UILabel!
     @IBOutlet weak var videoFrameRateLabel: UILabel!
-    
-    var delegate: SRVideoInfoViewDelegate?;
+
 }
