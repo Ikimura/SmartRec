@@ -2,7 +2,7 @@
 //  SRRoute.swift
 //  SmartRec
 //
-//  Created by Artsiom Karseka on 3/15/15.
+//  Created by Artsiom Karseka on 3/16/15.
 //  Copyright (c) 2015 con.epam.evnt. All rights reserved.
 //
 
@@ -13,7 +13,7 @@ class SRRoute: NSManagedObject {
 
     @NSManaged var duration: NSNumber
     @NSManaged var id: String
-    @NSManaged var startDate: NSNumber
+    @NSManaged var startDate: NSDate
     @NSManaged var routePoints: NSOrderedSet
     @NSManaged var videoPoints: NSOrderedSet
 

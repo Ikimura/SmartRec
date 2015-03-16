@@ -32,6 +32,9 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
     @IBOutlet weak var notificationButton: UIButton!
     @IBOutlet weak var calendarButton: UIButton!
     @IBOutlet weak var pictureImageView: UIImageView!
+    @IBOutlet weak var textViewTopLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textViewBottomLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var pictureImageTopLayoutConstraint: NSLayoutConstraint!
     //MARK: - life cycle
     
     override func viewDidLoad() {
@@ -40,6 +43,19 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
         self.configureUI();
     }
     
+    override func viewWillAppear(animated: Bool) {
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHide:", name: UIKeyboardDidHideNotification, object: nil);
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        
+        // unregister for keyboard notifications while not visible.
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidHideNotification, object: nil);
+    }
+
     //MARK: - Configuration
     
      override func setUpNavigationBar() {
@@ -66,7 +82,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
             addressLabel.text = appointment!.place.formattedAddress;
             
             var strDist = appointment!.place.distance?.doubleValue.format(".3");
-            addressLabel.text = addressLabel.text! + ", distance: \(strDist) km.";
+            addressLabel.text = addressLabel.text! + ", distance: \(strDist!) km.";
             
             if var phoneNumber = appointment!.place.internalPhoneNumber as String! {
                 
@@ -77,7 +93,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
                 phoneLabel.text = appointment!.place.formattedPhoneNumber;
             }
             
-            dateLabel.text = "\(appointment!.fireDate)";
+            dateLabel.text = "\(appointment!.fireDate.stringFromDateWithStringFormats([kTimeFormat, kDateFormat, kTimeFormat]))";
             websiteLabel.text = appointment!.place.website;
 //            cityZipLabel.text = appointment!.place.zipCity;
         }
@@ -298,6 +314,48 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
             notesTextView.textColor = UIColor.lightGrayColor();
             notesTextView.text = "Leave your notes...";
             notesTextView.resignFirstResponder();
+        }
+    }
+    
+    //MARK: - notifications
+    
+    func keyboardDidShow(notification: NSNotification) {
+        
+        if let userinfo = notification.userInfo {
+
+            var keyboardFrame: CGRect = (userinfo[UIKeyboardFrameEndUserInfoKey] as NSValue).CGRectValue();
+            
+            textViewTopLayoutConstraint.constant -= 80;
+            textViewBottomLayoutConstraint.constant += 80;
+            pictureImageTopLayoutConstraint.constant += 80;
+
+            UIView.animateWithDuration(0.33, animations: {[weak self] () -> Void in
+                
+                if let strongSelf = self {
+                    
+                    strongSelf.view.layoutIfNeeded();
+                }
+            });
+        }
+    }
+    
+    func keyboardDidHide(notification: NSNotification) {
+        
+        if let userinfo = notification.userInfo {
+            
+            var keyboardFrame: CGRect = (userinfo[UIKeyboardFrameEndUserInfoKey] as NSValue).CGRectValue();
+            
+            textViewTopLayoutConstraint.constant = 12;
+            textViewBottomLayoutConstraint.constant = 12;
+            pictureImageTopLayoutConstraint.constant = 12;
+            
+            UIView.animateWithDuration(0.33, animations: {[weak self] () -> Void in
+                
+                if let strongSelf = self {
+                    
+                    strongSelf.view.layoutIfNeeded();
+                }
+            });
         }
     }
     

@@ -28,6 +28,9 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
         
         tableView?.registerNib(UINib(nibName: "SRAppointmentHistoryCell", bundle: nil), forCellReuseIdentifier: "appHistory");
 
+        tableView.estimatedRowHeight = 73;
+        tableView.rowHeight = UITableViewAutomaticDimension;
+
         self.automaticallyAdjustsScrollViewInsets = false;
     }
     
@@ -83,7 +86,9 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
         if var appointment: SRCoreDataAppointment = dataSource.objectAtIndexPath(indexPath) as? SRCoreDataAppointment {
             
             cell!.nameLabel?.text = appointment.place.name;
-            cell!.dateLabel?.text = "\(appointment.fireDate)";
+            
+            let atLS = NSLocalizedString("AT", comment: "comment");
+            cell!.dateLabel?.text = "\(atLS) \(appointment.fireDate.humantReadableStringDateFromDate(kTimeFormat))";
             
             var iconURLString = appointment.place.iconURL;
             iconURLString = iconURLString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;

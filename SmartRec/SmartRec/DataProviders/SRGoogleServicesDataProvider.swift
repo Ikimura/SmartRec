@@ -56,7 +56,7 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
             urlString += "&keyword=\(keyword!)";
         }
         
-        urlString += "&key=\(kGooglePlaceAPIKey)";
+        urlString += "&language=\(kGooglePlaceAPILanguage)&key=\(kGooglePlaceAPIKey)";
         urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
 
         println("Debug: \(urlString)");
@@ -126,7 +126,7 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
             urlString += "&radius=\(radius!)";
         }
         
-        urlString += "&key=\(kGooglePlaceAPIKey)";
+        urlString += "&language=\(kGooglePlaceAPILanguage)&key=\(kGooglePlaceAPIKey)";
         urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;
         
         println("Debug: \(urlString)");
@@ -173,7 +173,7 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
     
     func placeDetails(placeId: String, complitionBlock: (data: NSDictionary?) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
         
-        var urlString = "\(kGooglePlaceDetailsAPIURL)reference=\(placeId)&key=\(kGooglePlaceAPIKey)";
+        var urlString = "\(kGooglePlaceDetailsAPIURL)reference=\(placeId)&language=\(kGooglePlaceAPILanguage)&key=\(kGooglePlaceAPIKey)";
         urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;
 
         println("Debug: \(urlString)");

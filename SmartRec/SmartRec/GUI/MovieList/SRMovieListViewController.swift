@@ -49,10 +49,6 @@ class SRMovieListViewController: SRCommonViewController, SRDataSourceDelegate, U
         super.setUpNavigationBar();
         
         self.title = "My Videos";
-        
-//        let rigthBatItem = UIBarButtonItem(image: UIImage(named: "map_annotation_conf"), style: .Plain, target: self, action: "didTapMap:");
-//        
-//        self.navigationItem.rightBarButtonItem = rigthBatItem;
     }
 
     //MARK: - UITableViewDataSource

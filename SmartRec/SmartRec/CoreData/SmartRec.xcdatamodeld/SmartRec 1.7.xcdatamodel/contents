@@ -29,7 +29,7 @@
     <entity name="SRRoute" representedClassName="SmartRec.SRRoute" syncable="YES">
         <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startDate" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="routePoints" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="SRRoutePoint" inverseName="route" inverseEntity="SRRoutePoint" elementID="routeMarks" syncable="YES"/>
         <relationship name="videoPoints" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="SRRouteVideoPoint" syncable="YES"/>
     </entity>

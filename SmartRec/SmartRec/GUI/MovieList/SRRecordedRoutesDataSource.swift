@@ -27,4 +27,13 @@ class SRRecordedRoutesDataSource : SRAppointmentsDataSource {
         
         return [ NSSortDescriptor(key: "videoData.date", ascending: true) ];
     }
+    
+    override func titleForHeaderInSection(section: Int) -> String {
+        
+        var point = self.objectAtIndexPath(NSIndexPath(forRow: 0, inSection: section)) as? SRRouteVideoPoint;
+        var sectionName = point?.route?.startDate.humantReadableStringDateFromDate(kDateFormat);
+        
+        return sectionName!;
+    }
+    
 }

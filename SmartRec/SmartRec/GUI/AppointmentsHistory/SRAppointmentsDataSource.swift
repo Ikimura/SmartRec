@@ -96,9 +96,10 @@ class SRAppointmentsDataSource : SRCoreDataDataSource, SRAppointmentsDataSourceP
     
     func titleForHeaderInSection(section: Int) -> String {
         
-        var section = fetchResultController!.sections![section] as? NSFetchedResultsSectionInfo;
+        var event = self.objectAtIndexPath(NSIndexPath(forRow: 0, inSection: section)) as? SRCoreDataAppointment;
+        var sectionName = event?.fireDate.humantReadableStringDateFromDate(kDateFormat);
         
-        return section!.name != nil ? section!.name! : "No name";
+        return sectionName!;
     }
     
     func numberOfItemInSection(index: Int) -> Int {

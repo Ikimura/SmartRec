@@ -207,7 +207,7 @@ class SRCoreDataManager: NSObject {
         println("route")
         if entity != nil {
             entity!.id = dataStruct.id;
-            entity!.startDate = NSNumber(double: dataStruct.dateSeconds);
+            entity!.startDate = NSDate(timeIntervalSince1970: dataStruct.dateSeconds);
         }
         
         self.saveContext(self.mainObjectContext);

@@ -17,6 +17,41 @@ extension NSDate {
         return dateFormatter.stringFromDate(self);
     }
     
+    func humantReadableStringDateFromDate(format: String) -> String {
+        var dateFormatter = NSDateFormatter();
+        
+        var calendar: NSCalendar = NSCalendar.currentCalendar();
+        let comps = (NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear);
+        
+        var nowDate = NSDate();
+        var appDate = self;
+        
+        let date1Components: NSDateComponents = calendar.components(comps, fromDate: appDate);
+        let date2Components: NSDateComponents = calendar.components(comps, fromDate: nowDate);
+        
+        appDate = calendar.dateFromComponents(date1Components)!;
+        nowDate = calendar.dateFromComponents(date2Components)!;
+        
+        var result: NSComparisonResult = appDate.compare(nowDate);
+        
+        var dateTimeString: String?;
+        
+        if (result == NSComparisonResult.OrderedSame) {
+            
+            let todayLS = NSLocalizedString("TODAY", comment: "comment");
+            
+            dateTimeString = "\(todayLS)";
+            
+        } else {
+            
+            dateFormatter.dateFormat = format;
+            
+            dateTimeString = "\(dateFormatter.stringFromDate(self))";
+        }
+        
+        return dateTimeString!;
+    }
+    
     func stringFromDateWithStringFormats(formats: [String]) -> String {
         var dateFormatter = NSDateFormatter();
         

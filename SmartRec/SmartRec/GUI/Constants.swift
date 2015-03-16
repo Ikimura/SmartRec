@@ -83,7 +83,7 @@ let kBusyViewNibName: String = "SRBusyView";
 
 let kTimeFormat: String = "h:mm a";
 
-let kDateFormat: String = "cсcc, d LLLL";
+let kDateFormat: String = "EEEE, d LLLL";
 
 let kGoogleServicesAPIKey: String = "AIzaSyDkaCDkatCMTXFFbC_cdRnkBC2KsGL7C3Q";
 
@@ -100,6 +100,8 @@ let kGooglePlaceDetailsAPIURL: String = "https://maps.googleapis.com/maps/api/pl
 let kGooglePlacePhotoAPIURL: String = "https://maps.googleapis.com/maps/api/place/photo?";
 
 let kGoogleDirectionAPIURL: String = "http://maps.googleapis.com/maps/api/directions/json?";
+
+let kGooglePlaceAPILanguage: String = "ru";
 
 let kGooglePhotoMaxHeight: Int = 160;
 
