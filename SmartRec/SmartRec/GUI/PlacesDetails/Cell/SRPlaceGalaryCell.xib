@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
@@ -13,14 +13,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="place_holder" translatesAutoresizingMaskIntoConstraints="NO" id="wVs-Pj-lpF">
-                        <rect key="frame" x="15" y="0.0" width="160" height="159.5"/>
+                        <rect key="frame" x="15" y="0.0" width="126" height="159.5"/>
                     </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="wVs-Pj-lpF" firstAttribute="top" secondItem="LR9-B1-5FO" secondAttribute="top" id="ApY-tp-yTZ"/>
                     <constraint firstItem="wVs-Pj-lpF" firstAttribute="leading" secondItem="LR9-B1-5FO" secondAttribute="leading" constant="15" id="FTi-sm-6IF"/>
                     <constraint firstAttribute="bottom" secondItem="wVs-Pj-lpF" secondAttribute="bottom" id="VQN-7T-Iey"/>
-                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="wVs-Pj-lpF" secondAttribute="trailing" constant="145" id="x13-UP-fNG"/>
+                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="wVs-Pj-lpF" secondAttribute="trailing" constant="179" id="x13-UP-fNG"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

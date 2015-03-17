@@ -52,26 +52,35 @@ class SRPlaceRouteMapViewController: SRCommonRouteMapViewController {
     
     func loadRouteIfNeeded(mode: SRRoutePathMode) {
         
+        if (routePaths.count == 0 || (routePaths.count - 1) < mode.value ) {
+            
+            self.loadRoute(mode);
+
+        } else {
+            
+            self.refreshMapView(mode);
+        }
+    }
+    
+    //MARK: - private
+    
+    private func refreshMapView(withMode: SRRoutePathMode) {
+        
+        mapView.clear();
+        
+        //Show markers
         var myCoordinateMarker: GMSMarker = GMSMarker(position: myCoordinate!);
         myCoordinateMarker.map = mapView;
         
         var targetCoordinateMarker: GMSMarker = GMSMarker(position: targetCoordinate!);
         targetCoordinateMarker.map = mapView;
         
-//        var flag: Bool = (routePaths.count - 1) < mode.value;
+        //Show route
+        self.showRouteData(pathMetrics[withMode.value]["distance"]!, duration:pathMetrics[withMode.value]["duration"]!);
         
-        if (routePaths.count == 0) {
-            
-            self.loadRoute(mode);
-            
-        } else {
-            
-//            self.showRouteData(drivingPathMetrics!["distance"]!, duration: drivingPathMetrics!["duration"]!);
-//            self.makeRoute(routePaths[mode.value]!, id: pathMetrics[mode.value]!["id"]!, strokeWidth: 3, colored: UIColor.redColor());
-        }
+        var color = pathMode.value == 0 ? UIColor.redColor() : UIColor.blueColor();
+        self.makeRoute(routePaths[withMode.value], id: pathMetrics[withMode.value]["id"]!, strokeWidth: 3, colored: color);
     }
-    
-    //MARK: - private
     
     private func loadRoute(mode: SRRoutePathMode) {
         
@@ -79,8 +88,12 @@ class SRPlaceRouteMapViewController: SRCommonRouteMapViewController {
             
             if let strongSelf = self {
                 
-//                strongSelf.routePaths.appen// showRouteData(metrics["distance"]!, duration: metrics["duration"]!);
-//                strongSelf.makeRoute(path, id: metrics["id"]!, strokeWidth: 3, colored: UIColor.redColor());
+                //Save routes
+                strongSelf.routePaths.append(path);
+                strongSelf.pathMetrics.append(metrics);
+                
+                //show route
+                strongSelf.refreshMapView(mode);
             }
         };
         

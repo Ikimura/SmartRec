@@ -61,15 +61,29 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
      override func setUpNavigationBar() {
         
         self.title = "LOGO"
-        let shareBar: UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem:.Action, target: self, action: Selector("didTapShare:"));
         
-        self.navigationItem.rightBarButtonItem = shareBar;
+        var rightBarButtonItem: UIBarButtonItem? = nil;
         
-        if (presantationType == .Notification) {
+        switch (presantationType!) {
+            
+        case .Notification:
             
             let doneBar: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "done:");
             self.navigationItem.leftBarButtonItem = doneBar;
+            
+            rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "map_annotation_conf"), style: .Plain, target: self, action: "didTapRouteButton:");
+            
+        case .Detailes:
+            rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "map_annotation_conf"), style: .Plain, target: self, action: "didTapRouteButton:");
+            
+        case .Confirmation:
+            rightBarButtonItem = UIBarButtonItem.init(barButtonSystemItem:.Action, target: self, action: Selector("didTapShare:"));
+            
+        default:
+            fatalError("No Such Presenation Type");
         }
+        
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem;
     }
     
     private func configureUI() {
@@ -78,6 +92,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
         confirmationButton.setTitleColor(UIColor.whiteColor(), forState: .Selected);
         
         if (appointment != nil) {
+            
             nameLabel.text = appointment!.place.name;
             addressLabel.text = appointment!.place.formattedAddress;
             
@@ -122,18 +137,16 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
         }
     }
     
-    private func disableButtons() {
-        
-        calendarButton.enabled = false;
-        notificationButton.enabled = false;
-        confirmationButton.enabled = false;
-    }
-    
     //Mark: - handlers
     
     func done(sender: AnyObject) {
         
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func didTapRouteButton(sender: AnyObject) {
+        
+        self.performSegueWithIdentifier(kRouteToPlaceSegueIdentifier_1, sender: self);
     }
     
     func didTapShare(sender: AnyObject) {
@@ -189,9 +202,13 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
                 } else {
                     
                     //TODO: localize
-                    self.disableButtons();
-                    self.showAlertWith("Succeed", message: "Appointment Was Successfully Added.");
-                    println("save succeded");
+//                    self.showAlertWith("Succeed", message: "Appointment Was Successfully Added.");
+//                    println("save succeded");
+                    
+                    if let mainVC = appDelegate.window?.rootViewController as? SRRootMenuViewController {
+                        
+                        mainVC.rollbackToContentViewController();
+                    }
                 }
                 
             case .Detailes:
@@ -381,4 +398,19 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
 //        self.presentViewController(controller, animated: true, completion: nil);
     }
 
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        
+        if (segue.identifier == kRouteToPlaceSegueIdentifier_1) {
+            
+            if let navVC = segue.destinationViewController as? UINavigationController {
+                
+                if let destVC = navVC.viewControllers[0] as? SRPlaceRouteMapViewController {
+                    
+                    destVC.myCoordinate = appDelegate.currentLocation().coordinate;
+                    destVC.targetCoordinate = CLLocationCoordinate2DMake(appointment!.place.lat.doubleValue, appointment!.place.lng.doubleValue);
+                }
+            }
+        }
+    }
 }

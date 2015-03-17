@@ -30,5 +30,14 @@ class SRRootMenuViewController : RESideMenu {
         self.contentViewShadowEnabled = true;
     }
     
-
+    func rollbackToContentViewController() {
+            
+        self.contentViewController.presentedViewController!.dismissViewControllerAnimated(true, completion: nil);
+        
+        if (self.contentViewController is SRNavigationController) {
+            
+            let vc = self.contentViewController as SRNavigationController;
+            vc.popToRootViewControllerAnimated(true);
+        }
+    }
 }

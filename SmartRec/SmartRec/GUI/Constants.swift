@@ -51,6 +51,8 @@ let kSelectAppointmentDateSegueIdentifier: String = "selectAppointmentDateSegueI
 
 let kRouteToPlaceSegueIdentifier: String = "routeToPlaceSegueIdentifier";
 
+let kRouteToPlaceSegueIdentifier_1: String = "routeToPlaceSegueIdentifier_1";
+
 let kConfirmationSegueIdentifier: String = "confirmationSegueIdentifier";
 
 let kShowVideoSegueIdentifier: String = "showVideoSegueIdentifier";

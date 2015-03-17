@@ -88,7 +88,7 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
             cell!.nameLabel?.text = appointment.place.name;
             
             let atLS = NSLocalizedString("AT", comment: "comment");
-            cell!.dateLabel?.text = "\(atLS) \(appointment.fireDate.humantReadableStringDateFromDate(kTimeFormat))";
+            cell!.dateLabel?.text = "\(atLS) \(appointment.fireDate.stringFromDateWithStringFormat(kTimeFormat))";
             
             var iconURLString = appointment.place.iconURL;
             iconURLString = iconURLString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;
