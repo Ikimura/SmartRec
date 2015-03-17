@@ -2,7 +2,7 @@
 //  SRCoreDataAppointment.swift
 //  SmartRec
 //
-//  Created by Artsiom Karseka on 3/15/15.
+//  Created by Artsiom Karseka on 3/17/15.
 //  Copyright (c) 2015 con.epam.evnt. All rights reserved.
 //
 
@@ -19,5 +19,6 @@ class SRCoreDataAppointment: NSManagedObject {
     @NSManaged var note: String
     @NSManaged var sortDate: NSDate
     @NSManaged var place: SRCoreDataPlace
+    @NSManaged var routes: NSOrderedSet?
 
 }
