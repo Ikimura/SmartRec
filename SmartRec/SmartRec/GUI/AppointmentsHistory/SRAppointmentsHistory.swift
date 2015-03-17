@@ -100,27 +100,24 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
             cell!.indicatorImageView.tintColor = UIColor.greenColor();
             if (appointment.completed.boolValue) {
                 
-                //TODO: resources
-                cell!.indicatorImageView.image = UIImage(named: "cell_indicator_sel");
+                cell!.indicatorImageView.image = UIImage(named: "cell_indicator_green_sel");
         
             } else if( NSDate().timeIntervalSince1970 > appointment.fireDate.timeIntervalSince1970){
                 
-                //TODO: resources
-//                cell!.indicatorImageView.image = nil;
-                cell!.indicatorImageView.image = UIImage(named: "cell_indicator_sel");
+                cell!.indicatorImageView.image = UIImage(named: "cell_indicator_warning");
         
             } else {
                 
-                cell!.indicatorImageView.image = UIImage(named: "cell_indicator_def");
+                cell!.indicatorImageView.image = UIImage(named: "cell_indicator_green_def");
             }
         
             if (appointment.locationTrack.boolValue) {
                 
-                cell!.mapIndicatorImageView.image = UIImage(named: "map_annotation_conf");
+                cell!.mapIndicatorImageView.image = UIImage(named: "map_annotation_sel");
         
             } else {
         
-                cell!.mapIndicatorImageView.image = nil;
+                cell!.mapIndicatorImageView.image = UIImage(named: "map_annotation_conf");
             }
         }
         

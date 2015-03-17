@@ -25,6 +25,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
     @IBOutlet weak var phoneLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var notesTextView: UITextView!
+    @IBOutlet weak var locationIndicatorImageView: UIImageView!
 //    @IBOutlet weak var cityZipLabel: UILabel!
     @IBOutlet weak var websiteLabel: UILabel!
     
@@ -88,9 +89,8 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
     
     private func configureUI() {
         
-        confirmationButton.setTitleShadowColor(UIColor.clearColor(), forState: .Selected);
-        confirmationButton.setTitleColor(UIColor.whiteColor(), forState: .Selected);
-        
+        locationIndicatorImageView.image = appointment!.locationTrack.boolValue ? UIImage(named: "map_annotation_sel") : UIImage(named: "map_annotation_conf");
+
         if (appointment != nil) {
             
             nameLabel.text = appointment!.place.name;
@@ -174,7 +174,8 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
         var btn = sender as UIButton;
         btn.selected = !btn.selected;
         
-        appointment!.locationTrack = !appointment!.locationTrack.boolValue;
+        appointment!.locationTrack = NSNumber(bool: !appointment!.locationTrack.boolValue);
+        locationIndicatorImageView.image = appointment!.locationTrack.boolValue ? UIImage(named: "map_annotation_sel") : UIImage(named: "map_annotation_conf");
     }
     
     @IBAction func finishDidTap(sender: AnyObject) {

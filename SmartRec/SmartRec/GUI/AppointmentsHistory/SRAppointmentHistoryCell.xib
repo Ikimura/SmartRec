@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -34,14 +35,14 @@
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hyf-8W-0iz">
-                        <rect key="frame" x="265" y="13" width="17" height="24"/>
+                        <rect key="frame" x="263" y="10" width="17" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="17" id="YnD-SN-rTa"/>
                             <constraint firstAttribute="height" constant="24" id="aNn-AR-2EH"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_indicator_def" translatesAutoresizingMaskIntoConstraints="NO" id="L9b-LB-Sab">
-                        <rect key="frame" x="260" y="39" width="22" height="22"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_indicator_green_def" translatesAutoresizingMaskIntoConstraints="NO" id="L9b-LB-Sab">
+                        <rect key="frame" x="260" y="40.5" width="22" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="N8v-mB-kzE"/>
                             <constraint firstAttribute="width" constant="22" id="vKu-qo-Qrw"/>
@@ -61,17 +62,17 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="hyf-8W-0iz" firstAttribute="centerY" secondItem="p4R-gD-HCd" secondAttribute="centerY" id="19S-TZ-0cw"/>
                     <constraint firstItem="5O4-vM-tNp" firstAttribute="top" secondItem="p4R-gD-HCd" secondAttribute="bottom" constant="2" id="3Nq-Qh-WtG"/>
-                    <constraint firstItem="L9b-LB-Sab" firstAttribute="top" secondItem="hyf-8W-0iz" secondAttribute="bottom" constant="2" id="A3n-Xw-JXC"/>
+                    <constraint firstItem="L9b-LB-Sab" firstAttribute="leading" secondItem="5O4-vM-tNp" secondAttribute="trailing" constant="10" id="5Uk-eb-EaE"/>
                     <constraint firstAttribute="bottom" secondItem="hiM-fw-270" secondAttribute="bottom" constant="1" id="DtT-j5-ND0"/>
-                    <constraint firstItem="hyf-8W-0iz" firstAttribute="leading" secondItem="p4R-gD-HCd" secondAttribute="trailing" constant="10" id="ERx-oO-h5B"/>
-                    <constraint firstItem="pck-1g-FtC" firstAttribute="leading" secondItem="L9b-LB-Sab" secondAttribute="trailing" id="Eb5-qH-OzL"/>
+                    <constraint firstItem="hyf-8W-0iz" firstAttribute="leading" secondItem="p4R-gD-HCd" secondAttribute="trailing" constant="8" id="ERx-oO-h5B"/>
                     <constraint firstAttribute="centerY" secondItem="j5F-r0-HXD" secondAttribute="centerY" id="OrO-Ya-dCx"/>
-                    <constraint firstItem="hyf-8W-0iz" firstAttribute="centerX" secondItem="L9b-LB-Sab" secondAttribute="centerX" constant="2.5" id="VPk-EJ-khR"/>
+                    <constraint firstItem="hyf-8W-0iz" firstAttribute="centerX" secondItem="L9b-LB-Sab" secondAttribute="centerX" id="VPk-EJ-khR"/>
                     <constraint firstAttribute="trailing" secondItem="hiM-fw-270" secondAttribute="trailing" constant="5" id="VUh-Qz-7Zy"/>
-                    <constraint firstItem="pck-1g-FtC" firstAttribute="leading" secondItem="hyf-8W-0iz" secondAttribute="trailing" id="hIz-BT-fMX"/>
-                    <constraint firstItem="L9b-LB-Sab" firstAttribute="leading" secondItem="5O4-vM-tNp" secondAttribute="trailing" constant="10" id="l3H-zc-6qg"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="L9b-LB-Sab" secondAttribute="bottomMargin" constant="10" id="dJG-Y1-T4w"/>
+                    <constraint firstItem="hyf-8W-0iz" firstAttribute="top" secondItem="D27-Q8-MGD" secondAttribute="top" constant="10" id="dX1-Kk-x82"/>
+                    <constraint firstItem="pck-1g-FtC" firstAttribute="leading" secondItem="hyf-8W-0iz" secondAttribute="trailing" constant="2" id="hIz-BT-fMX"/>
+                    <constraint firstItem="pck-1g-FtC" firstAttribute="leading" secondItem="L9b-LB-Sab" secondAttribute="trailing" id="jSa-1q-6oo"/>
                     <constraint firstItem="p4R-gD-HCd" firstAttribute="top" secondItem="D27-Q8-MGD" secondAttribute="top" constant="14" id="n6I-8r-hcX"/>
                     <constraint firstAttribute="bottom" secondItem="5O4-vM-tNp" secondAttribute="bottom" constant="16" id="qMN-Dq-m1V"/>
                     <constraint firstItem="5O4-vM-tNp" firstAttribute="leading" secondItem="j5F-r0-HXD" secondAttribute="trailing" constant="8" id="rr7-bD-dXi"/>
@@ -94,7 +95,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="cell_indicator_def" width="22" height="22"/>
+        <image name="cell_indicator_green_def" width="22" height="22"/>
         <image name="right.png" width="11" height="12"/>
     </resources>
 </document>

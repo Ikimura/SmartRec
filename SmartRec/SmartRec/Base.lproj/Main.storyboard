@@ -180,10 +180,10 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IFB-6j-8bg">
-                                            <rect key="frame" x="180" y="12" width="240" height="44"/>
+                                            <rect key="frame" x="176" y="12" width="248" height="44"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="5nL-AG-7kZ"/>
-                                                <constraint firstAttribute="width" constant="240" id="lip-76-WSz"/>
+                                                <constraint firstAttribute="width" constant="248" id="lip-76-WSz"/>
                                             </constraints>
                                             <state key="normal" backgroundImage="continue_btn">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -431,13 +431,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ny-c4-jzd">
-                                <rect key="frame" x="150" y="492" width="300" height="44"/>
-                                <color key="backgroundColor" red="0.24313725489999999" green="0.80392156859999997" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="180" y="492" width="240" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="FKZ-tZ-jrG"/>
-                                    <constraint firstAttribute="width" constant="300" id="g0n-5V-6rB"/>
+                                    <constraint firstAttribute="width" constant="240" id="g0n-5V-6rB"/>
                                 </constraints>
-                                <state key="normal" title="Continue">
+                                <state key="normal" backgroundImage="continue_btn">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -482,15 +481,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ad8-HV-DC0">
-                                <rect key="frame" x="160" y="443" width="280" height="44"/>
-                                <color key="backgroundColor" red="0.0" green="0.51764705879999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="176" y="443" width="248" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="280" id="6CN-Uj-X7d"/>
+                                    <constraint firstAttribute="width" constant="248" id="6CN-Uj-X7d"/>
                                     <constraint firstAttribute="height" constant="44" id="hrs-My-fww"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Location Notification">
+                                <state key="normal" backgroundImage="location_notification_btn">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -498,15 +496,14 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eWj-zL-qlF">
-                                <rect key="frame" x="160" y="492" width="280" height="44"/>
-                                <color key="backgroundColor" red="0.24313725489999999" green="0.80392156859999997" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="176" y="492" width="248" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="G1l-xB-rML"/>
-                                    <constraint firstAttribute="width" constant="280" id="ccd-c0-4Je"/>
+                                    <constraint firstAttribute="width" constant="248" id="ccd-c0-4Je"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Finish">
+                                <state key="normal" backgroundImage="finish_btn">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -527,7 +524,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="Zdh-pi-8Wd">
-                                        <rect key="frame" x="10" y="25" width="579" height="20"/>
+                                        <rect key="frame" x="10" y="25" width="579" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -544,7 +541,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AnB-QS-zAK">
-                                <rect key="frame" x="279" y="245" width="40" height="20"/>
+                                <rect key="frame" x="279" y="245" width="40" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.51764705879999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -557,22 +554,22 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lMu-SW-JIc">
-                                <rect key="frame" x="280" y="166" width="40" height="20"/>
+                                <rect key="frame" x="280" y="166" width="40" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map_annotation_conf" translatesAutoresizingMaskIntoConstraints="NO" id="gVh-oF-BL2">
-                                <rect key="frame" x="292" y="197" width="17" height="24"/>
+                                <rect key="frame" x="292" y="197.5" width="17" height="24"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="nsE-Id-Ooi">
-                                <rect key="frame" x="279" y="223" width="40" height="20"/>
+                                <rect key="frame" x="279" y="223.5" width="40" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="2f2-OL-n3O">
-                                <rect key="frame" x="280" y="264" width="40" height="20"/>
+                                <rect key="frame" x="280" y="264.5" width="40" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.51764705879999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -591,15 +588,14 @@
                                 </connections>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xDL-9C-ECG">
-                                <rect key="frame" x="160" y="394" width="280" height="44"/>
-                                <color key="backgroundColor" red="0.0" green="0.51764705879999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="176" y="394" width="248" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="XLW-qW-Yeh"/>
-                                    <constraint firstAttribute="width" constant="280" id="nmx-xt-W0c"/>
+                                    <constraint firstAttribute="width" constant="248" id="nmx-xt-W0c"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Add To Calendar">
+                                <state key="normal" backgroundImage="add_to_cal_btn">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -656,6 +652,7 @@
                         <outlet property="calendarButton" destination="xDL-9C-ECG" id="RBO-J0-Fxi"/>
                         <outlet property="confirmationButton" destination="eWj-zL-qlF" id="yWy-Hf-CJX"/>
                         <outlet property="dateLabel" destination="lMu-SW-JIc" id="qLh-WT-6WE"/>
+                        <outlet property="locationIndicatorImageView" destination="gVh-oF-BL2" id="Q4G-px-yJD"/>
                         <outlet property="nameLabel" destination="Zdh-pi-8Wd" id="0PJ-KU-Aow"/>
                         <outlet property="notesTextView" destination="E89-24-ahj" id="s3k-Ue-IRR"/>
                         <outlet property="notificationButton" destination="ad8-HV-DC0" id="xyY-fh-HCR"/>
@@ -950,10 +947,13 @@
         </scene>
     </scenes>
     <resources>
+        <image name="add_to_cal_btn" width="248" height="40"/>
         <image name="cell_indicator_def" width="22" height="22"/>
         <image name="clock_confirmation" width="24" height="24"/>
         <image name="continue_btn" width="248" height="40"/>
+        <image name="finish_btn" width="248" height="40"/>
         <image name="image_placeholder" width="44" height="44"/>
+        <image name="location_notification_btn" width="248" height="40"/>
         <image name="map_annotation_conf" width="17" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
