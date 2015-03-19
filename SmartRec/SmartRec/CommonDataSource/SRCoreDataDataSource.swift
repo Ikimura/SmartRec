@@ -24,11 +24,8 @@ protocol SRAppointmentsDataSourceProtocol {
 class SRCoreDataDataSource: SRDataSource {
     
     var fetchLimit: Int?;
-    
     var fetchResultController: NSFetchedResultsController?;
-
-    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
-    
+        
     override init() {
         super.init();
     }

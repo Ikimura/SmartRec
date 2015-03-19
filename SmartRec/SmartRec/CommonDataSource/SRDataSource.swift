@@ -9,8 +9,12 @@
 import Foundation
 
 protocol SRDataSourceDelegate {
- 
+    
     func dataSourceDidChangeDataSet(dataSource: SRDataSource);
+    
+    func dataSourceDidUpdate(#object:AnyObject, atIndexPath indexPath: NSIndexPath?);
+    func dataSourceDidDelete(#object:AnyObject, atIndexPath indexPath: NSIndexPath?);
+    func dataSourceDidInsert(#object:AnyObject, atIndexPath indexPath: NSIndexPath?);
 }
 
 class SRDataSource {

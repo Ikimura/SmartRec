@@ -71,8 +71,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
         
+        //schedule notifications
+        eventsTracker.rescheduleNotifications();
         println("applicationWillEnterForeground");
-        //TODO: delete appointments
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
@@ -119,9 +120,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func currentLocation() -> CLLocation {
         
         if (self.currrentLocation == nil) {
-            
             //GRODNO
-            return  CLLocation(latitude: 53.6884000, longitude: 23.8258000);
+            return CLLocation(latitude: 53.6884000, longitude: 23.8258000);
         }
         
         return self.currrentLocation!;
@@ -205,7 +205,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             }
             
             //schedule notifications
-            eventsTracker.scheduleLocationNotificationIfNeeded();
+            eventsTracker.rescheduleNotifications();
             
             NSLog("\(status)");
         default:
@@ -216,7 +216,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         currrentLocation = locations[0] as? CLLocation;
         //post notification
-        
         NSNotificationCenter.defaultCenter().postNotificationName(kLocationTitleNotification, object: nil, userInfo: ["location": locations[0] as CLLocation]);
     }
     

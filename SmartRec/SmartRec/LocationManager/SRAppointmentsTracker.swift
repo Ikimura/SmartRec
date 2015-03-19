@@ -17,6 +17,7 @@ class SRAppointmentsTracker : SRDataSourceDelegate {
         return temp;
     }();
     
+    private var application: UIApplication = UIApplication.sharedApplication();
     private var scheduledAppointments: [String] = [];
     
     init() {
@@ -26,44 +27,80 @@ class SRAppointmentsTracker : SRDataSourceDelegate {
     
     //MARK: - internal
     
-    func scheduleLocationNotificationIfNeeded() {
+    func rescheduleNotifications(){
         
-//        var allSet: NSMutableSet = NSMutableSet(array: dataSource.dataSet!);
-//        
-//        var app:UIApplication = UIApplication.sharedApplication();
-//        var alreadyScheduledSet: NSMutableSet = NSMutableSet(array: app.scheduledLocalNotifications);
-//        
-//        allSet.minusSet(alreadyScheduledSet);
-//        var toScheduleSet: NSMutableSet = allSet.copy() as NSMutableSet;
-//        
-//        
-//        allSet = NSMutableSet(array: dataSource.dataSet!);
-//        
-//        alreadyScheduledSet.minusSet(allSet);
-//        var toDeleteSet: NSMutableSet = alreadyScheduledSet;
-
+        dataSource.rebuildDataSet();
+        self.scheduleLocationNotificationsIfNeeded();
+    }
+    
+    func cancelLocationNotificationWith(uuidToCancel: String) {
+        
+        var app: UIApplication = UIApplication.sharedApplication();
+        
+        for oneEvent in app.scheduledLocalNotifications {
+            
+            var notification = oneEvent as UILocalNotification
+            
+            if let userInfoCurrent = notification.userInfo as? Dictionary<String,String> {
+                
+                let uid = userInfoCurrent["uuid"]! as String
+                if (uid == uuidToCancel) {
+                    //Cancelling local notificationw
+                    app.cancelLocalNotification(notification)
+                    break;
+                }
+            }
+        }
+    }
+    
+    func scheduleNewLocationNotification(#appointment: SRCoreDataAppointment) {
+        
+        var locNotification = UILocalNotification();
+        locNotification.alertBody = "You have arrived to \(appointment.place.name)!";
+        locNotification.regionTriggersOnce = false;
+        locNotification.category = "APPOINTMENTS_REMINDER_CATEGORY";
+        locNotification.userInfo = ["uuid": appointment.id];
+        
+        locNotification.region = CLCircularRegion(circularRegionWithCenter: CLLocationCoordinate2DMake(appointment.place.lat.doubleValue, appointment.place.lng.doubleValue), radius: kLocRadius, identifier: appointment.id);
+        
+        application.scheduleLocalNotification(locNotification);
+    }
+    
+    //MARK: - Private
+    
+    private func scheduleLocationNotificationsIfNeeded() {
+        
+        var newNotifications: NSMutableSet = NSMutableSet();
         for item in dataSource.dataSet! {
             
             if let appointment = item as? SRCoreDataAppointment {
                 
-//                if ( !contains(scheduledAppointments, appointment.id)) {
+                var locNotification = UILocalNotification();
+                locNotification.alertBody = "You have arrived to \(appointment.place.name)!";
+                locNotification.regionTriggersOnce = false;
+                locNotification.category = "APPOINTMENTS_REMINDER_CATEGORY";
+                locNotification.userInfo = ["uuid": appointment.id];
                 
-                    var locNotification = UILocalNotification();
-                    locNotification.alertBody = "You have arrived to \(appointment.place.name)!";
-                    locNotification.regionTriggersOnce = false;
-                    locNotification.category = "APPOINTMENTS_REMINDER_CATEGORY";
-                    locNotification.userInfo = ["uuid": appointment.id];
+                locNotification.region = CLCircularRegion(circularRegionWithCenter: CLLocationCoordinate2DMake(appointment.place.lat.doubleValue, appointment.place.lng.doubleValue), radius: kLocRadius, identifier: appointment.id);
                 
-                    locNotification.region = CLCircularRegion(circularRegionWithCenter: CLLocationCoordinate2DMake(appointment.place.lat.doubleValue, appointment.place.lng.doubleValue), radius: kLocRadius, identifier: appointment.id);
-                    
-                    println(locNotification.region.identifier);
-                    
-                    UIApplication.sharedApplication().scheduleLocalNotification(locNotification);
-                
-//                    UIApplication.sharedApplication().ca
-//                    scheduledAppointments.append(appointment.id);
-//                }
+                println(locNotification.region.identifier);
+                newNotifications.addObject(locNotification);
             }
+        }
+        
+        var alreadyScheduledSet: NSMutableSet = NSMutableSet(array: application.scheduledLocalNotifications);
+        
+        //old notifications
+        alreadyScheduledSet.minusSet(newNotifications);
+        //cancell notifications
+        for oldNotification in alreadyScheduledSet {
+            application.cancelLocalNotification(oldNotification as UILocalNotification);
+        }
+        //detect unscheduled notifications
+        newNotifications.minusSet(NSSet(array: application.scheduledLocalNotifications));
+        //schedule notification
+        for toScheduleNotification in alreadyScheduledSet {
+            application.scheduleLocalNotification(toScheduleNotification as UILocalNotification);
         }
     }
 
@@ -72,7 +109,48 @@ class SRAppointmentsTracker : SRDataSourceDelegate {
     func dataSourceDidChangeDataSet(dataSource: SRDataSource) {
      
         println("dataSourceDidChangeDataSet");
+    }
+    
+    func dataSourceDidUpdate(#object:AnyObject, atIndexPath indexPath: NSIndexPath?) {
         
-        self.scheduleLocationNotificationIfNeeded();
+        if let appointment = object as? SRCoreDataAppointment {
+            
+            var scheduledNotifications = application.scheduledLocalNotifications;
+            var filteredNotifications = scheduledNotifications.filter( { (obj: AnyObject) -> Bool in
+                let notif = obj as? UILocalNotification;
+                return (notif?.userInfo?["uuid"] as String) == appointment.id;
+            });
+            
+            if (appointment.locationTrack.boolValue && filteredNotifications.count == 0) {
+                
+                self.scheduleNewLocationNotification(appointment: appointment);
+                
+            } else if (!appointment.locationTrack.boolValue && filteredNotifications.count == 1) {
+                
+                self.cancelLocationNotificationWith(appointment.id);
+            }
+        }
+    }
+    
+    func dataSourceDidDelete(#object:AnyObject, atIndexPath indexPath: NSIndexPath?) {
+        
+        if let deletedAppointment = object as? SRCoreDataAppointment {
+            
+            if (deletedAppointment.locationTrack.boolValue) {
+                
+                self.cancelLocationNotificationWith(deletedAppointment.id);
+            }
+        }
+    }
+    
+    func dataSourceDidInsert(#object:AnyObject, atIndexPath indexPath: NSIndexPath?) {
+        
+        if let newAppointment = object as? SRCoreDataAppointment {
+            
+            if (newAppointment.locationTrack.boolValue) {
+                
+                self.scheduleNewLocationNotification(appointment: newAppointment);
+            }
+        }
     }
 }

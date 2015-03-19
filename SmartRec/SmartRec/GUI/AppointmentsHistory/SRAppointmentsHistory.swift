@@ -137,6 +137,11 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
             if let deleteItem = dataSource.objectAtIndexPath(indexPath) as? SRCoreDataAppointment {
                 
                 let result = SRCoreDataManager.sharedInstance.deleteEntity(deleteItem);
+                
+                if (deleteItem.locationTrack.boolValue) {
+                    
+                    appDelegate.eventsTracker.cancelLocationNotificationWith(deleteItem.id);
+                }
             }
         }
     }

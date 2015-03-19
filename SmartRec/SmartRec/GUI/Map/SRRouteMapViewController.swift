@@ -75,11 +75,15 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
     }
     
     override func mapView(mapView: GMSMapView, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
-        if isDetailsViewShowed != true {
+        
+        if (isDetailsViewShowed) {
+            
+            self.showHideDetailsView(!isDetailsViewShowed, animated: true);
+
+        } else {
+            
             super.mapView(mapView, didTapAtCoordinate: coordinate);
         }
-        
-        self.showHideDetailsView(false, animated: true);
     }
     
     override func mapView(mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView! {

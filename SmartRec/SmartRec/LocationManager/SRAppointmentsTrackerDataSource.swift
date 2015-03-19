@@ -11,6 +11,7 @@ import CoreData
 
 class SRAppointmentsTrackerDataSource : SRAppointmentsDataSource {
 
+
     override func fetchRequest() -> NSFetchRequest {
         var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "SRCoreDataAppointment");
         fetchRequest.sortDescriptors = self.sortDescriptor();
@@ -31,5 +32,28 @@ class SRAppointmentsTrackerDataSource : SRAppointmentsDataSource {
         predicates.append(NSPredicate(format: "sortDate == %@", trackDate)!);
         
         return NSCompoundPredicate(type: .AndPredicateType, subpredicates: predicates);
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        
+        switch(type) {
+            
+        case .Insert:
+            
+            delegate?.dataSourceDidInsert(object: anObject, atIndexPath: newIndexPath);
+            break;
+            
+        case .Delete:
+            
+            delegate?.dataSourceDidDelete(object: anObject, atIndexPath: indexPath);
+            break;
+            
+        case .Update:
+            delegate?.dataSourceDidUpdate(object: anObject, atIndexPath: indexPath);
+            break;
+            
+        default:
+            println("Not hanlde move");
+        }
     }
 }
