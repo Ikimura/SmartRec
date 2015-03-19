@@ -12,9 +12,9 @@ extension SRCoreDataAppointment {
 
     class func markArrivedAppointmnetWithId(id: String) {
         
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
-
-        if var event: SRCoreDataAppointment? = appDelegate.coreDataManager.checkForExistingEntity("SRCoreDataAppointment", withId: id, inContext: appDelegate.coreDataManager.mainObjectContext) as? SRCoreDataAppointment {
+        var context = SRCoreDataContextProvider.mainManagedObjectContext();
+        
+        if var event: SRCoreDataAppointment? = SRCoreDataManager.sharedInstance.singleManagedObject("SRCoreDataAppointment", withUniqueField: id, inContext: context) as? SRCoreDataAppointment {
             
             event!.completed = NSNumber(bool: true);
             
@@ -30,5 +30,21 @@ extension SRCoreDataAppointment {
                 println("OK!");
             }
         }
+    }
+    
+    func fillAppointmentPropertiesWith(appintmentData: SRAppointment) {
+            
+        if (appintmentData.calendarId != nil) {
+            self.calendarId = appintmentData.calendarId!;
+        }
+        
+        self.locationTrack = NSNumber(bool: appintmentData.locationTrack);
+        let fireDate = NSDate(timeIntervalSince1970: appintmentData.dateInSeconds);
+        self.fireDate = fireDate;
+        self.sortDate = NSCalendar.currentCalendar().startOfDayForDate(fireDate);
+        self.note = appintmentData.description;
+        println("\(appintmentData.id)");
+        self.id = "\(appintmentData.id)";
+        self.completed = NSNumber(bool: false);
     }
 }

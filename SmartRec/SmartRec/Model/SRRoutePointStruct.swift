@@ -13,4 +13,5 @@ public struct SRRoutePointStruct {
     var lng: Double;
     var lat: Double;
     var time: NSTimeInterval;
+    var longDescription: String?;
 }

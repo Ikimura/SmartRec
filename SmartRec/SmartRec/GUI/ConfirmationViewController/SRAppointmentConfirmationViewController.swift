@@ -94,7 +94,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
         if (appointment != nil) {
             
             nameLabel.text = appointment!.place.name;
-            addressLabel.text = appointment!.place.formattedAddress;
+            addressLabel.text = appointment!.place.formattedAddress!.capitalizedString;
             
             var strDist = appointment!.place.distance?.doubleValue.format(".3");
             addressLabel.text = addressLabel.text! + ", distance: \(strDist!) km.";

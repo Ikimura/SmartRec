@@ -11,251 +11,138 @@ import CoreData
 
 class SRCoreDataManager: NSObject {
     
-    private var storePath: String!;
-    
-    //MARK: - lazy properties
-    
-    lazy var masterObjectContext: NSManagedObjectContext = {
-        var tempMaster = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType);
-        tempMaster.persistentStoreCoordinator = self.storeCoordinator;
-        
-        return tempMaster;
-    }();
-    
-    lazy var mainObjectContext: NSManagedObjectContext = {
-        var tempMain = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType);
-        tempMain.persistentStoreCoordinator = self.storeCoordinator;
-        
-        return tempMain;
-    }();
-    
-    private lazy var storeCoordinator: NSPersistentStoreCoordinator = {
-        
-        let managedObjectModel = NSManagedObjectModel.mergedModelFromBundles(nil);
-        var tempStoreCordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel!);
-        
-        var error: NSError?;
-        
-        //for migration
-        let options: [String: Bool] = [
-            NSMigratePersistentStoresAutomaticallyOption : true,
-            NSInferMappingModelAutomaticallyOption : true
-        ];
-        
-        let tempURLS = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask);
-        
-        let storeURL = (tempURLS[tempURLS.count - 1]).URLByAppendingPathComponent(self.storePath);
-        
-        tempStoreCordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options, error: &error);
-        
-        if error != nil {
-            NSLog("\(error)");
+    class var sharedInstance: SRCoreDataManager {
+        struct Static {
+            static let instance: SRCoreDataManager = SRCoreDataManager();
         }
-        
-        return tempStoreCordinator;
-    }();
+        return Static.instance;
+    }
     
     //MARK: - life cycle
     
-    init(storePath: String) {
+    override init() {
         super.init();
         
-        self.storePath = storePath;
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "mocDidSaveNotification:", name: NSManagedObjectContextDidSaveNotification, object: self.mainObjectContext);
-    }
-    
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self);
     }
 
     //MARK: - new public API
     
-    func fillAppointmentPropertiesWith(appintmentData: SRAppointment) -> SRCoreDataAppointment? {
+    func tempAppointment(appointment: SRAppointment) -> NSManagedObject? {
+        var context = SRCoreDataContextProvider.mainManagedObjectContext();
         
-        var entity: SRCoreDataAppointment? = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataAppointment", inManagedObjectContext: self.mainObjectContext) as? SRCoreDataAppointment;
+        var appointmentEntity: SRCoreDataAppointment? = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataAppointment", inManagedObjectContext: context) as? SRCoreDataAppointment;
         
-        var placeEntity: SRCoreDataPlace? = self.checkForExistingEntity("SRCoreDataPlace", withId: appintmentData.place.placeId, inContext: self.mainObjectContext) as? SRCoreDataPlace;
+        var placeEntity: SRCoreDataPlace? = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataPlace", inManagedObjectContext: context) as? SRCoreDataPlace;
         
-        if (placeEntity == nil) {
+        if (appointmentEntity != nil && placeEntity != nil) {
             
-            placeEntity = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataPlace", inManagedObjectContext: self.mainObjectContext) as? SRCoreDataPlace;
+            appointmentEntity?.fillAppointmentPropertiesWith(appointment);
+            placeEntity?.fillPropertiesFromStruct(appointment.place);
+            
+            //add relashioships
+            appointmentEntity!.place = placeEntity!;
+            placeEntity!.addAppointment(appointmentEntity!);
+            
+            return appointmentEntity;
         }
         
-        if (entity != nil && placeEntity != nil) {
+        return nil;
+    }
+    
+    func insertAppointment(appointment: SRAppointment) -> SRResult {
+        
+        var context = SRCoreDataContextProvider.mainManagedObjectContext();
+        
+        var appointmentEntity: SRCoreDataAppointment? = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataAppointment", inManagedObjectContext: context) as? SRCoreDataAppointment;
+        
+        var placeEntity: SRCoreDataPlace? = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataPlace", inManagedObjectContext: context) as? SRCoreDataPlace;
+        
+        if (appointmentEntity != nil && placeEntity != nil) {
             
-            placeEntity!.reference = appintmentData.place.reference;
-            placeEntity!.placeId = appintmentData.place.placeId;
-            placeEntity!.name = appintmentData.place.name!;
-            placeEntity!.lat = NSNumber(double: appintmentData.place.lat);
-            placeEntity!.lng = NSNumber(double: appintmentData.place.lng);
-            placeEntity!.iconURL = appintmentData.place.iconURL!.absoluteString!;
+            appointmentEntity?.fillAppointmentPropertiesWith(appointment);
+            placeEntity?.fillPropertiesFromStruct(appointment.place);
             
-            if (appintmentData.place.photoReferences?.count != 0) {
+            //add relashioships
+            appointmentEntity!.place = placeEntity!;
+            placeEntity!.addAppointment(appointmentEntity!);
+            
+            var error: NSError?;
+            context.save(&error);
+            
+            if error != nil {
                 
-                placeEntity?.photoReference = appintmentData.place.photoReferences![0];
+                return .Failure(error!);
             }
             
-            if (appintmentData.place.vicinity != nil) {
+            return .Success(true);
+        }
+        
+        return .Failure(NSError(domain: "SRCoreDataManagerInsertDomain", code: -57, userInfo: nil));
+    }
+    
+
+    func addRelationBetweenVideoData(videoDataStruct: SRVideoDataStruct, andRouteMark identifier: String) -> SRResult {
+        
+        var workingContext = SRCoreDataContextProvider.workingManagedObjectContext();
+
+        if var videoMark = self.singleManagedObject(kManagedObjectVideoMark, withUniqueField: identifier, inContext: workingContext) as? SRRouteVideoPoint {
+            
+            var videoData: SRVideoData? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoData, inManagedObjectContext: workingContext) as? SRVideoData;
+
+            if (videoData != nil) {
+
+                println("SRVideoData")
+                videoData!.fillPropertiesFromStruct(videoDataStruct);
+            }
+            
+            videoMark.videoData = videoData;
+            
+            var saved = SRCoreDataContextProvider.saveWorkingContext(workingContext);
+            if (saved) {
+                return .Success(true);
+            } else {
+                return .Failure(NSError(domain: "SRCoreDataManagerAddRelashionship", code: -69, userInfo: nil));
+            }
+        }
+        
+        return .Failure(NSError(domain: "SRCoreDataManagerAddRelashionship", code: -67, userInfo: nil));
+    }
+    
+    func addRelationBetweenRoutePoint(routePoint: Any, andRoute identifier: String) -> SRResult {
+
+        var workingContext = SRCoreDataContextProvider.workingManagedObjectContext();
+
+        if var route = self.singleManagedObject(kManagedObjectRoute, withUniqueField: identifier, inContext: workingContext) as? SRRoute {
+            
+            var point: NSManagedObject? = nil;
+            
+            if routePoint is SRRoutePointStruct {
                 
-                placeEntity!.vicinity = appintmentData.place.vicinity!;
-            }
+                point = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoutePoint, inManagedObjectContext: workingContext) as? SRRoutePoint;
+                
+                (point as SRRoutePoint).fillPropertiesFromStruct(routePoint as SRRoutePointStruct);
+                route.addRoutePoint(point as SRRoutePoint);
 
-            placeEntity!.formattedAddress = appintmentData.place.formattedAddress!;
-            
-            if (appintmentData.place.formattedPhoneNumber != nil) {
-                placeEntity!.formattedPhoneNumber = appintmentData.place.formattedPhoneNumber!;
-            }
-            
-            if (appintmentData.place.internalPhoneNumber != nil) {
-                placeEntity!.internalPhoneNumber = appintmentData.place.internalPhoneNumber!;
-            }
-            
-            if (appintmentData.place.distance != nil) {
-                placeEntity!.distance = appintmentData.place.distance!;
-            }
-            
-            if (appintmentData.place.website != nil) {
-                placeEntity!.website = appintmentData.place.website!;
-            }
-            
-//            if (appintmentData.place.zipCity != nil) {
-//                placeEntity!.zipCity = appintmentData.place.zipCity!;
-//            }
-            
-            if (appintmentData.calendarId != nil) {
-                entity!.calendarId = appintmentData.calendarId!;
-            }
-            
-            
-            entity!.locationTrack = NSNumber(bool: appintmentData.locationTrack);
-            let fireDate = NSDate(timeIntervalSince1970: appintmentData.dateInSeconds);
-            entity!.fireDate = fireDate;
-            entity!.sortDate = NSCalendar.currentCalendar().startOfDayForDate(fireDate);
-            entity!.note = appintmentData.description;
-            entity!.place = placeEntity!;
-            println("\(appintmentData.id)");
-            entity!.id = "\(appintmentData.id)";
-            entity!.completed = NSNumber(bool: false);
-            
-            placeEntity?.addAppointment(entity!);
-        }
-        
-        return entity;
-        
-//        self.saveContext(self.mainObjectContext);
-//        complitionBlock(entity: entity!, error: nil);
-    }
-    
-    func insertVideoMarkEntity(dataStruct: SRVideoMarkStruct) -> NSManagedObject? {
-        var entity: SRRouteVideoPoint? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoMark, inManagedObjectContext: self.mainObjectContext) as? SRRouteVideoPoint;
-        
-        println("SRVideoMark")
-        if entity != nil {
-            entity!.id = dataStruct.id;
-            entity!.latitude = dataStruct.lat;
-            entity!.longitude = dataStruct.lng;
-            entity!.autoSaved = dataStruct.autoSave;
-            if let imageData =  dataStruct.image as NSData! {
-                entity!.thumbnailImage = imageData;
-            }
-        }
-        
-        self.saveContext(self.mainObjectContext);
-        
-        return entity;
-    }
-    
-    func insertRoutePointEntity(dataStruct: SRRoutePointStruct) -> NSManagedObject? {
-        var entity: SRRoutePoint? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoutePoint, inManagedObjectContext: self.mainObjectContext) as? SRRoutePoint;
-        
-        println("SRRoutePOint")
-        if entity != nil {
-            entity!.id = dataStruct.id;
-            entity!.latitude = dataStruct.lat;
-            entity!.longitude = dataStruct.lng;
-            entity!.time = NSDate(timeIntervalSince1970: dataStruct.time);
-        }
-        
-        self.saveContext(self.mainObjectContext);
-        
-        return entity;
-    }
-    
-    func insertVideoDataEntity(dataStruct: SRVideoDataStruct) -> NSManagedObject? {
-        var entity: SRVideoData? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoData, inManagedObjectContext: self.mainObjectContext) as? SRVideoData;
-        
-        println("SRVideoData")
-        if entity != nil {
-            entity!.id = dataStruct.id;
-            entity!.fileName = dataStruct.fileName;
-            entity!.date = NSDate(timeIntervalSince1970: dataStruct.dateSeconds);
-            entity!.fileSize = NSNumber(longLong: dataStruct.fileSize);
-            entity!.duration = NSNumber(double: dataStruct.duration);
-            entity!.frameRate = NSNumber(float: dataStruct.frameRate);
-            entity!.resolutionHeight = NSNumber(int: dataStruct.resHeight);
-            entity!.resolutionWidth = NSNumber(int: dataStruct.resWidth);
-        }
-        
-        self.saveContext(self.mainObjectContext);
-        
-        return entity;
-    }
-    
-    func insertRouteEntity(dataStruct: SRRouteStruct) -> NSManagedObject? {
-        var entity: SRRoute? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoute, inManagedObjectContext: self.mainObjectContext) as? SRRoute;
-        
-        println("route")
-        if entity != nil {
-            entity!.id = dataStruct.id;
-            entity!.startDate = NSDate(timeIntervalSince1970: dataStruct.dateSeconds);
-        }
-        
-        self.saveContext(self.mainObjectContext);
+            } else if (routePoint is SRVideoMarkStruct) {
+                
+                point = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoMark, inManagedObjectContext: workingContext) as? SRRouteVideoPoint;
+                
+                (point as SRRouteVideoPoint).fillPropertiesFromStruct(routePoint as SRVideoMarkStruct);
+                route.addMark(point as SRRouteVideoPoint);
 
-        return entity;
-    }
-    
-    func addRelationBetweenVideoMark(videoMark: SRRouteVideoPoint, andRute identifier: String) {
-        
-        mainObjectContext.performBlockAndWait { [weak self] () -> Void in
-            if var blockSelf = self {
-                if var route = blockSelf.checkForExistingEntity(kManagedObjectRoute, withId: identifier, inContext: blockSelf.mainObjectContext) as? SRRoute {
-                    route.addMark(videoMark);
-                    videoMark.route = route;
-                    
-                    blockSelf.saveContext(blockSelf.mainObjectContext);
-                }
             }
-        };
-    }
-
-    func addRelationBetweenVideoData(videoData: SRVideoDataStruct, andRouteMark identifier: String) {
-        
-        mainObjectContext.performBlockAndWait{ [weak self] () -> Void in
-            if var blockSelf = self {
-                if var videoMark = blockSelf.checkForExistingEntity(kManagedObjectVideoMark, withId: identifier, inContext: blockSelf.mainObjectContext) as? SRRouteVideoPoint {
-                    if let videoData = blockSelf.insertVideoDataEntity(videoData) as? SRVideoData {
-                        videoMark.videoData = videoData;
-                        blockSelf.saveContext(blockSelf.mainObjectContext);
-                    }
-                }
+            
+            (point as SRRoutePoint).route = route;
+            
+            var saved = SRCoreDataContextProvider.saveWorkingContext(workingContext);
+            if (saved) {
+                return .Success(true);
+            } else {
+                return .Failure(NSError(domain: "SRCoreDataManagerAddRelashionship", code: -79, userInfo: nil));
             }
-        };
-    }
-    
-    func addRelationBetweenRoutePoint(routePoint: SRRoutePoint, andRoute identifier: String) {
+        }
         
-        mainObjectContext.performBlockAndWait { [weak self] () -> Void in
-            if var blockSelf = self {
-                if var route = blockSelf.checkForExistingEntity(kManagedObjectRoute, withId: identifier, inContext: blockSelf.mainObjectContext) as? SRRoute {
-                    route.addRoutePoint(routePoint);
-                    routePoint.route = route;
-                    
-                    blockSelf.saveContext(blockSelf.mainObjectContext);
-                    
-                }
-            }
-        };
+        return .Failure(NSError(domain: "SRCoreDataManagerAddRelashionship", code: -77, userInfo: nil));
     }
     
     func updateEntity(entity: NSManagedObject) -> SRResult {
@@ -270,56 +157,32 @@ class SRCoreDataManager: NSObject {
         return .Failure(error!);
     }
     
+    func deleteEntity(entity: String, withUniqueField indentifier: String, fromContext context: NSManagedObjectContext) -> SRResult {
+        
+        var entity = self.singleManagedObject(entity, withUniqueField: indentifier, inContext: context);
+        
+        return self.deleteEntity(entity!);
+    }
+    
     func deleteEntity(entity: NSManagedObject) -> SRResult {
         
-        var managedContext = entity.managedObjectContext;
-        
-        managedContext?.deleteObject(entity);
+        var context = entity.managedObjectContext;
+        context?.delete(entity);
         
         var error: NSError?;
-        
-        if (managedContext?.save(&error) == true) {
+        if (context?.save(&error) == true) {
             return .Success(true);
         }
         
         return .Failure(error!);
     }
     
-    //MARK: - internal API
-
-    func fetchEntities(name: String, withCompletion completion:((fetchResult: NSAsynchronousFetchResult) -> Void))  {
-        
-        // Initialize Fetch Request
-        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: name);
-        fetchRequest.sortDescriptors = [ NSSortDescriptor(key: "startDate", ascending: true) ];
-        
-        // Initialize Asynchronous Fetch Request
-        var asynchronousFetchRequest: NSAsynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result: NSAsynchronousFetchResult!) -> Void in
-            //complition
-            completion(fetchResult: result);
-        };
-        
-        self.mainObjectContext.performBlock { () -> Void in
-            // Execute Asynchronous Fetch Request
-            var asynchronousFetchRequestError: NSError?;
-            var asynchronousFetchResult: NSAsynchronousFetchResult = self.mainObjectContext.executeRequest(asynchronousFetchRequest, error: &asynchronousFetchRequestError) as NSAsynchronousFetchResult;
-            
-            if (asynchronousFetchRequestError != nil) {
-                NSLog("Unable to execute asynchronous fetch result.");
-            }
-        }
-    }
+    //MARK: - Utils
     
-    //MARK: - private methods
-    
-    func checkForExistingEntity(name: String, withId identifier: String, inContext context: NSManagedObjectContext) -> NSManagedObject? {
-        var fetchRequest: NSFetchRequest = NSFetchRequest();
-        let entity: NSEntityDescription = NSEntityDescription.entityForName(name, inManagedObjectContext: context)!;
-        
-        fetchRequest.entity = entity;
+    func singleManagedObject(entityName: String, withUniqueField identifier: String, inContext context: NSManagedObjectContext) -> NSManagedObject? {
         
         var predicate: NSPredicate?
-        if (name == "SRCoreDataPlace") {
+        if (entityName == "SRCoreDataPlace") {
             
             predicate = NSPredicate(format: "placeId == %@", identifier)!;
 
@@ -328,10 +191,10 @@ class SRCoreDataManager: NSObject {
             predicate = NSPredicate(format: "id == %@", identifier)!;
         }
         
+        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: entityName);
         fetchRequest.predicate = predicate;
         
         var error: NSError?;
-        
         var res: AnyObject? = context.executeFetchRequest(fetchRequest, error: &error)?.first;
         
         if error != nil {
@@ -341,28 +204,20 @@ class SRCoreDataManager: NSObject {
         return res as? NSManagedObject;
     }
     
-    private func saveContext(context: NSManagedObjectContext) {
+    func findOrCreateManagedObject(entityName: String, predicate: NSPredicate, inContext: NSManagedObjectContext) -> NSManagedObject {
         
-        context.performBlockAndWait { [weak context] () -> Void in
-            if var blockContext = context {
-                var error: NSError?;
-                println(blockContext);
-                if blockContext.save(&error) == false {
-                    println(error);
-                }
-            }
-        };
-    }
-    
-    //MARK: - save notification
-
-    internal func mocDidSaveNotification(notification: NSNotification) {
-        if let savedContext = notification.object as? NSManagedObjectContext {
-        // ignore change notifications for the main MOC
-            if (self.masterObjectContext !== savedContext){
-                self.saveContext(masterObjectContext);
-            }
+        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: entityName);
+        fetchRequest.predicate = predicate;
+        fetchRequest.fetchLimit = 1;
+        
+        var route: AnyObject? = inContext.executeFetchRequest(fetchRequest, error: nil)?.first;
+        
+        if (route == nil) {
+            
+            route = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: inContext) as? NSManagedObject;
         }
+        
+        return route! as NSManagedObject;
     }
     
 }

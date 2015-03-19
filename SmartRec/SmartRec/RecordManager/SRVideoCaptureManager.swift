@@ -76,24 +76,30 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
         let identifier = String.randomString();
         println(identifier);
         
-        currentRouteData = SRRouteStruct(id: identifier, dateSeconds: NSDate().timeIntervalSince1970);
+        currentRouteData = SRRouteStruct(id: identifier, dateSeconds: NSDate().timeIntervalSince1970, mode:"Driving");
         
         //add object
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {[weak self] () -> Void in
+            
             if var blockSelf = self {
-                let newRoute = (blockSelf.appDelegate.coreDataManager.insertRouteEntity(blockSelf.currentRouteData!) as? SRRoute);
                 
-                blockSelf.route = newRoute!;
+                let newRoute = (SRRoute.insertRouteEntity(blockSelf.currentRouteData!) as SRRoute);
+                blockSelf.route = newRoute;
             }
         });
     }
 
     func finishRoute() {
+        
         if (needToDeleteRoute == true) {
+            
             dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {[weak self] () -> Void in
+                
                 if var blockSelf = self {
+                    
                     if (blockSelf.route != nil) {
-                        blockSelf.appDelegate.coreDataManager.deleteEntity(blockSelf.route!);
+                        
+                        SRCoreDataManager.sharedInstance.deleteEntity(blockSelf.route!);
                     }
                 }
             });
@@ -105,11 +111,8 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
             println("Debug: Add new point");
             
             if var blockSelf = self {
-                //insert SRVideoMark
-                if let routePoint = blockSelf.appDelegate.coreDataManager.insertRoutePointEntity(blockSelf.currentRoutePointData!) as? SRRoutePoint {
-                    //                    link point with route
-                    blockSelf.appDelegate.coreDataManager.addRelationBetweenRoutePoint(routePoint, andRoute: blockSelf.route!.id);
-                }
+                //link point with route
+                SRCoreDataManager.sharedInstance.addRelationBetweenRoutePoint(point, andRoute: blockSelf.route!.id);
             }
         });
     }
@@ -128,7 +131,8 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
         currentRoutePointData = SRRoutePointStruct(id: String.randomString(),
             lng: appDelegate.currentLocation().coordinate.longitude,
             lat: appDelegate.currentLocation().coordinate.latitude,
-            time: date.timeIntervalSince1970
+            time: date.timeIntervalSince1970,
+            longDescription: nil
         );
         
         //need link route point with route
@@ -218,15 +222,16 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
     private func saveInformationInCoreData(videoData: SRVideoDataStruct, markData: SRVideoMarkStruct) {
         //add object
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] () -> Void in
+            
             if var blockSelf = self {
-                //insert SRVideoMark
-                if let videoMark = blockSelf.appDelegate.coreDataManager.insertVideoMarkEntity(markData) as? SRRouteVideoPoint {
-                    println("For save data: \(videoData.fileName)");
-//                    link SRVideoData with SRVodeoMark
-                    blockSelf.appDelegate.coreDataManager.addRelationBetweenVideoData(videoData, andRouteMark: videoMark.id);
-//                    link SRRouteVideoPoint with SRRoute
-                    blockSelf.appDelegate.coreDataManager.addRelationBetweenVideoMark(videoMark, andRute: blockSelf.route!.id);
-                }
+                
+                println("For save data: \(videoData.fileName)");
+
+                //insert SRVideoMark and link SRRouteVideoPoint with SRRoute
+                SRCoreDataManager.sharedInstance.addRelationBetweenRoutePoint(markData, andRoute: blockSelf.route!.id);
+                
+                //link SRVideoData with SRVodeoMark
+                SRCoreDataManager.sharedInstance.addRelationBetweenVideoData(videoData, andRouteMark: markData.id);
             }
         });
     }
@@ -275,7 +280,8 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
                         self.addNewRoutePoint(SRRoutePointStruct(id: String.randomString(),
                             lng: crnLoc.coordinate.longitude,
                             lat: crnLoc.coordinate.latitude,
-                            time: NSDate().timeIntervalSince1970
+                            time: NSDate().timeIntervalSince1970,
+                            longDescription: nil
                             ));
                         
                         previousPoint = crnLoc!.coordinate;

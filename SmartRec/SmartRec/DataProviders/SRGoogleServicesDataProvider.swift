@@ -246,6 +246,7 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
                 if var routes = responseObject["routes"] as? Array<NSDictionary> {
                     
                     var data = GMSPath.parsePathsFromResponse(routes);
+                    SRRoute.parseRoutesFromResponse(routes);
                     path = data.0;
                     metrics = data.1;
                 }

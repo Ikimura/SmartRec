@@ -15,7 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     var window: UIWindow?
     
-    var coreDataManager: SRCoreDataManager!;
     var eventsTracker: SRAppointmentsTracker!;
     var locationManager: CLLocationManager!;
     
@@ -36,8 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         GMSServices.provideAPIKey(kGoogleMapsAPIKey);
         
         //init
-        coreDataManager = SRCoreDataManager(storePath: kStorePathComponent);
         eventsTracker = SRAppointmentsTracker();
+        SRCoreDataContextProvider.sharedInstance;
         
         //init location service
         locationManager = CLLocationManager();
@@ -51,6 +50,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             
             locationManager.requestWhenInUseAuthorization();
         }
+        
+        var req = NSFetchRequest(entityName: "SRRoute");
+        var context = SRCoreDataContextProvider.mainManagedObjectContext();
+        println(context.executeFetchRequest(req, error: nil)?.count);
 
         return true;
     }

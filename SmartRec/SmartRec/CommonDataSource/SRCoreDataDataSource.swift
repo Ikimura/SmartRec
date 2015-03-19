@@ -39,7 +39,7 @@ class SRCoreDataDataSource: SRDataSource {
     
     func context() -> NSManagedObjectContext {
         
-        return appDelegate.coreDataManager.mainObjectContext;
+        return SRCoreDataContextProvider.mainManagedObjectContext();
     }
     
     func fetchRequest() -> NSFetchRequest? {

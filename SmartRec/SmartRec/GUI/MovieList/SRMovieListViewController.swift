@@ -115,7 +115,7 @@ class SRMovieListViewController: SRCommonViewController, SRDataSourceDelegate, U
                         case .Success(let quotient):
                             println("Debug. File deleted!");
                             
-                            let result = appDelegate.coreDataManager.deleteEntity(deleteItem);
+                            let result = SRCoreDataManager.sharedInstance.deleteEntity(deleteItem);
                             switch result {
                             case .Success(let quotient):
                                 println("Debug. File deleted!");

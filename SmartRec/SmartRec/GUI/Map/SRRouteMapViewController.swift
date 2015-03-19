@@ -231,7 +231,7 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
                     
                     blockSelf.selectedVideoMark?.locationDescription =  googleAddress;
                     
-                    blockSelf.appDelegate.coreDataManager.updateEntity(blockSelf.selectedVideoMark!);
+                    SRCoreDataManager.sharedInstance.updateEntity(blockSelf.selectedVideoMark!);
                 }
             }
             

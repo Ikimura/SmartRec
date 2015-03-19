@@ -136,7 +136,7 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
             //Delete the row from the data source
             if let deleteItem = dataSource.objectAtIndexPath(indexPath) as? SRCoreDataAppointment {
                 
-                let result = appDelegate.coreDataManager.deleteEntity(deleteItem);
+                let result = SRCoreDataManager.sharedInstance.deleteEntity(deleteItem);
             }
         }
     }

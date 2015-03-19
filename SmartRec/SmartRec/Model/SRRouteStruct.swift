@@ -11,4 +11,5 @@ import Foundation
 public struct SRRouteStruct {
     var id: String;
     var dateSeconds: NSTimeInterval;
+    var mode: String;
 }

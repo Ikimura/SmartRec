@@ -145,7 +145,7 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
             var place = data as SRGooglePlace;
             
             detCell.nameLabel.text = place.name;
-            detCell.addressLabel.text = place.formattedAddress != nil ? place.formattedAddress : place.vicinity;
+            detCell.addressLabel.text = place.formattedAddress != nil ? place.formattedAddress!.capitalizedString : place.vicinity!.capitalizedString;
 //            detCell.cityStateZipLabel.text = place.zipCity;
             
             detCell.iconImage.setImageWithURL(place.iconURL, placeholderImage: UIImage(named: "image_placeholder"));

@@ -61,10 +61,10 @@ class SRPlacesListViewController : SRCommonViewController, UITableViewDataSource
         
         if (place.vicinity != nil) {
             
-            cell!.addressLabel.text = place.vicinity;
+            cell!.addressLabel.text = place.vicinity!.capitalizedString;
             
         } else {
-            cell!.addressLabel.text = place.formattedAddress;
+            cell!.addressLabel.text = place.formattedAddress!.capitalizedString;
         }
         
 //        cell!.cityStateZipLabel.text = nil;
