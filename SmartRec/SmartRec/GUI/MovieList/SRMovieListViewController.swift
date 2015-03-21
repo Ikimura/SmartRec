@@ -149,6 +149,17 @@ class SRMovieListViewController: SRCommonViewController, SRDataSourceDelegate, U
         });
     }
     
+    func dataSourceDidUpdate(#object:AnyObject, atIndexPath indexPath: NSIndexPath?) {
+        
+    }
+    
+    func dataSourceDidDelete(#object:AnyObject, atIndexPath indexPath: NSIndexPath?) {
+        
+    }
+    
+    func dataSourceDidInsert(#object:AnyObject, atIndexPath indexPath: NSIndexPath?) {
+        
+    }
     //MARK: - Handler
     
     func didTapMap(sender: AnyObject) {

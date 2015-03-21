@@ -160,4 +160,16 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
             }
         });
     }
+    
+    func dataSourceDidUpdate(#object:AnyObject, atIndexPath indexPath: NSIndexPath?) {
+        
+    }
+    
+    func dataSourceDidDelete(#object:AnyObject, atIndexPath indexPath: NSIndexPath?) {
+        
+    }
+    
+    func dataSourceDidInsert(#object:AnyObject, atIndexPath indexPath: NSIndexPath?) {
+        
+    }
 }
