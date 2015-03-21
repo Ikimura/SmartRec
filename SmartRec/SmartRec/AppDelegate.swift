@@ -51,9 +51,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             locationManager.requestWhenInUseAuthorization();
         }
         
-        var req = NSFetchRequest(entityName: "SRRoute");
+        var req = NSFetchRequest(entityName: "SRCoreDataAppointment");
         var context = SRCoreDataContextProvider.mainManagedObjectContext();
-        println(context.executeFetchRequest(req, error: nil)?.count);
+        println((context.executeFetchRequest(req, error: nil)?.first as SRCoreDataAppointment).id);
 
         return true;
     }

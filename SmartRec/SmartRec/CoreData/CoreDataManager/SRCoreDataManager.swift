@@ -26,60 +26,6 @@ class SRCoreDataManager: NSObject {
     }
 
     //MARK: - new public API
-    
-    func tempAppointment(appointment: SRAppointment) -> NSManagedObject? {
-        var context = SRCoreDataContextProvider.mainManagedObjectContext();
-        
-        var appointmentEntity: SRCoreDataAppointment? = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataAppointment", inManagedObjectContext: context) as? SRCoreDataAppointment;
-        
-        var placeEntity: SRCoreDataPlace? = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataPlace", inManagedObjectContext: context) as? SRCoreDataPlace;
-        
-        if (appointmentEntity != nil && placeEntity != nil) {
-            
-            appointmentEntity?.fillAppointmentPropertiesWith(appointment);
-            placeEntity?.fillPropertiesFromStruct(appointment.place);
-            
-            //add relashioships
-            appointmentEntity!.place = placeEntity!;
-            placeEntity!.addAppointment(appointmentEntity!);
-            
-            return appointmentEntity;
-        }
-        
-        return nil;
-    }
-    
-    func insertAppointment(appointment: SRAppointment) -> SRResult {
-        
-        var context = SRCoreDataContextProvider.mainManagedObjectContext();
-        
-        var appointmentEntity: SRCoreDataAppointment? = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataAppointment", inManagedObjectContext: context) as? SRCoreDataAppointment;
-        
-        var placeEntity: SRCoreDataPlace? = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataPlace", inManagedObjectContext: context) as? SRCoreDataPlace;
-        
-        if (appointmentEntity != nil && placeEntity != nil) {
-            
-            appointmentEntity?.fillAppointmentPropertiesWith(appointment);
-            placeEntity?.fillPropertiesFromStruct(appointment.place);
-            
-            //add relashioships
-            appointmentEntity!.place = placeEntity!;
-            placeEntity!.addAppointment(appointmentEntity!);
-            
-            var error: NSError?;
-            context.save(&error);
-            
-            if error != nil {
-                
-                return .Failure(error!);
-            }
-            
-            return .Success(true);
-        }
-        
-        return .Failure(NSError(domain: "SRCoreDataManagerInsertDomain", code: -57, userInfo: nil));
-    }
-    
 
     func addRelationBetweenVideoData(videoDataStruct: SRVideoDataStruct, andRouteMark identifier: String) -> SRResult {
         

@@ -17,4 +17,6 @@ class SRAppointmentHistoryCell: UITableViewCell {
     @IBOutlet var rightIndicator: UIImageView!;
     @IBOutlet var mapIndicatorImageView: UIImageView!;
     @IBOutlet var indicatorImageView: UIImageView!;
+    @IBOutlet var calendarImageView: UIImageView!;
+
 }

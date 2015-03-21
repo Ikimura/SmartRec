@@ -99,7 +99,7 @@ class SRAppointmentsTracker : SRDataSourceDelegate {
         //detect unscheduled notifications
         newNotifications.minusSet(NSSet(array: application.scheduledLocalNotifications));
         //schedule notification
-        for toScheduleNotification in alreadyScheduledSet {
+        for toScheduleNotification in newNotifications {
             application.scheduleLocalNotification(toScheduleNotification as UILocalNotification);
         }
     }

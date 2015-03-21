@@ -28,7 +28,7 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
         
         tableView?.registerNib(UINib(nibName: "SRAppointmentHistoryCell", bundle: nil), forCellReuseIdentifier: "appHistory");
 
-        tableView.estimatedRowHeight = 73;
+        tableView.estimatedRowHeight = 74;
         tableView.rowHeight = UITableViewAutomaticDimension;
 
         self.automaticallyAdjustsScrollViewInsets = false;
@@ -49,18 +49,13 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
         var event: AnyObject = dataSource.objectAtIndexPath(indexPath);
         
         var detailsVC = self.storyboard?.instantiateViewControllerWithIdentifier("confirmationVC") as?SRAppointmentConfirmationViewController;
-        detailsVC!.presantationType = .Detailes;
-        detailsVC!.appointment = event as? SRCoreDataAppointment;
+        detailsVC!.presentationType = .Detailes;
+        detailsVC!.appointmentCD = event as? SRCoreDataAppointment;
         
         self.navigationController?.pushViewController(detailsVC!, animated: true);
     }
     
     //MARK: - UITableViewDataSource
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        return 73.0;
-    }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
@@ -104,20 +99,29 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
         
             } else if( NSDate().timeIntervalSince1970 > appointment.fireDate.timeIntervalSince1970){
                 
-                cell!.indicatorImageView.image = UIImage(named: "cell_indicator_warning");
+                cell!.indicatorImageView.image = UIImage(named: "warning");
         
             } else {
                 
                 cell!.indicatorImageView.image = UIImage(named: "cell_indicator_green_def");
             }
+            
+            if (appointment.calendarId != nil) {
+                
+                cell!.calendarImageView.image = UIImage(named: "calendar_sel");
+                
+            } else {
+                
+                cell!.calendarImageView.image = nil;
+            }
         
             if (appointment.locationTrack.boolValue) {
                 
-                cell!.mapIndicatorImageView.image = UIImage(named: "map_annotation_sel");
+                cell!.mapIndicatorImageView.image = UIImage(named: "alarm_sel");
         
             } else {
         
-                cell!.mapIndicatorImageView.image = UIImage(named: "map_annotation_conf");
+                cell!.mapIndicatorImageView.image = UIImage(named: "alarm_def");
             }
         }
         

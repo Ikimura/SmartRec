@@ -73,8 +73,8 @@ class SRLeftMenuViewController: SRCommonViewController {
                 if var event  = SRCoreDataManager.sharedInstance.singleManagedObject("SRCoreDataAppointment", withUniqueField: id, inContext: SRCoreDataContextProvider.mainManagedObjectContext()) as? SRCoreDataAppointment {
                     
                     var detailsVC = self.storyboard?.instantiateViewControllerWithIdentifier("confirmationVC") as?SRAppointmentConfirmationViewController;
-                    detailsVC!.presantationType = .Notification;
-                    detailsVC!.appointment = event;
+                    detailsVC!.presentationType = .Notification;
+                    detailsVC!.appointmentCD = event;
                     
                     self.presentViewController(SRNavigationController(rootViewController: detailsVC!), animated: true, completion: nil);
 

@@ -94,10 +94,8 @@ class SRAppointmentDateViewController: SRCommonViewController, MGConferenceDateP
                 
                 var appointment = SRAppointment(id: id, place: detailedPlace!, dateInSeconds: appointmentDate!.timeIntervalSince1970, locationTrack: false, description: "", calendarId: nil);
                 
-                
-                confVC.presantationType = .Confirmation;
-                
-//                confVC.appointment = SR.tempAppointment(appointment) as? SRCoreDataAppointment;
+                confVC.presentationType = .Confirmation;
+                confVC.appointmentST = appointment;
             }
         }
     }

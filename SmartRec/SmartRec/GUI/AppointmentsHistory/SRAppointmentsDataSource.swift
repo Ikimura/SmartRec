@@ -32,7 +32,7 @@ class SRAppointmentsDataSource : SRCoreDataDataSource, SRAppointmentsDataSourceP
         
         var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "SRCoreDataAppointment");
         fetchRequest.sortDescriptors = self.sortDescriptor();
-        fetchRequest.predicate = self.compoundPredicate();
+//        fetchRequest.predicate = self.compoundPredicate();
         
         return fetchRequest;
     }
