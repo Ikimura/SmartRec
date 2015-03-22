@@ -39,8 +39,11 @@ class SRPlacesDetailsDataSource : SRPlacesDetailsDataSourceProtocol {
             
             if var strongSelf = self {
                 
-                strongSelf.placeToDetaile!.fillDetailsPropertiesForPlace(data!);
-                strongSelf.placeToDetaile!.addDistance(CLLocation.distanceBetweenLocation(CLLocationCoordinate2DMake(strongSelf.placeToDetaile!.lat, strongSelf.placeToDetaile!.lng), secondLocation: strongSelf.appDelegate.currentLocation().coordinate));
+                if (data != nil) {
+                    
+                    strongSelf.placeToDetaile!.fillDetailsPropertiesForPlace(data!);
+                    strongSelf.placeToDetaile!.addDistance(CLLocation.distanceBetweenLocation(CLLocationCoordinate2DMake(strongSelf.placeToDetaile!.lat, strongSelf.placeToDetaile!.lng), secondLocation: strongSelf.appDelegate.currentLocation().coordinate));
+                }
                 
                 complitionBlock();
             }
@@ -73,8 +76,17 @@ class SRPlacesDetailsDataSource : SRPlacesDetailsDataSourceProtocol {
         var items = 0;
         
         switch (index) {
-        case 0, 1: items = 1;
-        case 2: items = placeToDetaile!.photoReferences!.count;
+        case 0:
+            items = 1;
+            if (placeToDetaile?.weekDayText != nil) {
+                items++;
+            }
+        case 1: items = 1;
+        case 2:
+            if (placeToDetaile!.photoReferences?.count != 0) {
+                items = placeToDetaile!.photoReferences!.count;
+            }
+            
         default:
             fatalError("Wrong Section Index");
         }
@@ -85,8 +97,16 @@ class SRPlacesDetailsDataSource : SRPlacesDetailsDataSourceProtocol {
     func itemAtIndexPath(indexPath: NSIndexPath) -> Any {
         
         switch (indexPath.section) {
-        case 0: return placeToDetaile!;
+        case 0:
+            if (indexPath.row == 0) {
+                
+                return placeToDetaile!;
+            } else {
+                return placeToDetaile!.weekDayText!;
+            }
+
         case 2: return placeToDetaile!.photoReferences![indexPath.row];
+            
         default:
             fatalError("Wrong section number");
         }

@@ -23,14 +23,15 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
         tableView?.registerNib(UINib(nibName: "SRPlacesListTableViewCell", bundle: nil), forCellReuseIdentifier: kPlacesListCellIdentifier);
         tableView?.registerNib(UINib(nibName: "SRPlaceGalaryCell", bundle: nil), forCellReuseIdentifier: kGalaryCellIdentifier);
         tableView?.registerNib(UINib(nibName: "SRContinueTableViewCell", bundle: nil), forCellReuseIdentifier: kContinueCellIdentifier);
+        tableView?.registerNib(UINib(nibName: "SRPlaceWeekDayCell", bundle: nil), forCellReuseIdentifier: "weakday_cell_identifier");
 
         dataSource = SRPlacesDetailsDataSource(placeToDetaile: place!);
         
         self.showBusyView();
         dataSource?.loadData({ [weak self] () -> Void in
             
-            if let strongSelf = self {
-                
+            if var strongSelf = self {
+
                 strongSelf.hideBusyView();
                 strongSelf.tableView?.reloadData();
             }
@@ -50,9 +51,16 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         switch (indexPath.section) {
-        case 0: return 103;
+        case 0:
+            if (indexPath.row == 0) {
+                return 103
+            } else {
+                return 126;
+            }
         case 1: return 64;
-        case 2: return 120;
+        case 2:
+            return 120;
+
         default:
             fatalError("Wrong Section Index");
         }
@@ -101,11 +109,20 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
                 
             case is String:
                 
-                var gCell = tableView.dequeueReusableCellWithIdentifier(kGalaryCellIdentifier) as? SRPlaceGalaryCell;
-                gCell!.photoImageView.cancelImageRequestOperation();
-                
-                self.fillCell(gCell!, withData: item);
-                cell = gCell;
+                if (indexPath.section == 2) {
+                    var gCell = tableView.dequeueReusableCellWithIdentifier(kGalaryCellIdentifier) as? SRPlaceGalaryCell;
+                    gCell!.photoImageView.cancelImageRequestOperation();
+                    
+                    self.fillCell(gCell!, withData: item);
+                    cell = gCell;
+                    
+                } else {
+                    
+                    var wCell = tableView.dequeueReusableCellWithIdentifier("weakday_cell_identifier") as? SRPlaceWeekDayCell;
+                    wCell?.weekdayLabel.text = item as? String;
+                    
+                    cell = wCell;
+                }
                 
                 println(item);
             default:

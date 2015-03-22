@@ -13,7 +13,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxa-0C-9up" customClass="SRRoundedButton" customModule="SmartRec" customModuleProvider="target">
-                        <rect key="frame" x="30" y="10" width="260" height="44"/>
+                        <rect key="frame" x="15" y="10" width="290" height="44"/>
                         <color key="backgroundColor" red="0.0" green="0.51764705879999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="44" id="vzp-yg-n4m"/>
@@ -30,7 +30,7 @@
                 <constraints>
                     <constraint firstAttribute="centerX" secondItem="rxa-0C-9up" secondAttribute="centerX" id="U2p-4o-xkl"/>
                     <constraint firstAttribute="centerY" secondItem="rxa-0C-9up" secondAttribute="centerY" id="Xhy-nU-gq5"/>
-                    <constraint firstItem="rxa-0C-9up" firstAttribute="leading" secondItem="1BC-h9-dNG" secondAttribute="leading" constant="30" id="gjT-sg-SOd"/>
+                    <constraint firstItem="rxa-0C-9up" firstAttribute="leading" secondItem="1BC-h9-dNG" secondAttribute="leading" constant="15" id="gjT-sg-SOd"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

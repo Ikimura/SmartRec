@@ -84,14 +84,16 @@
 		13E5AE7719FF7BF900ABFAD8 /* NSURLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E5AE7619FF7BF900ABFAD8 /* NSURLExtensions.swift */; };
 		13EBF1EE1A1DC7A900029072 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EBF1ED1A1DC7A900029072 /* UIViewExtensions.swift */; };
 		13F985771A13912400E9B958 /* AVAssetExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F985761A13912400E9B958 /* AVAssetExtensions.swift */; };
+		60057DEF1ABF5135008BCBD6 /* SRCoreDataPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60057DEE1ABF5135008BCBD6 /* SRCoreDataPlace.swift */; };
+		60057DF11ABF5381008BCBD6 /* SRPlaceWeekDayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60057DF01ABF5381008BCBD6 /* SRPlaceWeekDayCell.xib */; };
+		60057DF31ABF5487008BCBD6 /* SRPlaceWeekDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60057DF21ABF5487008BCBD6 /* SRPlaceWeekDayCell.swift */; };
+		60057DF41ABF59BD008BCBD6 /* SRCoreDataPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60057DEE1ABF5135008BCBD6 /* SRCoreDataPlace.swift */; };
 		600CE4BA1AAE334700D20481 /* SRAppointmentsHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600CE4B91AAE334700D20481 /* SRAppointmentsHistory.swift */; };
 		600CE4BD1AAE34F700D20481 /* SRAppointmentsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600CE4BC1AAE34F700D20481 /* SRAppointmentsDataSource.swift */; };
 		6069D5811AB22E800029FC6F /* SRCoreDataAppointmentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6069D5801AB22E800029FC6F /* SRCoreDataAppointmentExtension.swift */; };
 		606D3FA81AB5A6E9006D0B73 /* SRRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FA71AB5A6E9006D0B73 /* SRRoutePoint.swift */; };
 		606D3FAC1AB5A6EA006D0B73 /* SRVideoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FAB1AB5A6EA006D0B73 /* SRVideoData.swift */; };
 		606D3FB21AB5A6EA006D0B73 /* SRRouteVideoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FB11AB5A6EA006D0B73 /* SRRouteVideoPoint.swift */; };
-		606D3FB81AB5A90C006D0B73 /* SRCoreDataPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FB71AB5A90C006D0B73 /* SRCoreDataPlace.swift */; };
-		606D3FBE1AB5ABEB006D0B73 /* SRCoreDataPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FB71AB5A90C006D0B73 /* SRCoreDataPlace.swift */; };
 		606D3FC01AB5ABEB006D0B73 /* SRRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FA71AB5A6E9006D0B73 /* SRRoutePoint.swift */; };
 		606D3FC11AB5ABEB006D0B73 /* SRRouteVideoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FB11AB5A6EA006D0B73 /* SRRouteVideoPoint.swift */; };
 		606D3FC21AB5ABEB006D0B73 /* SRVideoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FAB1AB5A6EA006D0B73 /* SRVideoData.swift */; };
@@ -306,13 +308,15 @@
 		13EBF1ED1A1DC7A900029072 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		13F985761A13912400E9B958 /* AVAssetExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVAssetExtensions.swift; sourceTree = "<group>"; };
 		576FBF43DDEE1F6555A4FA62 /* Pods-SmartRec.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRec.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmartRec/Pods-SmartRec.debug.xcconfig"; sourceTree = "<group>"; };
+		60057DEE1ABF5135008BCBD6 /* SRCoreDataPlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataPlace.swift; sourceTree = "<group>"; };
+		60057DF01ABF5381008BCBD6 /* SRPlaceWeekDayCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SRPlaceWeekDayCell.xib; sourceTree = "<group>"; };
+		60057DF21ABF5487008BCBD6 /* SRPlaceWeekDayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlaceWeekDayCell.swift; sourceTree = "<group>"; };
 		600CE4B91AAE334700D20481 /* SRAppointmentsHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAppointmentsHistory.swift; sourceTree = "<group>"; };
 		600CE4BC1AAE34F700D20481 /* SRAppointmentsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAppointmentsDataSource.swift; sourceTree = "<group>"; };
 		6069D5801AB22E800029FC6F /* SRCoreDataAppointmentExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataAppointmentExtension.swift; sourceTree = "<group>"; };
 		606D3FA71AB5A6E9006D0B73 /* SRRoutePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRRoutePoint.swift; sourceTree = "<group>"; };
 		606D3FAB1AB5A6EA006D0B73 /* SRVideoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRVideoData.swift; sourceTree = "<group>"; };
 		606D3FB11AB5A6EA006D0B73 /* SRRouteVideoPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRRouteVideoPoint.swift; sourceTree = "<group>"; };
-		606D3FB71AB5A90C006D0B73 /* SRCoreDataPlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataPlace.swift; sourceTree = "<group>"; };
 		608153B71A9E59780033FF09 /* SRPlacesMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesMapView.swift; sourceTree = "<group>"; };
 		608153B91A9E5A210033FF09 /* SRPlacesMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesMapViewController.swift; sourceTree = "<group>"; };
 		608153BE1A9E62F30033FF09 /* SRPlacesTypesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesTypesTableViewController.swift; sourceTree = "<group>"; };
@@ -827,7 +831,7 @@
 			children = (
 				60D9AB861AB9EC3E0008A93E /* SRRoute.swift */,
 				60ED30AB1AB8BF2B00EEFCAF /* SRCoreDataAppointment.swift */,
-				606D3FB71AB5A90C006D0B73 /* SRCoreDataPlace.swift */,
+				60057DEE1ABF5135008BCBD6 /* SRCoreDataPlace.swift */,
 				606D3FA71AB5A6E9006D0B73 /* SRRoutePoint.swift */,
 				606D3FB11AB5A6EA006D0B73 /* SRRouteVideoPoint.swift */,
 				606D3FAB1AB5A6EA006D0B73 /* SRVideoData.swift */,
@@ -1021,6 +1025,8 @@
 				60AEE9311AAB2C5500B1975F /* SRPlaceGalaryCell.xib */,
 				60AEE93E1AAB683400B1975F /* SRContinueTableViewCell.swift */,
 				60BD7F6A1ABF126D00826DC5 /* SRContinueTableViewCell.xib */,
+				60057DF21ABF5487008BCBD6 /* SRPlaceWeekDayCell.swift */,
+				60057DF01ABF5381008BCBD6 /* SRPlaceWeekDayCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1254,6 +1260,7 @@
 				60B94B2C1AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib in Resources */,
 				137E3B7319F52BF00094C5A1 /* LaunchScreen.xib in Resources */,
 				13BCBB291A28996600E823F9 /* SRBusyView.xib in Resources */,
+				60057DF11ABF5381008BCBD6 /* SRPlaceWeekDayCell.xib in Resources */,
 				609131121AB4AA7D00A56D8F /* SRAppointmentHistoryCell.xib in Resources */,
 				60B94B2A1AA220D900BBDAA1 /* SmartRec.SRPlacesListViewController.xib in Resources */,
 				60C316021A9BBB2E00D5DEE4 /* Settings.bundle in Resources */,
@@ -1332,6 +1339,7 @@
 				60D9AB8E1ABA1A750008A93E /* SRCoreDataRoutePointExtension.swift in Sources */,
 				1338720E1A1CC9FF00FFC29F /* SRMarkerInfoView.swift in Sources */,
 				60C316111A9BBB6D00D5DEE4 /* SRMapPolyline.swift in Sources */,
+				60057DF31ABF5487008BCBD6 /* SRPlaceWeekDayCell.swift in Sources */,
 				13E5AE7719FF7BF900ABFAD8 /* NSURLExtensions.swift in Sources */,
 				609CB2651AAF6C5900968A77 /* SRDataSource.swift in Sources */,
 				60AEE92A1AAAF87100B1975F /* SRPlacesDetailsTableViewController.swift in Sources */,
@@ -1353,7 +1361,6 @@
 				13265F5D1A1E10BA00E063CD /* SRVideoPlace.swift in Sources */,
 				60C316271A9BBC0A00D5DEE4 /* SRGoogleGeocodingServiceProtocol.swift in Sources */,
 				137E3B8B19F531B20094C5A1 /* SRNavigationController.swift in Sources */,
-				606D3FB81AB5A90C006D0B73 /* SRCoreDataPlace.swift in Sources */,
 				609131021AB47FEA00A56D8F /* SRCommonRouteMapViewController.swift in Sources */,
 				60C316191A9BBBB400D5DEE4 /* SRClusteringMapVIew.swift in Sources */,
 				60C316201A9BBBCB00D5DEE4 /* SRBaseMapViewProtocol.swift in Sources */,
@@ -1400,6 +1407,7 @@
 				1318DEC41A1F54AD007B0F54 /* StringExtensions.swift in Sources */,
 				13F985771A13912400E9B958 /* AVAssetExtensions.swift in Sources */,
 				60B94B301AA2211500BBDAA1 /* SRPlacesListViewController.swift in Sources */,
+				60057DEF1ABF5135008BCBD6 /* SRCoreDataPlace.swift in Sources */,
 				137945991A3B0BFA00AF1A97 /* SRVideoMarkStruct.swift in Sources */,
 				60C3C7D31AACA9C7001DF083 /* GMSPathExtensions.swift in Sources */,
 				60AEE9391AAB54F700B1975F /* MGConferenceDatePicker.m in Sources */,
@@ -1413,9 +1421,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60057DF41ABF59BD008BCBD6 /* SRCoreDataPlace.swift in Sources */,
 				60D9AB8C1ABA13340008A93E /* SRRoute.swift in Sources */,
 				60ED30AF1AB8C35700EEFCAF /* SRCoreDataAppointment.swift in Sources */,
-				606D3FBE1AB5ABEB006D0B73 /* SRCoreDataPlace.swift in Sources */,
 				606D3FC01AB5ABEB006D0B73 /* SRRoutePoint.swift in Sources */,
 				606D3FC11AB5ABEB006D0B73 /* SRRouteVideoPoint.swift in Sources */,
 				606D3FC21AB5ABEB006D0B73 /* SRVideoData.swift in Sources */,

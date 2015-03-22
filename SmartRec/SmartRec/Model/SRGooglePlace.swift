@@ -24,6 +24,7 @@ struct SRGooglePlace {
     var distance: CGFloat?;
     var photoReferences: [String]?;
     var website: String?;
+    var weekDayText: String?;
 //    var zipCity: String?;
 
     
@@ -35,6 +36,20 @@ struct SRGooglePlace {
         internalPhoneNumber = results["international_phone_number"] as? String;
         
         website = results["website"] as? String;
+        
+        var openingHours = results["opening_hours"] as? NSDictionary;
+        
+        if (openingHours != nil) {
+            
+            var weekdayArray = openingHours!["weekday_text"] as [String];
+            var weekDayT: String = "";
+            
+            for day in weekdayArray {
+                weekDayT = weekDayT + day + "\n";
+            }
+            weekDayText = weekDayT;
+        }
+
         
 //        if let address_components = results["address_components"] as? Array<NSDictionary> {
 //            

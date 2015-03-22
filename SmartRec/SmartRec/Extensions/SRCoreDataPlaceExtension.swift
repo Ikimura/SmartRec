@@ -55,6 +55,10 @@ extension SRCoreDataPlace {
             self.website = placeStruct.website!;
         }
         
+        if (placeStruct.weekDayText != nil) {
+            self.weekdayText = placeStruct.weekDayText!;
+        }
+        
 //            if (appintmentData.place.zipCity != nil) {
 //                placeEntity!.zipCity = appintmentData.place.zipCity!;
 //            }
