@@ -21,12 +21,12 @@ class SRRootMenuViewController : RESideMenu {
     override func viewDidLoad() {
         super.viewDidLoad();
         
-        self.view.backgroundColor = UIColor.greenColor();
+        self.view.backgroundColor = UIColor.clearColor();
         self.menuPreferredStatusBarStyle = .LightContent;
-        self.contentViewShadowColor = UIColor.blackColor();
+        self.contentViewShadowColor = UIColor.blueColor();
         self.contentViewShadowOffset = CGSizeMake(0, 0);
-        self.contentViewShadowOpacity = 0.6;
-        self.contentViewShadowRadius = 5;
+        self.contentViewShadowOpacity = 0.1;
+        self.contentViewShadowRadius = 2;
         self.contentViewShadowEnabled = true;
     }
     

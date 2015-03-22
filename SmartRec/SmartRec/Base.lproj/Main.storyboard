@@ -699,36 +699,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UrW-th-epe">
-                                <rect key="frame" x="16" y="97" width="66" height="30"/>
-                                <state key="normal" title="List">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu_bg" translatesAutoresizingMaskIntoConstraints="NO" id="WLS-bO-jDq">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UrW-th-epe">
+                                <rect key="frame" x="45" y="148" width="46" height="30"/>
+                                <state key="normal" title="Places">
+                                    <color key="titleColor" red="0.94117647059999998" green="0.97254901959999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="menuButtonDidTap:" destination="cjR-lt-eP7" eventType="touchUpInside" id="XJu-Kg-KdG"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Cn-2Z-Wv1">
-                                <rect key="frame" x="16" y="149" width="73" height="30"/>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Cn-2Z-Wv1">
+                                <rect key="frame" x="45" y="188" width="49" height="30"/>
                                 <state key="normal" title="History">
+                                    <color key="titleColor" red="0.94117647059999998" green="0.97254901959999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="menuButtonDidTap:" destination="cjR-lt-eP7" eventType="touchUpInside" id="EmN-lO-XIr"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vN7-1X-VT9">
-                                <rect key="frame" x="29" y="199" width="112" height="30"/>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vN7-1X-VT9">
+                                <rect key="frame" x="45" y="228" width="106" height="30"/>
                                 <state key="normal" title="Video Recorder">
+                                    <color key="titleColor" red="0.94117647059999998" green="0.97254901959999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="menuButtonDidTap:" destination="cjR-lt-eP7" eventType="touchUpInside" id="P5z-Tg-XtR"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RGJ-ha-0eY">
-                                <rect key="frame" x="29" y="237" width="100" height="30"/>
-                                <state key="normal" title="Video hostory">
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RGJ-ha-0eY">
+                                <rect key="frame" x="45" y="268" width="92" height="30"/>
+                                <state key="normal" title="Video History">
+                                    <color key="titleColor" red="0.94117647059999998" green="0.97254901959999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -737,6 +744,20 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="9Cn-2Z-Wv1" firstAttribute="top" secondItem="UrW-th-epe" secondAttribute="bottom" constant="10" id="6we-GG-eRX"/>
+                            <constraint firstItem="9Cn-2Z-Wv1" firstAttribute="leading" secondItem="UrW-th-epe" secondAttribute="leading" id="Izj-aK-jm2"/>
+                            <constraint firstItem="RGJ-ha-0eY" firstAttribute="top" secondItem="vN7-1X-VT9" secondAttribute="bottom" constant="10" id="JUV-JK-tI5"/>
+                            <constraint firstItem="RGJ-ha-0eY" firstAttribute="leading" secondItem="vN7-1X-VT9" secondAttribute="leading" id="LMj-tn-rNC"/>
+                            <constraint firstItem="WLS-bO-jDq" firstAttribute="leading" secondItem="DUi-tX-hIh" secondAttribute="leading" id="MSe-tP-VAi"/>
+                            <constraint firstItem="vN7-1X-VT9" firstAttribute="leading" secondItem="9Cn-2Z-Wv1" secondAttribute="leading" id="Mse-Yt-28y"/>
+                            <constraint firstItem="vN7-1X-VT9" firstAttribute="top" secondItem="9Cn-2Z-Wv1" secondAttribute="bottom" constant="10" id="UBj-dl-V2S"/>
+                            <constraint firstItem="WLS-bO-jDq" firstAttribute="top" secondItem="CZA-dl-NAG" secondAttribute="bottom" constant="-20" id="YVp-u5-pDe"/>
+                            <constraint firstItem="jtt-5P-YH9" firstAttribute="top" secondItem="WLS-bO-jDq" secondAttribute="bottom" id="awK-5o-hn6"/>
+                            <constraint firstItem="UrW-th-epe" firstAttribute="leading" secondItem="DUi-tX-hIh" secondAttribute="leading" constant="45" id="efm-KB-NvW"/>
+                            <constraint firstItem="UrW-th-epe" firstAttribute="top" secondItem="CZA-dl-NAG" secondAttribute="bottom" constant="128" id="kly-8Q-I2d"/>
+                            <constraint firstAttribute="trailing" secondItem="WLS-bO-jDq" secondAttribute="trailing" id="uYw-Vo-rdO"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SDg-J2-fq3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -955,6 +976,7 @@
         <image name="image_placeholder" width="44" height="44"/>
         <image name="location_notification_btn" width="248" height="40"/>
         <image name="map_annotation_conf" width="17" height="24"/>
+        <image name="menu_bg" width="320" height="568"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="172-ET-Ihs"/>
