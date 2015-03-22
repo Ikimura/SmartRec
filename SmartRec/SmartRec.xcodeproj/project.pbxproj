@@ -126,6 +126,7 @@
 		60B94B2C1AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60B94B261AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib */; };
 		60B94B301AA2211500BBDAA1 /* SRPlacesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B94B2F1AA2211500BBDAA1 /* SRPlacesListViewController.swift */; };
 		60B94B321AA2281300BBDAA1 /* SRPlacesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B94B311AA2281300BBDAA1 /* SRPlacesListTableViewCell.swift */; };
+		60BD7F2D1ABEFAA800826DC5 /* SRRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BD7F2C1ABEFAA800826DC5 /* SRRoundedButton.swift */; };
 		60BE86DA1A9BBE440070833C /* SRRoutePointStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3163E1A9BBC7900D5DEE4 /* SRRoutePointStruct.swift */; };
 		60BE86EA1A9BC45E0070833C /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60BE86E91A9BC45E0070833C /* GoogleMaps.framework */; };
 		60BE86EC1A9BC4720070833C /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 60BE86EB1A9BC4720070833C /* GoogleMaps.bundle */; };
@@ -344,6 +345,7 @@
 		60B94B261AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SRPlacesListTableViewCell.xib; sourceTree = "<group>"; };
 		60B94B2F1AA2211500BBDAA1 /* SRPlacesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesListViewController.swift; sourceTree = "<group>"; };
 		60B94B311AA2281300BBDAA1 /* SRPlacesListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesListTableViewCell.swift; sourceTree = "<group>"; };
+		60BD7F2C1ABEFAA800826DC5 /* SRRoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRRoundedButton.swift; sourceTree = "<group>"; };
 		60BE86E91A9BC45E0070833C /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		60BE86EB1A9BC4720070833C /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		60C316011A9BBB2E00D5DEE4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -795,6 +797,7 @@
 			children = (
 				13BCBB271A28996600E823F9 /* SRBusyView.xib */,
 				13BCBB321A28998200E823F9 /* SRBusyView.swift */,
+				60BD7F2C1ABEFAA800826DC5 /* SRRoundedButton.swift */,
 			);
 			path = CustomControls;
 			sourceTree = "<group>";
@@ -1318,6 +1321,7 @@
 				60C3163A1A9BBC5D00D5DEE4 /* NSDateExtensions.swift in Sources */,
 				606D3FA81AB5A6E9006D0B73 /* SRRoutePoint.swift in Sources */,
 				1368F4FE1A4B20F0004D52B1 /* SRVideoRouteDetailsViewController.swift in Sources */,
+				60BD7F2D1ABEFAA800826DC5 /* SRRoundedButton.swift in Sources */,
 				60ED30AC1AB8BF2B00EEFCAF /* SRCoreDataAppointment.swift in Sources */,
 				608153BF1A9E62F30033FF09 /* SRPlacesTypesTableViewController.swift in Sources */,
 				60C3161A1A9BBBB400D5DEE4 /* SRMarkersCluster.swift in Sources */,
