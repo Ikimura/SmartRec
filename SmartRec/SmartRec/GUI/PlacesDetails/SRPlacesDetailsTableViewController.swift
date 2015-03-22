@@ -53,7 +53,16 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
         switch (indexPath.section) {
         case 0:
             if (indexPath.row == 0) {
-                return 103
+                
+                let place = dataSource!.itemAtIndexPath(indexPath) as SRGooglePlace
+                var dCell = tableView.dequeueReusableCellWithIdentifier(kPlacesListCellIdentifier) as? SRPlacesListTableViewCell;
+                dCell!.iconImage.cancelImageRequestOperation();
+                
+                self.fillCell(dCell!, withData: place);
+                
+                dCell!.layoutIfNeeded();
+                
+                return dCell!.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height;
             } else {
                 return 126;
             }

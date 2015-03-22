@@ -33,6 +33,8 @@ class SRPlacesListViewController : SRCommonViewController, UITableViewDataSource
             tableView.scrollIndicatorInsets = inset;
             tableView.contentInset = inset;
         }
+        tableView.estimatedRowHeight = 102;
+        tableView.rowHeight = UITableViewAutomaticDimension;
     }
     
     //MARK: - UITableViewDataSource
