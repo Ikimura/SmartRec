@@ -107,12 +107,12 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
                 confirmationButton.hidden = true;
             } else {
                 
-                confirmationButton.setBackgroundImage(UIImage(named: "arrived_btn"), forState: .Normal);
+                confirmationButton.setTitle(NSLocalizedString("arrived_btn_title", comment:""), forState: .Normal);
             }
             calendarButton.hidden = true;
             notificationButton.hidden = true;
             
-            if (notesTextView.text == "Leave your notes...") {
+            if (appointmentCD?.note == nil || appointmentCD?.note.utf16Count == 0) {
                 notesTextView.hidden = true;
             }
             
@@ -123,7 +123,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
             
             pictureImageView.hidden = false;
             self.loadPlaceImage();
-            confirmationButton.setBackgroundImage(UIImage(named: "arrived_btn"), forState: .Normal | .Highlighted | .Selected);
+            confirmationButton.setTitle(NSLocalizedString("arrived_btn_title", comment:""), forState: .Normal);
             calendarButton.hidden = true;
             notificationButton.hidden = true;
             
@@ -201,9 +201,10 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
 
         var dist = data["distance"] as? CGFloat;
         if (dist != nil) {
-            
+            var distTitle = NSLocalizedString("distance_title", comment:"");
             var strDist = Double(dist!).format(".3");
-            addressLabel.text = addressLabel.text! + ", distance: \(strDist) km.";
+            var distReduction = NSLocalizedString("distance_reduction", comment:"");
+            addressLabel.text = addressLabel.text! + ", \(distTitle): \(strDist) " + distReduction + ".";
         }
         
         if var phoneNumber = data["internalPhoneNumber"] as? String {
@@ -217,7 +218,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
         
         if let fireDate = data["fireDate"] as? NSDate {
             
-            dateLabel.text = "\(fireDate.stringFromDateWithStringFormats([kTimeFormat, kDateFormat, kTimeFormat]))";
+            dateLabel.text = "\(fireDate.stringFromDateWithStringFormats([kTimeFormat, kDateFormat, kTimeFormat]).capitalizedString)";
         }
         websiteLabel.text = data["website"] as? String;
     }
@@ -353,7 +354,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
                     if (error == nil) {
                         
                         strongSelf.appointmentST!.calendarId = event.eventIdentifier;
-                        strongSelf.showAlertWith("Message", message: "Event Was Succesfully Added To Calendar!");
+                        strongSelf.showAlertWith(NSLocalizedString("allert_message_title", comment:""), message: NSLocalizedString("alert_message_body", comment:""));
                     }
                     
                 default:
@@ -387,7 +388,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
                     
                     if (error == nil) {
                         
-                        strongSelf.showAlertWith("Message", message: "Event Was Deleted From Calendar!")
+                        strongSelf.showAlertWith(NSLocalizedString("allert_message_title", comment:""), message: NSLocalizedString("alert_message_body_delete", comment:""));
                         
                     }
                 }
@@ -439,7 +440,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
         
         if (notesTextView.text.utf16Count == 0) {
             notesTextView.textColor = UIColor.lightGrayColor();
-            notesTextView.text = "Leave your notes...";
+            notesTextView.text = NSLocalizedString("add_comment_key", comment:"");
             notesTextView.resignFirstResponder();
         }
     }

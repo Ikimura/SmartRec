@@ -33,6 +33,9 @@
                     <constraint firstItem="rxa-0C-9up" firstAttribute="leading" secondItem="1BC-h9-dNG" secondAttribute="leading" constant="30" id="gjT-sg-SOd"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="button" destination="rxa-0C-9up" id="3w5-RI-SvF"/>
+            </connections>
             <point key="canvasLocation" x="589" y="259"/>
         </tableViewCell>
     </objects>

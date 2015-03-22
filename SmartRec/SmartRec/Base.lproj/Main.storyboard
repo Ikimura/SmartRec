@@ -369,7 +369,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Determining location..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7R-c3-axA">
-                                            <rect key="frame" x="213" y="12" width="173" height="21"/>
+                                            <rect key="frame" x="213" y="12.5" width="173" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.4392156862745098" green="0.4392156862745098" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -377,7 +377,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="S7R-c3-axA" secondAttribute="centerY" id="NAR-iA-BEg"/>
-                                        <constraint firstItem="S7R-c3-axA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Zwy-vc-5Mj" secondAttribute="leading" constant="10" id="gE0-JL-W5z"/>
+                                        <constraint firstItem="S7R-c3-axA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Zwy-vc-5Mj" secondAttribute="leading" constant="5" id="gE0-JL-W5z"/>
                                         <constraint firstAttribute="centerX" secondItem="S7R-c3-axA" secondAttribute="centerX" id="qgb-6B-DtE"/>
                                     </constraints>
                                 </view>
@@ -582,7 +582,7 @@
                                 <color key="textColor" red="0.0" green="0.51764705879999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="black" bouncesZoom="NO" keyboardDismissMode="onDrag" text="Leave your notes..." translatesAutoresizingMaskIntoConstraints="NO" id="E89-24-ahj">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="black" bouncesZoom="NO" keyboardDismissMode="onDrag" text="Leave your comment..." translatesAutoresizingMaskIntoConstraints="NO" id="E89-24-ahj">
                                 <rect key="frame" x="160" y="296" width="280" height="86"/>
                                 <color key="backgroundColor" red="0.94117647058823528" green="0.97254901960784312" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>

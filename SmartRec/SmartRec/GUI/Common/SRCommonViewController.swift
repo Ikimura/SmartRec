@@ -38,7 +38,7 @@ class SRCommonViewController: UIViewController, SRAirDropSharingProtocol {
     func showAlertWith(title: String, message: String) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert);
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("alert_message_close_btn", comment:""), style: UIAlertActionStyle.Default,handler: nil))
         
         self.presentViewController(alertController, animated: true, completion: nil)
     }

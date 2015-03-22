@@ -15,6 +15,7 @@ protocol SRContinueTableViewCellDelegate {
 
 class SRContinueTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var button: SRRoundedButton!
     var delegate: SRContinueTableViewCellDelegate?;
     
     @IBAction func didTapButton(sender: AnyObject) {

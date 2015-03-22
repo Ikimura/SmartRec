@@ -1,0 +1,87 @@
+
+/* Class = "UIButton"; normalTitle = "Rec"; ObjectID = "15s-wt-xfD"; */
+"15s-wt-xfD.normalTitle" = "Rec";
+
+/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "1Ny-c4-jzd"; */
+"1Ny-c4-jzd.normalTitle" = "Continue";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "2f2-OL-n3O"; */
+"2f2-OL-n3O.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "History"; ObjectID = "9Cn-2Z-Wv1"; */
+"9Cn-2Z-Wv1.normalTitle" = "History";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "AnB-QS-zAK"; */
+"AnB-QS-zAK.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "Info"; ObjectID = "Coa-Qx-H4S"; */
+"Coa-Qx-H4S.title" = "Information";
+
+/* Class = "UILabel"; text = "You create appintment for:"; ObjectID = "Dev-bx-U7a"; */
+"Dev-bx-U7a.text" = "You create appintment for:";
+
+/* Class = "UITextView"; text = "Leave your notes..."; ObjectID = "E89-24-ahj"; */
+"E89-24-ahj.text" = "Leave your comment...";
+
+/* Class = "UITabBarItem"; title = "Record"; ObjectID = "ETC-qY-Brt"; */
+"ETC-qY-Brt.title" = "Record";
+
+/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "IFB-6j-8bg"; */
+"IFB-6j-8bg.normalTitle" = "Continue";
+
+/* Class = "UIButton"; normalTitle = "Video History"; ObjectID = "RGJ-ha-0eY"; */
+"RGJ-ha-0eY.normalTitle" = "Video History";
+
+/* Class = "UILabel"; text = "Determining location..."; ObjectID = "S7R-c3-axA"; */
+"S7R-c3-axA.text" = "Determining location...";
+
+/* Class = "UIButton"; normalTitle = "Places"; ObjectID = "UrW-th-epe"; */
+"UrW-th-epe.normalTitle" = "Places";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "XQB-Ke-bEF"; */
+"XQB-Ke-bEF.text" = "-";
+
+/* Class = "UILabel"; text = "0 m/s"; ObjectID = "Y1K-V9-StV"; */
+"Y1K-V9-StV.text" = "0 m/s";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "Zdh-pi-8Wd"; */
+"Zdh-pi-8Wd.text" = "Name";
+
+/* Class = "UIButton"; normalTitle = "Location Notification"; ObjectID = "ad8-HV-DC0"; */
+"ad8-HV-DC0.normalTitle" = "Location Notification";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "b49-Ic-l4u"; */
+"b49-Ic-l4u.text" = "-";
+
+/* Class = "UIBarButtonItem"; title = "Walking"; ObjectID = "bpf-T2-Po0"; */
+"bpf-T2-Po0.title" = "Walking";
+
+/* Class = "UILabel"; text = "00:00"; ObjectID = "eI2-BP-ihS"; */
+"eI2-BP-ihS.text" = "00:00";
+
+/* Class = "UIButton"; normalTitle = "Finish"; ObjectID = "eWj-zL-qlF"; */
+"eWj-zL-qlF.normalTitle" = "Finish";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "l81-8F-hr1"; */
+"l81-8F-hr1.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "lMu-SW-JIc"; */
+"lMu-SW-JIc.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "nAQ-5i-1dC"; */
+"nAQ-5i-1dC.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "nsE-Id-Ooi"; */
+"nsE-Id-Ooi.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "ps3-eb-IDw"; */
+"ps3-eb-IDw.text" = "Label";
+
+/* Class = "UITabBarItem"; title = "Routes"; ObjectID = "uXC-J1-Rwl"; */
+"uXC-J1-Rwl.title" = "Routes";
+
+/* Class = "UIButton"; normalTitle = "Video Recorder"; ObjectID = "vN7-1X-VT9"; */
+"vN7-1X-VT9.normalTitle" = "Video Recorder";
+
+/* Class = "UIButton"; normalTitle = "Add To Calendar"; ObjectID = "xDL-9C-ECG"; */
+"xDL-9C-ECG.normalTitle" = "Add To Calendar";

@@ -120,13 +120,14 @@
 		60AEE93C1AAB5FF700B1975F /* SRAppointmentDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AEE93B1AAB5FF700B1975F /* SRAppointmentDateViewController.swift */; };
 		60AEE93D1AAB60D600B1975F /* MGConferenceDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AEE9371AAB54F700B1975F /* MGConferenceDatePicker.m */; };
 		60AEE93F1AAB683400B1975F /* SRContinueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AEE93E1AAB683400B1975F /* SRContinueTableViewCell.swift */; };
-		60AEE9411AAB68AD00B1975F /* SRContinueTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60AEE9401AAB68AD00B1975F /* SRContinueTableViewCell.xib */; };
 		60B94B081AA1D19F00BBDAA1 /* SRCalloutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60B94B071AA1D19F00BBDAA1 /* SRCalloutView.xib */; };
 		60B94B2A1AA220D900BBDAA1 /* SmartRec.SRPlacesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60B94B221AA220D900BBDAA1 /* SmartRec.SRPlacesListViewController.xib */; };
 		60B94B2C1AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60B94B261AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib */; };
 		60B94B301AA2211500BBDAA1 /* SRPlacesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B94B2F1AA2211500BBDAA1 /* SRPlacesListViewController.swift */; };
 		60B94B321AA2281300BBDAA1 /* SRPlacesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B94B311AA2281300BBDAA1 /* SRPlacesListTableViewCell.swift */; };
 		60BD7F2D1ABEFAA800826DC5 /* SRRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BD7F2C1ABEFAA800826DC5 /* SRRoundedButton.swift */; };
+		60BD7F381ABF041300826DC5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60BD7F3A1ABF041300826DC5 /* Localizable.strings */; };
+		60BD7F6B1ABF126D00826DC5 /* SRContinueTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60BD7F6A1ABF126D00826DC5 /* SRContinueTableViewCell.xib */; };
 		60BE86DA1A9BBE440070833C /* SRRoutePointStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3163E1A9BBC7900D5DEE4 /* SRRoutePointStruct.swift */; };
 		60BE86EA1A9BC45E0070833C /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60BE86E91A9BC45E0070833C /* GoogleMaps.framework */; };
 		60BE86EC1A9BC4720070833C /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 60BE86EB1A9BC4720070833C /* GoogleMaps.bundle */; };
@@ -134,7 +135,6 @@
 		60C316101A9BBB6D00D5DEE4 /* SRBaseMapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3160B1A9BBB6D00D5DEE4 /* SRBaseMapMarker.swift */; };
 		60C316111A9BBB6D00D5DEE4 /* SRMapPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3160C1A9BBB6D00D5DEE4 /* SRMapPolyline.swift */; };
 		60C316121A9BBB6D00D5DEE4 /* SRPointMapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3160D1A9BBB6D00D5DEE4 /* SRPointMapMarker.swift */; };
-		60C316161A9BBBA400D5DEE4 /* SRCommonMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C316151A9BBBA400D5DEE4 /* SRCommonMapViewController.swift */; };
 		60C316191A9BBBB400D5DEE4 /* SRClusteringMapVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C316171A9BBBB400D5DEE4 /* SRClusteringMapVIew.swift */; };
 		60C3161A1A9BBBB400D5DEE4 /* SRMarkersCluster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C316181A9BBBB400D5DEE4 /* SRMarkersCluster.swift */; };
 		60C3161E1A9BBBCB00D5DEE4 /* SRBaceMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3161B1A9BBBCB00D5DEE4 /* SRBaceMapView.swift */; };
@@ -339,20 +339,23 @@
 		60AEE9381AAB54F700B1975F /* MGConferenceDatePickerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGConferenceDatePickerDelegate.h; sourceTree = "<group>"; };
 		60AEE93B1AAB5FF700B1975F /* SRAppointmentDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAppointmentDateViewController.swift; sourceTree = "<group>"; };
 		60AEE93E1AAB683400B1975F /* SRContinueTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRContinueTableViewCell.swift; sourceTree = "<group>"; };
-		60AEE9401AAB68AD00B1975F /* SRContinueTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SRContinueTableViewCell.xib; sourceTree = "<group>"; };
 		60B94B071AA1D19F00BBDAA1 /* SRCalloutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SRCalloutView.xib; path = SmartRec/GUI/Common/MapView/CalloutView/SRCalloutView.xib; sourceTree = SOURCE_ROOT; };
 		60B94B221AA220D900BBDAA1 /* SmartRec.SRPlacesListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SmartRec.SRPlacesListViewController.xib; path = BranchList/SmartRec.SRPlacesListViewController.xib; sourceTree = "<group>"; };
 		60B94B261AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SRPlacesListTableViewCell.xib; sourceTree = "<group>"; };
 		60B94B2F1AA2211500BBDAA1 /* SRPlacesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesListViewController.swift; sourceTree = "<group>"; };
 		60B94B311AA2281300BBDAA1 /* SRPlacesListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesListTableViewCell.swift; sourceTree = "<group>"; };
 		60BD7F2C1ABEFAA800826DC5 /* SRRoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRRoundedButton.swift; sourceTree = "<group>"; };
+		60BD7F391ABF041300826DC5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		60BD7F3B1ABF041E00826DC5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		60BD7F3E1ABF0B8800826DC5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		60BD7F401ABF0B8A00826DC5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		60BD7F6A1ABF126D00826DC5 /* SRContinueTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SRContinueTableViewCell.xib; sourceTree = "<group>"; };
 		60BE86E91A9BC45E0070833C /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		60BE86EB1A9BC4720070833C /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		60C316011A9BBB2E00D5DEE4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		60C3160B1A9BBB6D00D5DEE4 /* SRBaseMapMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRBaseMapMarker.swift; sourceTree = "<group>"; };
 		60C3160C1A9BBB6D00D5DEE4 /* SRMapPolyline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRMapPolyline.swift; sourceTree = "<group>"; };
 		60C3160D1A9BBB6D00D5DEE4 /* SRPointMapMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPointMapMarker.swift; sourceTree = "<group>"; };
-		60C316151A9BBBA400D5DEE4 /* SRCommonMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCommonMapViewController.swift; sourceTree = "<group>"; };
 		60C316171A9BBBB400D5DEE4 /* SRClusteringMapVIew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRClusteringMapVIew.swift; sourceTree = "<group>"; };
 		60C316181A9BBBB400D5DEE4 /* SRMarkersCluster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRMarkersCluster.swift; sourceTree = "<group>"; };
 		60C3161B1A9BBBCB00D5DEE4 /* SRBaceMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRBaceMapView.swift; path = SmartRec/GUI/Common/MapView/SRBaceMapView.swift; sourceTree = SOURCE_ROOT; };
@@ -616,6 +619,7 @@
 		137E3B6619F52BF00094C5A1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				60BD7F3A1ABF041300826DC5 /* Localizable.strings */,
 				60C316011A9BBB2E00D5DEE4 /* Settings.bundle */,
 				137E3B6C19F52BF00094C5A1 /* Main.storyboard */,
 				137E3B7119F52BF00094C5A1 /* LaunchScreen.xib */,
@@ -676,7 +680,6 @@
 				130903B01A9396F1000669AC /* ClusteringMapView */,
 				130322EA1A8F736600FBAFF7 /* MapView */,
 				137E3B8A19F531B20094C5A1 /* SRNavigationController.swift */,
-				60C316151A9BBBA400D5DEE4 /* SRCommonMapViewController.swift */,
 				137E3B8C19F532550094C5A1 /* SRCommonViewController.swift */,
 				609131011AB47FEA00A56D8F /* SRCommonRouteMapViewController.swift */,
 			);
@@ -1017,7 +1020,7 @@
 				60AEE92F1AAB2BFE00B1975F /* SRPlaceGalaryCell.swift */,
 				60AEE9311AAB2C5500B1975F /* SRPlaceGalaryCell.xib */,
 				60AEE93E1AAB683400B1975F /* SRContinueTableViewCell.swift */,
-				60AEE9401AAB68AD00B1975F /* SRContinueTableViewCell.xib */,
+				60BD7F6A1ABF126D00826DC5 /* SRContinueTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1159,7 +1162,6 @@
 				Base,
 				en,
 				ru,
-				"be-BY",
 			);
 			mainGroup = 137E3B5A19F52BF00094C5A1;
 			productRefGroup = 137E3B6419F52BF00094C5A1 /* Products */;
@@ -1252,13 +1254,14 @@
 				60B94B2C1AA220D900BBDAA1 /* SRPlacesListTableViewCell.xib in Resources */,
 				137E3B7319F52BF00094C5A1 /* LaunchScreen.xib in Resources */,
 				13BCBB291A28996600E823F9 /* SRBusyView.xib in Resources */,
-				60AEE9411AAB68AD00B1975F /* SRContinueTableViewCell.xib in Resources */,
 				609131121AB4AA7D00A56D8F /* SRAppointmentHistoryCell.xib in Resources */,
 				60B94B2A1AA220D900BBDAA1 /* SmartRec.SRPlacesListViewController.xib in Resources */,
 				60C316021A9BBB2E00D5DEE4 /* Settings.bundle in Resources */,
+				60BD7F6B1ABF126D00826DC5 /* SRContinueTableViewCell.xib in Resources */,
 				137E3B7019F52BF00094C5A1 /* Images.xcassets in Resources */,
 				13E537A21A30BCBD000A27E6 /* SRGSensorView.xib in Resources */,
 				1338720C1A1CC9DF00FFC29F /* SRMarkerInfoView.xib in Resources */,
+				60BD7F381ABF041300826DC5 /* Localizable.strings in Resources */,
 				60BE86EC1A9BC4720070833C /* GoogleMaps.bundle in Resources */,
 				60B94B081AA1D19F00BBDAA1 /* SRCalloutView.xib in Resources */,
 			);
@@ -1332,7 +1335,6 @@
 				13E5AE7719FF7BF900ABFAD8 /* NSURLExtensions.swift in Sources */,
 				609CB2651AAF6C5900968A77 /* SRDataSource.swift in Sources */,
 				60AEE92A1AAAF87100B1975F /* SRPlacesDetailsTableViewController.swift in Sources */,
-				60C316161A9BBBA400D5DEE4 /* SRCommonMapViewController.swift in Sources */,
 				600CE4BD1AAE34F700D20481 /* SRAppointmentsDataSource.swift in Sources */,
 				13265F5B1A1E0DA100E063CD /* SRVideoMapMarker.swift in Sources */,
 				609131141AB4ABC400A56D8F /* SRAppointmentHistoryCell.swift in Sources */,
@@ -1452,6 +1454,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				137E3B6D19F52BF00094C5A1 /* Base */,
+				60BD7F3E1ABF0B8800826DC5 /* en */,
+				60BD7F401ABF0B8A00826DC5 /* ru */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1462,6 +1466,16 @@
 				137E3B7219F52BF00094C5A1 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		60BD7F3A1ABF041300826DC5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				60BD7F391ABF041300826DC5 /* en */,
+				60BD7F3B1ABF041E00826DC5 /* ru */,
+			);
+			name = Localizable.strings;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

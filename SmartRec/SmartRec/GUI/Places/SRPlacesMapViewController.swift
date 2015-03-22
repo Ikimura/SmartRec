@@ -24,7 +24,7 @@ struct RestorationKeys {
 enum SRControllerMode: String {
     
     case Map = "Map";
-    case List = "List";
+    case List =  "List";
 }
 
 class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewControllerDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
@@ -98,10 +98,10 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         
         if (self.navigationController != nil) {
             
-            var searchButton = UIBarButtonItem(title: "List", style: .Plain, target: self, action: "didSelectRightButton:");
+            var searchButton = UIBarButtonItem(title: NSLocalizedString("list_naviagtion_button_title", comment:""), style: .Plain, target: self, action: "didSelectRightButton:");
             self.navigationItem.rightBarButtonItem = searchButton;
             
-            searchButton.possibleTitles = NSSet(array: ["Map"]);
+            searchButton.possibleTitles = NSSet(array: [NSLocalizedString("map_naviagtion_button_title", comment:"")]);
             rightBarButtonItem = searchButton;
         }
     }
@@ -114,7 +114,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         
         switch (mode) {
         case .Map:
-            rightBarButtonItem?.title = "List";
+            rightBarButtonItem?.title = NSLocalizedString("list_naviagtion_button_title", comment:"");
             
             if (resultsController.placesList.count != 0) {
                 
@@ -126,7 +126,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
             
         case .List:
             
-            rightBarButtonItem?.title = "Map";
+            rightBarButtonItem?.title = NSLocalizedString("map_naviagtion_button_title", comment:"");
             
             searchController.active = true;
             
@@ -174,12 +174,12 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
     
     func didPresentSearchController(searchController: UISearchController) {
         //NSLog(__FUNCTION__)
-        rightBarButtonItem?.title = "Map";
+        rightBarButtonItem?.title = NSLocalizedString("map_naviagtion_button_title", comment:"");
     }
     
     func didDismissSearchController(searchController: UISearchController) {
         //NSLog(__FUNCTION__)
-        rightBarButtonItem?.title = "List";
+        rightBarButtonItem?.title = NSLocalizedString("list_naviagtion_button_title", comment:"");
     }
     
     // MARK: UISearchResultsUpdating
@@ -279,7 +279,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
                 
                 if (strongSelf.googlePlaces.count == 0 && !isQeurySearch) {
                     //TODO: change to localized strings
-                    strongSelf.showAlertWith("Attention", message: "No Data Available");
+                    strongSelf.showAlertWith(NSLocalizedString("alert_attention_title", comment:""), message: NSLocalizedString("alert_attention_body", comment:""));
                 }
             }
         };
@@ -290,7 +290,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
                 
                 if let userInfo = error.userInfo as NSDictionary! {
                     
-                    strongSelf.showAlertWith("Error Occuried", message: userInfo["NSLocalizedDescription"] as String);
+                    strongSelf.showAlertWith(NSLocalizedString("alert_error_title", comment:""), message: userInfo["NSLocalizedDescription"] as String);
                 }
             }
         }

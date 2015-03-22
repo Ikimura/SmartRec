@@ -145,14 +145,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         var markArrivedAction = UIMutableUserNotificationAction();
         markArrivedAction.identifier = "MARK_ARRIVED";
-        markArrivedAction.title = "Mark arrived";
+        markArrivedAction.title = NSLocalizedString("arrived_btn_title", comment:"");
         markArrivedAction.activationMode = .Background;
         markArrivedAction.destructive = false;
         markArrivedAction.authenticationRequired = true;
         
         var showAction = UIMutableUserNotificationAction();
         showAction.identifier = "SHOW_APPOINTMENT";
-        showAction.title = "Show";
+        showAction.title = NSLocalizedString("notification_show_btn", comment:"");
         showAction.activationMode = .Foreground;
         showAction.destructive = false;
         showAction.authenticationRequired = true;

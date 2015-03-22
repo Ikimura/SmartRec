@@ -45,7 +45,7 @@ class SRPlaceRouteMapViewController: SRCommonRouteMapViewController {
     
     override func setUpNavigationBar() {
         
-        self.title = "Route";
+        self.title = NSLocalizedString("route_title", comment:"");
     }
     
     //MARK: - public
@@ -105,8 +105,9 @@ class SRPlaceRouteMapViewController: SRCommonRouteMapViewController {
     }
     
     private func showRouteData(distance: String, duration: String) {
-        
-        metricsLabel.text = "Distance: \(distance). Duration: \(duration).";
+        var distTitle = NSLocalizedString("distance_title", comment:"").capitalizedString;
+        var durationTitle = NSLocalizedString("duration_title", comment:"").capitalizedString;
+        metricsLabel.text = distTitle + ": \(distance). " + durationTitle + ": \(duration).";
     }
     
     
@@ -121,14 +122,14 @@ class SRPlaceRouteMapViewController: SRCommonRouteMapViewController {
         
         var button = sender as? UIBarButtonItem;
         
-        if (button?.title == "Walking") {
+        if (button?.title == NSLocalizedString("route_mode_walking_title", comment:"")) {
             
-            button?.title = "Driving";
+            button?.title = NSLocalizedString("route_mode_driving_title", comment:"");
             pathMode = (title: .Driving, value: 1);
             
         } else {
             
-            button?.title = "Walking";
+            button?.title = NSLocalizedString("route_mode_walking_title", comment: "");
             pathMode = (title: .Walking, value: 0);
         }
         

@@ -48,7 +48,7 @@ class SRMovieListViewController: SRCommonViewController, SRDataSourceDelegate, U
     override func setUpNavigationBar() {
         super.setUpNavigationBar();
         
-        self.title = "My Videos";
+        self.title = NSLocalizedString("my_videos", comment:"");
     }
 
     //MARK: - UITableViewDataSource

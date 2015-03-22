@@ -73,8 +73,9 @@ class SRPlacesListViewController : SRCommonViewController, UITableViewDataSource
         }
         var dist = Double(place.distance!);
         var strDist = dist.format(".3");
-        
-        cell!.distanceLabel.text = "\(strDist), km";
+        var distReduction = NSLocalizedString("distance_reduction", comment:"")
+
+        cell!.distanceLabel.text = "\(strDist), " + distReduction + ".";
         
         cell!.iconImage.setImageWithURL(place.iconURL, placeholderImage: UIImage(named: "image_placeholder"));
         

@@ -38,7 +38,7 @@ extension NSDate {
         
         if (result == NSComparisonResult.OrderedSame) {
             
-            let todayLS = NSLocalizedString("TODAY", comment: "comment");
+            let todayLS = NSLocalizedString("today_key", comment: "comment");
             
             dateTimeString = "\(todayLS)";
             
@@ -69,13 +69,13 @@ extension NSDate {
 
         var result: NSComparisonResult = appDate.compare(nowDate);
         
-        let atLS = NSLocalizedString("AT", comment: "comment");
+        let atLS = NSLocalizedString("at_key", comment: "comment");
 
         var dateTimeString: String?;
         
         if (result == NSComparisonResult.OrderedSame) {
             dateFormatter.dateFormat = formats[0];
-            let todayLS = NSLocalizedString("TODAY", comment: "comment");
+            let todayLS = NSLocalizedString("today_key", comment: "comment");
 
             dateTimeString = "\(todayLS), \(atLS) \(dateFormatter.stringFromDate(self))";
         } else {

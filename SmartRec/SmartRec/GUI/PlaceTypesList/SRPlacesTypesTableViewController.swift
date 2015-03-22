@@ -25,7 +25,7 @@ class SRPlacesTypesTableViewController: SRCommonViewController, UITableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad();
         
-        self.title = "Types";
+        self.title = NSLocalizedString("places_types_title", comment:"");
     }
     
     override func viewWillAppear(animated: Bool) {

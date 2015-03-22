@@ -110,6 +110,6 @@
     </objects>
     <resources>
         <image name="location.png" width="15" height="15"/>
-        <image name="right.png" width="11" height="12"/>
+        <image name="right.png" width="44" height="44"/>
     </resources>
 </document>

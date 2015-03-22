@@ -1,0 +1,64 @@
+/* 
+  Localizable.strings
+  SmartRec
+
+  Created by Artsiom Karseka on 3/22/15.
+  Copyright (c) 2015 con.epam.evnt. All rights reserved.
+*/
+
+"places_types_title" = "Types";
+"airport_type" = "Airport";
+"amusement_park_type" = "Amusement park";
+"art_galery_type" = "Art Gallery";
+"atm_type" = "ATM";
+"bar_type" = "Bar";
+"bakery_type" = "Bakery";
+"bank_type" = "Bank";
+"beaty_salon_type" = "Beauty Salon";
+"book_store_type" = "Book Store";
+"bowling_alley_type" = "Bowling Alley";
+"cafe_type" = "Cafe";
+"car_wash_type" = "Car Wash";
+"casino_type" = "Casino";
+"cemetery_type" ="Cemetery";
+"church_type" = "Church";
+"city_hall_type" ="City Hall";
+"clothing_store_type" ="Clothing Store";
+"courthouse_type" = "Courthouse";
+"embassy_type" ="Embassy";
+"gym_type" ="Gym";
+"hospital_type" = "Hospital";
+"library_type" = "Library";
+"night_club_type" = "Night Club";
+"movie_theater_type" = "Movie Theater";
+"museum_type" = "Museum";
+"park_type" = "Park";
+"pharmacy_type" = "Pharmacy";
+"restaurant_type" ="Restaurant";
+"train_station" = "Train Station";
+"university_type" = "University";
+"zoo_type" ="Zoo";
+"continue_button" = "Continue";
+"distance_reduction" = "km";
+"details_title" = "Details";
+"continue_cell_button" = "Continue";
+"date_selection_title" = "Date and Time";
+"map_naviagtion_button_title" = "Map";
+"list_naviagtion_button_title" = "List";
+"distance_title" = "distance";
+"duration_title" = "duration";
+"route_title" = "Route";
+"route_mode_walking_title" = "Walking";
+"route_mode_driving_title" = "Driving";
+"at_key" = "at";
+"today_key" = "Today";
+"add_comment_key" = "Leave your comment...";
+"allert_message_title" = "Message";
+"alert_message_body" = "Event Was Succesfully Added To Calendar!";
+"alert_message_body_delete" = "Event Was Deleted From Calendar!";
+"alert_message_close_btn" = "Close";
+"alert_attention_title" = "Attention";
+"alert_attention_body" = "No Data Available.";
+"alert_error_title" = "Error Occuried";
+"arrived_btn_title" = "Mark Arrived";
+"notification_show_btn" = "Show";

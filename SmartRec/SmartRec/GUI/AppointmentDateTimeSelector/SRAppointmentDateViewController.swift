@@ -19,12 +19,12 @@ class SRAppointmentDateViewController: SRCommonViewController, MGConferenceDateP
     override func viewDidLoad() {
         super.viewDidLoad();
         
-        self.title = "Date and Time";
         self.setUpDatePicker();
     }
     
     override func setUpNavigationBar() {
         
+        self.title = NSLocalizedString("date_selection_title", comment:"");
     }
     
     private func setUpDatePicker() {

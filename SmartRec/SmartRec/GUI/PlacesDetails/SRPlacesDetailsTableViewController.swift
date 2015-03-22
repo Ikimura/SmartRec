@@ -20,8 +20,6 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad();
         
-        self.title = "Details";
-        
         tableView?.registerNib(UINib(nibName: "SRPlacesListTableViewCell", bundle: nil), forCellReuseIdentifier: kPlacesListCellIdentifier);
         tableView?.registerNib(UINib(nibName: "SRPlaceGalaryCell", bundle: nil), forCellReuseIdentifier: kGalaryCellIdentifier);
         tableView?.registerNib(UINib(nibName: "SRContinueTableViewCell", bundle: nil), forCellReuseIdentifier: kContinueCellIdentifier);
@@ -43,6 +41,8 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
     
     override func setUpNavigationBar() {
         
+        self.title = NSLocalizedString("details_title", comment:"");
+
     }
     
     //MARK: - UITableViewDelegate
@@ -81,6 +81,7 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
         if (indexPath.section == 1) {
             var cCell = tableView.dequeueReusableCellWithIdentifier(kContinueCellIdentifier) as? SRContinueTableViewCell;
             cCell?.delegate = self;
+            cCell?.button.setTitle(NSLocalizedString("continue_cell_button", comment:""), forState: .Normal);
             
             cell = cCell;
             
@@ -155,7 +156,9 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
                 
                 var dist = Double(place.distance!);
                 var strDist = dist.format(".3");
-                detCell.distanceLabel.text = "\(strDist), km";
+                var distReduction = NSLocalizedString("distance_reduction", comment:"")
+
+                detCell.distanceLabel.text = "\(strDist), " + distReduction + ".";
                 
             } else {
                 

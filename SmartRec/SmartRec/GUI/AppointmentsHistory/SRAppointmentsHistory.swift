@@ -59,7 +59,7 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        return dataSource.titleForHeaderInSection(section);
+        return dataSource.titleForHeaderInSection(section).capitalizedString;
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
