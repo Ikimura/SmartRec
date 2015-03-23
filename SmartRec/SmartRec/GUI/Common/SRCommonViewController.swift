@@ -83,10 +83,10 @@ class SRCommonViewController: UIViewController, SRAirDropSharingProtocol {
     
     //pragma mark - SRAirDropSharingProtocol
     
-    func shareVideoItem() {
-        var objectsToShare = [self.fileURL!];
+    func shareItemWithAirDropSocialServices(item: NSURL) {
+    
+        var objectsToShare = [item];
         
-        var controller = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil);
         var excludedActivities = [
             UIActivityTypePostToTwitter, UIActivityTypePostToFacebook,
             UIActivityTypePostToWeibo, UIActivityTypeMessage, UIActivityTypeMail,
@@ -96,12 +96,36 @@ class SRCommonViewController: UIViewController, SRAirDropSharingProtocol {
             UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo
         ];
         
-        controller.excludedActivityTypes = excludedActivities;
+        self.presentSocialSharinController(objectsToShare, excludedServices: excludedActivities);
+    }
+    
+    func shareItemInSocialServices(item: SRSocialShareableItemProtocol, excludingServices excludedServices: [NSString!]) {
+        
+        var activityItems: [AnyObject] = [];
+        
+        if let messageText = item.socialSharingMessageText() as String! {
+            activityItems.append(messageText);
+        }
+        
+        if let imageURL = item.socialSharingThumbnailUrl() as NSURL! {
+            
+            var imageData = NSData(contentsOfURL: imageURL)
+            var thumbnailImage = UIImage(data: imageData!);
+            activityItems.append(imageURL);
+        }
+        
+        self.presentSocialSharinController(activityItems, excludedServices: excludedServices);
+    }
+    
+    private func presentSocialSharinController(activityItems: [AnyObject], excludedServices: [NSString!]) {
+        
+        var controller = UIActivityViewController(activityItems: activityItems,
+            applicationActivities: nil);
+        
+        controller.excludedActivityTypes = excludedServices;
         
         // Present the controller
         self.presentViewController(controller, animated: true, completion: nil);
-
     }
-    
     
 }

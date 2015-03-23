@@ -333,9 +333,10 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
     // MARK: - parent override
     
     override func prepareItemToShare() {
+        
         if (videoURL != nil) {
-            self.fileURL = videoURL;
-            self.shareVideoItem();
+            
+            self.shareItemWithAirDropSocialServices(videoURL!);   
         }
     }
 

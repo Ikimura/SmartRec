@@ -15,7 +15,7 @@ enum SRConfirmationScreenType: Int {
     case Notification = 2;
 }
 
-class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialSharingProtocol, UITextViewDelegate {
+class SRAppointmentConfirmationViewController: SRCommonViewController, UITextViewDelegate {
     
     var appointmentCD: SRCoreDataAppointment?;
     var appointmentST: SRAppointment?;
@@ -236,7 +236,17 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
     }
     
     func didTapShare(sender: AnyObject) {
-        self.shareAppointmetnt();
+        
+        var excludedActivities = [
+            UIActivityTypeAirDrop,
+            UIActivityTypePostToWeibo, UIActivityTypeMessage,
+            UIActivityTypePrint, UIActivityTypeCopyToPasteboard,
+            UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,
+            UIActivityTypeAddToReadingList, UIActivityTypePostToFlickr,
+            UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo
+        ];
+        
+        self.shareItemInSocialServices(appointmentST!, excludingServices: excludedActivities);
     }
     
     @IBAction func addToCalendatDidTap(sender: AnyObject) {
@@ -485,28 +495,6 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, SRSocialS
                 }
             });
         }
-    }
-    
-    //MARK: - SRSocialSharingProtocol
-
-    func shareAppointmetnt() {
-        
-//        var controller = UIActivityViewController(activityItems: [appointment!.place.name!, appointment!.description],
-//                                          applicationActivities: nil);
-        
-//        var excludedActivities = [
-//            UIActivityTypeAirDrop,
-//            UIActivityTypePostToWeibo, UIActivityTypeMessage,
-//            UIActivityTypePrint, UIActivityTypeCopyToPasteboard,
-//            UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,
-//            UIActivityTypeAddToReadingList, UIActivityTypePostToFlickr,
-//            UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo
-//        ];
-//        
-//        controller.excludedActivityTypes = excludedActivities;
-        
-        // Present the controller
-//        self.presentViewController(controller, animated: true, completion: nil);
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

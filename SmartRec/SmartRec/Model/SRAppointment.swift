@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SRAppointment {
+struct SRAppointment : SRSocialShareableItemProtocol {
 
     var id: String;
     var place: SRGooglePlace;
@@ -31,4 +31,29 @@ struct SRAppointment {
         
         calendarId = id;
     }
+    
+    func socialSharingMessageText() -> String {
+        
+        let fireDate = NSDate(timeIntervalSince1970: dateInSeconds);
+        let fireDateString = "\(fireDate.stringFromDateWithStringFormats([kTimeFormat, kDateFormat, kTimeFormat]).capitalizedString)";
+        let postText = place.name! + "\n" + place.formattedAddress!.capitalizedString + "\n" + fireDateString;
+        
+        return postText;
+    }
+    
+    func socialSharingThumbnailUrl() -> NSURL? {
+        
+        if (place.photoReferences?.count != 0) {
+            
+            let photoReference = place.photoReferences![0] as String!;
+            
+            var urlString = "\(kGooglePlacePhotoAPIURL)maxheight=\(kGooglePhotoMaxHeight)&photoreference=\(photoReference)&key=\(kGooglePlaceAPIKey)";
+            urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;
+            
+            return NSURL(string: urlString)!;
+        }
+        
+        return nil;
+    }
+    
 }

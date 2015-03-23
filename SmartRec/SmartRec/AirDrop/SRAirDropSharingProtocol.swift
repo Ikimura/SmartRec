@@ -8,15 +8,12 @@
 
 import Foundation
 
-public protocol SRAirDropSharingProtocol {
+protocol SRAirDropSharingProtocol {
     
-    var fileURL: NSURL? {get set}
-    
-    func shareVideoItem();
-
+    func shareItemWithAirDropSocialServices(item: NSURL);
 }
 
-public protocol SRSocialSharingProtocol {
+protocol SRSocialSharingProtocol {
     
-    func shareAppointmetnt();
+    func shareItemInSocialServices(item: SRSocialShareableItemProtocol, excludingServices excludeServices: [NSString!]);
 }
