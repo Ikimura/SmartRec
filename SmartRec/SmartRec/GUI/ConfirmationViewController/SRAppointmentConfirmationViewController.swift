@@ -70,7 +70,8 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
             
         case .Notification:
             
-            let doneBar: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "done:");
+            let doneBar: UIBarButtonItem = UIBarButtonItem(title: NSLocalizedString("arrived_btn_title", comment:""), style: .Plain, target: self, action: "done:");
+            
             self.navigationItem.leftBarButtonItem = doneBar;
             
             rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "map_annotation_conf"), style: .Plain, target: self, action: "didTapRouteButton:");
@@ -88,6 +89,8 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
         self.navigationItem.rightBarButtonItem = rightBarButtonItem;
     }
     
+    //MARK: - UI settuping
+    
     private func configureUI() {
 
         switch (presentationType!) {
@@ -96,6 +99,8 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
             
             pictureImageView.hidden = true;
             var data = self.formDictionaryFromStructAppointment();
+            notificationButton.setTitle(NSLocalizedString("conf_cancel_btn_sel", comment:""), forState: .Selected);
+            calendarButton.setTitle(NSLocalizedString("cal_cancel_btn_sel", comment:""), forState: .Selected);
             self.fillUIFromDictionary(data);
             
         case .Detailes:
@@ -111,11 +116,18 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
             }
             calendarButton.hidden = true;
             notificationButton.hidden = true;
-            
-            if (appointmentCD?.note == nil || appointmentCD?.note.utf16Count == 0) {
+
+            if (appointmentCD?.note.utf16Count == 0) {
+                
                 notesTextView.hidden = true;
+                
+            } else {
+                
+                notesTextView.text = appointmentCD!.note;
             }
             
+            notesTextView.editable = !appointmentCD!.completed.boolValue;
+
             var data: [String: Any] = self.formDictionaryFromCoreDataAppointment();
             self.fillUIFromDictionary(data)
             
@@ -123,9 +135,20 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
             
             pictureImageView.hidden = false;
             self.loadPlaceImage();
-            confirmationButton.setTitle(NSLocalizedString("arrived_btn_title", comment:""), forState: .Normal);
+            
+            if (appointmentCD?.note.utf16Count == 0) {
+                
+                notesTextView.hidden = true;
+                
+            } else {
+                
+                notesTextView.text = appointmentCD!.note;
+            }
+            
+            notesTextView.editable = false;
             calendarButton.hidden = true;
             notificationButton.hidden = true;
+            confirmationButton.hidden = true;
             
             var data: [String: Any] = self.formDictionaryFromCoreDataAppointment();
             self.fillUIFromDictionary(data)
@@ -223,10 +246,11 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
         websiteLabel.text = data["website"] as? String;
     }
     
-    //Mark: - handlers
+    //MARK: - handlers
     
     func done(sender: AnyObject) {
         
+        SRCoreDataAppointment.markArrivedAppointmnetWithId(appointmentCD!.id);
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -285,10 +309,14 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
                 
             case .Confirmation:
                 
-                if (notesTextView.text.utf16Count > 0) {
+                if (notesTextView.text.utf16Count > 0 && notesTextView.text != NSLocalizedString("add_comment_key", comment:"")) {
                     
                     appointmentST!.description = notesTextView.text;
+                } else {
+                    
+                    appointmentST!.description = "";
                 }
+                
                 var result = SRCoreDataAppointment.insertAppointment(appointmentST!);
                 
                 switch result {
@@ -311,6 +339,8 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
                 if (appointmentCD != nil) {
                     
                     SRCoreDataAppointment.markArrivedAppointmnetWithId(appointmentCD!.id);
+                    confirmationButton.hidden = true;
+                    notesTextView.editable = false;
                     
                 } else {
                     
@@ -342,8 +372,9 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
                 case .Confirmation:
                     
                     var event = EKEvent(eventStore: store);
-                    event.title = "CitiGuide. Visit \(strongSelf.appointmentST!.place.name)";
-                    event.location = strongSelf.appointmentST!.place.formattedAddress;
+                    let visitText = "CitiGuide. " + NSLocalizedString("notification_visit_key", comment:"");
+                    event.title = visitText + " \(strongSelf.appointmentST!.place.name!)";
+                    event.location = strongSelf.appointmentST!.place.formattedAddress!;
                     
                     if (strongSelf.appointmentST?.description != "") {
                         

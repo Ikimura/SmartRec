@@ -62,3 +62,6 @@
 "alert_error_title" = "Error Occuried";
 "arrived_btn_title" = "Mark Arrived";
 "notification_show_btn" = "Show";
+"notification_visit_key" = "Visit";
+"conf_cancel_btn_sel" = "Cancel";
+"cal_cancel_btn_sel" = "Remove From Calendar";
