@@ -12,7 +12,7 @@ class SRBaseMapViewController: SRCommonViewController, SRBaseMapViewDataSource, 
     
     @IBOutlet var mapView: SRBaseMapView?;
     
-    private let verticalOffsetForCallout: CGFloat = 35;
+    private let verticalOffsetForCallout: CGFloat = 43;
     
     override func viewDidLoad() {
         super.viewDidLoad();

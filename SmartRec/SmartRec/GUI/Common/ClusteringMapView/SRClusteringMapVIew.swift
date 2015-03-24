@@ -82,8 +82,8 @@ class SRClusteringMapView: SRBaseMapView {
                 
                 let distance: CGFloat = CLLocation.distanceBetweenLocation(firstLocation, secondLocation: secondLocation);
                 distanceCache[j] = distance;
-
             }
+            
             self.distanceBetweenLocationCache?.append(distanceCache);
         }
     }

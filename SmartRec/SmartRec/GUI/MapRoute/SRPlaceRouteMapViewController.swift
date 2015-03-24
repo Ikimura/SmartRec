@@ -70,9 +70,11 @@ class SRPlaceRouteMapViewController: SRCommonRouteMapViewController {
         
         //Show markers
         var myCoordinateMarker: GMSMarker = GMSMarker(position: myCoordinate!);
+        myCoordinateMarker.icon = UIImage(named: "you_here");
         myCoordinateMarker.map = mapView;
         
         var targetCoordinateMarker: GMSMarker = GMSMarker(position: targetCoordinate!);
+        targetCoordinateMarker.icon = UIImage(named: "fin_pin");
         targetCoordinateMarker.map = mapView;
         
         //Show route

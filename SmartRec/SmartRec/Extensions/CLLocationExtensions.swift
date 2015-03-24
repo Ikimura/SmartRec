@@ -24,7 +24,7 @@ extension CLLocation {
         let c: CGFloat = 2 * atan2(sqrt(a), sqrt(1 - a));
         
         let distanse: CGFloat = R * c;
-        
+        //km
         return distanse;
     }
     

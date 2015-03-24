@@ -346,7 +346,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
     }
     
     override func iconForMarkerAtIndex(index: Int) -> UIImage? {
-        return UIImage(named: "citiPin");
+        return UIImage(named: "pin");
     }
     
     //MARK: - SRBaseMapViewDelegate
@@ -358,6 +358,11 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
             selectedData = number.integerValue;
             performSegueWithIdentifier(kShowPlaceDetailsSegueIdentifier, sender: self);
         }
+    }
+    
+    override func didChangeCameraPosition(position: GMSCameraPosition, byGesture: Bool) {
+        
+        println("GEture")
     }
     
     //MARK: - Navigation

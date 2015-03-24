@@ -16,6 +16,8 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
     var delegate: SRBaseMapViewDelegate?;
     var mapMarkers: [GMSMarker]?;
     
+    private var willMoveByGesture = false;
+    
     @IBOutlet var googleMapView: GMSMapView!;
     
     private lazy var calloutView: SRCalloutView! = {
@@ -41,7 +43,7 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
         
         if let coordinate: CLLocationCoordinate2D = dataSource?.initialLocation() {
             
-            googleMapView.camera = GMSCameraPosition.cameraWithLatitude(coordinate.latitude, longitude: coordinate.longitude, zoom: 10.0);
+            googleMapView.camera = GMSCameraPosition.cameraWithLatitude(coordinate.latitude, longitude: coordinate.longitude, zoom: 12.0);
         }
         
         googleMapView.delegate = self;
@@ -178,9 +180,19 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
         return self.emptyCalloutView;
     }
     
+    func mapView(mapView: GMSMapView!, willMove gesture: Bool) {
+        willMoveByGesture = gesture;
+    }
+    
     func mapView(mapView: GMSMapView!, didChangeCameraPosition position: GMSCameraPosition!) {
         if (mapView.selectedMarker != nil && !self.calloutView.hidden) {
             self.updateCalloutViewPosition(false);
+        }
+        
+        if (willMoveByGesture) {
+            
+            delegate?.didChangeCameraPosition(position, byGesture: true);
+            willMoveByGesture = false;
         }
     }
     
