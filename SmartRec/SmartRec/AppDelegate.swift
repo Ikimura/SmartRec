@@ -16,8 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     var window: UIWindow?
     
     var eventsTracker: SRAppointmentsTracker!;
-    var locationManager: CLLocationManager!;
     
+    private var locationManager: CLLocationManager!;
     private var currrentLocation: CLLocation?;
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -78,10 +78,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        self.startMonitoringLocation();
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        self.stopMonitoringLocation();
     }
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
@@ -119,21 +121,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func currentLocation() -> CLLocation {
         
-        if (self.currrentLocation == nil) {
+        if (currrentLocation == nil) {
             //GRODNO
-            return CLLocation(latitude: 53.6884000, longitude: 23.8258000);
+            if (locationManager.location != nil) {
+                
+                currrentLocation = locationManager.location!;
+                
+            } else {
+                
+                currrentLocation = CLLocation(latitude: 53.6884000, longitude: 23.8258000);
+            }
+
         }
         
-        return self.currrentLocation!;
+        return currrentLocation!;
     }
     
     func startMonitoringLocation() {
-        self.locationManager.startUpdatingLocation();
-        //        locationManager.startMonitoringSignificantLocationChanges();
+        locationManager.startUpdatingLocation();
+//                locationManager.startMonitoringSignificantLocationChanges();
     }
     
     func stopMonitoringLocation() {
-        self.locationManager.stopUpdatingLocation();
+        locationManager.stopUpdatingLocation();
         //        locationManager.stopMonitoringSignificantLocationChanges();
     }
 
@@ -214,9 +224,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        currrentLocation = locations[0] as? CLLocation;
+        currrentLocation = locations.last as? CLLocation;
         //post notification
-        NSNotificationCenter.defaultCenter().postNotificationName(kLocationTitleNotification, object: nil, userInfo: ["location": locations[0] as CLLocation]);
+        NSNotificationCenter.defaultCenter().postNotificationName(kLocationTitleNotification, object: nil, userInfo: ["location": currrentLocation!]);
     }
     
     func locationManagerDidPauseLocationUpdates(manager: CLLocationManager!) {
