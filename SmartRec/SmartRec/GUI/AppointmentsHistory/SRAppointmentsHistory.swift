@@ -37,7 +37,7 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
     override func setUpNavigationBar() {
         super.setUpNavigationBar();
         
-        self.title = "History";
+        self.title = NSLocalizedString("history_screen_title", comment:"");
     }
     
     //MARK: - UITableViewDelegate
@@ -82,7 +82,7 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
             
             cell!.nameLabel?.text = appointment.place.name;
             
-            let atLS = NSLocalizedString("AT", comment: "comment");
+            let atLS = NSLocalizedString("at_key", comment: "comment").capitalizedString;
             cell!.dateLabel?.text = "\(atLS) \(appointment.fireDate.stringFromDateWithStringFormat(kTimeFormat))";
             
             var iconURLString = appointment.place.iconURL;
