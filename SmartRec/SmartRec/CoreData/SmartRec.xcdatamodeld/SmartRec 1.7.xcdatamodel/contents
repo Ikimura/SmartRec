@@ -8,7 +8,7 @@
         <attribute name="locationTrack" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="place" maxCount="1" deletionRule="Cascade" destinationEntity="SRCoreDataPlace" inverseName="appointments" inverseEntity="SRCoreDataPlace" syncable="YES"/>
+        <relationship name="place" maxCount="1" deletionRule="Nullify" destinationEntity="SRCoreDataPlace" inverseName="appointments" inverseEntity="SRCoreDataPlace" syncable="YES"/>
         <relationship name="routes" optional="YES" toMany="YES" maxCount="2" deletionRule="Nullify" ordered="YES" destinationEntity="SRRoute" inverseName="appointment" inverseEntity="SRRoute" syncable="YES"/>
     </entity>
     <entity name="SRCoreDataPlace" representedClassName="SmartRec.SRCoreDataPlace" syncable="YES">
@@ -62,7 +62,7 @@
         <attribute name="resolutionWidth" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="SRCoreDataAppointment" positionX="117" positionY="144" width="128" height="178"/>
+        <element name="SRCoreDataAppointment" positionX="117" positionY="144" width="128" height="180"/>
         <element name="SRCoreDataPlace" positionX="-164" positionY="134" width="128" height="285"/>
         <element name="SRRoute" positionX="144" positionY="-72" width="128" height="148"/>
         <element name="SRRoutePoint" positionX="-225" positionY="-153" width="128" height="133"/>

@@ -16,7 +16,7 @@ extension SRCoreDataAppointment {
         
         if var event: SRCoreDataAppointment? = SRCoreDataManager.sharedInstance.singleManagedObject("SRCoreDataAppointment", withUniqueField: id, inContext: context) as? SRCoreDataAppointment! {
             
-            event!.completed = NSNumber(bool: true);
+            event!.completed = true;
             
             var error: NSError?;
             event!.managedObjectContext?.save(&error);
@@ -38,14 +38,14 @@ extension SRCoreDataAppointment {
             self.calendarId = appintmentData.calendarId!;
         }
         
-        self.locationTrack = NSNumber(bool: appintmentData.locationTrack);
+        self.locationTrack = appintmentData.locationTrack;
         let fireDate = NSDate(timeIntervalSince1970: appintmentData.dateInSeconds);
-        self.fireDate = fireDate;
-        self.sortDate = NSCalendar.currentCalendar().startOfDayForDate(fireDate);
+        self.fireDate = fireDate.timeIntervalSince1970;
+        self.sortDate = NSCalendar.currentCalendar().startOfDayForDate(fireDate).timeIntervalSince1970;
         self.note = appintmentData.description;
         println("\(appintmentData.id)");
         self.id = "\(appintmentData.id)";
-        self.completed = NSNumber(bool: false);
+        self.completed = false;
     }
     
     class func insertAppointment(appointment: SRAppointment) -> SRResult {

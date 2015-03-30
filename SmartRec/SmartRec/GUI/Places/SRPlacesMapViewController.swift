@@ -206,7 +206,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         let whitespaceCharacterSet = NSCharacterSet.whitespaceCharacterSet()
         let strippedString = searchController.searchBar.text.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
         
-        if (strippedString.utf16Count != 0) {
+        if (strippedString.utf16Count >= 3) {
             
             self.loadPlacesWithTypes(nil, textSearch: strippedString, coordinates: coordinate, radius: 1000, isQeurySearch: true);
         }

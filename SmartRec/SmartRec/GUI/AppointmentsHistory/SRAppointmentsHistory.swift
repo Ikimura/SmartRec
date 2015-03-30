@@ -83,7 +83,8 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
             cell!.nameLabel?.text = appointment.place.name;
             
             let atLS = NSLocalizedString("at_key", comment: "comment").capitalizedString;
-            cell!.dateLabel?.text = "\(atLS) \(appointment.fireDate.stringFromDateWithStringFormat(kTimeFormat))";
+            var date = NSDate(timeIntervalSince1970: appointment.fireDate)
+            cell!.dateLabel?.text = "\(atLS) \(date.stringFromDateWithStringFormat(kTimeFormat))";
             
             var iconURLString = appointment.place.iconURL;
             iconURLString = iconURLString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;
@@ -97,7 +98,7 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
                 
                 cell!.indicatorImageView.image = UIImage(named: "cell_indicator_green_sel");
         
-            } else if( NSDate().timeIntervalSince1970 > appointment.fireDate.timeIntervalSince1970){
+            } else if( NSDate().timeIntervalSince1970 > appointment.fireDate){
                 
                 cell!.indicatorImageView.image = UIImage(named: "warning");
         
@@ -140,12 +141,12 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
             //Delete the row from the data source
             if let deleteItem = dataSource.objectAtIndexPath(indexPath) as? SRCoreDataAppointment {
                 
+                let result = SRCoreDataManager.sharedInstance.deleteEntity(deleteItem);
+
                 if (deleteItem.locationTrack.boolValue) {
                     
                     appDelegate.eventsTracker.cancelLocationNotificationWith(deleteItem.id);
-                }
-                
-                let result = SRCoreDataManager.sharedInstance.deleteEntity(deleteItem);
+                }                
             }
         }
     }

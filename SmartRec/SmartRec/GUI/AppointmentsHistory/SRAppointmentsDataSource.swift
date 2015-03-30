@@ -56,8 +56,6 @@ class SRAppointmentsDataSource : SRCoreDataDataSource, SRAppointmentsDataSourceP
     override func refreshDataSet() {
         
         fetchResultController?.performFetch(nil);
-        
-        delegate?.dataSourceDidChangeDataSet(self);
     }
     
     override func rebuildDataSet() {
@@ -97,14 +95,16 @@ class SRAppointmentsDataSource : SRCoreDataDataSource, SRAppointmentsDataSourceP
     func titleForHeaderInSection(section: Int) -> String {
         
         var event = self.objectAtIndexPath(NSIndexPath(forRow: 0, inSection: section)) as? SRCoreDataAppointment;
-        var sectionName = event?.fireDate.humantReadableStringDateFromDate(kDateFormat);
+        var date = NSDate(timeIntervalSince1970: event!.fireDate);
+        var sectionName = date.humantReadableStringDateFromDate(kDateFormat);
         
-        return sectionName!;
+        return sectionName;
     }
     
     func numberOfItemInSection(index: Int) -> Int {
         
         var section = fetchResultController!.sections![index] as? NSFetchedResultsSectionInfo;
+        println(section!.numberOfObjects);
         
         return section!.numberOfObjects;
     }
@@ -123,6 +123,7 @@ class SRAppointmentsDataSource : SRCoreDataDataSource, SRAppointmentsDataSourceP
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         
+        self.refreshDataSet();
         delegate?.dataSourceDidChangeDataSet(self);
     }
 }

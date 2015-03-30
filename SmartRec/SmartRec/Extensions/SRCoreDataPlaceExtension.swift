@@ -88,7 +88,7 @@ extension SRCoreDataPlace {
         self.name = name!;
         self.placeId = placeId!;
         self.reference = reference!;
-        self.vicinity = vicinity!;
+        self.vicinity = vicinity;
         if (self.formattedAddress == nil) {
             
             self.formattedAddress = formattedAddress;

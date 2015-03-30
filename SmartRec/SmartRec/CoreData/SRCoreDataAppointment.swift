@@ -2,7 +2,7 @@
 //  SRCoreDataAppointment.swift
 //  SmartRec
 //
-//  Created by Artsiom Karseka on 3/17/15.
+//  Created by Artsiom Karseka on 3/30/15.
 //  Copyright (c) 2015 con.epam.evnt. All rights reserved.
 //
 
@@ -12,12 +12,12 @@ import CoreData
 class SRCoreDataAppointment: NSManagedObject {
 
     @NSManaged var calendarId: String?
-    @NSManaged var completed: NSNumber
-    @NSManaged var fireDate: NSDate
+    @NSManaged var completed: Bool
+    @NSManaged var fireDate: NSTimeInterval
     @NSManaged var id: String
-    @NSManaged var locationTrack: NSNumber
+    @NSManaged var locationTrack: Bool
     @NSManaged var note: String
-    @NSManaged var sortDate: NSDate
+    @NSManaged var sortDate: NSTimeInterval
     @NSManaged var place: SRCoreDataPlace
     @NSManaged var routes: NSOrderedSet?
 
