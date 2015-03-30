@@ -104,7 +104,6 @@ class SRAppointmentsDataSource : SRCoreDataDataSource, SRAppointmentsDataSourceP
     func numberOfItemInSection(index: Int) -> Int {
         
         var section = fetchResultController!.sections![index] as? NSFetchedResultsSectionInfo;
-        println(section!.numberOfObjects);
         
         return section!.numberOfObjects;
     }
