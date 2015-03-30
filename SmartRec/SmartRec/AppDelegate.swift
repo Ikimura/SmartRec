@@ -16,10 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     var window: UIWindow?
     
     var eventsTracker: SRAppointmentsTracker!;
+    var GoogleServiceReachable: Reachability?;
     
+    private(set) var isOfflineMode: Bool?;
+
     private var locationManager: CLLocationManager!;
     private var currrentLocation: CLLocation?;
-    
+
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         //Appearnces
@@ -28,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
         UIApplication.sharedApplication().statusBarStyle = .LightContent;
 
+        self.setupGoogleServiceReachability();
+        
         //sync defaults
         self.synchronizeUserDefaults();
         
@@ -66,6 +71,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        GoogleServiceReachable?.stopNotifier();
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -74,17 +81,83 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         //schedule notifications
         eventsTracker.rescheduleNotifications();
         println("applicationWillEnterForeground");
+        
+        GoogleServiceReachable?.startNotifier();
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         self.startMonitoringLocation();
+        
+        isOfflineMode = !GoogleServiceReachable!.isReachable();
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         self.stopMonitoringLocation();
     }
+    
+    
+    //MARK: - Reachability
+    
+    func setupGoogleServiceReachability() {
+        
+        GoogleServiceReachable = Reachability(hostName: "google.com");
+        
+        GoogleServiceReachable?.reachableBlock = { [weak self] (reach: Reachability!) -> Void in
+            
+            if let strongSelf = self {
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    strongSelf.applicationDidSwitchToOnline();
+//                    NSObject.cancelPreviousPerformRequestsWithTarget(strongSelf, selector: "applicationDidSwitchToOffline", object: nil);
+//                    
+//                    if (strongSelf.isOfflineMode) {
+//                        
+//                        NSObject.cancelPreviousPerformRequestsWithTarget(strongSelf, selector: "applicationDidSwitchToOnline", object: nil);
+//                        
+//                        NSObject.performSelector("applicationDidSwitchToOnline", withObject: nil, afterDelay: 4.0);
+//                    }
+                });
+            }
+        }
+        
+        GoogleServiceReachable?.unreachableBlock = { [weak self] (reach: Reachability!) -> Void in
+            
+            if let strongSelf = self {
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    strongSelf.applicationDidSwitchToOffline();
+//                    NSObject.cancelPreviousPerformRequestsWithTarget(strongSelf, selector: "applicationDidSwitchToOnline", object: nil);
+//                    
+//                    NSObject.cancelPreviousPerformRequestsWithTarget(strongSelf, selector: "applicationDidSwitchToOffline", object: nil);
+                });
+                
+//                if (strongSelf.isOfflineMode!) {
+//                
+//                    NSObject.cancelPreviousPerformRequestsWithTarget(strongSelf, selector: "applicationDidSwitchToOnline", object: nil);
+//                    
+//                    NSObject.performSelector("applicationDidSwitchToOffline", withObject: nil, afterDelay: 5.0);
+//                }
+            }
+        }
+
+        GoogleServiceReachable?.startNotifier();
+    }
+    
+    func applicationDidSwitchToOnline() {
+        
+        self.isOfflineMode = false;
+    }
+    
+    func applicationDidSwitchToOffline() {
+        
+        self.isOfflineMode = true;
+    }
+    
+    //MARK: - Notifications
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         

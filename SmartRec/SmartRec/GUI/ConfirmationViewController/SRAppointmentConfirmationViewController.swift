@@ -164,7 +164,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
             "name": appointmentCD!.place.name,
             "tracking": appointmentCD!.locationTrack,
             "formattedAddress": appointmentCD!.place.formattedAddress!,
-            "distance": appointmentCD!.place.distance?.floatValue,
+            "distance": appointmentCD!.place.distance,
             "fireDate": appointmentCD!.fireDate
         ];
         
@@ -545,7 +545,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
                     
                     case .Detailes, .Notification:
                         
-                        location = CLLocation(latitude: appointmentCD!.place.lat.doubleValue, longitude: appointmentCD!.place.lng.doubleValue);
+                        location = CLLocation(latitude: appointmentCD!.place.lat, longitude: appointmentCD!.place.lng);
                     }
                     
                     if (location != nil) {

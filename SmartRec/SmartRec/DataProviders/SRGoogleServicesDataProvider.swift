@@ -44,8 +44,8 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
         }
     }
     
-    func nearbySearchPlaces(lat: Double, lng: Double, radius: Int, types:[String], keyword: String?, name: String?, complitionBlock: (data: [SRGooglePlace]) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
-    
+    func nearbySearchPlaces(lat: Double, lng: Double, radius: Int, types:[String], keyword: String?, name: String?, complitionBlock: (data: Array<NSDictionary>) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
+        
         var urlString = "\(kGoogleNearbySearchAPIURL)location=\(lat),\(lng)&radius=\(radius)&types=";
         
         for type in types {
@@ -70,21 +70,21 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
             var status = responseObject["status"] as? String;
             var responsStatus: SRResponseStatus = SRResponseStatus(rawValue: status!)!;
             
-            var places: [SRGooglePlace]?;
+            var results: Array<NSDictionary>?;
 
             switch (responsStatus) {
             case .OK:
-                if var results = responseObject["results"] as? Array<NSDictionary> {
-                    places = SRGooglePlace.fillPropertiesFromNearbySearchDectionary(results);
-                }
+                
+                results = responseObject["results"] as? Array<NSDictionary>;
+                
             case .ZERO_RESULTS:
-                places = [];
+                results = [];
             case .INVALID_REQUEST:
                 fallthrough;
             case .REQUEST_DENIED:
                 fallthrough;
             case .OVER_QUERY_LIMIT:
-                places = [];
+                results = [];
                 if let errorMessage = responseObject["error_message"] as? String {
                     println(errorMessage);
                 }
@@ -92,7 +92,7 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
                 break;
             }
             
-            complitionBlock(data: places!);
+            complitionBlock(data: results!);
             
             }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 
@@ -101,8 +101,8 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
         }
     }
     
-    func placeTextSearch(textQeury: String, lat: Double?, lng: Double?, radius: Int?, types:[String]?, complitionBlock: (data: [SRGooglePlace]!) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
-        
+    func placeTextSearch(textQeury: String, lat: Double?, lng: Double?, radius: Int?, types:[String]?, complitionBlock: (data: Array<NSDictionary>) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
+    
         let formattedText = textQeury.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding);
         
         var urlString = "\(kGoogleTextSearchAPIURL)query=\(formattedText!)&sensor=true";
@@ -140,21 +140,21 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
             var status = responseObject["status"] as? String;
             var responsStatus: SRResponseStatus = SRResponseStatus(rawValue: status!)!;
             
-            var places: [SRGooglePlace]?;
+            var results: Array<NSDictionary>?;
             
             switch (responsStatus) {
             case .OK:
-                if var results = responseObject["results"] as? Array<NSDictionary> {
-                    places = SRGooglePlace.fillPropertiesFromNearbySearchDectionary(results);
-                }
+                
+                results = responseObject["results"] as? Array<NSDictionary>;
+
             case .ZERO_RESULTS:
-                places = [];
+                results = [];
             case .INVALID_REQUEST:
                 fallthrough;
             case .REQUEST_DENIED:
                 fallthrough;
             case .OVER_QUERY_LIMIT:
-                places = [];
+                results = [];
                 if let errorMessage = responseObject["error_message"] as? String {
                     println(errorMessage);
                 }
@@ -162,7 +162,7 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
                 break;
             }
             
-            complitionBlock(data: places!);
+            complitionBlock(data: results!);
             
             }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 
@@ -171,9 +171,9 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
         }
     }
     
-    func placeDetails(placeId: String, complitionBlock: (data: NSDictionary?) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
+    func placeDetails(placeReference: String, complitionBlock: (data: NSDictionary?) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
         
-        var urlString = "\(kGooglePlaceDetailsAPIURL)reference=\(placeId)&language=\(kGooglePlaceAPILanguage)&key=\(kGooglePlaceAPIKey)";
+        var urlString = "\(kGooglePlaceDetailsAPIURL)reference=\(placeReference)&language=\(kGooglePlaceAPILanguage)&key=\(kGooglePlaceAPIKey)";
         urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;
 
         println("Debug: \(urlString)");

@@ -18,14 +18,14 @@ protocol SRPlacesDetailsDataSourceProtocol {
 
 class SRPlacesDetailsDataSource : SRPlacesDetailsDataSourceProtocol {
     
-    private var placeToDetaile: SRGooglePlace?;
+    private var placeToDetaile: SRCoreDataPlace?;
     private lazy var googleServicesProvider: SRGoogleServicesDataProvider = {
         var tempProvider = SRGoogleServicesDataProvider();
         return tempProvider;
     }();
     private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
 
-    convenience init(placeToDetaile: SRGooglePlace) {
+    convenience init(placeToDetaile: SRCoreDataPlace) {
         self.init();
         
         self.placeToDetaile = placeToDetaile;
@@ -35,23 +35,23 @@ class SRPlacesDetailsDataSource : SRPlacesDetailsDataSourceProtocol {
     
     func loadData(complitionBlock:() -> Void, errorBlock:(error: NSError?) -> Void) {
     
-        googleServicesProvider.placeDetails(placeToDetaile!.reference, complitionBlock: { [weak self] (data) -> Void in
+        if (placeToDetaile!.fullData) {
             
-            if var strongSelf = self {
+            complitionBlock();
+            
+        } else {
+            
+            SRPlacesController.sharedInstance.placeDetails(placeToDetaile!.reference, complitionBlock: { [weak self] (data, error) -> Void in
                 
                 if (data != nil) {
                     
-                    strongSelf.placeToDetaile!.fillDetailsPropertiesForPlace(data!);
-                    strongSelf.placeToDetaile!.addDistance(CLLocation.distanceBetweenLocation(CLLocationCoordinate2DMake(strongSelf.placeToDetaile!.lat, strongSelf.placeToDetaile!.lng), secondLocation: strongSelf.appDelegate.currentLocation().coordinate));
+                    complitionBlock();
+                    
+                } else {
+                    
+                    errorBlock(error: error);
                 }
-                
-                complitionBlock();
-            }
-            
-        }) { (error) -> Void in
-            
-            errorBlock(error: error);
-            println(error);
+            });
         }
     }
     
@@ -63,7 +63,7 @@ class SRPlacesDetailsDataSource : SRPlacesDetailsDataSourceProtocol {
             sections++;
         }
         
-        if (placeToDetaile?.photoReferences?.count != 0) {
+        if (placeToDetaile?.photoReference != nil) {
             
             sections++;
         }
@@ -78,13 +78,13 @@ class SRPlacesDetailsDataSource : SRPlacesDetailsDataSourceProtocol {
         switch (index) {
         case 0:
             items = 1;
-            if (placeToDetaile?.weekDayText != nil) {
+            if (placeToDetaile!.weekdayText != nil) {
                 items++;
             }
         case 1: items = 1;
         case 2:
-            if (placeToDetaile!.photoReferences?.count != 0) {
-                items = placeToDetaile!.photoReferences!.count;
+            if (placeToDetaile!.photoReference != nil) {
+                items++;
             }
             
         default:
@@ -102,10 +102,10 @@ class SRPlacesDetailsDataSource : SRPlacesDetailsDataSourceProtocol {
                 
                 return placeToDetaile!;
             } else {
-                return placeToDetaile!.weekDayText!;
+                return placeToDetaile!.weekdayText!;
             }
 
-        case 2: return placeToDetaile!.photoReferences![indexPath.row];
+        case 2: return placeToDetaile!.photoReference!
             
         default:
             fatalError("Wrong section number");

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -10,29 +10,23 @@
             <rect key="frame" x="0.0" y="0.0" width="100" height="88"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_loading" translatesAutoresizingMaskIntoConstraints="NO" id="p7J-eK-hkY">
-                    <rect key="frame" x="40" y="34" width="20" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="20" id="b98-fc-O3D"/>
-                        <constraint firstAttribute="width" constant="20" id="wij-Md-tzf"/>
-                    </constraints>
-                </imageView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="4L3-01-xCr">
+                    <rect key="frame" x="32" y="25" width="37" height="37"/>
+                    <color key="color" red="0.0" green="0.51764705879999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="p7J-eK-hkY" secondAttribute="centerX" id="QKg-q1-uMS"/>
-                <constraint firstAttribute="centerY" secondItem="p7J-eK-hkY" secondAttribute="centerY" id="aC5-NT-Qlf"/>
+                <constraint firstAttribute="centerX" secondItem="4L3-01-xCr" secondAttribute="centerX" id="B0Q-sE-BiD"/>
+                <constraint firstAttribute="centerY" secondItem="4L3-01-xCr" secondAttribute="centerY" id="KXZ-iO-YxE"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="activityIndicator" destination="p7J-eK-hkY" id="mi9-Hw-NB8"/>
+                <outlet property="activityIndicator" destination="4L3-01-xCr" id="KfN-Hi-pIr"/>
             </connections>
         </view>
     </objects>
-    <resources>
-        <image name="ic_loading" width="20" height="20"/>
-    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

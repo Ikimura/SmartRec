@@ -10,13 +10,13 @@ import Foundation
 
 protocol SRPlacesListViewControllerDelegate {
 
-    func placesListController(controller: SRPlacesListViewController, didSelectPlace place: SRGooglePlace);
+    func placesListController(controller: SRPlacesListViewController, didSelectPlace place: SRCoreDataPlace);
 }
 
 class SRPlacesListViewController : SRCommonViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet var tableView: UITableView!;    
-    var placesList: [SRGooglePlace] = [];
+    var placesList: [SRCoreDataPlace] = [];
     var types: [(name: String, value: String)]?;
     var delegate: SRPlacesListViewControllerDelegate?;
     
@@ -50,8 +50,8 @@ class SRPlacesListViewController : SRCommonViewController, UITableViewDataSource
         
         cell?.imageView?.cancelImageRequestOperation();
         
-        var place: SRGooglePlace = placesList[indexPath.row];
-        cell!.nameLabel.text = "\(place.name!)";
+        var place: SRCoreDataPlace = placesList[indexPath.row];
+        cell!.nameLabel.text = "\(place.name)";
         
         if (place.formattedPhoneNumber != nil) {
             
@@ -69,17 +69,13 @@ class SRPlacesListViewController : SRCommonViewController, UITableViewDataSource
             cell!.addressLabel.text = place.formattedAddress!.capitalizedString;
         }
         
-        if (place.distance == nil) {
-            
-            place.addDistance(CLLocation.distanceBetweenLocation(CLLocationCoordinate2DMake(place.lat, place.lng), secondLocation: appDelegate.currentLocation().coordinate));
-        }
-        var dist = Double(place.distance!);
+        var dist = Double(place.distance);
         var strDist = dist.format(".3");
         var distReduction = NSLocalizedString("distance_reduction", comment:"")
 
         cell!.distanceLabel.text = "\(strDist), " + distReduction + ".";
-        
-        cell!.iconImage.setImageWithURL(place.iconURL, placeholderImage: UIImage(named: "image_placeholder"));
+        var iconURL = NSURL(string: place.iconURL);
+        cell!.iconImage.setImageWithURL(iconURL, placeholderImage: UIImage(named: "image_placeholder"));
         
         return cell!;
     }

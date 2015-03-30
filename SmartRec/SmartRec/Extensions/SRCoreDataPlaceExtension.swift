@@ -18,50 +18,80 @@ extension SRCoreDataPlace {
         appointments = tempSet;
     }
     
-    func fillPropertiesFromStruct(placeStruct: SRGooglePlace) {
+    func fillPropertiesFromDetailsDectionary(result: NSDictionary) {
         
-        self.reference = placeStruct.reference;
-        self.placeId = placeStruct.placeId;
-        self.name = placeStruct.name!;
-        self.lat = NSNumber(double: placeStruct.lat);
-        self.lng = NSNumber(double: placeStruct.lng);
-        self.iconURL = placeStruct.iconURL!.absoluteString!;
+        self.formattedAddress = result["formatted_address"] as? String;
         
-        if (placeStruct.photoReferences?.count != 0) {
+        self.formattedPhoneNumber = result["formatted_phone_number"] as? String;
+        self.internalPhoneNumber = result["international_phone_number"] as? String;
+        
+        self.website = result["website"] as? String;
+        
+        var openingHours = result["opening_hours"] as? NSDictionary;
+        
+        if (openingHours != nil) {
             
-            self.photoReference = placeStruct.photoReferences![0];
-        }
-        
-        if (placeStruct.vicinity != nil) {
+            var weekdayArray = openingHours!["weekday_text"] as [String];
+            var weekDayT: String = "";
             
-            self.vicinity = placeStruct.vicinity!;
+            for day in weekdayArray {
+                weekDayT = weekDayT + day + "\n";
+            }
+            
+            self.weekdayText = weekDayT;
         }
-        
-        self.formattedAddress = placeStruct.formattedAddress!;
-        
-        if (placeStruct.formattedPhoneNumber != nil) {
-            self.formattedPhoneNumber = placeStruct.formattedPhoneNumber!;
-        }
-        
-        if (placeStruct.internalPhoneNumber != nil) {
-            self.internalPhoneNumber = placeStruct.internalPhoneNumber!;
-        }
-        
-        if (placeStruct.distance != nil) {
-            self.distance = placeStruct.distance!;
-        }
-        
-        if (placeStruct.website != nil) {
-            self.website = placeStruct.website!;
-        }
-        
-        if (placeStruct.weekDayText != nil) {
-            self.weekdayText = placeStruct.weekDayText!;
-        }
-        
-//            if (appintmentData.place.zipCity != nil) {
-//                placeEntity!.zipCity = appintmentData.place.zipCity!;
-//            }
     }
     
+    func fillPropertiesFromDectionary(result: NSDictionary) {
+        
+        var placeId = result["place_id"] as? String!;
+        var name = result["name"] as? String!;
+        var reference = result["reference"] as? String!;
+        
+        if var iconURLString = result["icon"] as? String {
+            
+             self.iconURL = iconURLString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;
+        }
+        
+        var vicinity = result["vicinity"] as? String;
+        var types = result["types"] as? [String];
+        var formattedAddress = result["formatted_address"] as? String;
+        
+        var lat: Double?;
+        var lng: Double?;
+        
+        if let geometry = result["geometry"] as? NSDictionary {
+            if let location = geometry["location"] as? NSDictionary {
+                
+                lat = location["lat"] as? Double!;
+                lng = location["lng"] as? Double!;
+            }
+        }
+        
+        self.lat = lat!;
+        self.lng = lng!;
+
+        var photosRefs: [String] = [];
+        
+        if let photos = result["photos"] as? Array<NSDictionary> {
+            
+            for photo in photos {
+                
+                if let photoRef = photo["photo_reference"] as? String {
+                    
+                    self.photoReference = photoRef;
+                    break;
+                }
+            }
+        }
+        
+        self.name = name!;
+        self.placeId = placeId!;
+        self.reference = reference!;
+        self.vicinity = vicinity!;
+        if (self.formattedAddress == nil) {
+            
+            self.formattedAddress = formattedAddress;
+        }
+    }
 }

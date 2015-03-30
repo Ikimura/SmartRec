@@ -25,7 +25,7 @@ class SRAppointmentsDataSource : SRCoreDataDataSource, SRAppointmentsDataSourceP
 
     func sortDescriptor() -> [AnyObject] {
         
-        return [ NSSortDescriptor(key: "fireDate", ascending: true) ];
+        return [ NSSortDescriptor(key: "fireDate", ascending: false) ];
     }
 
     override func fetchRequest() -> NSFetchRequest {

@@ -10,12 +10,12 @@ import UIKit
 
 class SRBusyView: UIView {
     
-    @IBOutlet weak var activityIndicator: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     override func awakeFromNib() {
         super.awakeFromNib();
         self.hideBusyView();
-        self.rotateLayerInfinite();
+        self.activityIndicator.startAnimating();
     }
 
     deinit{
@@ -28,6 +28,7 @@ class SRBusyView: UIView {
     }
 
     func hideBusyView() {
+        
         self.activityIndicator.hidden = true;
     }
 
@@ -47,16 +48,5 @@ class SRBusyView: UIView {
                 self.frame = rect;
             }
             super.layoutSubviews();
-    }
-
-    func rotateLayerInfinite() {
-        var rotation: CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation");
-        rotation.fromValue = NSNumber(float: 0);
-        rotation.toValue = NSNumber(float: Float(2.0 * M_PI));
-        rotation.duration = 1.0;
-        rotation.repeatCount = 10000000000000;
-        
-        self.activityIndicator.layer.removeAllAnimations();
-        self.activityIndicator.layer.addAnimation(rotation, forKey: "Spin");
     }
 }

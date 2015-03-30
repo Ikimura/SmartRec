@@ -21,7 +21,7 @@ struct SRGooglePlace {
     var formattedAddress: String?;
     var formattedPhoneNumber: String?;
     var internalPhoneNumber: String?;
-    var distance: CGFloat?;
+    var distance: Float?;
     var photoReferences: [String]?;
     var website: String?;
     var weekDayText: String?;
@@ -47,18 +47,12 @@ struct SRGooglePlace {
             for day in weekdayArray {
                 weekDayT = weekDayT + day + "\n";
             }
+            
             weekDayText = weekDayT;
         }
-
-        
-//        if let address_components = results["address_components"] as? Array<NSDictionary> {
-//            
-//            let postal_component = address_components[address_components.count - 1];
-//            zipCity = postal_component["long_name"] as? String;
-//        }
     }
     
-    mutating func addDistance(newDistance: CGFloat) {
+    mutating func addDistance(newDistance: Float) {
         
         distance = newDistance;
     }

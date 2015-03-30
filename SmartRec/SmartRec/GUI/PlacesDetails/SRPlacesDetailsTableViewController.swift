@@ -11,7 +11,7 @@ import Foundation
 class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDataSource, UITableViewDelegate, SRContinueTableViewCellDelegate {
 
     @IBOutlet var tableView: UITableView?;
-    var place: SRGooglePlace?;
+    var place: SRCoreDataPlace?;
     
     private var dataSource: SRPlacesDetailsDataSourceProtocol?;
     
@@ -28,12 +28,16 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
         dataSource = SRPlacesDetailsDataSource(placeToDetaile: place!);
         
         self.showBusyView();
+        
         dataSource?.loadData({ [weak self] () -> Void in
             
             if var strongSelf = self {
 
-                strongSelf.hideBusyView();
-                strongSelf.tableView?.reloadData();
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    strongSelf.hideBusyView();
+                    strongSelf.tableView?.reloadData();
+                })
             }
             
             }, errorBlock: { (error) -> Void in
@@ -54,7 +58,7 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
         case 0:
             if (indexPath.row == 0) {
                 
-                let place = dataSource!.itemAtIndexPath(indexPath) as SRGooglePlace
+                let place = dataSource!.itemAtIndexPath(indexPath) as SRCoreDataPlace
                 var dCell = tableView.dequeueReusableCellWithIdentifier(kPlacesListCellIdentifier) as? SRPlacesListTableViewCell;
                 dCell!.iconImage.cancelImageRequestOperation();
                 
@@ -108,7 +112,7 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
             
             switch (item) {
                 
-            case let place as SRGooglePlace:
+            case let place as SRCoreDataPlace:
                 
                 var dCell = tableView.dequeueReusableCellWithIdentifier(kPlacesListCellIdentifier) as? SRPlacesListTableViewCell;
                 dCell!.iconImage.cancelImageRequestOperation();
@@ -169,27 +173,21 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
             
         case var detCell as SRPlacesListTableViewCell:
             
-            var place = data as SRGooglePlace;
+            var place = data as SRCoreDataPlace;
             
             detCell.nameLabel.text = place.name;
             detCell.addressLabel.text = place.formattedAddress != nil ? place.formattedAddress!.capitalizedString : place.vicinity!.capitalizedString;
-//            detCell.cityStateZipLabel.text = place.zipCity;
             
-            detCell.iconImage.setImageWithURL(place.iconURL, placeholderImage: UIImage(named: "image_placeholder"));
-            detCell.phoneLabel.text = place.internalPhoneNumber != nil ? place.internalPhoneNumber : place.formattedPhoneNumber;
+            var iconURL = NSURL(string: place.iconURL);
             
-            if (place.distance != nil) {
-                
-                var dist = Double(place.distance!);
-                var strDist = dist.format(".3");
-                var distReduction = NSLocalizedString("distance_reduction", comment:"")
+            detCell.iconImage.setImageWithURL(iconURL, placeholderImage: UIImage(named: "image_placeholder"));
+            detCell.phoneLabel.text = place.internalPhoneNumber != nil ? place.internalPhoneNumber : place.formattedPhoneNumber;            
+            
+            var dist = Double(place.distance);
+            var strDist = dist.format(".3");
+            var distReduction = NSLocalizedString("distance_reduction", comment:"")
 
-                detCell.distanceLabel.text = "\(strDist), " + distReduction + ".";
-                
-            } else {
-                
-                detCell.distanceLabel.text = nil;
-            }
+            detCell.distanceLabel.text = "\(strDist), " + distReduction + ".";
 
             detCell.rightIndicator.image = nil;
             
@@ -216,7 +214,7 @@ class SRPlacesDetailsTableViewController: SRCommonViewController, UITableViewDat
             
             if let destVC = segue.destinationViewController as? SRAppointmentDateViewController {
                 
-                destVC.detailedPlace = dataSource!.itemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? SRGooglePlace;
+                destVC.detailedPlace = dataSource!.itemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? SRCoreDataPlace;
             }
             
         } else if (segue.identifier == kRouteToPlaceSegueIdentifier) {

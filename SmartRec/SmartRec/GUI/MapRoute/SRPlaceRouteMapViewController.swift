@@ -40,7 +40,6 @@ class SRPlaceRouteMapViewController: SRCommonRouteMapViewController {
         self.loadRouteIfNeeded(pathMode);
     }
     
-    
     //MARK: - Override
     
     override func setUpNavigationBar() {

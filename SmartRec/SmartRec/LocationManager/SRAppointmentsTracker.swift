@@ -61,7 +61,7 @@ class SRAppointmentsTracker : SRDataSourceDelegate {
         locNotification.category = "APPOINTMENTS_REMINDER_CATEGORY";
         locNotification.userInfo = ["uuid": appointment.id];
         
-        locNotification.region = CLCircularRegion(circularRegionWithCenter: CLLocationCoordinate2DMake(appointment.place.lat.doubleValue, appointment.place.lng.doubleValue), radius: kLocRadius, identifier: appointment.id);
+        locNotification.region = CLCircularRegion(circularRegionWithCenter: CLLocationCoordinate2DMake(appointment.place.lat, appointment.place.lng), radius: kLocRadius, identifier: appointment.id);
         
         application.scheduleLocalNotification(locNotification);
     }
@@ -81,7 +81,7 @@ class SRAppointmentsTracker : SRDataSourceDelegate {
                 locNotification.category = "APPOINTMENTS_REMINDER_CATEGORY";
                 locNotification.userInfo = ["uuid": appointment.id];
                 
-                locNotification.region = CLCircularRegion(circularRegionWithCenter: CLLocationCoordinate2DMake(appointment.place.lat.doubleValue, appointment.place.lng.doubleValue), radius: kLocRadius, identifier: appointment.id);
+                locNotification.region = CLCircularRegion(circularRegionWithCenter: CLLocationCoordinate2DMake(appointment.place.lat, appointment.place.lng), radius: kLocRadius, identifier: appointment.id);
                 
                 println(locNotification.region.identifier);
                 newNotifications.addObject(locNotification);

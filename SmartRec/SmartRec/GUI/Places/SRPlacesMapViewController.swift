@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 // State restoration values.
 struct SearchControllerRestorableState {
@@ -31,12 +32,8 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
 
     var placesTypes: [(name: String, value: String)]?;
     
-    private var googlePlaces: [SRGooglePlace] = [];
+    private var googlePlaces: [SRCoreDataPlace] = [];
     private var rightBarButtonItem: UIBarButtonItem?;
-    private lazy var googleServicesProvider: SRGoogleServicesDataProvider = {
-        var tempProvider = SRGoogleServicesDataProvider();
-        return tempProvider;
-    }();
     private var selectedData: Any?;
 
     //MARK:- searController
@@ -63,10 +60,12 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         
         // Restore the searchController's active state.
         if restoredState.wasActive {
+            
             searchController.active = restoredState.wasActive
             restoredState.wasActive = false
             
             if restoredState.wasFirstResponder {
+                
                 searchController.searchBar.becomeFirstResponder()
                 restoredState.wasFirstResponder = false
             }
@@ -158,7 +157,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
     
     //MARK: - SRPlacesListViewControllerDelegate
     
-    func placesListController(controller: SRPlacesListViewController, didSelectPlace place: SRGooglePlace) {
+    func placesListController(controller: SRPlacesListViewController, didSelectPlace place: SRCoreDataPlace) {
         
         selectedData = place;
         performSegueWithIdentifier(kShowPlaceDetailsSegueIdentifier, sender: controller);
@@ -170,16 +169,31 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         searchBar.resignFirstResponder()
     }
     
-    // MARK: UISearchControllerDelegate
+    // MARK: - UISearchControllerDelegate
     
     func didPresentSearchController(searchController: UISearchController) {
         //NSLog(__FUNCTION__)
-        rightBarButtonItem?.title = NSLocalizedString("map_naviagtion_button_title", comment:"");
     }
     
-    func didDismissSearchController(searchController: UISearchController) {
+    func willPresentSearchController(searchController: UISearchController) {
+        
+        UIView.animateWithDuration(0.33, animations: {[weak self] () -> Void in
+            
+            if let strongSelf  = self {
+                strongSelf.navigationItem.rightBarButtonItem = nil;
+            }
+        });
+    }
+    
+    func willDismissSearchController(searchController: UISearchController) {
         //NSLog(__FUNCTION__)
-        rightBarButtonItem?.title = NSLocalizedString("list_naviagtion_button_title", comment:"");
+        UIView.animateWithDuration(0.33, animations: {[weak self] () -> Void in
+
+            if let strongSelf  = self {
+                
+                strongSelf.navigationItem.rightBarButtonItem = strongSelf.rightBarButtonItem;
+            }
+        });
     }
     
     // MARK: UISearchResultsUpdating
@@ -256,41 +270,72 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
     }
     
     private func loadPlacesWithTypes(types: [(name: String, value: String)]?, textSearch: String?, coordinates: CLLocationCoordinate2D?, radius: Int?, isQeurySearch: Bool) {
+
         
-        var complitionBlock = { [weak self](data: [SRGooglePlace]!) -> () in
+        var tempComplitionBlock = { [weak self]( placeIds:[String]?, error: NSError?) -> Void in
             
             if var strongSelf = self {
                 
-                if (isQeurySearch) {
-                    
-                    let resultsController = strongSelf.searchController.searchResultsController as SRPlacesListViewController;
-                    resultsController.placesList = data;
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    strongSelf.hideBusyView();
+                });
+                
+                if (placeIds != nil && placeIds?.count != 0) {
                     
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         
-                        resultsController.tableView.reloadData();
+                        var context = SRCoreDataContextProvider.mainManagedObjectContext();
+                        var fetchRequest = NSFetchRequest(entityName: "SRCoreDataPlace");
+
+                        //FIXME: - исправить косыль
+                        var predArray : Array<NSPredicate> = []
+                        for id in placeIds! {
+                            
+                            predArray.append(NSPredicate(format: "placeId LIKE %@", id)!);
+                        }
+                    
+                        fetchRequest.predicate = NSCompoundPredicate(type: NSCompoundPredicateType.OrPredicateType, subpredicates: predArray);
+                        
+                        var cdError: NSError?;
+                        var pl = context.executeFetchRequest(fetchRequest, error: &cdError) as? [SRCoreDataPlace];
+                        
+                        if (cdError == nil) {
+                            
+                            if (isQeurySearch) {
+                                
+                                let resultsController = strongSelf.searchController.searchResultsController as SRPlacesListViewController;
+                                
+                                resultsController.placesList = pl!;
+                                resultsController.tableView.reloadData();
+                                
+                            } else {
+                                
+                                strongSelf.googlePlaces = pl!;
+                                strongSelf.refreshData();
+                            }
+                            
+                        } else {
+                            
+                            if let userInfo = cdError!.userInfo as NSDictionary! {
+                                
+                                strongSelf.showAlertWith(NSLocalizedString("alert_error_title", comment:""), message: userInfo["NSLocalizedDescription"] as String);
+                            }
+                        }
                     });
                     
                 } else {
                     
-                    strongSelf.googlePlaces = data;
-                    strongSelf.refreshData();
-                }
-                
-                if (strongSelf.googlePlaces.count == 0 && !isQeurySearch) {
-                    //TODO: change to localized strings
-                    strongSelf.showAlertWith(NSLocalizedString("alert_attention_title", comment:""), message: NSLocalizedString("alert_attention_body", comment:""));
-                }
-            }
-        };
-        
-        var errorBlock = { [weak self] (error: NSError) -> Void in
-            
-            if var strongSelf = self {
-                
-                if let userInfo = error.userInfo as NSDictionary! {
-                    
-                    strongSelf.showAlertWith(NSLocalizedString("alert_error_title", comment:""), message: userInfo["NSLocalizedDescription"] as String);
+                    if (strongSelf.googlePlaces.count == 0 && !isQeurySearch) {
+                        
+                        strongSelf.showAlertWith(NSLocalizedString("alert_attention_title", comment:""), message: NSLocalizedString("alert_attention_body", comment:""));
+                        
+                    } else if (error != nil) {
+                        
+                        if let userInfo = error!.userInfo as NSDictionary! {
+                            
+                            strongSelf.showAlertWith(NSLocalizedString("alert_error_title", comment:""), message: userInfo["NSLocalizedDescription"] as String);
+                        }
+                    }
                 }
             }
         }
@@ -304,13 +349,16 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         
         if (isQeurySearch) {
             
-            googleServicesProvider.placeTextSearch(textSearch!, lat: coordinates?.latitude, lng: coordinates?.longitude, radius: radius, types: stringTypes, complitionBlock: complitionBlock, errorComplitionBlock: errorBlock);
+            self.showBusyView();
+
+            SRPlacesController.sharedInstance.textSearchPlace(textSearch!, coordinate: coordinates, radius: radius, types: stringTypes, complitionBlock: tempComplitionBlock);
             
         } else {
+            
+            self.showBusyView();
          
-            googleServicesProvider.nearbySearchPlaces(coordinates!.latitude, lng: coordinates!.longitude, radius: radius!, types: stringTypes, keyword: nil, name: nil, complitionBlock: complitionBlock, errorComplitionBlock: errorBlock);
+            SRPlacesController.sharedInstance.nearbyPlaces(coordinates!, radius: radius!, types: stringTypes, keyword: nil, name: nil, complitionBlock: tempComplitionBlock);
         }
-        
     }
     
     //MARK: - SRBaseMapViewDataSource
@@ -329,9 +377,9 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         
         var title = "";
         
-        if let place = self.googlePlaces[index] as SRGooglePlace! {
+        if let place = self.googlePlaces[index] as SRCoreDataPlace! {
             
-            title = place.name!;
+            title = place.name;
         }
         
         return title;
@@ -339,7 +387,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
     
     override func locationForMarkerAtIndex(index: Int) -> CLLocationCoordinate2D? {
         
-        let place = self.googlePlaces[index] as SRGooglePlace!;
+        let place = self.googlePlaces[index] as SRCoreDataPlace;
         var coordinate = CLLocationCoordinate2DMake(place.lat, place.lng);
         
         return coordinate;
@@ -370,7 +418,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         
-        var selectedPlace: SRGooglePlace?;
+        var selectedPlace: SRCoreDataPlace?;
         
         switch (sender) {
             
@@ -378,7 +426,8 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
             selectedPlace = googlePlaces[selectedData as Int];
             
         case is SRPlacesListViewController:
-            selectedPlace = selectedData as? SRGooglePlace;
+            
+            selectedPlace = selectedData as? SRCoreDataPlace;
             
         default:
             fatalError("Unknown Sender");

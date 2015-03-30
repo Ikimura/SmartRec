@@ -50,6 +50,12 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
         googleMapView.mapType = kGMSTypeNormal;
         googleMapView.myLocationEnabled = true
         googleMapView.settings.rotateGestures = false;
+        
+        var marker: GMSMarker = GMSMarker();
+        marker.title = "You";
+        marker.position = dataSource!.initialLocation();
+        marker.map = googleMapView;
+        marker.icon = UIImage(named: "you_here");
     }
     
     
@@ -92,7 +98,6 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
     
     //MARK: SRBaseMapViewProtocol
 
-    //FIXME: - CHeck
     func reloadMarkersList() {
         self.hideCalloutView();
         

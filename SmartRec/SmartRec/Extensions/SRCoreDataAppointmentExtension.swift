@@ -54,16 +54,15 @@ extension SRCoreDataAppointment {
         
         var appointmentEntity: SRCoreDataAppointment? = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataAppointment", inManagedObjectContext: context) as? SRCoreDataAppointment;
         
-        var placeEntity: SRCoreDataPlace? = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataPlace", inManagedObjectContext: context) as? SRCoreDataPlace;
+        var placeEntity: SRCoreDataPlace = SRCoreDataManager.sharedInstance.singleManagedObject("SRCoreDataPlace", withUniqueField: appointment.place.placeId, inContext: context) as SRCoreDataPlace;
         
-        if (appointmentEntity != nil && placeEntity != nil) {
+        if (appointmentEntity != nil) {
             
             appointmentEntity?.fillAppointmentPropertiesWith(appointment);
-            placeEntity?.fillPropertiesFromStruct(appointment.place);
             
             //add relashioships
-            appointmentEntity!.place = placeEntity!;
-            placeEntity!.addAppointment(appointmentEntity!);
+            appointmentEntity!.place = placeEntity;
+            placeEntity.addAppointment(appointmentEntity!);
             
             var error: NSError?;
             context.save(&error);
@@ -78,5 +77,4 @@ extension SRCoreDataAppointment {
         
         return .Failure(NSError(domain: "SRCoreDataManagerInsertDomain", code: -57, userInfo: nil));
     }
-    
 }

@@ -2,7 +2,7 @@
 //  SRCoreDataPlace.swift
 //  SmartRec
 //
-//  Created by Artsiom Karseka on 3/22/15.
+//  Created by Artsiom Karseka on 3/29/15.
 //  Copyright (c) 2015 con.epam.evnt. All rights reserved.
 //
 
@@ -11,20 +11,21 @@ import CoreData
 
 class SRCoreDataPlace: NSManagedObject {
 
-    @NSManaged var distance: NSNumber?
+    @NSManaged var distance: Float
     @NSManaged var formattedAddress: String?
     @NSManaged var formattedPhoneNumber: String?
     @NSManaged var iconURL: String
     @NSManaged var internalPhoneNumber: String?
-    @NSManaged var lat: NSNumber
-    @NSManaged var lng: NSNumber
+    @NSManaged var lat: Double
+    @NSManaged var lng: Double
     @NSManaged var name: String
     @NSManaged var photoReference: String?
     @NSManaged var placeId: String
     @NSManaged var reference: String
-    @NSManaged var vicinity: String
+    @NSManaged var vicinity: String?
     @NSManaged var website: String?
     @NSManaged var weekdayText: String?
+    @NSManaged var fullData: Bool
     @NSManaged var appointments: NSSet
 
 }

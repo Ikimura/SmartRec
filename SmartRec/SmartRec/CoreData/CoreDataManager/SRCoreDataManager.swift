@@ -113,7 +113,7 @@ class SRCoreDataManager: NSObject {
     func deleteEntity(entity: NSManagedObject) -> SRResult {
         
         var context = entity.managedObjectContext;
-        context?.delete(entity);
+        context?.deleteObject(entity);
         
         var error: NSError?;
         if (context?.save(&error) == true) {
@@ -160,6 +160,7 @@ class SRCoreDataManager: NSObject {
         
         if (route == nil) {
             
+            println("New entity=\(entityName) created.");
             route = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: inContext) as? NSManagedObject;
         }
         

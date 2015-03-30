@@ -11,10 +11,11 @@ import Foundation
 class SRAppointmentDateViewController: SRCommonViewController, MGConferenceDatePickerDelegate {
 
     @IBOutlet weak var dateTimPickerView: UIView!
+
+    var detailedPlace: SRCoreDataPlace?;
     
-    var appointmentDate: NSDate?;
-    var datePicker: MGConferenceDatePicker?;
-    var detailedPlace: SRGooglePlace?;
+    private var datePicker: MGConferenceDatePicker?;
+    
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -74,25 +75,43 @@ class SRAppointmentDateViewController: SRCommonViewController, MGConferenceDateP
     
     func conferenceDatePicker(datePicker: MGConferenceDatePicker, saveDate date: NSDate) {
         println("conferenceDatePicker");
-        appointmentDate = date;
-        println("Selected Date \(appointmentDate)");
-
     }
 
     //MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        appointmentDate = datePicker?.valueOfSelectedDate();
+        var appointmentDate = datePicker?.valueOfSelectedDate();
         println("Selected Date \(appointmentDate)");
         
         if segue.identifier == kConfirmationSegueIdentifier {
             
             if let confVC = segue.destinationViewController as? SRAppointmentConfirmationViewController {
                 
-                var id = "\(detailedPlace!.placeId)\(appointmentDate!.timeIntervalSince1970)";
+                var photoRef: [String]? = nil;
+                if (detailedPlace!.photoReference != nil) {
+                    
+                    photoRef = [detailedPlace!.photoReference!];
+                }
                 
-                var appointment = SRAppointment(id: id, place: detailedPlace!, dateInSeconds: appointmentDate!.timeIntervalSince1970, locationTrack: false, description: "", calendarId: nil);
+                var id = "\(detailedPlace!.placeId)\(appointmentDate!.timeIntervalSince1970)";
+                var placeStruct = SRGooglePlace(placeId: detailedPlace!.placeId,
+                    reference: detailedPlace!.reference,
+                    lng: detailedPlace!.lat,
+                    lat: detailedPlace!.lng,
+                    iconURL: NSURL(string: detailedPlace!.iconURL),
+                    name: detailedPlace!.name,
+                    types: nil,
+                    vicinity: detailedPlace!.vicinity,
+                    formattedAddress: detailedPlace!.formattedAddress,
+                    formattedPhoneNumber: detailedPlace!.formattedPhoneNumber,
+                    internalPhoneNumber: detailedPlace!.internalPhoneNumber,
+                    distance: detailedPlace!.distance,
+                    photoReferences: photoRef,
+                    website: detailedPlace!.website,
+                    weekDayText: detailedPlace!.weekdayText);
+                
+                var appointment = SRAppointment(id: id, place: placeStruct, dateInSeconds: appointmentDate!.timeIntervalSince1970, locationTrack: false, description: "", calendarId: nil);
                 
                 confVC.presentationType = .Confirmation;
                 confVC.appointmentST = appointment;
