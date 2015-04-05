@@ -34,8 +34,9 @@ class SRPlacesDetailsDataSource : SRPlacesDetailsDataSourceProtocol {
     //MARK: - public interface
     
     func loadData(complitionBlock:() -> Void, errorBlock:(error: NSError?) -> Void) {
-    
-        if (placeToDetaile!.fullData) {
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
+        if (placeToDetaile!.fullData || appDelegate.isOfflineMode) {
             
             complitionBlock();
             

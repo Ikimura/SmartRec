@@ -52,6 +52,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         super.viewDidLoad();
         
         self.setUpSearchController();
+
         self.loadPlacesWithTypes(placesTypes, textSearch: nil, coordinates: self.initialLocation(), radius: 1000, isQeurySearch: false);
     }
     
@@ -270,7 +271,6 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
     }
     
     private func loadPlacesWithTypes(types: [(name: String, value: String)]?, textSearch: String?, coordinates: CLLocationCoordinate2D?, radius: Int?, isQeurySearch: Bool) {
-
         
         var tempComplitionBlock = { [weak self]( placeIds:[String]?, error: NSError?) -> Void in
             
@@ -287,7 +287,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
                         var context = SRCoreDataContextProvider.mainManagedObjectContext();
                         var fetchRequest = NSFetchRequest(entityName: "SRCoreDataPlace");
 
-                        //FIXME: - исправить косыль
+                        //FIXME: - исправить костыль
                         var predArray : Array<NSPredicate> = []
                         for id in placeIds! {
                             
@@ -347,17 +347,27 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
             }
         }
         
-        if (isQeurySearch) {
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
+        if (appDelegate.isOfflineMode) {
             
             self.showBusyView();
 
-            SRPlacesController.sharedInstance.textSearchPlace(textSearch!, coordinate: coordinates, radius: radius, types: stringTypes, complitionBlock: tempComplitionBlock);
+            SRPlacesController.sharedInstance.cashedPlacesWith(stringTypes, textSearch: textSearch, andLocationCordinate: coordinates!, inRadius: 1000.0, complitionBlock: tempComplitionBlock);
             
         } else {
             
-            self.showBusyView();
-         
-            SRPlacesController.sharedInstance.nearbyPlaces(coordinates!, radius: radius!, types: stringTypes, keyword: nil, name: nil, complitionBlock: tempComplitionBlock);
+            if (isQeurySearch) {
+                
+                self.showBusyView();
+                
+                SRPlacesController.sharedInstance.textSearchPlace(textSearch!, coordinate: coordinates, radius: radius, types: stringTypes, complitionBlock: tempComplitionBlock);
+                
+            } else {
+                
+                self.showBusyView();
+                
+                SRPlacesController.sharedInstance.nearbyPlaces(coordinates!, radius: radius!, types: stringTypes, keyword: nil, name: nil, complitionBlock: tempComplitionBlock);
+            }
         }
     }
     
@@ -387,9 +397,8 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
     
     override func locationForMarkerAtIndex(index: Int) -> CLLocationCoordinate2D? {
         
-        let place = self.googlePlaces[index] as SRCoreDataPlace;
+        let place = self.googlePlaces[index] as SRCoreDataPlace!;
         var coordinate = CLLocationCoordinate2DMake(place.lat, place.lng);
-        
         return coordinate;
     }
     

@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     var eventsTracker: SRAppointmentsTracker!;
     var GoogleServiceReachable: Reachability?;
     
-    private(set) var isOfflineMode: Bool?;
+    private(set) var isOfflineMode: Bool = false;
 
     private var locationManager: CLLocationManager!;
     private var currrentLocation: CLLocation?;

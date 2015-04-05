@@ -96,33 +96,68 @@ class SRPlacesController {
         }
     }
     
-    func cashedPlacesWith(types: [String], andLocationCordinate: CLLocationCoordinate2D, inRadius: Double) -> [AnyObject]? {
+    func cashedPlacesWith(types: [String], textSearch: String?, andLocationCordinate: CLLocationCoordinate2D, inRadius: Double, complitionBlock:(placesId: [String]?, error: NSError?) -> Void) {
         
-        var fetchRequest = NSFetchRequest(entityName: "SRCoreDataPlace");
-        //        fetchRequest.predicate = NSPredicate(format: "ANY types.title IN %@", types);
-        //        fetchRequest.predicate = NSPredicate(format: "name CONTAINS[c] %@", name);
-        
-        var workinContext = SRCoreDataContextProvider.workingManagedObjectContext();
-        
-        var error: NSError? = nil;
-        var cashedPlaces = workinContext.executeFetchRequest(fetchRequest, error: &error);
-        println("DEBUG. all Places = \(cashedPlaces?.count)");
-        
-        var region: CLCircularRegion = CLCircularRegion(center: andLocationCordinate, radius: inRadius, identifier: "");
-        
-        if (error == nil) {
-            //filter places in raduis
-            cashedPlaces = cashedPlaces?.filter({ (obj: AnyObject) -> Bool in
+        dispatch_async(self.serialQueue, { [weak self]() -> Void in
+
+            if let strongSelf = self {
+                var cdPlaces: [String] = [];
+
+                var fetchRequest = NSFetchRequest(entityName: "SRCoreDataPlace");
                 
-                var place = obj as? SRCoreDataPlace;
-                var placeCoordinate = CLLocationCoordinate2DMake(place!.lat, place!.lng);
+                var predArray : Array<NSPredicate> = []
+                for type in types {
+                    
+                    predArray.append(NSPredicate(format: "types CONTAINS[c] %@", type)!);
+                }
+
+                if (textSearch != nil) {
+                    
+                    var orPredicate = NSCompoundPredicate(type: .OrPredicateType, subpredicates: predArray);
+                    var searchPredicate = NSPredicate(format: "name CONTAINS[c] %@", textSearch!)!;
+
+                    fetchRequest.predicate = NSCompoundPredicate(type: .OrPredicateType, subpredicates: [orPredicate, searchPredicate]);
+                    
+                } else {
+                    
+                    fetchRequest.predicate = NSCompoundPredicate(type: .OrPredicateType, subpredicates: predArray);
+                }
                 
-                return region.containsCoordinate(placeCoordinate);
-            });
-        }
-        
-        println("DEBUG. cashedPlaces = \(cashedPlaces?.count)");
-        return cashedPlaces;
+                var workinContext = SRCoreDataContextProvider.workingManagedObjectContext();
+                
+                var error: NSError? = nil;
+                var cashedPlaces = workinContext.executeFetchRequest(fetchRequest, error: &error);
+                println("DEBUG. all Places = \(cashedPlaces?.count)");
+                
+                var region: CLCircularRegion = CLCircularRegion(center: andLocationCordinate, radius: inRadius, identifier: "");
+                
+                if (error == nil) {
+                    //filter places in raduis
+                    cashedPlaces = cashedPlaces?.filter({ (obj: AnyObject) -> Bool in
+                        
+                        var place = obj as? SRCoreDataPlace;
+                        var placeCoordinate = CLLocationCoordinate2DMake(place!.lat, place!.lng);
+                        var contains = region.containsCoordinate(placeCoordinate);
+                        if (contains) {
+                            
+                            cdPlaces.append(place!.placeId);
+                        }
+                        return contains;
+                    });
+                }
+                
+                println("DEBUG. cashedPlaces = \(cashedPlaces?.count)");
+                
+                if (cashedPlaces != nil) {
+                    
+                    complitionBlock(placesId: cdPlaces, error: nil);
+                    
+                } else {
+                    
+                    complitionBlock(placesId: cdPlaces, error: nil);
+                }
+            }
+        });
     }
     
     private func serrializePlacesFromResponseDictionary(response: Array<NSDictionary>, complitionBlock: (places: [String], error: NSError?) -> Void) {
@@ -170,7 +205,6 @@ class SRPlacesController {
                         if (existPlaceEntity?.distance == 0) {
                             
                             existPlaceEntity?.distance = Float(CLLocation.distanceBetweenLocation(CLLocationCoordinate2DMake(existPlaceEntity!.lat, existPlaceEntity!.lng), secondLocation: appDelegate.currentLocation().coordinate));
-
                         }
                     }
                 }

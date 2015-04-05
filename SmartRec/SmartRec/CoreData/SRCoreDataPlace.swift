@@ -2,7 +2,7 @@
 //  SRCoreDataPlace.swift
 //  SmartRec
 //
-//  Created by Artsiom Karseka on 3/29/15.
+//  Created by Artsiom Karseka on 4/5/15.
 //  Copyright (c) 2015 con.epam.evnt. All rights reserved.
 //
 
@@ -14,6 +14,7 @@ class SRCoreDataPlace: NSManagedObject {
     @NSManaged var distance: Float
     @NSManaged var formattedAddress: String?
     @NSManaged var formattedPhoneNumber: String?
+    @NSManaged var fullData: Bool
     @NSManaged var iconURL: String
     @NSManaged var internalPhoneNumber: String?
     @NSManaged var lat: Double
@@ -25,7 +26,7 @@ class SRCoreDataPlace: NSManagedObject {
     @NSManaged var vicinity: String?
     @NSManaged var website: String?
     @NSManaged var weekdayText: String?
-    @NSManaged var fullData: Bool
+    @NSManaged var types: String
     @NSManaged var appointments: NSSet
 
 }

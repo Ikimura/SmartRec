@@ -54,7 +54,13 @@ extension SRCoreDataPlace {
         }
         
         var vicinity = result["vicinity"] as? String;
-        var types = result["types"] as? [String];
+        var types = result["types"] as [String]!;
+        self.types = "";
+        for type in types {
+            
+            self.types += "\(type)";
+        }
+        
         var formattedAddress = result["formatted_address"] as? String;
         
         var lat: Double?;
