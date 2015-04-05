@@ -330,8 +330,12 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
                     }
                     
                 case .Failure(let error):
+                    
                     println("Debug. Adding failed");
-                    self.showAlertWith("Error", message: "\(error)");
+                    if let userInfo = error.userInfo as NSDictionary! {
+                        
+                        self.showAlertWith(userInfo[NSLocalizedDescriptionKey] as String, message: userInfo[NSLocalizedRecoverySuggestionErrorKey] as String);
+                    }
                 }
                 
             case .Detailes:

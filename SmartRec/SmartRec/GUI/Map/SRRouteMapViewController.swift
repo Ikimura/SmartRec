@@ -11,7 +11,7 @@ import CoreData
 
 class SRRouteMapViewController: SRCommonRouteMapViewController {
     
-    var route: SRRoute?;
+    var route: SRCoreDataRoute?;
     var selectedVideoMark: SRRouteVideoPoint?;
     
     private var videoURL: NSURL?;
@@ -272,7 +272,7 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
     
     func markVideoMarkersForRoute(route: AnyObject) {
         
-        if var tempRoute = route as? SRRoute {
+        if var tempRoute = route as? SRCoreDataRoute {
             
             tempRoute.videoPoints.enumerateObjectsUsingBlock { [weak self] (element, index, stop) -> Void in
                 
@@ -303,7 +303,7 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
     
     func makePolylineForRoute(route: AnyObject){
         
-        if var tempRoute = route as? SRRoute {
+        if var tempRoute = route as? SRCoreDataRoute {
             
             var gmsPaths: GMSMutablePath = GMSMutablePath();
             

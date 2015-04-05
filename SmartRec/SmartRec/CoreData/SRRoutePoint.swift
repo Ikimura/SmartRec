@@ -16,6 +16,6 @@ class SRRoutePoint: NSManagedObject {
     @NSManaged var locationDescription: String?
     @NSManaged var longitude: NSNumber
     @NSManaged var time: NSDate
-    @NSManaged var route: SRRoute?
+    @NSManaged var route: SRCoreDataRoute?
 
 }

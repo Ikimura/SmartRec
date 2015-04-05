@@ -25,21 +25,6 @@
 		13361DB319F6917A00F0CB64 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13361DB219F6917A00F0CB64 /* AssetsLibrary.framework */; };
 		1338720C1A1CC9DF00FFC29F /* SRMarkerInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1338720B1A1CC9DF00FFC29F /* SRMarkerInfoView.xib */; };
 		1338720E1A1CC9FF00FFC29F /* SRMarkerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1338720D1A1CC9FF00FFC29F /* SRMarkerInfoView.swift */; };
-		13557F331A3B142E00E36CE7 /* SRRouteStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137945941A3B0BFA00AF1A97 /* SRRouteStruct.swift */; };
-		13557F341A3B142E00E36CE7 /* SRVideoDataStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137945951A3B0BFA00AF1A97 /* SRVideoDataStruct.swift */; };
-		13557F351A3B142E00E36CE7 /* SRVideoMarkStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137945961A3B0BFA00AF1A97 /* SRVideoMarkStruct.swift */; };
-		13557F3C1A3B147B00E36CE7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130A5B8C19F7CECB004515A7 /* Constants.swift */; };
-		13557F3E1A3B15B100E36CE7 /* SRSingletonLocationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A4FDD41A237B0B00201DD5 /* SRSingletonLocationSpec.swift */; };
-		13557F3F1A3B15B100E36CE7 /* SRCoreDataSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A4FDE61A23840D00201DD5 /* SRCoreDataSpec.swift */; };
-		13557F401A3B15B100E36CE7 /* SRUIViewExtensionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A4FDE11A237D0300201DD5 /* SRUIViewExtensionSpec.swift */; };
-		13557F411A3B15B100E36CE7 /* SRPerformaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D7456B1A139C620089BA09 /* SRPerformaceTests.swift */; };
-		13557F421A3B167E00E36CE7 /* SRMarkerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1338720D1A1CC9FF00FFC29F /* SRMarkerInfoView.swift */; };
-		13557F431A3B169A00E36CE7 /* NSFileManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379459A1A3B0C3E00AF1A97 /* NSFileManagerExtensions.swift */; };
-		13557F441A3B169A00E36CE7 /* NSURLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E5AE7619FF7BF900ABFAD8 /* NSURLExtensions.swift */; };
-		13557F451A3B169A00E36CE7 /* AVAssetExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F985761A13912400E9B958 /* AVAssetExtensions.swift */; };
-		13557F461A3B169A00E36CE7 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EBF1ED1A1DC7A900029072 /* UIViewExtensions.swift */; };
-		13557F471A3B169A00E36CE7 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1318DEC31A1F54AD007B0F54 /* StringExtensions.swift */; };
-		13557F481A3B226200E36CE7 /* SRCoreDataManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13557F311A3B136000E36CE7 /* SRCoreDataManagerSpec.swift */; };
 		1359A0DA1A00E50C00FC8994 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1359A0D91A00E50C00FC8994 /* CoreLocation.framework */; };
 		1359A0DF1A0123E100FC8994 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1359A0DE1A0123E100FC8994 /* CoreData.framework */; };
 		136895691A1A270900D37A14 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304A28A1A162372004CBD9B /* SystemConfiguration.framework */; };
@@ -92,9 +77,6 @@
 		606D3FA81AB5A6E9006D0B73 /* SRRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FA71AB5A6E9006D0B73 /* SRRoutePoint.swift */; };
 		606D3FAC1AB5A6EA006D0B73 /* SRVideoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FAB1AB5A6EA006D0B73 /* SRVideoData.swift */; };
 		606D3FB21AB5A6EA006D0B73 /* SRRouteVideoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FB11AB5A6EA006D0B73 /* SRRouteVideoPoint.swift */; };
-		606D3FC01AB5ABEB006D0B73 /* SRRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FA71AB5A6E9006D0B73 /* SRRoutePoint.swift */; };
-		606D3FC11AB5ABEB006D0B73 /* SRRouteVideoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FB11AB5A6EA006D0B73 /* SRRouteVideoPoint.swift */; };
-		606D3FC21AB5ABEB006D0B73 /* SRVideoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FAB1AB5A6EA006D0B73 /* SRVideoData.swift */; };
 		606EC8831AC2B8A8008BC813 /* SRPlacesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606EC8821AC2B8A8008BC813 /* SRPlacesController.swift */; };
 		608153B81A9E59780033FF09 /* SRPlacesMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608153B71A9E59780033FF09 /* SRPlacesMapView.swift */; };
 		608153BA1A9E5A210033FF09 /* SRPlacesMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608153B91A9E5A210033FF09 /* SRPlacesMapViewController.swift */; };
@@ -108,7 +90,6 @@
 		609131121AB4AA7D00A56D8F /* SRAppointmentHistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 609131111AB4AA7D00A56D8F /* SRAppointmentHistoryCell.xib */; };
 		609131141AB4ABC400A56D8F /* SRAppointmentHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609131131AB4ABC400A56D8F /* SRAppointmentHistoryCell.swift */; };
 		609194531AC9E9070051D8BA /* SRCoreDataAppointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609194521AC9E9070051D8BA /* SRCoreDataAppointment.swift */; };
-		609194541AC9E9560051D8BA /* SRCoreDataAppointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609194521AC9E9070051D8BA /* SRCoreDataAppointment.swift */; };
 		609329AF1AAE16DB008B5218 /* SRRootMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609329AE1AAE16DB008B5218 /* SRRootMenuViewController.swift */; };
 		609329B21AAE1933008B5218 /* SRLeftMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609329B11AAE1933008B5218 /* SRLeftMenuViewController.swift */; };
 		609A9A5E1A9F944D00BC8D43 /* SRPlacesTypesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609A9A5D1A9F944D00BC8D43 /* SRPlacesTypesTableViewCell.swift */; };
@@ -121,7 +102,6 @@
 		60AEE9341AAB4CE700B1975F /* CLLocationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AEE9331AAB4CE700B1975F /* CLLocationExtensions.swift */; };
 		60AEE9391AAB54F700B1975F /* MGConferenceDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AEE9371AAB54F700B1975F /* MGConferenceDatePicker.m */; };
 		60AEE93C1AAB5FF700B1975F /* SRAppointmentDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AEE93B1AAB5FF700B1975F /* SRAppointmentDateViewController.swift */; };
-		60AEE93D1AAB60D600B1975F /* MGConferenceDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AEE9371AAB54F700B1975F /* MGConferenceDatePicker.m */; };
 		60AEE93F1AAB683400B1975F /* SRContinueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AEE93E1AAB683400B1975F /* SRContinueTableViewCell.swift */; };
 		60B94B081AA1D19F00BBDAA1 /* SRCalloutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60B94B071AA1D19F00BBDAA1 /* SRCalloutView.xib */; };
 		60B94B2A1AA220D900BBDAA1 /* SmartRec.SRPlacesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60B94B221AA220D900BBDAA1 /* SmartRec.SRPlacesListViewController.xib */; };
@@ -132,7 +112,6 @@
 		60BD7F2D1ABEFAA800826DC5 /* SRRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BD7F2C1ABEFAA800826DC5 /* SRRoundedButton.swift */; };
 		60BD7F381ABF041300826DC5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60BD7F3A1ABF041300826DC5 /* Localizable.strings */; };
 		60BD7F6B1ABF126D00826DC5 /* SRContinueTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60BD7F6A1ABF126D00826DC5 /* SRContinueTableViewCell.xib */; };
-		60BE86DA1A9BBE440070833C /* SRRoutePointStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3163E1A9BBC7900D5DEE4 /* SRRoutePointStruct.swift */; };
 		60BE86EA1A9BC45E0070833C /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60BE86E91A9BC45E0070833C /* GoogleMaps.framework */; };
 		60BE86EC1A9BC4720070833C /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 60BE86EB1A9BC4720070833C /* GoogleMaps.bundle */; };
 		60C316021A9BBB2E00D5DEE4 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 60C316011A9BBB2E00D5DEE4 /* Settings.bundle */; };
@@ -161,28 +140,20 @@
 		60C3C7D11AAC949D001DF083 /* SRPlaceRouteMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3C7D01AAC949D001DF083 /* SRPlaceRouteMapViewController.swift */; };
 		60C3C7D31AACA9C7001DF083 /* GMSPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3C7D21AACA9C7001DF083 /* GMSPathExtensions.swift */; };
 		60C6DCF41AAF89DD00907C91 /* SRRecordedRoutesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C6DCF31AAF89DD00907C91 /* SRRecordedRoutesDataSource.swift */; };
-		60D9AB871AB9EC3E0008A93E /* SRRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D9AB861AB9EC3E0008A93E /* SRRoute.swift */; };
 		60D9AB891AB9F74A0008A93E /* SRCoreDataContextProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D9AB881AB9F74A0008A93E /* SRCoreDataContextProvider.swift */; };
-		60D9AB8C1ABA13340008A93E /* SRRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D9AB861AB9EC3E0008A93E /* SRRoute.swift */; };
 		60D9AB8E1ABA1A750008A93E /* SRCoreDataRoutePointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D9AB8D1ABA1A750008A93E /* SRCoreDataRoutePointExtension.swift */; };
 		60D9AB901ABA1BB50008A93E /* SRCoreDataVideoPointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D9AB8F1ABA1BB50008A93E /* SRCoreDataVideoPointExtension.swift */; };
 		60D9AB921ABA1D2F0008A93E /* SRCoreDataVideoDataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D9AB911ABA1D2F0008A93E /* SRCoreDataVideoDataExtension.swift */; };
 		60D9AB941ABA48000008A93E /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D9AB931ABA48000008A93E /* MapManager.swift */; };
 		60DAC27F1AC8292600773990 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 60DAC27E1AC8292600773990 /* Reachability.m */; };
 		60E9FF611AD14D02003A3BBC /* SRCoreDataPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9FF601AD14D02003A3BBC /* SRCoreDataPlace.swift */; };
-		60E9FF621AD14EB3003A3BBC /* SRCoreDataPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9FF601AD14D02003A3BBC /* SRCoreDataPlace.swift */; };
+		60E9FF711AD1833D003A3BBC /* SRCoreDataRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9FF701AD1833D003A3BBC /* SRCoreDataRoute.swift */; };
+		60E9FF741AD18582003A3BBC /* SRRoutesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9FF731AD18582003A3BBC /* SRRoutesController.swift */; };
 		60EA0F621AAE05130050E5E0 /* SRCoreDataPlaceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EA0F611AAE05130050E5E0 /* SRCoreDataPlaceExtension.swift */; };
 		9246CE854797EB575F7D3CF9 /* libPods-SmartRec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 629E0BE8345E5875EE1D9C09 /* libPods-SmartRec.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1313C5A91A25C51400C580AB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 137E3B5B19F52BF00094C5A1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 137E3B6219F52BF00094C5A1;
-			remoteInfo = SmartRec;
-		};
 		13B660D11A236CCD00EDA68A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 13B660CA1A236CCD00EDA68A /* Nimble.xcodeproj */;
@@ -387,7 +358,6 @@
 		60C3C7D01AAC949D001DF083 /* SRPlaceRouteMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlaceRouteMapViewController.swift; sourceTree = "<group>"; };
 		60C3C7D21AACA9C7001DF083 /* GMSPathExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMSPathExtensions.swift; sourceTree = "<group>"; };
 		60C6DCF31AAF89DD00907C91 /* SRRecordedRoutesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRRecordedRoutesDataSource.swift; sourceTree = "<group>"; };
-		60D9AB861AB9EC3E0008A93E /* SRRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRRoute.swift; sourceTree = "<group>"; };
 		60D9AB881AB9F74A0008A93E /* SRCoreDataContextProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataContextProvider.swift; sourceTree = "<group>"; };
 		60D9AB8D1ABA1A750008A93E /* SRCoreDataRoutePointExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataRoutePointExtension.swift; sourceTree = "<group>"; };
 		60D9AB8F1ABA1BB50008A93E /* SRCoreDataVideoPointExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataVideoPointExtension.swift; sourceTree = "<group>"; };
@@ -396,6 +366,8 @@
 		60DAC27D1AC8292600773990 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		60DAC27E1AC8292600773990 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		60E9FF601AD14D02003A3BBC /* SRCoreDataPlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataPlace.swift; sourceTree = "<group>"; };
+		60E9FF701AD1833D003A3BBC /* SRCoreDataRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataRoute.swift; sourceTree = "<group>"; };
+		60E9FF731AD18582003A3BBC /* SRRoutesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRRoutesController.swift; sourceTree = "<group>"; };
 		60EA0F611AAE05130050E5E0 /* SRCoreDataPlaceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataPlaceExtension.swift; sourceTree = "<group>"; };
 		629E0BE8345E5875EE1D9C09 /* libPods-SmartRec.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SmartRec.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEEFD9D2BCFD05A6A3E5D224 /* Pods-SmartRec.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRec.release.xcconfig"; path = "Pods/Target Support Files/Pods-SmartRec/Pods-SmartRec.release.xcconfig"; sourceTree = "<group>"; };
@@ -552,7 +524,6 @@
 			children = (
 				60C316251A9BBC0A00D5DEE4 /* SRGoogleGeocodingServiceProtocol.swift */,
 				60C316261A9BBC0A00D5DEE4 /* SRGoogleSearchServiceProtocol.swift */,
-				606EC8821AC2B8A8008BC813 /* SRPlacesController.swift */,
 			);
 			name = Services;
 			path = ../../../../../../../Users/artsiom_karseka/Documents/Study/Diplom/SmartRec/SmartRec/Services;
@@ -821,6 +792,8 @@
 		13CA8BD01A14973400E8C6D8 /* CoreDataManager */ = {
 			isa = PBXGroup;
 			children = (
+				606EC8821AC2B8A8008BC813 /* SRPlacesController.swift */,
+				60E9FF731AD18582003A3BBC /* SRRoutesController.swift */,
 				13CA8BD51A14A3BA00E8C6D8 /* SRCoreDataManager.swift */,
 				60D9AB881AB9F74A0008A93E /* SRCoreDataContextProvider.swift */,
 			);
@@ -840,7 +813,7 @@
 			children = (
 				609194521AC9E9070051D8BA /* SRCoreDataAppointment.swift */,
 				60E9FF601AD14D02003A3BBC /* SRCoreDataPlace.swift */,
-				60D9AB861AB9EC3E0008A93E /* SRRoute.swift */,
+				60E9FF701AD1833D003A3BBC /* SRCoreDataRoute.swift */,
 				606D3FA71AB5A6E9006D0B73 /* SRRoutePoint.swift */,
 				606D3FB11AB5A6EA006D0B73 /* SRRouteVideoPoint.swift */,
 				606D3FAB1AB5A6EA006D0B73 /* SRVideoData.swift */,
@@ -1139,7 +1112,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				1313C5AA1A25C51400C580AB /* PBXTargetDependency */,
 			);
 			name = SmartRecTests;
 			productName = SmartRecTests;
@@ -1361,7 +1333,6 @@
 				60D9AB901ABA1BB50008A93E /* SRCoreDataVideoPointExtension.swift in Sources */,
 				60AEE92D1AAAF99400B1975F /* SRPlacesDetailsDataSource.swift in Sources */,
 				60C316421A9BBC9600D5DEE4 /* SRSettingsManager.swift in Sources */,
-				60D9AB871AB9EC3E0008A93E /* SRRoute.swift in Sources */,
 				60D9AB891AB9F74A0008A93E /* SRCoreDataContextProvider.swift in Sources */,
 				60C316281A9BBC0A00D5DEE4 /* SRGoogleSearchServiceProtocol.swift in Sources */,
 				137945971A3B0BFA00AF1A97 /* SRRouteStruct.swift in Sources */,
@@ -1372,6 +1343,7 @@
 				13265F5D1A1E10BA00E063CD /* SRVideoPlace.swift in Sources */,
 				60C316271A9BBC0A00D5DEE4 /* SRGoogleGeocodingServiceProtocol.swift in Sources */,
 				137E3B8B19F531B20094C5A1 /* SRNavigationController.swift in Sources */,
+				60E9FF711AD1833D003A3BBC /* SRCoreDataRoute.swift in Sources */,
 				609131021AB47FEA00A56D8F /* SRCommonRouteMapViewController.swift in Sources */,
 				60C316191A9BBBB400D5DEE4 /* SRClusteringMapVIew.swift in Sources */,
 				60C316201A9BBBCB00D5DEE4 /* SRBaseMapViewProtocol.swift in Sources */,
@@ -1412,6 +1384,7 @@
 				137945981A3B0BFA00AF1A97 /* SRVideoDataStruct.swift in Sources */,
 				600CE4BA1AAE334700D20481 /* SRAppointmentsHistory.swift in Sources */,
 				137E3B9219F533A90094C5A1 /* SRMovieTableViewCell.swift in Sources */,
+				60E9FF741AD18582003A3BBC /* SRRoutesController.swift in Sources */,
 				60C3C7CE1AAC4EA2001DF083 /* SRAppointment.swift in Sources */,
 				60AEE93F1AAB683400B1975F /* SRContinueTableViewCell.swift in Sources */,
 				130A5B8D19F7CECB004515A7 /* Constants.swift in Sources */,
@@ -1435,41 +1408,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60E9FF621AD14EB3003A3BBC /* SRCoreDataPlace.swift in Sources */,
-				609194541AC9E9560051D8BA /* SRCoreDataAppointment.swift in Sources */,
-				60D9AB8C1ABA13340008A93E /* SRRoute.swift in Sources */,
-				606D3FC01AB5ABEB006D0B73 /* SRRoutePoint.swift in Sources */,
-				606D3FC11AB5ABEB006D0B73 /* SRRouteVideoPoint.swift in Sources */,
-				606D3FC21AB5ABEB006D0B73 /* SRVideoData.swift in Sources */,
-				60BE86DA1A9BBE440070833C /* SRRoutePointStruct.swift in Sources */,
-				13557F481A3B226200E36CE7 /* SRCoreDataManagerSpec.swift in Sources */,
-				13557F431A3B169A00E36CE7 /* NSFileManagerExtensions.swift in Sources */,
-				13557F441A3B169A00E36CE7 /* NSURLExtensions.swift in Sources */,
-				60AEE93D1AAB60D600B1975F /* MGConferenceDatePicker.m in Sources */,
-				13557F451A3B169A00E36CE7 /* AVAssetExtensions.swift in Sources */,
-				13557F461A3B169A00E36CE7 /* UIViewExtensions.swift in Sources */,
-				13557F471A3B169A00E36CE7 /* StringExtensions.swift in Sources */,
-				13557F421A3B167E00E36CE7 /* SRMarkerInfoView.swift in Sources */,
-				13557F3E1A3B15B100E36CE7 /* SRSingletonLocationSpec.swift in Sources */,
-				13557F3F1A3B15B100E36CE7 /* SRCoreDataSpec.swift in Sources */,
-				13557F401A3B15B100E36CE7 /* SRUIViewExtensionSpec.swift in Sources */,
-				13557F411A3B15B100E36CE7 /* SRPerformaceTests.swift in Sources */,
-				13557F3C1A3B147B00E36CE7 /* Constants.swift in Sources */,
-				13557F331A3B142E00E36CE7 /* SRRouteStruct.swift in Sources */,
-				13557F341A3B142E00E36CE7 /* SRVideoDataStruct.swift in Sources */,
-				13557F351A3B142E00E36CE7 /* SRVideoMarkStruct.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		1313C5AA1A25C51400C580AB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 137E3B6219F52BF00094C5A1 /* SmartRec */;
-			targetProxy = 1313C5A91A25C51400C580AB /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		137E3B6C19F52BF00094C5A1 /* Main.storyboard */ = {

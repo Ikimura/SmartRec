@@ -9,6 +9,14 @@
 import CoreData
 
 extension SRCoreDataAppointment {
+    
+    func addRoute(route: SRCoreDataRoute) {
+        
+        var tempSet: NSMutableOrderedSet = NSMutableOrderedSet(orderedSet: routes);
+        tempSet.addObject(route);
+        
+        routes = tempSet;
+    }
 
     class func markArrivedAppointmnetWithId(id: String) {
         
@@ -51,30 +59,40 @@ extension SRCoreDataAppointment {
     class func insertAppointment(appointment: SRAppointment) -> SRResult {
         
         var context = SRCoreDataContextProvider.mainManagedObjectContext();
-        
-        var appointmentEntity: SRCoreDataAppointment? = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataAppointment", inManagedObjectContext: context) as? SRCoreDataAppointment;
-        
-        var placeEntity: SRCoreDataPlace = SRCoreDataManager.sharedInstance.singleManagedObject("SRCoreDataPlace", withUniqueField: appointment.place.placeId, inContext: context) as SRCoreDataPlace;
-        
-        if (appointmentEntity != nil) {
-            
-            appointmentEntity?.fillAppointmentPropertiesWith(appointment);
-            
-            //add relashioships
-            appointmentEntity!.place = placeEntity;
-            placeEntity.addAppointment(appointmentEntity!);
-            
-            var error: NSError?;
-            context.save(&error);
-            
-            if error != nil {
                 
-                return .Failure(error!);
-            }
+        var appointmentEntity = SRCoreDataManager.sharedInstance.singleManagedObject("SRCoreDataAppointment", withUniqueField: appointment.id, inContext: context) as? SRCoreDataAppointment;
+        
+        if (appointmentEntity == nil) {
             
-            return .Success(true);
+            appointmentEntity = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataAppointment", inManagedObjectContext: context) as? SRCoreDataAppointment;
+            
+            var placeEntity: SRCoreDataPlace = SRCoreDataManager.sharedInstance.singleManagedObject("SRCoreDataPlace", withUniqueField: appointment.place.placeId, inContext: context) as SRCoreDataPlace;
+            
+            if (appointmentEntity != nil) {
+                
+                appointmentEntity?.fillAppointmentPropertiesWith(appointment);
+                
+                //add relashioships
+                appointmentEntity!.place = placeEntity;
+                placeEntity.addAppointment(appointmentEntity!);
+                
+                var error: NSError?;
+                context.save(&error);
+                
+                if error != nil {
+                    
+                    return .Failure(error!);
+                }
+                
+                return .Success(true);
+            }
         }
         
-        return .Failure(NSError(domain: "SRCoreDataManagerInsertDomain", code: -57, userInfo: nil));
+        var userInfo = [
+            NSLocalizedDescriptionKey: NSLocalizedString("appintment_creation_error_title", comment: ""),
+            NSLocalizedFailureReasonErrorKey: NSLocalizedString("appintment_creation_error_reson", comment: ""),
+            NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("appintment_creation_error_suggestion", comment: "")];
+        
+        return .Failure(NSError(domain: "SRCoreDataManagerInsertDomain", code: -57, userInfo: userInfo));
     }
 }

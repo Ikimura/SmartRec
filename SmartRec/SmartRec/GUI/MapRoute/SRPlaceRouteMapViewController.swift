@@ -20,6 +20,7 @@ class SRPlaceRouteMapViewController: SRCommonRouteMapViewController {
     
     var targetCoordinate: CLLocationCoordinate2D?;
     var myCoordinate: CLLocationCoordinate2D?;
+    var appointmentId: String?;
     
     private lazy var googleServicesProvider: SRGoogleServicesDataProvider = {
         var tempProvider = SRGoogleServicesDataProvider();
@@ -36,9 +37,27 @@ class SRPlaceRouteMapViewController: SRCommonRouteMapViewController {
         super.viewDidLoad();
         
         self.setUpMap(targetCoordinate!);
-        
         self.loadRouteIfNeeded(pathMode);
     }
+    
+//    func routeWithMode(mode: String, with complitionBlock: (route: SRCoreDataRoute?, error: NSError?) -> Void) {
+//        
+//        SRRoutesController.sharedInstance.googleDirectionForAppintment(self.appointmentId, from: self.fromCoordinate!, to: self.targetCoordinate!, mode: mode) { (routeId, error) -> Void in
+//            
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                
+//                var mainContext = SRCoreDataContextProvider.mainManagedObjectContext();
+//                
+//                var route: SRCoreDataRoute? = nil;
+//                if (error == nil) {
+//                    
+//                    route = SRCoreDataManager.sharedInstance.singleManagedObject("SRCoreDataRoute", withUniqueField: routeId!, inContext: mainContext) as? SRCoreDataRoute;
+//                }
+//                
+//                complitionBlock(route: route, error: error);
+//            });
+//        }
+//    }
     
     //MARK: - Override
     
@@ -51,13 +70,18 @@ class SRPlaceRouteMapViewController: SRCommonRouteMapViewController {
     
     func loadRouteIfNeeded(mode: SRRoutePathMode) {
         
-        if (routePaths.count == 0 || (routePaths.count - 1) < mode.value ) {
+        if (appointmentId != nil) {
             
-            self.loadRoute(mode);
-
         } else {
             
-            self.refreshMapView(mode);
+            if (routePaths.count == 0 || (routePaths.count - 1) < mode.value ) {
+                
+                self.loadRoute(mode);
+                
+            } else {
+                
+                self.refreshMapView(mode);
+            }
         }
     }
     

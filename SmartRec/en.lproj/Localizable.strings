@@ -66,3 +66,6 @@
 "conf_cancel_btn_sel" = "Cancel";
 "cal_cancel_btn_sel" = "Remove From Calendar";
 "history_screen_title" = "History";
+"appintment_creation_error_title" = "Operation Was Unsuccessful";
+"appintment_creation_error_reson" = "The appointment already exists.";
+"appintment_creation_error_suggestion" = "Please, choose different time or place.";

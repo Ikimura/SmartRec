@@ -31,7 +31,7 @@ let kManagedObjectVideoMark: String = "SRRouteVideoPoint";
 
 let kManagedObjectVideoData: String = "SRVideoData";
 
-let kManagedObjectRoute: String = "SRRoute";
+let kManagedObjectRoute: String = "SRCoreDataRoute";
 
 let kMovieListCellIdentifier: String = "movieCellidentifier";
 

@@ -9,7 +9,7 @@
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortDate" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="place" maxCount="1" deletionRule="Nullify" destinationEntity="SRCoreDataPlace" inverseName="appointments" inverseEntity="SRCoreDataPlace" syncable="YES"/>
-        <relationship name="routes" optional="YES" toMany="YES" maxCount="2" deletionRule="Nullify" ordered="YES" destinationEntity="SRRoute" inverseName="appointment" inverseEntity="SRRoute" syncable="YES"/>
+        <relationship name="routes" optional="YES" toMany="YES" maxCount="2" deletionRule="Nullify" ordered="YES" destinationEntity="SRCoreDataRoute" inverseName="appointment" inverseEntity="SRCoreDataRoute" syncable="YES"/>
     </entity>
     <entity name="SRCoreDataPlace" representedClassName="SmartRec.SRCoreDataPlace" syncable="YES">
         <attribute name="distance" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -30,8 +30,10 @@
         <attribute name="weekdayText" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="appointments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SRCoreDataAppointment" inverseName="place" inverseEntity="SRCoreDataAppointment" syncable="YES"/>
     </entity>
-    <entity name="SRRoute" representedClassName="SmartRec.SRRoute" syncable="YES">
+    <entity name="SRCoreDataRoute" representedClassName="SmartRec.SRCoreDataRoute" syncable="YES">
+        <attribute name="distance" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="googleOverviewPolyline" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -45,7 +47,7 @@
         <attribute name="locationDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="route" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SRRoute" inverseName="routePoints" inverseEntity="SRRoute" syncable="YES"/>
+        <relationship name="route" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SRCoreDataRoute" inverseName="routePoints" inverseEntity="SRCoreDataRoute" syncable="YES"/>
     </entity>
     <entity name="SRRouteVideoPoint" representedClassName="SmartRec.SRRouteVideoPoint" parentEntity="SRRoutePoint" syncable="YES">
         <attribute name="autoSaved" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -65,7 +67,7 @@
     <elements>
         <element name="SRCoreDataAppointment" positionX="117" positionY="144" width="128" height="180"/>
         <element name="SRCoreDataPlace" positionX="-164" positionY="134" width="128" height="300"/>
-        <element name="SRRoute" positionX="144" positionY="-72" width="128" height="148"/>
+        <element name="SRCoreDataRoute" positionX="144" positionY="-72" width="128" height="180"/>
         <element name="SRRoutePoint" positionX="-225" positionY="-153" width="128" height="133"/>
         <element name="SRRouteVideoPoint" positionX="-225" positionY="14" width="128" height="88"/>
         <element name="SRVideoData" positionX="-468" positionY="-10" width="128" height="163"/>

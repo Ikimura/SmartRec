@@ -31,9 +31,11 @@ class SRRecordedRoutesDataSource : SRAppointmentsDataSource {
     override func titleForHeaderInSection(section: Int) -> String {
         
         var point = self.objectAtIndexPath(NSIndexPath(forRow: 0, inSection: section)) as? SRRouteVideoPoint;
-        var sectionName = point?.route?.startDate.humantReadableStringDateFromDate(kDateFormat);
         
-        return sectionName!;
+        var date = NSDate(timeIntervalSince1970: point!.route!.startDate);
+        var sectionName = date.humantReadableStringDateFromDate(kDateFormat);
+        
+        return sectionName;
     }
     
 }

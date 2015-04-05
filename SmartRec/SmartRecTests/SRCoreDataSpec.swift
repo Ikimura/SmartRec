@@ -56,7 +56,7 @@ class SRCoreDataSpec: QuickSpec {
                 // ...none of the code in this closure will be run.
                 it("SRRoute should not be nil") {
                     let entity = NSEntityDescription.entityForName(kManagedObjectRoute, inManagedObjectContext: self.managedObjectContext!);
-                    let route = SRRoute(entity: entity!, insertIntoManagedObjectContext: self.managedObjectContext);
+                    let route = SRCoreDataRoute(entity: entity!, insertIntoManagedObjectContext: self.managedObjectContext);
                     expect(route).notTo(beNil());
                 }
                 

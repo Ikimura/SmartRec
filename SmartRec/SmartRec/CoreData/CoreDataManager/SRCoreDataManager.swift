@@ -26,70 +26,6 @@ class SRCoreDataManager: NSObject {
     }
 
     //MARK: - new public API
-
-    func addRelationBetweenVideoData(videoDataStruct: SRVideoDataStruct, andRouteMark identifier: String) -> SRResult {
-        
-        var workingContext = SRCoreDataContextProvider.workingManagedObjectContext();
-
-        if var videoMark = self.singleManagedObject(kManagedObjectVideoMark, withUniqueField: identifier, inContext: workingContext) as? SRRouteVideoPoint {
-            
-            var videoData: SRVideoData? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoData, inManagedObjectContext: workingContext) as? SRVideoData;
-
-            if (videoData != nil) {
-
-                println("SRVideoData")
-                videoData!.fillPropertiesFromStruct(videoDataStruct);
-            }
-            
-            videoMark.videoData = videoData;
-            
-            var saved = SRCoreDataContextProvider.saveWorkingContext(workingContext);
-            if (saved) {
-                return .Success(true);
-            } else {
-                return .Failure(NSError(domain: "SRCoreDataManagerAddRelashionship", code: -69, userInfo: nil));
-            }
-        }
-        
-        return .Failure(NSError(domain: "SRCoreDataManagerAddRelashionship", code: -67, userInfo: nil));
-    }
-    
-    func addRelationBetweenRoutePoint(routePoint: Any, andRoute identifier: String) -> SRResult {
-
-        var workingContext = SRCoreDataContextProvider.workingManagedObjectContext();
-
-        if var route = self.singleManagedObject(kManagedObjectRoute, withUniqueField: identifier, inContext: workingContext) as? SRRoute {
-            
-            var point: NSManagedObject? = nil;
-            
-            if routePoint is SRRoutePointStruct {
-                
-                point = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoutePoint, inManagedObjectContext: workingContext) as? SRRoutePoint;
-                
-                (point as SRRoutePoint).fillPropertiesFromStruct(routePoint as SRRoutePointStruct);
-                route.addRoutePoint(point as SRRoutePoint);
-
-            } else if (routePoint is SRVideoMarkStruct) {
-                
-                point = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoMark, inManagedObjectContext: workingContext) as? SRRouteVideoPoint;
-                
-                (point as SRRouteVideoPoint).fillPropertiesFromStruct(routePoint as SRVideoMarkStruct);
-                route.addMark(point as SRRouteVideoPoint);
-
-            }
-            
-            (point as SRRoutePoint).route = route;
-            
-            var saved = SRCoreDataContextProvider.saveWorkingContext(workingContext);
-            if (saved) {
-                return .Success(true);
-            } else {
-                return .Failure(NSError(domain: "SRCoreDataManagerAddRelashionship", code: -79, userInfo: nil));
-            }
-        }
-        
-        return .Failure(NSError(domain: "SRCoreDataManagerAddRelashionship", code: -77, userInfo: nil));
-    }
     
     func updateEntity(entity: NSManagedObject) -> SRResult {
         var managedContext = entity.managedObjectContext;
@@ -156,15 +92,15 @@ class SRCoreDataManager: NSObject {
         fetchRequest.predicate = predicate;
         fetchRequest.fetchLimit = 1;
         
-        var route: AnyObject? = inContext.executeFetchRequest(fetchRequest, error: nil)?.first;
+        var entity: AnyObject? = inContext.executeFetchRequest(fetchRequest, error: nil)?.first;
         
-        if (route == nil) {
+        if (entity == nil) {
             
             println("New entity=\(entityName) created.");
-            route = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: inContext) as? NSManagedObject;
+            entity = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: inContext) as? NSManagedObject;
         }
         
-        return route! as NSManagedObject;
+        return entity! as NSManagedObject;
     }
     
 }

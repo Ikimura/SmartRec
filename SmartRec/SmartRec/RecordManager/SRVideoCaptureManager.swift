@@ -35,7 +35,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
             return false;
         }
     };
-    private var route: SRRoute?;
+    private var route: SRCoreDataRoute?;
     private lazy var fileManager: NSFileManager = {
         return NSFileManager.defaultManager();
         }();
@@ -83,7 +83,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
             
             if var blockSelf = self {
                 
-                let newRoute = (SRRoute.insertRouteEntity(blockSelf.currentRouteData!) as SRRoute);
+                let newRoute = (SRCoreDataRoute.insertRouteEntity(blockSelf.currentRouteData!) as SRCoreDataRoute);
                 blockSelf.route = newRoute;
             }
         });
@@ -112,7 +112,10 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
             
             if var blockSelf = self {
                 //link point with route
-                SRCoreDataManager.sharedInstance.addRelationBetweenRoutePoint(point, andRoute: blockSelf.route!.id);
+                SRRoutesController.sharedInstance.addRelationBetweenRoutePoint(point, andRoute: blockSelf.route!.id, complitionBlock: { (result) -> Void in
+                    
+                    println(result);
+                });
             }
         });
     }
@@ -227,11 +230,17 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
                 
                 println("For save data: \(videoData.fileName)");
 
-                //insert SRVideoMark and link SRRouteVideoPoint with SRRoute
-                SRCoreDataManager.sharedInstance.addRelationBetweenRoutePoint(markData, andRoute: blockSelf.route!.id);
+                //insert SRVideoMark and link SRRouteVideoPoint with SRCoreDataRoute
+                SRRoutesController.sharedInstance.addRelationBetweenRoutePoint(markData, andRoute: blockSelf.route!.id, complitionBlock: { (result) -> Void in
+                    
+                    println(result);
+                });
                 
                 //link SRVideoData with SRVodeoMark
-                SRCoreDataManager.sharedInstance.addRelationBetweenVideoData(videoData, andRouteMark: markData.id);
+                SRRoutesController.sharedInstance.addRelationBetweenVideoData(videoData, andRouteMark: markData.id, complitionBlock: { (result) -> Void in
+                    
+                    println(result);
+                });
             }
         });
     }

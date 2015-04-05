@@ -219,8 +219,8 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
         }
     }
     
-    func googleDirectionFrom(origin: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, mode: String, complitionBlock: (path: GMSPath, metrics: Dictionary<String, String>) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
-        
+    func googleDirection(origin: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, mode: String, complitionBlock: (response: Array<NSDictionary>) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
+    
         var urlString = "\(kGoogleDirectionAPIURL)origin=\(origin.latitude),\(origin.longitude)&destination=\(destination.latitude),\(destination.longitude)&units=metric&mode=\(mode)";
         urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;
         
@@ -235,21 +235,13 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
             var status = responseObject["status"] as? String;
             var responsStatus: SRResponseStatus = SRResponseStatus(rawValue: status!)!;
             
-            var path: GMSPath?;
-            var metrics: Dictionary<String, String>?;
-            var id: String?;
+            var route: Array<NSDictionary> = [];
             
             switch (responsStatus) {
             case .OK:
                 println("OK");
                 
-                if var routes = responseObject["routes"] as? Array<NSDictionary> {
-                    
-                    var data = GMSPath.parsePathsFromResponse(routes);
-                    SRRoute.parseRoutesFromResponse(routes);
-                    path = data.0;
-                    metrics = data.1;
-                }
+                route = responseObject["routes"] as Array<NSDictionary>!;
 
             case .INVALID_REQUEST:
                 fallthrough
@@ -269,7 +261,7 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
                 break;
             }
 
-            complitionBlock(path: path!, metrics: metrics!);
+            complitionBlock(response: route);
             
             }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 
@@ -278,4 +270,62 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
         }
     }
 
+    func googleDirectionFrom(origin: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, mode: String, complitionBlock: (path: GMSPath, metrics: Dictionary<String, String>) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
+     
+        var urlString = "\(kGoogleDirectionAPIURL)origin=\(origin.latitude),\(origin.longitude)&destination=\(destination.latitude),\(destination.longitude)&units=metric&mode=\(mode)";
+        urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;
+        
+        println("Debug: \(urlString)");
+        
+        var requesOperationManager: AFHTTPRequestOperationManager = AFHTTPRequestOperationManager();
+        let serializer = AFJSONResponseSerializer();
+        requesOperationManager.responseSerializer = serializer;
+        
+        requesOperationManager.GET(urlString, parameters: nil, success: { (operation: AFHTTPRequestOperation!, responseObject: AnyObject!) -> Void in
+            
+            var status = responseObject["status"] as? String;
+            var responsStatus: SRResponseStatus = SRResponseStatus(rawValue: status!)!;
+            
+            var path: GMSPath?;
+            var metrics: Dictionary<String, String>?;
+            var id: String?;
+            var route: Array<NSDictionary> = [];
+            
+            switch (responsStatus) {
+            case .OK:
+                println("OK");
+                
+                if var routes = responseObject["routes"] as? Array<NSDictionary> {
+                    
+                    var data = GMSPath.parsePathsFromResponse(routes);
+                    path = data.0;
+                    metrics = data.1;
+                }
+                
+            case .INVALID_REQUEST:
+                fallthrough
+            case .REQUEST_DENIED:
+                fallthrough
+            case .OVER_QUERY_LIMIT:
+                fallthrough
+            case .ZERO_RESULTS:
+                fallthrough
+            case .UNKNOWN_ERROR:
+                fallthrough
+            case .NOT_FOUND:
+                if let errorMessage = responseObject["error_message"] as? String {
+                    println(errorMessage);
+                }
+            default:
+                break;
+            }
+            
+            complitionBlock(path: path!, metrics: metrics!);
+            
+            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                
+                println("Error: \(error)");
+                errorComplitionBlock(error: error);
+        }
+    }
 }
