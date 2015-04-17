@@ -31,6 +31,7 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.hidden = true;
         recordManager = SRVideoCaptureManager();
         recordManager.delegate = self;
 
@@ -137,7 +138,10 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
                 blockSelf.timeLabel.text = "00:00";
                 blockSelf.latitudeLabel.text = "-";
                 blockSelf.longitudeLabel.text = "-";
-                blockSelf.speedLabel.text = "0 m/s";
+                var time = NSLocalizedString("distance_reduction", comment: "comment");
+                var dist = NSLocalizedString("time_hour_reduction", comment: "comment");
+                
+                blockSelf.speedLabel.text = "0 \(dist)/\(time)";
             }
         });
     }
@@ -159,7 +163,6 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         self.startTimer();
         //
         recordBtn.selected = true;
-        recordBtn.titleLabel?.text = "Stop";
         // Disable the idle timer while recording
         UIApplication.sharedApplication().idleTimerDisabled = true;
         //Start recording
@@ -176,7 +179,6 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         self.updateUIByDefault();
         //
         recordBtn.selected = false;
-        recordBtn.titleLabel?.text = "Rec";
         
         UIApplication.sharedApplication().idleTimerDisabled = false;
         
@@ -248,7 +250,9 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
                     if var blockSelf = self {
                         blockSelf.latitudeLabel.text = String(format: "%.8f", crnLoc.coordinate.latitude);
                         blockSelf.longitudeLabel.text = String(format: "%.8f", crnLoc.coordinate.longitude);
-                        blockSelf.speedLabel.text = String(format: "%.1f m/s", crnLoc.speed);
+                        var time = NSLocalizedString("distance_reduction", comment: "comment");
+                        var dist = NSLocalizedString("time_hour_reduction", comment: "comment");
+                        blockSelf.speedLabel.text = String(format: "%.1f \(dist)/\(time)", crnLoc.speed * 3.6);
                     }
                 });
             }

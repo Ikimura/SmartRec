@@ -40,6 +40,7 @@
 "zoo_type" ="Zoo";
 "continue_button" = "Continue";
 "distance_reduction" = "km";
+"time_hour_reduction" = "h";
 "details_title" = "Details";
 "continue_cell_button" = "Continue";
 "date_selection_title" = "Date and Time";

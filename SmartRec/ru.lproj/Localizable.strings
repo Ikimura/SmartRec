@@ -38,6 +38,7 @@
 "university_type" = "Университет";
 "zoo_type" ="Зоопарк";
 "distance_reduction" = "км";
+"time_hour_reduction" = "ч";
 "details_title" = "Информация";
 "continue_cell_button" = "Продолжить";
 "date_selection_title" = "Дата и Время";

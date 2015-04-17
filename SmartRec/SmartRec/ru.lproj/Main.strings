@@ -42,7 +42,7 @@
 "XQB-Ke-bEF.text" = "-";
 
 /* Class = "UILabel"; text = "0 m/s"; ObjectID = "Y1K-V9-StV"; */
-"Y1K-V9-StV.text" = "0 м/с";
+"Y1K-V9-StV.text" = "0 км/ч";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "Zdh-pi-8Wd"; */
 "Zdh-pi-8Wd.text" = "Name";
