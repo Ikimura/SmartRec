@@ -105,8 +105,6 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
             
         case .Detailes:
             
-            pictureImageView.hidden = false;
-            self.loadPlaceImage();
             if (appointmentCD!.completed.boolValue) {
                 
                 confirmationButton.hidden = true;
@@ -121,6 +119,9 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
                 
                 notesTextView.hidden = true;
                 
+                pictureImageView.hidden = false;
+                self.loadPlaceImage();
+                
             } else {
                 
                 notesTextView.text = appointmentCD!.note;
@@ -133,12 +134,11 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
             
         case .Notification:
             
-            pictureImageView.hidden = false;
-            self.loadPlaceImage();
-            
             if (appointmentCD?.note.utf16Count == 0) {
                 
                 notesTextView.hidden = true;
+                pictureImageView.hidden = false;
+                self.loadPlaceImage();
                 
             } else {
                 
@@ -239,8 +239,9 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
             phoneLabel.text = data["formattedPhoneNumber"] as? String;
         }
         
-        if let fireDate = data["fireDate"] as? NSDate {
+        if let fireTimeInterval = data["fireDate"] as? NSTimeInterval {
             
+            var fireDate = NSDate(timeIntervalSince1970: fireTimeInterval);
             dateLabel.text = "\(fireDate.stringFromDateWithStringFormats([kTimeFormat, kDateFormat, kTimeFormat]).capitalizedString)";
         }
         websiteLabel.text = data["website"] as? String;
@@ -463,7 +464,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
         
         if (photoReference != nil) {
             
-            var urlString = "\(kGooglePlacePhotoAPIURL)maxheight=\(kGooglePhotoMaxHeight)&photoreference=\(photoReference)&key=\(kGooglePlaceAPIKey)";
+            var urlString = "\(kGooglePlacePhotoAPIURL)maxheight=\(kGooglePhotoMaxHeight)&photoreference=\(photoReference!)&key=\(kGooglePlaceAPIKey)";
             urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!;
             
             let photoURL = NSURL(string: urlString);

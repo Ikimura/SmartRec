@@ -26,16 +26,9 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
     private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
     private var settingsManager: SRSettingsManager!;
     private var currentRecorder: SRVideoRecorder?;
-    private var isRecording: Bool!;
-    private var needToDeleteRoute: Bool
-        { get {
-            if (route?.routePoints == nil || route?.videoPoints == nil || route?.routePoints.count == 0){
-                return true;
-            }
-            return false;
-        }
-    };
-    private var route: SRCoreDataRoute?;
+    private var isRecording: Bool = false;
+    private var needToDeleteRoute: Bool = true;
+    private var routeId: String?;
     private lazy var fileManager: NSFileManager = {
         return NSFileManager.defaultManager();
         }();
@@ -49,8 +42,6 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
     
     override init(){
         super.init();
-        
-        isRecording = false;
         
         settingsManager = SRSettingsManager();
         settingsManager.delegate = self;
@@ -79,44 +70,36 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
         currentRouteData = SRRouteStruct(id: identifier, dateSeconds: NSDate().timeIntervalSince1970, mode:"Driving");
         
         //add object
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {[weak self] () -> Void in
+        SRRoutesController.sharedInstance.insertRouteEntity(self.currentRouteData!, complitionBlock: { [weak self](routeId) -> Void in
             
-            if var blockSelf = self {
+            if let strongSelf = self {
                 
-                let newRoute = (SRCoreDataRoute.insertRouteEntity(blockSelf.currentRouteData!) as SRCoreDataRoute);
-                blockSelf.route = newRoute;
+                strongSelf.routeId = routeId;
             }
         });
     }
 
     func finishRoute() {
         
-        if (needToDeleteRoute == true) {
+        if (needToDeleteRoute) {
             
-            dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {[weak self] () -> Void in
+            if (self.routeId != nil) {
                 
-                if var blockSelf = self {
-                    
-                    if (blockSelf.route != nil) {
-                        
-                        SRCoreDataManager.sharedInstance.deleteEntity(blockSelf.route!);
-                    }
-                }
-            });
+                SRRoutesController.sharedInstance.deleteRouteWithId(self.routeId!, complitionBlock: { (result) -> Void in
+                    println("Delete route resulft: \(result)");
+                });
+            }
         }
     }
     
     private func addNewRoutePoint(point: SRRoutePointStruct) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] () -> Void in
-            println("Debug: Add new point");
+        println("Debug: Add new point");
+        
+        needToDeleteRoute = false;
+        //link point with route
+        SRRoutesController.sharedInstance.addRelationBetweenRoutePoint(point, andRoute: self.routeId!, complitionBlock: { (result) -> Void in
             
-            if var blockSelf = self {
-                //link point with route
-                SRRoutesController.sharedInstance.addRelationBetweenRoutePoint(point, andRoute: blockSelf.route!.id, complitionBlock: { (result) -> Void in
-                    
-                    println(result);
-                });
-            }
+            println("addRelationBetweenRoutePoint resulft: \(result)");
         });
     }
     
@@ -171,7 +154,9 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
     }
     
     func stopRunnigSession() {
-        if isRecording == true {
+        
+        if (isRecording) {
+            
             isRecording = !isRecording;
             currentRecorder?.stopRecording();
         }
@@ -224,24 +209,20 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
     
     private func saveInformationInCoreData(videoData: SRVideoDataStruct, markData: SRVideoMarkStruct) {
         //add object
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] () -> Void in
-            
-            if var blockSelf = self {
-                
-                println("For save data: \(videoData.fileName)");
+        println("For save data: \(videoData.fileName)");
 
-                //insert SRVideoMark and link SRRouteVideoPoint with SRCoreDataRoute
-                SRRoutesController.sharedInstance.addRelationBetweenRoutePoint(markData, andRoute: blockSelf.route!.id, complitionBlock: { (result) -> Void in
-                    
-                    println(result);
-                });
-                
-                //link SRVideoData with SRVodeoMark
-                SRRoutesController.sharedInstance.addRelationBetweenVideoData(videoData, andRouteMark: markData.id, complitionBlock: { (result) -> Void in
-                    
-                    println(result);
-                });
-            }
+        needToDeleteRoute = false;
+        
+        //insert SRVideoMark and link SRRouteVideoPoint with SRCoreDataRoute
+        SRRoutesController.sharedInstance.addRelationBetweenRoutePoint(markData, andRoute: self.routeId!, complitionBlock: { (result) -> Void in
+            
+            println("addRelationBetweenRoutePoint resulft: \(result)");
+        });
+        
+        //link SRVideoData with SRVodeoMark
+        SRRoutesController.sharedInstance.addRelationBetweenVideoData(videoData, andRouteMark: markData.id, complitionBlock: { (result) -> Void in
+            
+            println("addRelationBetweenVideoData resulft: \(result)");
         });
     }
     
@@ -261,6 +242,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
     func settingsDidChange() {
         
         if (currentRecorder?.isRunning == true || currentRecorder?.isInterrupted == true ) {
+            
             self.stopRunnigSession();
             
             self.setUpRecorder();
@@ -277,14 +259,19 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
     func didUpdatedLocations(notification: NSNotification) {
         println("Did recieve location notification");
 
-        if (isRecording == true) {
+        if (isRecording) {
+            
             if let userInfo: [NSObject: AnyObject?] = notification.userInfo as [NSObject: AnyObject?]! {
+                
                 if let crnLoc = userInfo["location"] as? CLLocation! {
                     println("Did updated current location");
 
-                    if previousPoint == nil {
+                    if (previousPoint == nil) {
+                        
                         previousPoint = CLLocationCoordinate2D(latitude: crnLoc.coordinate.latitude, longitude: crnLoc.coordinate.longitude);
+                        
                     } else if (crnLoc.coordinate.latitude != previousPoint!.latitude && crnLoc.coordinate.longitude != previousPoint!.longitude) {
+                            
                         //FXME:- move in manager
                         self.addNewRoutePoint(SRRoutePointStruct(id: String.randomString(),
                             lng: crnLoc.coordinate.longitude,
@@ -304,7 +291,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
     func didOccasionAppears(notification: NSNotification) {
         println("Debug. Did recieve occasion notification");
         //mark current record 
-        if (isRecording == true && !currentVideoMarkData!.autoSave) {
+        if (isRecording && !currentVideoMarkData!.autoSave) {
             currentVideoMarkData!.autoSave = true;
         }
     }
@@ -337,7 +324,8 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
     
         //
         //start new video part recording
-        if isRecording == true {
+        if (isRecording) {
+            
             println("captureVideoRecordingDidStopRecoding - delegate");
             delegate?.videoCaptureManagerDidEndVideoPartRecording(self);
             

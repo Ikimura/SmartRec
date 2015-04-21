@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     var window: UIWindow?
     
-    var eventsTracker: SRAppointmentsTracker!;
+    var eventsTracker: SRAppointmentsTracker?;
     var GoogleServiceReachable: Reachability?;
     
     private(set) var isOfflineMode: Bool = false;
@@ -58,7 +58,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
 //        var req = NSFetchRequest(entityName: "SRCoreDataAppointment");
 //        var context = SRCoreDataContextProvider.mainManagedObjectContext();
-//        println((context.executeFetchRequest(req, error: nil)?.first as SRCoreDataAppointment)?.id);
+//        let trackDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate()).timeIntervalSinceReferenceDate;
+//
+//        var obj = context.executeFetchRequest(req, error: nil)?.first as? SRCoreDataAppointment!;
+//        
+//        if obj?.sortDate == trackDate {
+//            
+//            println("Bu");
+//        }
 
         return true;
     }
@@ -79,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
         
         //schedule notifications
-        eventsTracker.rescheduleNotifications();
+        eventsTracker?.rescheduleNotifications();
         println("applicationWillEnterForeground");
         
         GoogleServiceReachable?.startNotifier();
@@ -288,7 +295,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             }
             
             //schedule notifications
-            eventsTracker.rescheduleNotifications();
+            eventsTracker?.rescheduleNotifications();
             
             NSLog("\(status)");
         default:

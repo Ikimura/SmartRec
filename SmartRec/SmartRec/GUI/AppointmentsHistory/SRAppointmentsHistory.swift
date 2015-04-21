@@ -145,7 +145,7 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
 
                 if (deleteItem.locationTrack.boolValue) {
                     
-                    appDelegate.eventsTracker.cancelLocationNotificationWith(deleteItem.id);
+                    appDelegate.eventsTracker?.cancelLocationNotificationWith(deleteItem.id);
                 }                
             }
         }

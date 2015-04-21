@@ -25,11 +25,11 @@ class SRAppointmentsTrackerDataSource : SRAppointmentsDataSource {
         var predicates: [AnyObject] = [];
         
         predicates.append(NSPredicate(format: "locationTrack == true")!);
-        
         predicates.append(NSPredicate(format: "completed == false")!);
         
-        let trackDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate());
-        predicates.append(NSPredicate(format: "sortDate == %@", trackDate)!);
+        //FIXME: - !!!
+//        let trackDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate());
+//        predicates.append(NSPredicate(format: "sortDate == %@", trackDate.timeIntervalSinceReferenceDate)!);
         
         return NSCompoundPredicate(type: .AndPredicateType, subpredicates: predicates);
     }

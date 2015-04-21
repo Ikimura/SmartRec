@@ -41,8 +41,7 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         
         locationQueue = dispatch_queue_create("con.epam.evnt.SmartRec.locations", DISPATCH_QUEUE_SERIAL);
         
-        acceleraometrWidget = SRGSensor(delta: 0.05, frequancy: 1/50, allowView: true);
-
+        self.setupUI();
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -108,6 +107,13 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     }
     
     //MARK: - private methods
+    
+    private func setupUI() {
+        
+        acceleraometrWidget = SRGSensor(delta: 0.05, frequancy: 1/50, allowView: true);
+        recordBtn.setImage(UIImage(named: "record.png"), forState: .Normal);
+        recordBtn.setImage(UIImage(named: "stop.png"), forState: .Selected);
+    }
     
     private func setUpWidgetView() {
         acceleraometrWidget!.widgetView.setTranslatesAutoresizingMaskIntoConstraints(false);

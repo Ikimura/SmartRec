@@ -110,8 +110,11 @@ class SRCommonViewController: UIViewController, SRAirDropSharingProtocol {
         if let imageURL = item.socialSharingThumbnailUrl() as NSURL! {
             
             var imageData = NSData(contentsOfURL: imageURL)
-            var thumbnailImage = UIImage(data: imageData!);
-            activityItems.append(imageURL);
+            if (imageData != nil) {
+                
+                var thumbnailImage = UIImage(data: imageData!);
+                activityItems.append(imageURL);
+            }
         }
         
         self.presentSocialSharinController(activityItems, excludedServices: excludedServices);

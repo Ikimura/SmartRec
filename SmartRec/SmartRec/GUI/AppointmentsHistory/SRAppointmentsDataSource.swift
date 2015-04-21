@@ -76,7 +76,6 @@ class SRAppointmentsDataSource : SRCoreDataDataSource, SRAppointmentsDataSourceP
             fetchedResultsController?.performFetch(nil);
             
             fetchedResultsController?.delegate = self;
-            
         }
         
         self.fetchResultController = fetchedResultsController;

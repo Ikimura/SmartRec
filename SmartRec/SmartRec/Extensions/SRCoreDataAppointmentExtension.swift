@@ -49,7 +49,7 @@ extension SRCoreDataAppointment {
         self.locationTrack = appintmentData.locationTrack;
         let fireDate = NSDate(timeIntervalSince1970: appintmentData.dateInSeconds);
         self.fireDate = fireDate.timeIntervalSince1970;
-        self.sortDate = NSCalendar.currentCalendar().startOfDayForDate(fireDate).timeIntervalSince1970;
+        self.sortDate = NSCalendar.currentCalendar().startOfDayForDate(fireDate).timeIntervalSinceReferenceDate;
         self.note = appintmentData.description;
         println("\(appintmentData.id)");
         self.id = "\(appintmentData.id)";

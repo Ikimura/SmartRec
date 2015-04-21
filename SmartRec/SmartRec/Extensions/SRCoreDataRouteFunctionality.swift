@@ -33,29 +33,4 @@ extension SRCoreDataRoute {
         self.startDate = routeStruct.dateSeconds;
         self.mode = routeStruct.mode;
     }
-    
-    class func insertRouteEntity(dataStruct: SRRouteStruct) -> SRCoreDataRoute {
-        
-        var workingContext = SRCoreDataContextProvider.workingManagedObjectContext();
-        
-        var route: SRCoreDataRoute? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoute, inManagedObjectContext: workingContext) as? SRCoreDataRoute;
-        
-        if (route != nil) {
-            
-            route!.fillPropertiesFromStruct(dataStruct);
-        }
-        
-        var saved = SRCoreDataContextProvider.saveWorkingContext(workingContext);
-        
-        if (!saved) {
-            fatalError("cant save route");
-        }
-        
-        return route!;
-    }
-    
-    func parseRouteFromResponse(results: Array<NSDictionary>) {
-        
-
-    }
 }

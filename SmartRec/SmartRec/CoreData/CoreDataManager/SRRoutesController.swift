@@ -28,7 +28,55 @@ class SRRoutesController {
         return dispatch_queue_create("com.routeSerrializeData.serialQueue", DISPATCH_QUEUE_SERIAL);
     }();
     
+    func insertRouteEntity(dataStruct: SRRouteStruct, complitionBlock: (routeId:  String) -> Void) {
+        
+        dispatch_async(self.serialQueue, { [weak self]() -> Void in
+            
+            var workingContext = SRCoreDataContextProvider.workingManagedObjectContext();
+            
+            var route: SRCoreDataRoute? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoute, inManagedObjectContext: workingContext) as? SRCoreDataRoute;
+            
+            if (route != nil) {
+                
+                route!.fillPropertiesFromStruct(dataStruct);
+            }
+            
+            var saved = SRCoreDataContextProvider.saveWorkingContext(workingContext);
+            
+            if (saved) {
+                
+                complitionBlock(routeId: route!.id);
+                
+            } else {
+                
+                fatalError("cant save route");
+            }
+        });
+    }
     
+    func deleteRouteWithId(routeId: String, complitionBlock: (result:  SRResult) -> Void) {
+        
+        dispatch_async(self.serialQueue, { [weak self]() -> Void in
+            
+            var workingContext = SRCoreDataContextProvider.workingManagedObjectContext();
+            
+            var entity = SRCoreDataManager.sharedInstance.singleManagedObject("SRRoute", withUniqueField: routeId, inContext: workingContext);
+            
+            workingContext.deleteObject(entity!);
+            
+            var saved = SRCoreDataContextProvider.saveWorkingContext(workingContext);
+            
+            if (saved) {
+                
+                complitionBlock(result: .Success(true));
+                
+            } else {
+                
+                complitionBlock(result: .Failure(NSError(domain: "SRCoreDataManagerDeleteRoute", code: -89, userInfo: nil)));
+            }
+        });
+    }
+
     func addRelationBetweenVideoData(videoDataStruct: SRVideoDataStruct, andRouteMark identifier: String, complitionBlock: (result:  SRResult) -> Void) {
         
         dispatch_async(self.serialQueue, { [weak self]() -> Void in
