@@ -33,12 +33,10 @@ public class SRGSensor: NSObject {
     
     private var measuresCount: Double = 1.0;
     private var needView: Bool;
-    
-    
     /**
     * Magnifies the readings from the accelerometer for testing purposes
     */
-    private var accelerationScale: Float = 1.0;
+    private var accelerationScale: Double = 1.0;
 
     
     public init(delta: Double, frequancy: Double, allowView: Bool) {
@@ -84,10 +82,11 @@ public class SRGSensor: NSObject {
                 println("acceleration_z: \(accelerometerData.acceleration.z)");
                 
                 // Save ourselves a multiply if we can
-                if (accelerationScale_ != 1.0) {
-                    blockSelf.accelerationXAverage *= accelerationScale_;
-                    blockSelf.accelerationYAverage *= accelerationScale_;
-                    blockSelf.accelerationZAverage *= accelerationScale_;
+                if (blockSelf.accelerationScale != 1.0) {
+                    
+                    blockSelf.accelerationXAverage *= blockSelf.accelerationScale;
+                    blockSelf.accelerationYAverage *= blockSelf.accelerationScale;
+                    blockSelf.accelerationZAverage *= blockSelf.accelerationScale;
                 }
                 
                 // Check if we exceeded our max decel

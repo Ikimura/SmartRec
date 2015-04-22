@@ -139,15 +139,18 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     }
     
     private func updateUIByDefault() {
+        
         dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+            
             if var blockSelf = self {
+                
                 blockSelf.timeLabel.text = "00:00";
                 blockSelf.latitudeLabel.text = "-";
                 blockSelf.longitudeLabel.text = "-";
-                var time = NSLocalizedString("distance_reduction", comment: "comment");
-                var dist = NSLocalizedString("time_hour_reduction", comment: "comment");
+                var dist = NSLocalizedString("distance_reduction", comment: "comment");
+                var time = NSLocalizedString("time_hour_reduction", comment: "comment");
                 
-                blockSelf.speedLabel.text = "0 \(dist)/\(time)";
+                blockSelf.speedLabel.text = "0.0 \(dist)/\(time)";
             }
         });
     }
@@ -256,9 +259,10 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
                     if var blockSelf = self {
                         blockSelf.latitudeLabel.text = String(format: "%.8f", crnLoc.coordinate.latitude);
                         blockSelf.longitudeLabel.text = String(format: "%.8f", crnLoc.coordinate.longitude);
-                        var time = NSLocalizedString("distance_reduction", comment: "comment");
-                        var dist = NSLocalizedString("time_hour_reduction", comment: "comment");
-                        blockSelf.speedLabel.text = String(format: "%.1f \(dist)/\(time)", crnLoc.speed * 3.6);
+                        var dist = NSLocalizedString("distance_reduction", comment: "comment");
+                        var time = NSLocalizedString("time_hour_reduction", comment: "comment");
+                        var speed = (crnLoc.speed * 3.6) > 0 ? crnLoc.speed * 3.6 : 0.0;
+                        blockSelf.speedLabel.text = String(format: "%.1f \(dist)/\(time)", speed);
                     }
                 });
             }
