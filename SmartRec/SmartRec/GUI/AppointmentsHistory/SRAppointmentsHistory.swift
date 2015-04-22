@@ -80,7 +80,7 @@ class SRAppointmentsHistory: SRCommonViewController, SRDataSourceDelegate, UITab
         
         if var appointment: SRCoreDataAppointment = dataSource.objectAtIndexPath(indexPath) as? SRCoreDataAppointment {
             
-            cell!.nameLabel?.text = appointment.place.name;
+            cell!.nameLabel?.text = appointment.place.name.capitalizedString;
             
             let atLS = NSLocalizedString("at_key", comment: "comment").capitalizedString;
             var date = NSDate(timeIntervalSince1970: appointment.fireDate)

@@ -56,7 +56,7 @@ class SRAppointmentsTracker : SRDataSourceDelegate {
     func scheduleNewLocationNotification(#appointment: SRCoreDataAppointment) {
         
         var locNotification = UILocalNotification();
-        locNotification.alertBody = "You have arrived to \(appointment.place.name)!";
+        locNotification.alertBody = NSLocalizedString("loaction_notification_alert_body", comment:"") + " \"" + appointment.place.name.capitalizedString + "\"";
         locNotification.regionTriggersOnce = false;
         locNotification.category = "APPOINTMENTS_REMINDER_CATEGORY";
         locNotification.userInfo = ["uuid": appointment.id];
@@ -76,7 +76,7 @@ class SRAppointmentsTracker : SRDataSourceDelegate {
             if let appointment = item as? SRCoreDataAppointment {
                 
                 var locNotification = UILocalNotification();
-                locNotification.alertBody = "You have arrived to \(appointment.place.name)!";
+                locNotification.alertBody = NSLocalizedString("loaction_notification_alert_body", comment:"") + " \"" + appointment.place.name.capitalizedString + "\"";
                 locNotification.regionTriggersOnce = false;
                 locNotification.category = "APPOINTMENTS_REMINDER_CATEGORY";
                 locNotification.userInfo = ["uuid": appointment.id];

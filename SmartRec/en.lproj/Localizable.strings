@@ -71,3 +71,4 @@
 "appintment_creation_error_title" = "Operation Was Unsuccessful";
 "appintment_creation_error_reson" = "The appointment already exists.";
 "appintment_creation_error_suggestion" = "Please, choose different time or place.";
+"loaction_notification_alert_body" = "You Have Arrived to";

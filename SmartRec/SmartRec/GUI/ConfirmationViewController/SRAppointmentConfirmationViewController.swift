@@ -35,7 +35,6 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
     @IBOutlet weak var pictureImageView: UIImageView!
     @IBOutlet weak var textViewTopLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var textViewBottomLayoutConstraint: NSLayoutConstraint!
-    @IBOutlet weak var pictureImageTopLayoutConstraint: NSLayoutConstraint!
     
     //MARK: - life cycle
     
@@ -136,7 +135,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
             
         case .Notification:
             
-            if (appointmentCD?.note.utf16Count == 0) {
+            if (appointmentCD!.note.utf16Count == 0) {
                 
                 notesTextView.hidden = true;
                 pictureImageView.hidden = false;
@@ -145,9 +144,9 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
             } else {
                 
                 notesTextView.text = appointmentCD!.note;
+                notesTextView.editable = false;
             }
-            
-            notesTextView.editable = false;
+
             calendarButton.hidden = true;
             notificationButton.hidden = true;
             confirmationButton.hidden = true;
@@ -194,7 +193,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
             "tracking": NSNumber(bool: appointmentST!.locationTrack),
             "formattedAddress": appointmentST!.place.formattedAddress!,
             "distance": appointmentST!.place.distance!,
-            "fireDate": NSDate(timeIntervalSince1970: appointmentST!.dateInSeconds)
+            "fireDate": appointmentST!.dateInSeconds
         ];
         
         if var internalPhoneNumber = appointmentST!.place.internalPhoneNumber as String! {
@@ -236,9 +235,13 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
             
             phoneLabel.text = phoneNumber;
             
+        } else if var phoneNumber = data["formattedPhoneNumber"] as? String {
+            
+            phoneLabel.text = phoneNumber;
+            
         } else {
             
-            phoneLabel.text = data["formattedPhoneNumber"] as? String;
+            phoneLabel.text = nil;
         }
         
         if let fireTimeInterval = data["fireDate"] as? NSTimeInterval {
@@ -457,7 +460,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
                 photoReference = appointmentST!.place.photoReferences![0] as String!;
             }
             
-        case .Detailes:
+        case .Detailes, .Notification:
             photoReference = appointmentCD!.place.photoReference as String!;
             
         default:
@@ -503,7 +506,6 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
             
             textViewTopLayoutConstraint.constant -= 80;
             textViewBottomLayoutConstraint.constant += 80;
-            pictureImageTopLayoutConstraint.constant += 80;
 
             UIView.animateWithDuration(0.33, animations: {[weak self] () -> Void in
                 
@@ -523,7 +525,6 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
             
             textViewTopLayoutConstraint.constant = 12;
             textViewBottomLayoutConstraint.constant = 12;
-            pictureImageTopLayoutConstraint.constant = 12;
             
             UIView.animateWithDuration(0.33, animations: {[weak self] () -> Void in
                 

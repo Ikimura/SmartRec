@@ -608,9 +608,10 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jb1-5K-VfI">
-                                <rect key="frame" x="237" y="296" width="126" height="162"/>
+                                <rect key="frame" x="237" y="327" width="126" height="160"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="126" id="d4v-5o-rCc"/>
+                                    <constraint firstAttribute="height" constant="160" id="Lop-m9-GW9"/>
+                                    <constraint firstAttribute="width" constant="126" id="pAQ-w7-KXd"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -625,15 +626,14 @@
                             <constraint firstItem="nsE-Id-Ooi" firstAttribute="top" secondItem="gVh-oF-BL2" secondAttribute="bottom" constant="2" id="Du5-O2-R8F"/>
                             <constraint firstItem="AnB-QS-zAK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1vt-GH-EMe" secondAttribute="leading" constant="20" id="EaJ-n6-C8G"/>
                             <constraint firstAttribute="centerX" secondItem="2f2-OL-n3O" secondAttribute="centerX" id="Hex-KJ-1RG"/>
-                            <constraint firstItem="Jb1-5K-VfI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1vt-GH-EMe" secondAttribute="leadingMargin" constant="20" id="LpA-BH-NZ2"/>
-                            <constraint firstItem="RsN-vd-kL6" firstAttribute="top" secondItem="Jb1-5K-VfI" secondAttribute="bottom" constant="98" id="Mxn-Fu-V1X"/>
+                            <constraint firstItem="RsN-vd-kL6" firstAttribute="top" secondItem="Jb1-5K-VfI" secondAttribute="bottom" constant="69" id="Mxn-Fu-V1X"/>
                             <constraint firstItem="zi4-Y3-8cG" firstAttribute="leading" secondItem="1vt-GH-EMe" secondAttribute="leading" id="NkU-J5-9PY"/>
                             <constraint firstItem="E89-24-ahj" firstAttribute="top" secondItem="2f2-OL-n3O" secondAttribute="bottom" constant="12" id="PlD-ec-Aoy"/>
                             <constraint firstAttribute="centerX" secondItem="SUm-f5-8Pm" secondAttribute="centerX" id="PnM-Py-qoq"/>
+                            <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="Jb1-5K-VfI" secondAttribute="trailing" priority="750" constant="221" id="PrH-wP-v91"/>
                             <constraint firstAttribute="centerX" secondItem="AnB-QS-zAK" secondAttribute="centerX" constant="1" id="QZt-Ri-K3m"/>
                             <constraint firstItem="gVh-oF-BL2" firstAttribute="top" secondItem="lMu-SW-JIc" secondAttribute="bottom" constant="12" id="QfY-uS-97Z"/>
                             <constraint firstAttribute="centerX" secondItem="Jb1-5K-VfI" secondAttribute="centerX" id="RZD-ck-k3h"/>
-                            <constraint firstItem="Jb1-5K-VfI" firstAttribute="top" secondItem="E89-24-ahj" secondAttribute="bottom" constant="-86" id="Sfz-ob-BcC"/>
                             <constraint firstItem="AnB-QS-zAK" firstAttribute="top" secondItem="nsE-Id-Ooi" secondAttribute="bottom" constant="2" id="VFv-XN-iHg"/>
                             <constraint firstAttribute="centerX" secondItem="eWj-zL-qlF" secondAttribute="centerX" id="fFn-NE-rh9"/>
                             <constraint firstItem="xDL-9C-ECG" firstAttribute="top" secondItem="E89-24-ahj" secondAttribute="bottom" constant="12" id="hDm-zB-exH"/>
@@ -662,7 +662,6 @@
                         <outlet property="notesTextView" destination="E89-24-ahj" id="s3k-Ue-IRR"/>
                         <outlet property="notificationButton" destination="ad8-HV-DC0" id="xyY-fh-HCR"/>
                         <outlet property="phoneLabel" destination="AnB-QS-zAK" id="ACd-eH-7eu"/>
-                        <outlet property="pictureImageTopLayoutConstraint" destination="Sfz-ob-BcC" id="f8Q-Qa-rLq"/>
                         <outlet property="pictureImageView" destination="Jb1-5K-VfI" id="txA-Jc-OgO"/>
                         <outlet property="textViewBottomLayoutConstraint" destination="hDm-zB-exH" id="X1f-h7-ZiL"/>
                         <outlet property="textViewTopLayoutConstraint" destination="PlD-ec-Aoy" id="yiw-Bb-rvK"/>
@@ -978,7 +977,7 @@
         <image name="image_placeholder" width="44" height="44"/>
         <image name="map_annotation_conf" width="17" height="24"/>
         <image name="menu_bg" width="320" height="568"/>
-        <image name="record" width="32" height="32"/>
+        <image name="record" width="64" height="64"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="172-ET-Ihs"/>

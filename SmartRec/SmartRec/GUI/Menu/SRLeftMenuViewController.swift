@@ -77,7 +77,6 @@ class SRLeftMenuViewController: SRCommonViewController {
                     detailsVC!.appointmentCD = event;
                     
                     self.presentViewController(SRNavigationController(rootViewController: detailsVC!), animated: true, completion: nil);
-
                 }
             }
         }

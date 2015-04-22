@@ -172,6 +172,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         if let region = notification.region as CLRegion! {
             
             println(region.identifier);
+            var uuid = notification.userInfo!["uuid"] as? String
+            self.handleLocationNotificationInEnterForeground(uuid!);
         }
     }
     
@@ -228,6 +230,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
 
     //MARK: - private
+    
+    private func handleLocationNotificationInEnterForeground(appointmentUUID: String) {
+        
+        var workingContext = SRCoreDataContextProvider.workingManagedObjectContext();
+        var appointment: SRCoreDataAppointment? = SRCoreDataManager.sharedInstance.singleManagedObject(kManagedObjectAppointment, withUniqueField: appointmentUUID, inContext: workingContext) as? SRCoreDataAppointment;
+        
+        var alertController = UIAlertController(title: NSLocalizedString("allert_message_title", comment:""), message: NSLocalizedString("loaction_notification_alert_body", comment:"") + " \"" + appointment!.place.name.capitalizedString + "\"", preferredStyle: .Alert);
+        
+        var alertShowAction = UIAlertAction(title: NSLocalizedString("notification_show_btn", comment:""), style: .Default) { (action: UIAlertAction!) -> Void in
+            
+            println("Show action in foreground");
+            NSNotificationCenter.defaultCenter().postNotificationName("SHOW_APPOINTMENT", object: nil, userInfo: ["uuid": appointmentUUID]);
+        };
+        
+        var alertArrivedAction = UIAlertAction(title: NSLocalizedString("arrived_btn_title", comment:""), style: .Cancel) { (action: UIAlertAction!) -> Void in
+            
+            println("Arrived action in foreground");
+            SRCoreDataAppointment.markArrivedAppointmnetWithId(appointmentUUID);
+        };
+        
+        alertController.addAction(alertShowAction);
+        alertController.addAction(alertArrivedAction);
+        
+        var rootViewController = self.window!.rootViewController
+        rootViewController?.presentViewController(alertController, animated: true, completion: nil);
+    }
     
     private func setupNotificationSettings() {
         // Specify the notification types.
