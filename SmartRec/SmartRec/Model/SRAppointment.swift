@@ -43,7 +43,7 @@ struct SRAppointment : SRSocialShareableItemProtocol {
     
     func socialSharingThumbnailUrl() -> NSURL? {
         
-        if (place.photoReferences?.count != 0) {
+        if (place.photoReferences != nil && place.photoReferences!.count != 0) {
             
             let photoReference = place.photoReferences![0] as String!;
             

@@ -25,11 +25,15 @@ let kDurationSettingsKey: String = "durationSettingsKey";
 
 let kFileDirectory: NSSearchPathDirectory = .DocumentDirectory;
 
-let kManagedObjectRoutePoint: String = "SRRoutePoint";
+let kManagedObjectAppointment: String = "SRCoreDataAppointment";
 
-let kManagedObjectVideoMark: String = "SRRouteVideoPoint";
+let kManagedObjectPlace: String = "SRCoreDataPlace";
 
-let kManagedObjectVideoData: String = "SRVideoData";
+let kManagedObjectRoutePoint: String = "SRCoreDataRoutePoint";
+
+let kManagedObjectVideoMark: String = "SRCoreDataRouteVideoPoint";
+
+let kManagedObjectVideoData: String = "SRCoreDataVideoData";
 
 let kManagedObjectRoute: String = "SRCoreDataRoute";
 

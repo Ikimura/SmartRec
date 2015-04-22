@@ -11,7 +11,7 @@ import CoreData
 
 extension SRCoreDataRoute {
     
-    func addMark(mark: SRRouteVideoPoint) {
+    func addMark(mark: SRCoreDataRouteVideoPoint) {
         
         var tempSet: NSMutableOrderedSet = NSMutableOrderedSet(orderedSet: videoPoints);
         tempSet.addObject(mark);
@@ -19,7 +19,7 @@ extension SRCoreDataRoute {
         videoPoints = tempSet;
     }
     
-    func addRoutePoint(point: SRRoutePoint) {
+    func addRoutePoint(point: SRCoreDataRoutePoint) {
         
         var tempSet: NSMutableOrderedSet = NSMutableOrderedSet(orderedSet: routePoints)
         tempSet.addObject(point);

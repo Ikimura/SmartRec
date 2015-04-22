@@ -30,7 +30,7 @@ class SRAppointmentsDataSource : SRCoreDataDataSource, SRAppointmentsDataSourceP
 
     override func fetchRequest() -> NSFetchRequest {
         
-        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "SRCoreDataAppointment");
+        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: kManagedObjectAppointment);
         fetchRequest.sortDescriptors = self.sortDescriptor();
 //        fetchRequest.predicate = self.compoundPredicate();
         

@@ -20,9 +20,6 @@
 /* Class = "UILabel"; text = "You create appintment for:"; ObjectID = "Dev-bx-U7a"; */
 "Dev-bx-U7a.text" = "Событие будет проходить в:";
 
-/* Class = "UITextView"; text = "Leave your notes..."; ObjectID = "E89-24-ahj"; */
-"E89-24-ahj.text" = "Оставьте свой комментарий...";
-
 /* Class = "UITabBarItem"; title = "Record"; ObjectID = "ETC-qY-Brt"; */
 "ETC-qY-Brt.title" = "Запись";
 

@@ -49,6 +49,7 @@
 "distance_title" = "distance";
 "duration_title" = "duration";
 "route_title" = "Route";
+"my_videos" = "My Videos";
 "route_mode_walking_title" = "Walking";
 "route_mode_driving_title" = "Driving";
 "at_key" = "at";

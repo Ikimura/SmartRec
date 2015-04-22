@@ -72,9 +72,6 @@
 		600CE4BA1AAE334700D20481 /* SRAppointmentsHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600CE4B91AAE334700D20481 /* SRAppointmentsHistory.swift */; };
 		600CE4BD1AAE34F700D20481 /* SRAppointmentsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600CE4BC1AAE34F700D20481 /* SRAppointmentsDataSource.swift */; };
 		6069D5811AB22E800029FC6F /* SRCoreDataAppointmentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6069D5801AB22E800029FC6F /* SRCoreDataAppointmentExtension.swift */; };
-		606D3FA81AB5A6E9006D0B73 /* SRRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FA71AB5A6E9006D0B73 /* SRRoutePoint.swift */; };
-		606D3FAC1AB5A6EA006D0B73 /* SRVideoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FAB1AB5A6EA006D0B73 /* SRVideoData.swift */; };
-		606D3FB21AB5A6EA006D0B73 /* SRRouteVideoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3FB11AB5A6EA006D0B73 /* SRRouteVideoPoint.swift */; };
 		606EC8831AC2B8A8008BC813 /* SRPlacesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606EC8821AC2B8A8008BC813 /* SRPlacesController.swift */; };
 		608153B81A9E59780033FF09 /* SRPlacesMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608153B71A9E59780033FF09 /* SRPlacesMapView.swift */; };
 		608153BA1A9E5A210033FF09 /* SRPlacesMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608153B91A9E5A210033FF09 /* SRPlacesMapViewController.swift */; };
@@ -82,6 +79,10 @@
 		608153C11A9E639D0033FF09 /* SRPlacesTypesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608153C01A9E639D0033FF09 /* SRPlacesTypesDataSource.swift */; };
 		608A0B5C1AB0A4630072E9A8 /* SRAppointmentsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608A0B5B1AB0A4630072E9A8 /* SRAppointmentsTracker.swift */; };
 		608A0B671AB0AE0C0072E9A8 /* SRAppointmentsTrackerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608A0B661AB0AE0C0072E9A8 /* SRAppointmentsTrackerDataSource.swift */; };
+		608F34AF1AE78B2A00DD6F12 /* SRCoreDataRouteVideoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608F34AE1AE78B2A00DD6F12 /* SRCoreDataRouteVideoPoint.swift */; };
+		608F34B11AE78B2B00DD6F12 /* SRCoreDataRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608F34B01AE78B2B00DD6F12 /* SRCoreDataRoutePoint.swift */; };
+		608F34B31AE78B2B00DD6F12 /* SRCoreDataRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608F34B21AE78B2B00DD6F12 /* SRCoreDataRoute.swift */; };
+		608F34B51AE78B2B00DD6F12 /* SRCoreDataVideoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608F34B41AE78B2B00DD6F12 /* SRCoreDataVideoData.swift */; };
 		609131021AB47FEA00A56D8F /* SRCommonRouteMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609131011AB47FEA00A56D8F /* SRCommonRouteMapViewController.swift */; };
 		6091310D1AB4910900A56D8F /* SRVideoInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6091310C1AB4910900A56D8F /* SRVideoInfoView.xib */; };
 		6091310F1AB4920300A56D8F /* SRVideoInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6091310E1AB4920300A56D8F /* SRVideoInfoView.swift */; };
@@ -145,7 +146,6 @@
 		60D9AB941ABA48000008A93E /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D9AB931ABA48000008A93E /* MapManager.swift */; };
 		60DAC27F1AC8292600773990 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 60DAC27E1AC8292600773990 /* Reachability.m */; };
 		60E9FF611AD14D02003A3BBC /* SRCoreDataPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9FF601AD14D02003A3BBC /* SRCoreDataPlace.swift */; };
-		60E9FF711AD1833D003A3BBC /* SRCoreDataRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9FF701AD1833D003A3BBC /* SRCoreDataRoute.swift */; };
 		60E9FF741AD18582003A3BBC /* SRRoutesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9FF731AD18582003A3BBC /* SRRoutesController.swift */; };
 		60EA0F621AAE05130050E5E0 /* SRCoreDataPlaceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EA0F611AAE05130050E5E0 /* SRCoreDataPlaceExtension.swift */; };
 		9246CE854797EB575F7D3CF9 /* libPods-SmartRec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 629E0BE8345E5875EE1D9C09 /* libPods-SmartRec.a */; };
@@ -224,9 +224,6 @@
 		600CE4B91AAE334700D20481 /* SRAppointmentsHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAppointmentsHistory.swift; sourceTree = "<group>"; };
 		600CE4BC1AAE34F700D20481 /* SRAppointmentsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAppointmentsDataSource.swift; sourceTree = "<group>"; };
 		6069D5801AB22E800029FC6F /* SRCoreDataAppointmentExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataAppointmentExtension.swift; sourceTree = "<group>"; };
-		606D3FA71AB5A6E9006D0B73 /* SRRoutePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRRoutePoint.swift; sourceTree = "<group>"; };
-		606D3FAB1AB5A6EA006D0B73 /* SRVideoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRVideoData.swift; sourceTree = "<group>"; };
-		606D3FB11AB5A6EA006D0B73 /* SRRouteVideoPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRRouteVideoPoint.swift; sourceTree = "<group>"; };
 		606EC8821AC2B8A8008BC813 /* SRPlacesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesController.swift; sourceTree = SOURCE_ROOT; };
 		608153B71A9E59780033FF09 /* SRPlacesMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesMapView.swift; sourceTree = "<group>"; };
 		608153B91A9E5A210033FF09 /* SRPlacesMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesMapViewController.swift; sourceTree = "<group>"; };
@@ -234,6 +231,10 @@
 		608153C01A9E639D0033FF09 /* SRPlacesTypesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesTypesDataSource.swift; sourceTree = "<group>"; };
 		608A0B5B1AB0A4630072E9A8 /* SRAppointmentsTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAppointmentsTracker.swift; sourceTree = "<group>"; };
 		608A0B661AB0AE0C0072E9A8 /* SRAppointmentsTrackerDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAppointmentsTrackerDataSource.swift; sourceTree = "<group>"; };
+		608F34AE1AE78B2A00DD6F12 /* SRCoreDataRouteVideoPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataRouteVideoPoint.swift; sourceTree = "<group>"; };
+		608F34B01AE78B2B00DD6F12 /* SRCoreDataRoutePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataRoutePoint.swift; sourceTree = "<group>"; };
+		608F34B21AE78B2B00DD6F12 /* SRCoreDataRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataRoute.swift; sourceTree = "<group>"; };
+		608F34B41AE78B2B00DD6F12 /* SRCoreDataVideoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataVideoData.swift; sourceTree = "<group>"; };
 		609131011AB47FEA00A56D8F /* SRCommonRouteMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCommonRouteMapViewController.swift; sourceTree = "<group>"; };
 		6091310C1AB4910900A56D8F /* SRVideoInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SRVideoInfoView.xib; sourceTree = "<group>"; };
 		6091310E1AB4920300A56D8F /* SRVideoInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRVideoInfoView.swift; sourceTree = "<group>"; };
@@ -303,7 +304,6 @@
 		60DAC27D1AC8292600773990 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		60DAC27E1AC8292600773990 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		60E9FF601AD14D02003A3BBC /* SRCoreDataPlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataPlace.swift; sourceTree = "<group>"; };
-		60E9FF701AD1833D003A3BBC /* SRCoreDataRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataRoute.swift; sourceTree = "<group>"; };
 		60E9FF731AD18582003A3BBC /* SRRoutesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRRoutesController.swift; sourceTree = "<group>"; };
 		60EA0F611AAE05130050E5E0 /* SRCoreDataPlaceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataPlaceExtension.swift; sourceTree = "<group>"; };
 		629E0BE8345E5875EE1D9C09 /* libPods-SmartRec.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SmartRec.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -724,10 +724,10 @@
 			children = (
 				609194521AC9E9070051D8BA /* SRCoreDataAppointment.swift */,
 				60E9FF601AD14D02003A3BBC /* SRCoreDataPlace.swift */,
-				60E9FF701AD1833D003A3BBC /* SRCoreDataRoute.swift */,
-				606D3FA71AB5A6E9006D0B73 /* SRRoutePoint.swift */,
-				606D3FB11AB5A6EA006D0B73 /* SRRouteVideoPoint.swift */,
-				606D3FAB1AB5A6EA006D0B73 /* SRVideoData.swift */,
+				608F34B21AE78B2B00DD6F12 /* SRCoreDataRoute.swift */,
+				608F34B01AE78B2B00DD6F12 /* SRCoreDataRoutePoint.swift */,
+				608F34AE1AE78B2A00DD6F12 /* SRCoreDataRouteVideoPoint.swift */,
+				608F34B41AE78B2B00DD6F12 /* SRCoreDataVideoData.swift */,
 				13CA8BD01A14973400E8C6D8 /* CoreDataManager */,
 				13D786871A1358E700A4DD3C /* SmartRec.xcdatamodeld */,
 			);
@@ -1154,7 +1154,6 @@
 				60D9AB921ABA1D2F0008A93E /* SRCoreDataVideoDataExtension.swift in Sources */,
 				60AEE93C1AAB5FF700B1975F /* SRAppointmentDateViewController.swift in Sources */,
 				60C3163A1A9BBC5D00D5DEE4 /* NSDateExtensions.swift in Sources */,
-				606D3FA81AB5A6E9006D0B73 /* SRRoutePoint.swift in Sources */,
 				1368F4FE1A4B20F0004D52B1 /* SRVideoRouteDetailsViewController.swift in Sources */,
 				60BD7F2D1ABEFAA800826DC5 /* SRRoundedButton.swift in Sources */,
 				608153BF1A9E62F30033FF09 /* SRPlacesTypesTableViewController.swift in Sources */,
@@ -1185,13 +1184,12 @@
 				13265F5D1A1E10BA00E063CD /* SRVideoPlace.swift in Sources */,
 				60C316271A9BBC0A00D5DEE4 /* SRGoogleGeocodingServiceProtocol.swift in Sources */,
 				137E3B8B19F531B20094C5A1 /* SRNavigationController.swift in Sources */,
-				60E9FF711AD1833D003A3BBC /* SRCoreDataRoute.swift in Sources */,
 				609131021AB47FEA00A56D8F /* SRCommonRouteMapViewController.swift in Sources */,
+				608F34B31AE78B2B00DD6F12 /* SRCoreDataRoute.swift in Sources */,
 				60C316191A9BBBB400D5DEE4 /* SRClusteringMapVIew.swift in Sources */,
 				60C316201A9BBBCB00D5DEE4 /* SRBaseMapViewProtocol.swift in Sources */,
 				60C6DCF41AAF89DD00907C91 /* SRRecordedRoutesDataSource.swift in Sources */,
 				60D9AB941ABA48000008A93E /* MapManager.swift in Sources */,
-				606D3FB21AB5A6EA006D0B73 /* SRRouteVideoPoint.swift in Sources */,
 				60C316101A9BBB6D00D5DEE4 /* SRBaseMapMarker.swift in Sources */,
 				1379459B1A3B0C3E00AF1A97 /* NSFileManagerExtensions.swift in Sources */,
 				608153C11A9E639D0033FF09 /* SRPlacesTypesDataSource.swift in Sources */,
@@ -1200,7 +1198,6 @@
 				137E3B8D19F532550094C5A1 /* SRCommonViewController.swift in Sources */,
 				137E3B9A19F542DB0094C5A1 /* SRVideoWriterViewController.swift in Sources */,
 				60C3C7CC1AAC4E2B001DF083 /* SRAppointmentConfirmationViewController.swift in Sources */,
-				606D3FAC1AB5A6EA006D0B73 /* SRVideoData.swift in Sources */,
 				609CB2671AAF6E3800968A77 /* SRCoreDataDataSource.swift in Sources */,
 				13D786891A1358E700A4DD3C /* SmartRec.xcdatamodeld in Sources */,
 				60DAC27F1AC8292600773990 /* Reachability.m in Sources */,
@@ -1212,7 +1209,9 @@
 				60C3161E1A9BBBCB00D5DEE4 /* SRBaceMapView.swift in Sources */,
 				60C3C7D11AAC949D001DF083 /* SRPlaceRouteMapViewController.swift in Sources */,
 				13E537A01A30BCBD000A27E6 /* SRGSensor.swift in Sources */,
+				608F34AF1AE78B2A00DD6F12 /* SRCoreDataRouteVideoPoint.swift in Sources */,
 				13CA8BD61A14A3BA00E8C6D8 /* SRCoreDataManager.swift in Sources */,
+				608F34B51AE78B2B00DD6F12 /* SRCoreDataVideoData.swift in Sources */,
 				137E3B6919F52BF00094C5A1 /* AppDelegate.swift in Sources */,
 				609329B21AAE1933008B5218 /* SRLeftMenuViewController.swift in Sources */,
 				60C316391A9BBC5D00D5DEE4 /* DoubleExtensions.swift in Sources */,
@@ -1230,6 +1229,7 @@
 				60C3C7CE1AAC4EA2001DF083 /* SRAppointment.swift in Sources */,
 				60AEE93F1AAB683400B1975F /* SRContinueTableViewCell.swift in Sources */,
 				130A5B8D19F7CECB004515A7 /* Constants.swift in Sources */,
+				608F34B11AE78B2B00DD6F12 /* SRCoreDataRoutePoint.swift in Sources */,
 				606EC8831AC2B8A8008BC813 /* SRPlacesController.swift in Sources */,
 				13BCBB331A28998200E823F9 /* SRBusyView.swift in Sources */,
 				1318DEC41A1F54AD007B0F54 /* StringExtensions.swift in Sources */,

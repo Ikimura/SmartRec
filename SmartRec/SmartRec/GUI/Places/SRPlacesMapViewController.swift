@@ -285,7 +285,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         
                         var context = SRCoreDataContextProvider.mainManagedObjectContext();
-                        var fetchRequest = NSFetchRequest(entityName: "SRCoreDataPlace");
+                        var fetchRequest = NSFetchRequest(entityName: kManagedObjectPlace);
 
                         //FIXME: - исправить костыль
                         var predArray : Array<NSPredicate> = []

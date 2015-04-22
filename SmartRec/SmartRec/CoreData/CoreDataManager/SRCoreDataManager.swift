@@ -64,7 +64,7 @@ class SRCoreDataManager: NSObject {
     func singleManagedObject(entityName: String, withUniqueField identifier: String, inContext context: NSManagedObjectContext) -> NSManagedObject? {
         
         var predicate: NSPredicate?
-        if (entityName == "SRCoreDataPlace") {
+        if (entityName == kManagedObjectPlace) {
             
             predicate = NSPredicate(format: "placeId == %@", identifier)!;
 

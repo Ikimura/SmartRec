@@ -70,7 +70,7 @@ class SRLeftMenuViewController: SRCommonViewController {
             
             if let id = userInfo["uuid"] as? String {
                 
-                if var event  = SRCoreDataManager.sharedInstance.singleManagedObject("SRCoreDataAppointment", withUniqueField: id, inContext: SRCoreDataContextProvider.mainManagedObjectContext()) as? SRCoreDataAppointment {
+                if var event  = SRCoreDataManager.sharedInstance.singleManagedObject(kManagedObjectAppointment, withUniqueField: id, inContext: SRCoreDataContextProvider.mainManagedObjectContext()) as? SRCoreDataAppointment {
                     
                     var detailsVC = self.storyboard?.instantiateViewControllerWithIdentifier("confirmationVC") as?SRAppointmentConfirmationViewController;
                     detailsVC!.presentationType = .Notification;

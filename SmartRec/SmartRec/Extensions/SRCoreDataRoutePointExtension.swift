@@ -8,14 +8,14 @@
 
 import Foundation
 
-extension SRRoutePoint {
+extension SRCoreDataRoutePoint {
     
     func fillPropertiesFromStruct(pointStruct: SRRoutePointStruct) {
         
         self.id = pointStruct.id;
         self.latitude = pointStruct.lat;
         self.longitude = pointStruct.lng;
-        self.time = NSDate(timeIntervalSince1970: pointStruct.time);
+        self.time = pointStruct.time;
         
         if (pointStruct.longDescription != nil) {
             

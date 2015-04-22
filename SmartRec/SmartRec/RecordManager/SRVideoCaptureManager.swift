@@ -213,13 +213,13 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
 
         needToDeleteRoute = false;
         
-        //insert SRVideoMark and link SRRouteVideoPoint with SRCoreDataRoute
+        //insert SRVideoMark and link SRCoreDataRouteVideoPoint with SRCoreDataRoute
         SRRoutesController.sharedInstance.addRelationBetweenRoutePoint(markData, andRoute: self.routeId!, complitionBlock: { (result) -> Void in
             
             println("addRelationBetweenRoutePoint resulft: \(result)");
         });
         
-        //link SRVideoData with SRVodeoMark
+        //link SRCoreDataVideoData with SRVodeoMark
         SRRoutesController.sharedInstance.addRelationBetweenVideoData(videoData, andRouteMark: markData.id, complitionBlock: { (result) -> Void in
             
             println("addRelationBetweenVideoData resulft: \(result)");

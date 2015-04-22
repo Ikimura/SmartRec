@@ -97,6 +97,8 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
             
         case .Confirmation:
             
+            notesTextView.text = NSLocalizedString("add_comment_key", comment:"");
+            
             pictureImageView.hidden = true;
             var data = self.formDictionaryFromStructAppointment();
             notificationButton.setTitle(NSLocalizedString("conf_cancel_btn_sel", comment:""), forState: .Selected);

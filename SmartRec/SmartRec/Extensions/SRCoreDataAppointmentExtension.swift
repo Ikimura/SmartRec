@@ -22,7 +22,7 @@ extension SRCoreDataAppointment {
         
         var context = SRCoreDataContextProvider.mainManagedObjectContext();
         
-        if var event: SRCoreDataAppointment? = SRCoreDataManager.sharedInstance.singleManagedObject("SRCoreDataAppointment", withUniqueField: id, inContext: context) as? SRCoreDataAppointment! {
+        if var event: SRCoreDataAppointment? = SRCoreDataManager.sharedInstance.singleManagedObject(kManagedObjectAppointment, withUniqueField: id, inContext: context) as? SRCoreDataAppointment! {
             
             event!.completed = true;
             
@@ -60,13 +60,13 @@ extension SRCoreDataAppointment {
         
         var context = SRCoreDataContextProvider.mainManagedObjectContext();
                 
-        var appointmentEntity = SRCoreDataManager.sharedInstance.singleManagedObject("SRCoreDataAppointment", withUniqueField: appointment.id, inContext: context) as? SRCoreDataAppointment;
+        var appointmentEntity = SRCoreDataManager.sharedInstance.singleManagedObject(kManagedObjectAppointment, withUniqueField: appointment.id, inContext: context) as? SRCoreDataAppointment;
         
         if (appointmentEntity == nil) {
             
-            appointmentEntity = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataAppointment", inManagedObjectContext: context) as? SRCoreDataAppointment;
+            appointmentEntity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectAppointment, inManagedObjectContext: context) as? SRCoreDataAppointment;
             
-            var placeEntity: SRCoreDataPlace = SRCoreDataManager.sharedInstance.singleManagedObject("SRCoreDataPlace", withUniqueField: appointment.place.placeId, inContext: context) as SRCoreDataPlace;
+            var placeEntity: SRCoreDataPlace = SRCoreDataManager.sharedInstance.singleManagedObject(kManagedObjectPlace, withUniqueField: appointment.place.placeId, inContext: context) as SRCoreDataPlace;
             
             if (appointmentEntity != nil) {
                 

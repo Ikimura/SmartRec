@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C1514" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="SRCoreDataAppointment" representedClassName="SmartRec.SRCoreDataAppointment" syncable="YES">
         <attribute name="calendarId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="completed" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -38,10 +38,10 @@
         <attribute name="mode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="appointment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SRCoreDataAppointment" inverseName="routes" inverseEntity="SRCoreDataAppointment" syncable="YES"/>
-        <relationship name="routePoints" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="SRRoutePoint" inverseName="route" inverseEntity="SRRoutePoint" elementID="routeMarks" syncable="YES"/>
-        <relationship name="videoPoints" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="SRRouteVideoPoint" syncable="YES"/>
+        <relationship name="routePoints" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="SRCoreDataRoutePoint" inverseName="route" inverseEntity="SRCoreDataRoutePoint" elementID="routeMarks" syncable="YES"/>
+        <relationship name="videoPoints" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="SRCoreDataRouteVideoPoint" syncable="YES"/>
     </entity>
-    <entity name="SRRoutePoint" representedClassName="SmartRec.SRRoutePoint" elementID="SRRouteMark" syncable="YES">
+    <entity name="SRCoreDataRoutePoint" representedClassName="SmartRec.SRCoreDataRoutePoint" elementID="SRRouteMark" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="locationDescription" optional="YES" attributeType="String" syncable="YES"/>
@@ -49,12 +49,12 @@
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="route" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SRCoreDataRoute" inverseName="routePoints" inverseEntity="SRCoreDataRoute" syncable="YES"/>
     </entity>
-    <entity name="SRRouteVideoPoint" representedClassName="SmartRec.SRRouteVideoPoint" parentEntity="SRRoutePoint" syncable="YES">
+    <entity name="SRCoreDataRouteVideoPoint" representedClassName="SmartRec.SRCoreDataRouteVideoPoint" parentEntity="SRCoreDataRoutePoint" syncable="YES">
         <attribute name="autoSaved" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="thumbnailImage" optional="YES" attributeType="Binary" syncable="YES"/>
-        <relationship name="videoData" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="SRVideoData" syncable="YES"/>
+        <relationship name="videoData" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="SRCoreDataVideoData" syncable="YES"/>
     </entity>
-    <entity name="SRVideoData" representedClassName="SmartRec.SRVideoData" elementID="SRNote" syncable="YES">
+    <entity name="SRCoreDataVideoData" representedClassName="SmartRec.SRCoreDataVideoData" elementID="SRNote" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="fileName" optional="YES" attributeType="String" syncable="YES"/>
@@ -67,9 +67,9 @@
     <elements>
         <element name="SRCoreDataAppointment" positionX="117" positionY="144" width="128" height="180"/>
         <element name="SRCoreDataPlace" positionX="-164" positionY="134" width="128" height="300"/>
-        <element name="SRCoreDataRoute" positionX="144" positionY="-72" width="128" height="180"/>
-        <element name="SRRoutePoint" positionX="-225" positionY="-153" width="128" height="133"/>
-        <element name="SRRouteVideoPoint" positionX="-225" positionY="14" width="128" height="88"/>
-        <element name="SRVideoData" positionX="-468" positionY="-10" width="128" height="163"/>
+        <element name="SRCoreDataRoute" positionX="144" positionY="-72" width="128" height="178"/>
+        <element name="SRCoreDataRoutePoint" positionX="-225" positionY="-153" width="128" height="133"/>
+        <element name="SRCoreDataRouteVideoPoint" positionX="-225" positionY="14" width="128" height="88"/>
+        <element name="SRCoreDataVideoData" positionX="-468" positionY="-10" width="128" height="163"/>
     </elements>
 </model>

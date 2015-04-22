@@ -71,7 +71,7 @@ class SRMovieListViewController: SRCommonViewController, SRDataSourceDelegate, U
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: SRMovieTableViewCell = tableView.dequeueReusableCellWithIdentifier(kMovieListCellIdentifier, forIndexPath: indexPath) as SRMovieTableViewCell;
 
-        if let item = dataSource.objectAtIndexPath(indexPath) as? SRRouteVideoPoint {
+        if let item = dataSource.objectAtIndexPath(indexPath) as? SRCoreDataRouteVideoPoint {
             
             if var videoDataItem = item.videoData {
                 println(videoDataItem.fileName);
@@ -96,13 +96,13 @@ class SRMovieListViewController: SRCommonViewController, SRDataSourceDelegate, U
         return true;
     }
     
-    //TODO: FIX
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
         if (editingStyle == .Delete) {
+            
             //Delete the row from the data source
-            if let deleteItem = dataSource.objectAtIndexPath(indexPath) as? SRRouteVideoPoint {
+            if let deleteItem = dataSource.objectAtIndexPath(indexPath) as? SRCoreDataRouteVideoPoint {
                 
-                //FIXME: - move deleting
                 if var videoDataItem = deleteItem.videoData {
                     let url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(videoDataItem.fileName)\(kFileExtension)");
                     println("Debug. URL: \(url!)");
@@ -173,10 +173,10 @@ class SRMovieListViewController: SRCommonViewController, SRDataSourceDelegate, U
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         
-        var selectedVideoMark: SRRouteVideoPoint?;
+        var selectedVideoMark: SRCoreDataRouteVideoPoint?;
         if let selectedCell = sender as? SRMovieTableViewCell {
             let indexPath: NSIndexPath = tableView.indexPathForCell(selectedCell)!;
-            if let selectedItem = dataSource.objectAtIndexPath(indexPath) as? SRRouteVideoPoint {
+            if let selectedItem = dataSource.objectAtIndexPath(indexPath) as? SRCoreDataRouteVideoPoint {
                 selectedVideoMark = selectedItem;
             }
         }

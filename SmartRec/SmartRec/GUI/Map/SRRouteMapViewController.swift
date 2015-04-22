@@ -12,7 +12,7 @@ import CoreData
 class SRRouteMapViewController: SRCommonRouteMapViewController {
     
     var route: SRCoreDataRoute?;
-    var selectedVideoMark: SRRouteVideoPoint?;
+    var selectedVideoMark: SRCoreDataRouteVideoPoint?;
     
     private var videoURL: NSURL?;
     private var videoInfoViewTopLayoutConstraing: NSLayoutConstraint?;
@@ -117,7 +117,7 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
             
             if (temp != nil && temp?.count != 0) {
                 
-                selectedVideoMark = temp?.firstObject as? SRRouteVideoPoint;
+                selectedVideoMark = temp?.firstObject as? SRCoreDataRouteVideoPoint;
                 //update info in view
                 self.updateVideoInformation();
                 
@@ -199,13 +199,13 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
     private func updateRouteInformation() {
         //set route start-end dagte time
         var startDate: NSDate?;
-        if let firstPoint = route!.routePoints.firstObject as? SRRoutePoint {
-            startDate = firstPoint.time;
+        if let firstPoint = route!.routePoints.firstObject as? SRCoreDataRoutePoint {
+            startDate = NSDate(timeIntervalSince1970: firstPoint.time);
         }
         
         var endDate: NSDate?;
-        if let lastPoint = route!.routePoints.lastObject as? SRRoutePoint {
-            endDate = lastPoint.time;
+        if let lastPoint = route!.routePoints.lastObject as? SRCoreDataRoutePoint {
+            endDate = NSDate(timeIntervalSince1970: lastPoint.time);
         }
         
         let startDateString = startDate?.stringFromDateWithStringFormat("ccc, LLL d, h:m:s");
@@ -218,7 +218,7 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
         
         if (selectedVideoMark?.locationDescription == nil) {
             
-            googleServicesProvider.geocoding(selectedVideoMark!.latitude.doubleValue, lng: selectedVideoMark!.longitude.doubleValue) { [weak self] (data) -> Void in
+            googleServicesProvider.geocoding(selectedVideoMark!.latitude, lng: selectedVideoMark!.longitude) { [weak self] (data) -> Void in
                 //parse JSON
                 if var blockSelf = self {
                     
@@ -247,24 +247,24 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
         videoInfoView.videoFileNameLabel.text = selectedVideoMark!.videoData!.fileName;
         
         //date
-        let date: NSDate = selectedVideoMark!.videoData!.date;
+        let date: NSDate = NSDate(timeIntervalSince1970: selectedVideoMark!.videoData!.date);
         videoInfoView.videoMarkDateLabel.text = date.stringFromDateWithStringFormats([kTimeFormat, kDateFormat, kTimeFormat]);
         
         //set file duration
-        let seconds = selectedVideoMark!.videoData!.duration.doubleValue.format(".1");
+        let seconds = selectedVideoMark!.videoData!.duration.format(".1");
         let durationLS = NSLocalizedString("DURATION", comment: "comment");
         videoInfoView.videFileDurationLabel.text = "\(durationLS): \(seconds)";
         
         //set size data bytes
-        let mBytes = Double(Double(selectedVideoMark!.videoData!.fileSize.integerValue) / 1000000.0).format(".3");
+        let mBytes = Double(Double(selectedVideoMark!.videoData!.fileSize) / 1000000.0).format(".3");
         let sizeLS = NSLocalizedString("SIZE", comment: "comment");
         videoInfoView.fileSizeLabel.text = "\(sizeLS): \(mBytes) MB.";
         
         //set video resolution
-        videoInfoView.videoResolutionLabel.text = "\(selectedVideoMark!.videoData!.resolutionWidth.integerValue)x\(selectedVideoMark!.videoData!.resolutionHeight.integerValue)";
+        videoInfoView.videoResolutionLabel.text = "\(selectedVideoMark!.videoData!.resolutionWidth)x\(selectedVideoMark!.videoData!.resolutionHeight)";
         
         //set frame rates
-        let fps = Double(selectedVideoMark!.videoData!.frameRate.floatValue).format(".2");
+        let fps = Double(selectedVideoMark!.videoData!.frameRate).format(".2");
         videoInfoView.videoFrameRateLabel.text = "FPS: \(fps)";
     }
 
@@ -276,7 +276,7 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
             
             tempRoute.videoPoints.enumerateObjectsUsingBlock { [weak self] (element, index, stop) -> Void in
                 
-                if let mark = element as? SRRouteVideoPoint {
+                if let mark = element as? SRCoreDataRouteVideoPoint {
                     
                     dispatch_async(dispatch_get_main_queue(), {() -> Void in
                         //show annotations
@@ -284,8 +284,8 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
                             "id": mark.id,
                             "date": mark.videoData!.date.description,
                             "fileName": mark.videoData!.fileName,
-                            "lat": mark.latitude.doubleValue,
-                            "lng": mark.longitude.doubleValue,
+                            "lat": mark.latitude,
+                            "lng": mark.longitude,
                             "photo": mark.thumbnailImage];
                         //
                         var place: SRVideoPlace = SRVideoPlace(dictionary: dic);
@@ -311,9 +311,9 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
                 
                 if var blockSelf = self {
 
-                    if let routePoint = element as? SRRoutePoint {
+                    if let routePoint = element as? SRCoreDataRoutePoint {
                         
-                        gmsPaths.addCoordinate(CLLocationCoordinate2D(latitude: routePoint.latitude.doubleValue, longitude: routePoint.longitude.doubleValue));
+                        gmsPaths.addCoordinate(CLLocationCoordinate2D(latitude: routePoint.latitude, longitude: routePoint.longitude));
                         //display markers for points
                         blockSelf.showGoogleMapMarker(SRPointMapMarker(routeID: tempRoute.id));
                     }

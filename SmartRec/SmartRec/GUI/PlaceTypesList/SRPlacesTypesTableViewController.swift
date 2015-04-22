@@ -10,6 +10,8 @@ import Foundation
 
 class SRPlacesTypesTableViewController: SRCommonViewController, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var tableView: UITableView!
+
     private var typesDataSource: SRPlacseTypesDataSource?;
     private var selectedTypes:[(name: String, value: String)]?;
     
@@ -26,6 +28,7 @@ class SRPlacesTypesTableViewController: SRCommonViewController, UITableViewDeleg
         super.viewDidLoad();
         
         self.title = NSLocalizedString("places_types_title", comment:"");
+        self.tableView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 70.0, right: 0.0);
     }
     
     override func viewWillAppear(animated: Bool) {

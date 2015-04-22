@@ -47,6 +47,7 @@
 "distance_title" = "расстояние";
 "duration_title" = "время";
 "route_title" = "Маршрут";
+"my_videos" = "Мои Видео";
 "route_mode_walking_title" = "Пешком";
 "route_mode_driving_title" = "Авто";
 "at_key" = "в";

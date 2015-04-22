@@ -83,13 +83,13 @@ class SRRoutesController {
 
             var workingContext = SRCoreDataContextProvider.workingManagedObjectContext();
             
-            if var videoMark = SRCoreDataManager.sharedInstance.singleManagedObject(kManagedObjectVideoMark, withUniqueField: identifier, inContext: workingContext) as? SRRouteVideoPoint {
+            if var videoMark = SRCoreDataManager.sharedInstance.singleManagedObject(kManagedObjectVideoMark, withUniqueField: identifier, inContext: workingContext) as? SRCoreDataRouteVideoPoint {
                 
-                var videoData: SRVideoData? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoData, inManagedObjectContext: workingContext) as? SRVideoData;
+                var videoData: SRCoreDataVideoData? = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoData, inManagedObjectContext: workingContext) as? SRCoreDataVideoData;
                 
                 if (videoData != nil) {
                     
-                    println("SRVideoData")
+                    println("SRCoreDataVideoData")
                     videoData!.fillPropertiesFromStruct(videoDataStruct);
                 }
                 
@@ -122,21 +122,21 @@ class SRRoutesController {
                 
                 if routePoint is SRRoutePointStruct {
                     
-                    point = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoutePoint, inManagedObjectContext: workingContext) as? SRRoutePoint;
+                    point = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoutePoint, inManagedObjectContext: workingContext) as? SRCoreDataRoutePoint;
                     
-                    (point as SRRoutePoint).fillPropertiesFromStruct(routePoint as SRRoutePointStruct);
-                    route.addRoutePoint(point as SRRoutePoint);
+                    (point as SRCoreDataRoutePoint).fillPropertiesFromStruct(routePoint as SRRoutePointStruct);
+                    route.addRoutePoint(point as SRCoreDataRoutePoint);
                     
                 } else if (routePoint is SRVideoMarkStruct) {
                     
-                    point = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoMark, inManagedObjectContext: workingContext) as? SRRouteVideoPoint;
+                    point = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectVideoMark, inManagedObjectContext: workingContext) as? SRCoreDataRouteVideoPoint;
                     
-                    (point as SRRouteVideoPoint).fillPropertiesFromStruct(routePoint as SRVideoMarkStruct);
-                    route.addMark(point as SRRouteVideoPoint);
+                    (point as SRCoreDataRouteVideoPoint).fillPropertiesFromStruct(routePoint as SRVideoMarkStruct);
+                    route.addMark(point as SRCoreDataRouteVideoPoint);
                     
                 }
                 
-                (point as SRRoutePoint).route = route;
+                (point as SRCoreDataRoutePoint).route = route;
                 
                 var saved = SRCoreDataContextProvider.saveWorkingContext(workingContext);
                 if (saved) {
@@ -181,13 +181,13 @@ class SRRoutesController {
                 var appointment: SRCoreDataAppointment? = nil;
                 if (appointmentId != nil) {
     
-                    appointment = SRCoreDataManager.sharedInstance.singleManagedObject("SRCoreDataAppointment", withUniqueField: appointmentId!, inContext: workingContext) as? SRCoreDataAppointment;
+                    appointment = SRCoreDataManager.sharedInstance.singleManagedObject(kManagedObjectAppointment, withUniqueField: appointmentId!, inContext: workingContext) as? SRCoreDataAppointment;
                 }
                 
                 println("results = \(response.count)")
                 
                 //Creating Route
-                var routeEntity = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataRoute", inManagedObjectContext: workingContext) as? SRCoreDataRoute;
+                var routeEntity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoute, inManagedObjectContext: workingContext) as? SRCoreDataRoute;
                 
                 let route = response[0];
                 var id = route["summary"] as? String;
@@ -235,7 +235,7 @@ class SRRoutesController {
                     );
                     
                     //ADD relashionship
-                    var firstPointEntity = NSEntityDescription.insertNewObjectForEntityForName("SRRoutePoint", inManagedObjectContext: workingContext) as? SRRoutePoint;
+                    var firstPointEntity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoutePoint, inManagedObjectContext: workingContext) as? SRCoreDataRoutePoint;
                     firstPointEntity?.fillPropertiesFromStruct(point);
                     
                     routeEntity?.addRoutePoint(firstPointEntity!);
@@ -258,7 +258,7 @@ class SRRoutesController {
                     );
                     
                     //ADD relashionship
-                    var secondPointEntity = NSEntityDescription.insertNewObjectForEntityForName("SRRoutePoint", inManagedObjectContext: workingContext) as? SRRoutePoint;
+                    var secondPointEntity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectRoutePoint, inManagedObjectContext: workingContext) as? SRCoreDataRoutePoint;
                     secondPointEntity?.fillPropertiesFromStruct(point);
                     
                     routeEntity?.addRoutePoint(secondPointEntity!);

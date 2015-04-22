@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension SRRouteVideoPoint {
+extension SRCoreDataRouteVideoPoint {
     
     func fillPropertiesFromStruct(videoPointStruct: SRVideoMarkStruct) {
 

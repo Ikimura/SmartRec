@@ -108,7 +108,8 @@ class SRAppointmentsTracker : SRDataSourceDelegate {
     
     func dataSourceDidChangeDataSet(dataSource: SRDataSource) {
      
-        println("dataSourceDidChangeDataSet");
+        self.scheduleLocationNotificationsIfNeeded();
+        println("SRAppointmentsTracker dataSourceDidChangeDataSet");
     }
     
     func dataSourceDidUpdate(#object:AnyObject, atIndexPath indexPath: NSIndexPath?) {

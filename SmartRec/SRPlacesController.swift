@@ -76,7 +76,7 @@ class SRPlacesController {
                     dispatch_async(strongSelf.serialQueue, { () -> Void in
                         
                         var workingContext = SRCoreDataContextProvider.workingManagedObjectContext();
-                        var existPlaceEntity: SRCoreDataPlace? = SRCoreDataManager.sharedInstance.findOrCreateManagedObject("SRCoreDataPlace", predicate: NSPredicate (format: "reference == %@", placeReference)!, inContext: workingContext) as? SRCoreDataPlace;
+                        var existPlaceEntity: SRCoreDataPlace? = SRCoreDataManager.sharedInstance.findOrCreateManagedObject(kManagedObjectPlace, predicate: NSPredicate (format: "reference == %@", placeReference)!, inContext: workingContext) as? SRCoreDataPlace;
                         
                         existPlaceEntity?.fillPropertiesFromDetailsDectionary(data!);
                         existPlaceEntity?.fullData = true;
@@ -103,7 +103,7 @@ class SRPlacesController {
             if let strongSelf = self {
                 var cdPlaces: [String] = [];
 
-                var fetchRequest = NSFetchRequest(entityName: "SRCoreDataPlace");
+                var fetchRequest = NSFetchRequest(entityName: kManagedObjectPlace);
                 
                 var predArray : Array<NSPredicate> = []
                 for type in types {
@@ -179,13 +179,13 @@ class SRPlacesController {
                     var placeId = result["place_id"] as? NSString!;
                     cdPlaces.append(placeId!);
 
-                    var existPlaceEntity: SRCoreDataPlace? = SRCoreDataManager.sharedInstance.singleManagedObject("SRCoreDataPlace", withUniqueField: placeId!, inContext: workingContext) as? SRCoreDataPlace;
+                    var existPlaceEntity: SRCoreDataPlace? = SRCoreDataManager.sharedInstance.singleManagedObject(kManagedObjectPlace, withUniqueField: placeId!, inContext: workingContext) as? SRCoreDataPlace;
                     
                     var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate;
                     
                     if (existPlaceEntity == nil) {
                         
-                        var placeEntity = NSEntityDescription.insertNewObjectForEntityForName("SRCoreDataPlace", inManagedObjectContext: workingContext) as? SRCoreDataPlace;
+                        var placeEntity = NSEntityDescription.insertNewObjectForEntityForName(kManagedObjectPlace, inManagedObjectContext: workingContext) as? SRCoreDataPlace;
                         
                         placeEntity!.fillPropertiesFromDectionary(result);
                         println("Added place_id=\(placeId!)");

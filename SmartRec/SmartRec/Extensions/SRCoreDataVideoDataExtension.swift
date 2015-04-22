@@ -8,17 +8,17 @@
 
 import Foundation
 
-extension SRVideoData {
+extension SRCoreDataVideoData {
     
     func fillPropertiesFromStruct(videoDataStruct: SRVideoDataStruct) {
         
         self.id = videoDataStruct.id;
         self.fileName = videoDataStruct.fileName;
-        self.date = NSDate(timeIntervalSince1970: videoDataStruct.dateSeconds);
-        self.fileSize = NSNumber(longLong: videoDataStruct.fileSize);
-        self.duration = NSNumber(double: videoDataStruct.duration);
-        self.frameRate = NSNumber(float: videoDataStruct.frameRate);
-        self.resolutionHeight = NSNumber(int: videoDataStruct.resHeight);
-        self.resolutionWidth = NSNumber(int: videoDataStruct.resWidth);
+        self.date = videoDataStruct.dateSeconds;
+        self.fileSize = videoDataStruct.fileSize;
+        self.duration = videoDataStruct.duration;
+        self.frameRate = videoDataStruct.frameRate;
+        self.resolutionHeight = videoDataStruct.resHeight;
+        self.resolutionWidth = videoDataStruct.resWidth;
     }
 }
