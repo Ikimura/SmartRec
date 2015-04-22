@@ -117,3 +117,5 @@ let kNavigationBarHeight: CGFloat = 64;
 
 let kLocRadius: Double = 1500.0;
 
+let MAX_ALLOWED_DECELERATION: int = 4; // in g's
+
