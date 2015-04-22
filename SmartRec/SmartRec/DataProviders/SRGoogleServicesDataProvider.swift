@@ -57,7 +57,7 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
         }
         
         urlString += "&language=\(kGooglePlaceAPILanguage)&key=\(kGooglePlaceAPIKey)";
-        urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!
 
         println("Debug: \(urlString)");
         
@@ -102,24 +102,22 @@ class SRGoogleServicesDataProvider: SRGoogleGeocodingServiceProtocol, SRGoogleSe
     }
     
     func placeTextSearch(textQeury: String, lat: Double?, lng: Double?, radius: Int?, types:[String]?, complitionBlock: (data: Array<NSDictionary>) -> Void, errorComplitionBlock: (error: NSError) -> Void) {
-    
-        let formattedText = textQeury.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding);
         
-        var urlString = "\(kGoogleTextSearchAPIURL)query=\(formattedText!)&sensor=true";
+        var urlString = "\(kGoogleTextSearchAPIURL)query=\(textQeury)&sensor=true";
         
         if (lat != nil && lng != nil) {
             
             urlString += "&location=\(lat!),\(lng!)";
         }
         
-        if (types != nil && types?.count != 0) {
-            
-            urlString += "&types=";
-            
-            for type in types! {
-                urlString += type + "|";
-            }
-        }
+//        if (types != nil && types?.count != 0) {
+//            
+//            urlString += "&types=";
+//            
+//            for type in types! {
+//                urlString += type + "|";
+//            }
+//        }
         
         if (radius != nil) {
             
