@@ -61,7 +61,7 @@ class SRAppointmentConfirmationViewController: SRCommonViewController, UITextVie
     
     override func setUpNavigationBar() {
         
-        self.title = "LOGO"
+        self.title = NSLocalizedString("confirmation_screen_title", comment:"");
         
         var rightBarButtonItem: UIBarButtonItem? = nil;
         

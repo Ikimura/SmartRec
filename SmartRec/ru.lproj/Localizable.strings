@@ -66,6 +66,7 @@
 "conf_cancel_btn_sel" = "Отменить";
 "cal_cancel_btn_sel" = "Удалить из Календаря";
 "history_screen_title" = "Мои Места";
+"confirmation_screen_title" = "Подтверждение";
 "appintment_creation_error_title" = "Не Удалось Завершить Операцию";
 "appintment_creation_error_reson" = "Такое назначение уже существует.";
 "appintment_creation_error_suggestion" = "Пожалуйста, выберите другое время или место.";

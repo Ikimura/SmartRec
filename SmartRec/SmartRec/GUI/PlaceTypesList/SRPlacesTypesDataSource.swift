@@ -10,7 +10,7 @@ import Foundation
 
 class SRPlacseTypesDataSource {
     
-    private let types:[(name: String, value: String)] = [
+    private var types:[(name: String, value: String)] = [
         (name: NSLocalizedString("airport_type", comment:""), value: "airport"),
         (name: NSLocalizedString("amusement_park_type", comment:""), value: "amusement_park"),
         (name: NSLocalizedString("art_galery_type", comment:""), value: "art_gallery"),
@@ -43,6 +43,11 @@ class SRPlacseTypesDataSource {
         (name: NSLocalizedString("university_type", comment:""), value: "university"),
         (name: NSLocalizedString("zoo_type", comment:""), value: "zoo")
     ];
+    
+    init() {
+        
+        types.sort({ $0.name < $1.name });
+    }
     
     //public interface
     
