@@ -51,7 +51,7 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
 
         //get notifications about position changing
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdatedLocations:", name: kLocationTitleNotification, object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didOccasionAppears:", name: "Occasion", object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didOccasionAppears:", name: "SROccasionNotification", object: nil);
     }
     
     deinit {

@@ -31,7 +31,6 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.hidden = true;
         recordManager = SRVideoCaptureManager();
         recordManager.delegate = self;
 
@@ -42,6 +41,11 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         locationQueue = dispatch_queue_create("con.epam.evnt.SmartRec.locations", DISPATCH_QUEUE_SERIAL);
         
         self.setupUI();
+    }
+    
+    override func setUpNavigationBar() {
+        
+        self.navigationController?.navigationBar.hidden = true;
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -60,8 +64,9 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
                 strongSelf.appDelegate.startMonitoringLocation();
             }
         });
-        //start monitoring acceleration
-        acceleraometrWidget?.startAccelerationMonitoring();
+        
+        //TODO: - for debug start monitoring acceleration
+//        acceleraometrWidget?.startAccelerationMonitoring();
         
         //FIXME: - fix it
         recordManager.createNewRoute();
@@ -80,14 +85,16 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
                 strongSelf.appDelegate.stopMonitoringLocation();
             }
         });
-        //stop monitoring acceleration
-        acceleraometrWidget?.stopAccelerationMonitoring();
+        
+        //TODO: - for debug stop monitoring acceleration
+//        acceleraometrWidget?.stopAccelerationMonitoring();
         
         //FIXME: - fix it
         recordManager.finishRoute();
     }
     
     deinit {
+        
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
@@ -97,6 +104,11 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     }
     
     //MARK: - Handlers
+    
+    @IBAction func saveBtnAction(sender: AnyObject) {
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("SROccasionNotification", object: nil);
+    }
     
     @IBAction func recBtnAction(sender: AnyObject) {
         if recordBtn.selected == false {
@@ -194,6 +206,22 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         recordBtn.enabled = true;
     }
     
+    private func startAccelerationMonitoringIfNeeded() {
+    
+        if (!self.acceleraometrWidget!.isRunning) {
+            
+            self.acceleraometrWidget?.startAccelerationMonitoring();
+        }
+    }
+    
+    private func stopAccelerationMonitoringIfNeeded() {
+        
+        if (self.acceleraometrWidget!.isRunning) {
+            
+            self.acceleraometrWidget?.stopAccelerationMonitoring();
+        }
+    }
+    
     //MARK: - SRVideoRecorderDelegateProtocol
     
     func videoCaptureManagerDidEndVideoPartRecording(captureManager: SRVideoCaptureManager) {
@@ -252,16 +280,30 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         println("Did recieve location notification");
         
         if let userInfo: [NSObject: AnyObject?] = notification.userInfo as [NSObject: AnyObject?]! {
+            
             if let crnLoc = userInfo["location"] as? CLLocation! {
                 println("Did updated current location");
                 
                 dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+                    
                     if var blockSelf = self {
+                        
                         blockSelf.latitudeLabel.text = String(format: "%.8f", crnLoc.coordinate.latitude);
                         blockSelf.longitudeLabel.text = String(format: "%.8f", crnLoc.coordinate.longitude);
                         var dist = NSLocalizedString("distance_reduction", comment: "comment");
                         var time = NSLocalizedString("time_hour_reduction", comment: "comment");
                         var speed = (crnLoc.speed * 3.6) > 0 ? crnLoc.speed * 3.6 : 0.0;
+                        
+                        //start monitoring acceleration when speed is over 15 km/h
+                        if (speed >= 15 ) {
+                            
+                            blockSelf.startAccelerationMonitoringIfNeeded();
+                            
+                        } else {
+                            
+                            blockSelf.stopAccelerationMonitoringIfNeeded();
+                        }
+                        
                         blockSelf.speedLabel.text = String(format: "%.1f \(dist)/\(time)", speed);
                     }
                 });

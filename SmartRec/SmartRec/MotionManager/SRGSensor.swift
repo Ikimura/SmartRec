@@ -12,6 +12,12 @@ import CoreMotion
 public class SRGSensor: NSObject {
     
     public var accelerationValueDelta: Double;
+    public var isRunning: Bool {
+        get {
+            
+            return motionManager.accelerometerActive;
+        }
+    }
     
     internal lazy var widgetView: SRGSensorView = {
         let temp = UIView.viewFromNibName("SRGSensorView") as SRGSensorView;
@@ -94,7 +100,7 @@ public class SRGSensor: NSObject {
                     abs(blockSelf.accelerationYAverage) >= MAX_ALLOWED_DECELERATION ||
                     abs(blockSelf.accelerationZAverage) >= MAX_ALLOWED_DECELERATION) {
                         
-                        NSNotificationCenter.defaultCenter().postNotificationName("Occasion", object: nil);
+                        NSNotificationCenter.defaultCenter().postNotificationName("SROccasionNotification", object: nil);
                 }
 
                 if (blockSelf.needView == true) {
