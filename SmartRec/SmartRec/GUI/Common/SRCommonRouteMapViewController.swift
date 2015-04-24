@@ -17,6 +17,10 @@ class SRCommonRouteMapViewController : SRCommonViewController, GMSMapViewDelegat
         
     }
     
+    override func setUpNavigationBar() {
+        
+    }
+    
     //MARK: - Configure
     
     func setUpMap(targetCoordinate: CLLocationCoordinate2D) {

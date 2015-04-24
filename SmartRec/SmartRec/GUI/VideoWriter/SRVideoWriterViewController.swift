@@ -43,13 +43,10 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         self.setupUI();
     }
     
-    override func setUpNavigationBar() {
-        
-        self.navigationController?.navigationBar.hidden = true;
-    }
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
+        
+        self.navigationController?.navigationBar.hidden = true;
         
         //add constraints
         self.setUpWidgetView();

@@ -41,6 +41,7 @@
 "continue_button" = "Continue";
 "distance_reduction" = "km";
 "time_hour_reduction" = "h";
+"time_seconds_reduction" = "sec";
 "details_title" = "Details";
 "continue_cell_button" = "Continue";
 "date_selection_title" = "Date and Time";
@@ -48,6 +49,8 @@
 "list_naviagtion_button_title" = "List";
 "distance_title" = "distance";
 "duration_title" = "duration";
+"size_title" = "size";
+"megabytes_title_short" = "MB";
 "route_title" = "Route";
 "my_videos" = "My Videos";
 "route_mode_walking_title" = "Walking";
@@ -73,3 +76,4 @@
 "appintment_creation_error_reson" = "The appointment already exists.";
 "appintment_creation_error_suggestion" = "Please, choose different time or place.";
 "loaction_notification_alert_body" = "You Have Arrived to";
+"video_title" = "video";

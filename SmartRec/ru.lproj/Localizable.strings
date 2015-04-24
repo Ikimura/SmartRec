@@ -39,6 +39,7 @@
 "zoo_type" ="Зоопарк";
 "distance_reduction" = "км";
 "time_hour_reduction" = "ч";
+"time_seconds_reduction" = "с";
 "details_title" = "Информация";
 "continue_cell_button" = "Продолжить";
 "date_selection_title" = "Дата и Время";
@@ -46,6 +47,8 @@
 "list_naviagtion_button_title" = "Список";
 "distance_title" = "расстояние";
 "duration_title" = "время";
+"size_title" = "размер";
+"megabytes_title_short" = "МБ";
 "route_title" = "Маршрут";
 "my_videos" = "Мои Видео";
 "route_mode_walking_title" = "Пешком";
@@ -71,3 +74,4 @@
 "appintment_creation_error_reson" = "Такое назначение уже существует.";
 "appintment_creation_error_suggestion" = "Пожалуйста, выберите другое время или место.";
 "loaction_notification_alert_body" = "Вы находитесь рядом с";
+"video_title" = "видео";

@@ -60,7 +60,7 @@ class SRRoutesController {
             
             var workingContext = SRCoreDataContextProvider.workingManagedObjectContext();
             
-            var entity = SRCoreDataManager.sharedInstance.singleManagedObject("SRRoute", withUniqueField: routeId, inContext: workingContext);
+            var entity = SRCoreDataManager.sharedInstance.singleManagedObject(kManagedObjectRoute, withUniqueField: routeId, inContext: workingContext);
             
             workingContext.deleteObject(entity!);
             

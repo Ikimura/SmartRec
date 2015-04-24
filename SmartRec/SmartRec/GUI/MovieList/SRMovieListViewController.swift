@@ -76,6 +76,9 @@ class SRMovieListViewController: SRCommonViewController, SRDataSourceDelegate, U
             if var videoDataItem = item.videoData {
                 println(videoDataItem.fileName);
                 cell.dateLabel.text = videoDataItem.fileName;
+                
+                var timeSec = NSLocalizedString("time_seconds_reduction", comment: "");
+                cell.locationLabel.text = "\(videoDataItem.duration) \(timeSec).";
             }
 
             if let image = UIImage(data: item.thumbnailImage)? {
@@ -132,6 +135,11 @@ class SRMovieListViewController: SRCommonViewController, SRDataSourceDelegate, U
                 }
             }
         }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true);
     }
     
     //MARK: - SRAppointmentsDataSourceDelegate

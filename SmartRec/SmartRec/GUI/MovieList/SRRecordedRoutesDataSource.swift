@@ -33,8 +33,9 @@ class SRRecordedRoutesDataSource : SRAppointmentsDataSource {
         var point = self.objectAtIndexPath(NSIndexPath(forRow: 0, inSection: section)) as? SRCoreDataRouteVideoPoint;
         
         var date = NSDate(timeIntervalSince1970: point!.route!.startDate);
-        var sectionName = date.humantReadableStringDateFromDate(kDateFormat);
-        
+        var videoTitle = NSLocalizedString("video_title", comment: "");
+        var sectionName = "\(date.stringFromDateWithStringFormats([kLongTimeFormat, kDateFormat, kLongTimeFormat]).capitalizedString) - \(point!.route!.videoPoints.count) \(videoTitle)";
+
         return sectionName;
     }
     

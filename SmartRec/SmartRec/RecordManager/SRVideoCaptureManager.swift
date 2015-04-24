@@ -95,7 +95,6 @@ class SRVideoCaptureManager: NSObject, SRVideoRecorderDelegate, SRSettingsManage
     private func addNewRoutePoint(point: SRRoutePointStruct) {
         println("Debug: Add new point");
         
-        needToDeleteRoute = false;
         //link point with route
         SRRoutesController.sharedInstance.addRelationBetweenRoutePoint(point, andRoute: self.routeId!, complitionBlock: { (result) -> Void in
             

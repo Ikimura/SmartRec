@@ -53,6 +53,13 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
         self.setUpVideoInfoView();
         
         self.makePolylineForRoute(route!);
+        
+        //update url for sharing
+        if let url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(selectedVideoMark!.videoData!.fileName)\(kFileExtension)") as NSURL! {
+            
+            videoURL = url;
+            println("update video url")
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -93,8 +100,9 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
             let anchor = marker.position;
             
             mapInfoView.titleLabel.text = routeMarker.videoPoint.fileName;
-            mapInfoView.subtitleLabel.text = routeMarker.videoPoint.date;
-            
+            let mBytes = Double(Double(selectedVideoMark!.videoData!.fileSize) / 1000000.0).format(".3");
+            let mbString = NSLocalizedString("megabytes_title_short", comment: "");
+            mapInfoView.subtitleLabel.text = "\(mBytes) \(mbString).";
             if let photo = routeMarker.videoPoint.photo {
                 mapInfoView.pictureImageView.image = photo;
             }
@@ -118,8 +126,18 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
             if (temp != nil && temp?.count != 0) {
                 
                 selectedVideoMark = temp?.firstObject as? SRCoreDataRouteVideoPoint;
+                
+                //update url for sharing
+                if let url = NSURL.URL(directoryName: kFileDirectory, fileName: "\(selectedVideoMark!.videoData!.fileName)\(kFileExtension)") as NSURL! {
+                    
+                    videoURL = url;
+                    println("update video url")
+                }
+                
                 //update info in view
                 self.updateVideoInformation();
+                //update route inof
+                self.updateRouteInformation();
                 
                 //show view
                 self.showHideDetailsView(true, animated: true);
@@ -233,7 +251,7 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
                         blockSelf.videoInfoView.videoMarkLocationLabel.text = googleAddress;
                     })
                     
-                    blockSelf.selectedVideoMark?.locationDescription =  googleAddress;
+                    blockSelf.selectedVideoMark?.locationDescription =  googleAddress.capitalizedString;
                     
                     SRCoreDataManager.sharedInstance.updateEntity(blockSelf.selectedVideoMark!);
                 }
@@ -252,13 +270,14 @@ class SRRouteMapViewController: SRCommonRouteMapViewController {
         
         //set file duration
         let seconds = selectedVideoMark!.videoData!.duration.format(".1");
-        let durationLS = NSLocalizedString("DURATION", comment: "comment");
-        videoInfoView.videFileDurationLabel.text = "\(durationLS): \(seconds)";
+        let durationLS = NSLocalizedString("duration_title", comment: "comment");
+        videoInfoView.videFileDurationLabel.text = "\(durationLS.capitalizedString): \(seconds)";
         
         //set size data bytes
         let mBytes = Double(Double(selectedVideoMark!.videoData!.fileSize) / 1000000.0).format(".3");
-        let sizeLS = NSLocalizedString("SIZE", comment: "comment");
-        videoInfoView.fileSizeLabel.text = "\(sizeLS): \(mBytes) MB.";
+        let sizeLS = NSLocalizedString("size_title", comment: "");
+        let mbString = NSLocalizedString("megabytes_title_short", comment: "");
+        videoInfoView.fileSizeLabel.text = "\(sizeLS.capitalizedString): \(mBytes) \(mbString).";
         
         //set video resolution
         videoInfoView.videoResolutionLabel.text = "\(selectedVideoMark!.videoData!.resolutionWidth)x\(selectedVideoMark!.videoData!.resolutionHeight)";

@@ -89,6 +89,8 @@ let kBusyViewNibName: String = "SRBusyView";
 
 let kTimeFormat: String = "h:mm a";
 
+let kLongTimeFormat: String = "h:mm:ss a";
+
 let kDateFormat: String = "EEEE, d LLLL";
 
 let kGoogleServicesAPIKey: String = "AIzaSyDkaCDkatCMTXFFbC_cdRnkBC2KsGL7C3Q";
