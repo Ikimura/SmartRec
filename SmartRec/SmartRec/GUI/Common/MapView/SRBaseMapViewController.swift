@@ -68,8 +68,8 @@ class SRBaseMapViewController: SRCommonViewController, SRBaseMapViewDataSource, 
         
     }
     
-    func didChangeCameraPosition(position: GMSCameraPosition, byGesture: Bool) {
-        
+    func didChangeCameraPosition(mapView: GMSMapView, position: GMSCameraPosition, byGesture: Bool) {
+    
     }
 
 }

@@ -71,6 +71,7 @@
 		60057DF31ABF5487008BCBD6 /* SRPlaceWeekDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60057DF21ABF5487008BCBD6 /* SRPlaceWeekDayCell.swift */; };
 		600CE4BA1AAE334700D20481 /* SRAppointmentsHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600CE4B91AAE334700D20481 /* SRAppointmentsHistory.swift */; };
 		600CE4BD1AAE34F700D20481 /* SRAppointmentsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600CE4BC1AAE34F700D20481 /* SRAppointmentsDataSource.swift */; };
+		604867031AFF959D00A30641 /* GMSMapExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604867021AFF959D00A30641 /* GMSMapExtension.swift */; };
 		6069D5811AB22E800029FC6F /* SRCoreDataAppointmentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6069D5801AB22E800029FC6F /* SRCoreDataAppointmentExtension.swift */; };
 		606EC8831AC2B8A8008BC813 /* SRPlacesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606EC8821AC2B8A8008BC813 /* SRPlacesController.swift */; };
 		608153B81A9E59780033FF09 /* SRPlacesMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608153B71A9E59780033FF09 /* SRPlacesMapView.swift */; };
@@ -223,6 +224,7 @@
 		60057DF21ABF5487008BCBD6 /* SRPlaceWeekDayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlaceWeekDayCell.swift; sourceTree = "<group>"; };
 		600CE4B91AAE334700D20481 /* SRAppointmentsHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAppointmentsHistory.swift; sourceTree = "<group>"; };
 		600CE4BC1AAE34F700D20481 /* SRAppointmentsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAppointmentsDataSource.swift; sourceTree = "<group>"; };
+		604867021AFF959D00A30641 /* GMSMapExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMSMapExtension.swift; sourceTree = "<group>"; };
 		6069D5801AB22E800029FC6F /* SRCoreDataAppointmentExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRCoreDataAppointmentExtension.swift; sourceTree = "<group>"; };
 		606EC8821AC2B8A8008BC813 /* SRPlacesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesController.swift; sourceTree = SOURCE_ROOT; };
 		608153B71A9E59780033FF09 /* SRPlacesMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRPlacesMapView.swift; sourceTree = "<group>"; };
@@ -748,6 +750,7 @@
 				1318DEC31A1F54AD007B0F54 /* StringExtensions.swift */,
 				60AEE9331AAB4CE700B1975F /* CLLocationExtensions.swift */,
 				60C3C7D21AACA9C7001DF083 /* GMSPathExtensions.swift */,
+				604867021AFF959D00A30641 /* GMSMapExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1152,6 +1155,7 @@
 				60C3163C1A9BBC5D00D5DEE4 /* SRSearchPlaceExtension.swift in Sources */,
 				60C3162C1A9BBC3600D5DEE4 /* SRGoogleServicesDataProvider.swift in Sources */,
 				60D9AB921ABA1D2F0008A93E /* SRCoreDataVideoDataExtension.swift in Sources */,
+				604867031AFF959D00A30641 /* GMSMapExtension.swift in Sources */,
 				60AEE93C1AAB5FF700B1975F /* SRAppointmentDateViewController.swift in Sources */,
 				60C3163A1A9BBC5D00D5DEE4 /* NSDateExtensions.swift in Sources */,
 				1368F4FE1A4B20F0004D52B1 /* SRVideoRouteDetailsViewController.swift in Sources */,

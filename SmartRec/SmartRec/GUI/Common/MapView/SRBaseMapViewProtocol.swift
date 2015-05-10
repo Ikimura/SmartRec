@@ -25,7 +25,7 @@ protocol SRBaseMapViewDelegate {
     func didTapMarker() -> Bool;
     func calloutAccessoryControlTappedByIdentifier(identifier: AnyObject);
     
-    func didChangeCameraPosition(position: GMSCameraPosition, byGesture: Bool);
+    func didChangeCameraPosition(mapView: GMSMapView, position: GMSCameraPosition, byGesture: Bool);
 }
 
 protocol SRBaseMapViewProtocol {

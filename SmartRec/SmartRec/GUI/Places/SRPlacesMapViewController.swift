@@ -43,6 +43,9 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
     // Secondary search results table view.
     private var resultsTableController: SRPlacesListViewController!
     
+    private var oldRadius: Double = 1000.0;
+    private var mapViewCricle: GMSCircle?;
+    
     required override init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder);
         
@@ -53,7 +56,9 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         
         self.setUpSearchController();
 
-        self.loadPlacesWithTypes(placesTypes, textSearch: nil, coordinates: self.initialLocation(), radius: 1000, isQeurySearch: false);
+        self.loadPlacesWithTypes(placesTypes, textSearch: nil, coordinates: self.initialLocation(), radius: Int(oldRadius), isQeurySearch: false);
+        
+        self.drawCircle(onMap: self.mapView!.googleMapView, withRadius: oldRadius);
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -209,7 +214,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         
         if (strippedString.utf16Count >= 3) {
             
-            self.loadPlacesWithTypes(nil, textSearch: strippedString, coordinates: coordinate, radius: 1000, isQeurySearch: true);
+            self.loadPlacesWithTypes(nil, textSearch: strippedString, coordinates: coordinate, radius: Int(oldRadius), isQeurySearch: true);
         }
     }
     
@@ -352,7 +357,7 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
             
             self.showBusyView();
 
-            SRPlacesController.sharedInstance.cashedPlacesWith(stringTypes, textSearch: textSearch, andLocationCordinate: coordinates!, inRadius: 1000.0, complitionBlock: tempComplitionBlock);
+            SRPlacesController.sharedInstance.cashedPlacesWith(stringTypes, textSearch: textSearch, andLocationCordinate: coordinates!, inRadius: radius!, complitionBlock: tempComplitionBlock);
             
         } else {
             
@@ -417,9 +422,40 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         }
     }
     
-    override func didChangeCameraPosition(position: GMSCameraPosition, byGesture: Bool) {
+    override func didChangeCameraPosition(mapView: GMSMapView, position: GMSCameraPosition, byGesture: Bool) {
         
-        println("GEture")
+        if (byGesture) {
+            println("Geture");
+            
+            var newRadius = mapView.visibleRegionRadius();
+            
+            if (newRadius / oldRadius >= 1.5 ) {
+                
+                oldRadius = newRadius;
+                println("FetchNewData");
+                self.loadPlacesWithTypes(placesTypes, textSearch: nil, coordinates: self.initialLocation(), radius: Int(oldRadius), isQeurySearch: false);
+                self.drawCircle(onMap: mapView, withRadius: oldRadius);
+            }
+        }
+    }
+    
+    //MARK: - Utils
+    
+    func drawCircle(onMap mapView: GMSMapView, withRadius radius: Double) {
+        
+        // draw circle
+        dispatch_async(dispatch_get_main_queue(), {[weak self] () -> Void in
+            
+            if let strongSelf = self {
+                
+                strongSelf.mapViewCricle?.map = nil;
+                
+                strongSelf.mapViewCricle = GMSCircle(position: strongSelf.initialLocation(), radius: radius);
+                strongSelf.mapViewCricle!.map = mapView;
+                strongSelf.mapViewCricle!.fillColor = UIColor(red:64.0/255.0, green:164.0/255.0, blue:211.0/255.0, alpha:0.1);
+                strongSelf.mapViewCricle!.strokeWidth = 0.2;
+            }
+        });
     }
     
     //MARK: - Navigation

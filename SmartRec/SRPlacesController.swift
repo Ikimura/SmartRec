@@ -96,7 +96,7 @@ class SRPlacesController {
         }
     }
     
-    func cashedPlacesWith(types: [String], textSearch: String?, andLocationCordinate: CLLocationCoordinate2D, inRadius: Double, complitionBlock:(placesId: [String]?, error: NSError?) -> Void) {
+    func cashedPlacesWith(types: [String], textSearch: String?, andLocationCordinate: CLLocationCoordinate2D, inRadius: Int, complitionBlock:(placesId: [String]?, error: NSError?) -> Void) {
         
         dispatch_async(self.serialQueue, { [weak self]() -> Void in
 
@@ -129,7 +129,7 @@ class SRPlacesController {
                 var cashedPlaces = workinContext.executeFetchRequest(fetchRequest, error: &error);
                 println("DEBUG. all Places = \(cashedPlaces?.count)");
                 
-                var region: CLCircularRegion = CLCircularRegion(center: andLocationCordinate, radius: inRadius, identifier: "");
+                var region: CLCircularRegion = CLCircularRegion(center: andLocationCordinate, radius: Double(inRadius), identifier: "");
                 
                 if (error == nil) {
                     //filter places in raduis

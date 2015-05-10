@@ -43,7 +43,8 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
         
         if let coordinate: CLLocationCoordinate2D = dataSource?.initialLocation() {
             
-            googleMapView.camera = GMSCameraPosition.cameraWithLatitude(coordinate.latitude, longitude: coordinate.longitude, zoom: 12.0);
+            googleMapView.setRadius(1000, withСoordinate: coordinate);
+//            googleMapView.camera = GMSCameraPosition.cameraWithLatitude(coordinate.latitude, longitude: coordinate.longitude, zoom: 12.0);
         }
         
         googleMapView.delegate = self;
@@ -52,7 +53,7 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
         googleMapView.settings.rotateGestures = false;
         
         var marker: GMSMarker = GMSMarker();
-        marker.title = "You";
+        marker.title = NSLocalizedString("you_string", comment: "").capitalizedString;
         marker.position = dataSource!.initialLocation();
         marker.map = googleMapView;
         marker.icon = UIImage(named: "you_here");
@@ -170,6 +171,10 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
     func mapView(mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView! {
         var point: CGPoint = self.calloutViewPositionWithMarker(marker);
         
+        if (marker.title == NSLocalizedString("you_string", comment: "").capitalizedString) {
+            return nil;
+        }
+        
         self.calloutView.textLabel.text = marker.title;
         self.calloutView.showCalloutWithPosition(point);
         
@@ -196,8 +201,11 @@ class SRBaseMapView : UIView, SRBaseMapViewProtocol, GMSMapViewDelegate, SRCallo
         
         if (willMoveByGesture) {
             
-            delegate?.didChangeCameraPosition(position, byGesture: true);
+            delegate?.didChangeCameraPosition(mapView, position: position, byGesture: true);
             willMoveByGesture = false;
+        } else {
+            
+            delegate?.didChangeCameraPosition(mapView, position: position, byGesture: false);
         }
     }
     
