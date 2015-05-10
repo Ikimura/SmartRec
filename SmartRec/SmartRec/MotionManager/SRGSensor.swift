@@ -42,7 +42,7 @@ public class SRGSensor: NSObject {
     /**
     * Magnifies the readings from the accelerometer for testing purposes
     */
-    private var accelerationScale: Double = 1.0;
+    private var accelerationScale: Double = 2.0;
 
     
     public init(delta: Double, frequancy: Double, allowView: Bool) {
@@ -83,27 +83,24 @@ public class SRGSensor: NSObject {
                 blockSelf.accelerationYAverage = blockSelf.accelerationYSum/blockSelf.measuresCount;
                 blockSelf.accelerationZAverage = blockSelf.accelerationZSum/blockSelf.measuresCount;
                 
-                println("acceleration_x: \(accelerometerData.acceleration.x)");
-                println("acceleration_y: \(accelerometerData.acceleration.y)");
-                println("acceleration_z: \(accelerometerData.acceleration.z)");
-                
-                // Save ourselves a multiply if we can
-                if (blockSelf.accelerationScale != 1.0) {
-                    
+                #if DEBUG
                     blockSelf.accelerationXAverage *= blockSelf.accelerationScale;
                     blockSelf.accelerationYAverage *= blockSelf.accelerationScale;
                     blockSelf.accelerationZAverage *= blockSelf.accelerationScale;
-                }
+                #endif
                 
                 // Check if we exceeded our max decel
                 if(abs(blockSelf.accelerationXAverage) >= MAX_ALLOWED_DECELERATION ||
                     abs(blockSelf.accelerationYAverage) >= MAX_ALLOWED_DECELERATION ||
                     abs(blockSelf.accelerationZAverage) >= MAX_ALLOWED_DECELERATION) {
                         
+                        println("acceleration_x: \(accelerometerData.acceleration.x)");
+                        println("acceleration_y: \(accelerometerData.acceleration.y)");
+                        println("acceleration_z: \(accelerometerData.acceleration.z)");
                         NSNotificationCenter.defaultCenter().postNotificationName("SROccasionNotification", object: nil);
                 }
 
-                if (blockSelf.needView == true) {
+                if (blockSelf.needView) {
                     
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         

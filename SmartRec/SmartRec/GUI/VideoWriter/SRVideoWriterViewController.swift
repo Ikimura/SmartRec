@@ -22,18 +22,27 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     private var recordManager: SRVideoCaptureManager!;
     private var previewView: UIView?;
     private var timer: NSTimer?;
+    private var userInteractionTimer: NSTimer?;
     private var seconds: Int = 0;
     private var locationQueue: dispatch_queue_t?;
     private var acceleraometrWidget: SRGSensor?;
-
+    
+    private var lastBrightnessOfScreen: CGFloat?;
+    
     //MARK: life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        recordManager = SRVideoCaptureManager();
-        recordManager.delegate = self;
-
+        #if (arch(i386) || arch(x86_64)) && os(iOS)
+            
+            println("Simulator");
+        #else
+            
+            recordManager = SRVideoCaptureManager();
+            recordManager.delegate = self;
+        #endif
+            
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name: UIApplicationDidEnterBackgroundNotification, object: UIApplication.sharedApplication());
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: UIApplication.sharedApplication());
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdatedLocations:", name: kLocationTitleNotification, object: nil)
@@ -46,13 +55,21 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
         
-        self.navigationController?.navigationBar.hidden = true;
+        UIScreen.mainScreen().wantsSoftwareDimming = true;
         
+        self.navigationController?.navigationBar.hidden = true;
+
         //add constraints
         self.setUpWidgetView();
         
-        recordManager.startRunnigSession();
-        
+        #if (arch(i386) || arch(x86_64)) && os(iOS)
+            
+            println("Simulator");
+        #else
+            
+            recordManager.startRunnigSession();
+        #endif
+            
         //Update location, speed, timer
         dispatch_async(locationQueue, { [weak self]() -> Void in
             
@@ -62,15 +79,24 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
             }
         });
         
-        //TODO: - for debug start monitoring acceleration
-//        acceleraometrWidget?.startAccelerationMonitoring();
+        #if DEBUG
+            //:for debug start monitoring acceleration
+            acceleraometrWidget?.startAccelerationMonitoring();
+        #endif
         
-        //FIXME: - fix it
-        recordManager.createNewRoute();
+        #if (arch(i386) || arch(x86_64)) && os(iOS)
+        
+            println("Simulator");
+        #else
+
+            recordManager.createNewRoute();
+        #endif
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
+        
+        UIScreen.mainScreen().wantsSoftwareDimming = false;
         
         recordManager.stopRunnigSession();
         
@@ -83,11 +109,18 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
             }
         });
         
-        //TODO: - for debug stop monitoring acceleration
-//        acceleraometrWidget?.stopAccelerationMonitoring();
+        #if DEBUG
+            //: - for debug stop monitoring acceleration
+            acceleraometrWidget?.stopAccelerationMonitoring();
+        #endif
         
-        //FIXME: - fix it
-        recordManager.finishRoute();
+        #if (arch(i386) || arch(x86_64)) && os(iOS)
+            
+            println("Simulator");
+        #else
+            
+            recordManager.finishRoute();
+        #endif
     }
     
     deinit {
@@ -138,15 +171,6 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         view.addConstraints(constraint_POS_H);
     }
     
-    func updateTimeLabel(t: NSTimer) {
-        var minutesPast, secondsPast: Int;
-        
-        seconds++;
-        minutesPast = (seconds % 3600) / 60;
-        secondsPast = (seconds % 3600) % 60;
-        timeLabel.text = String(format: "%02d:%02d", minutesPast, secondsPast);
-    }
-    
     private func updateUIByDefault() {
         
         dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
@@ -168,17 +192,36 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimeLabel:", userInfo: nil, repeats: true);
     }
     
+    private func startUserInteractionTimer() {
+        
+        lastBrightnessOfScreen = UIScreen.mainScreen().brightness;
+        #if DEBUG
+            let interval = 10.0;
+        #else
+            let interval = 5.0;
+        #endif
+        
+        userInteractionTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: "tornOffScreen", userInfo: nil, repeats: false);
+    }
+    
     private func stopTimer() {
         seconds = 0;
         timer?.invalidate();
+    }
+    
+    private func stopUserInteractionTimer() {
+        
+        UIScreen.mainScreen().brightness = lastBrightnessOfScreen!;
+        userInteractionTimer?.invalidate();
     }
     
     private func startRecording() {
         NSLog("START RECORDING");
         recordBtn.enabled = false;
         //Record video
-        recordManager.startRecordingVideo();
+        recordManager?.startRecordingVideo();
         self.startTimer();
+        self.startUserInteractionTimer();
         //
         recordBtn.selected = true;
         // Disable the idle timer while recording
@@ -191,8 +234,9 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         NSLog("STOP RECORDING");
         recordBtn.enabled = false;
         //
-        recordManager.stopRecordingVideo();
+        recordManager?.stopRecordingVideo();
         self.stopTimer();
+        self.stopUserInteractionTimer();
 
         self.updateUIByDefault();
         //
@@ -217,6 +261,22 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
             
             self.acceleraometrWidget?.stopAccelerationMonitoring();
         }
+    }
+    
+    //MARK: - Timers Selectors
+    
+    func updateTimeLabel(t: NSTimer) {
+        var minutesPast, secondsPast: Int;
+        
+        seconds++;
+        minutesPast = (seconds % 3600) / 60;
+        secondsPast = (seconds % 3600) % 60;
+        timeLabel.text = String(format: "%02d:%02d", minutesPast, secondsPast);
+    }
+    
+    func tornOffScreen() {
+        
+        UIScreen.mainScreen().brightness = 0.0;
     }
     
     //MARK: - SRVideoRecorderDelegateProtocol
@@ -333,4 +393,12 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
         acceleraometrWidget?.startAccelerationMonitoring();
     }
 
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        super.touchesBegan(touches, withEvent:event)
+        
+        if (recordBtn.selected) {
+            self.stopUserInteractionTimer();
+            self.startUserInteractionTimer();
+        }
+    }
 }

@@ -86,13 +86,15 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
             var fileOutput = AVCaptureMovieFileOutput();
             videoFileOutput = fileOutput;
             
-            var sessionPreset: AnyObject?;
+            var sessionPreset: NSString?;
             
             switch (videoQuality!) {
             case .High:
                 // For single core systems like iPhone 4 and iPod Touch 4th Generation we use a lower resolution and framerate to maintain real-time performance.
                 if ( NSProcessInfo.processInfo().processorCount != 1 ) {
                     if (captureSession.canSetSessionPreset(AVCaptureSessionPreset1280x720)) {
+                        
+                        println("video qualityt AVCaptureSessionPreset1280x720");
                         sessionPreset = AVCaptureSessionPreset1280x720;
                     } else {
                         fallthrough;
@@ -102,19 +104,24 @@ class SRVideoRecorder: NSObject, AVCaptureFileOutputRecordingDelegate {
                 }
             case .Medium:
                 if (captureSession.canSetSessionPreset(AVCaptureSessionPreset640x480)) {
+                    
+                    println("video qualityt AVCaptureSessionPreset640x480");
                     sessionPreset = AVCaptureSessionPreset640x480;
-                    videoFrameRate = kLowFramRate;
                 } else{
                     fallthrough;
                 }
             case .Low:
                 if (captureSession.canSetSessionPreset(AVCaptureSessionPreset352x288)) {
+                    
+                    println("video qualityt AVCaptureSessionPreset352x288");
                     sessionPreset = AVCaptureSessionPreset352x288;
                     videoFrameRate = kLowFramRate;
                 }
             default:
                 break;
             }
+            
+            captureSession.sessionPreset = sessionPreset;
             
             var maxDuration: CMTime = CMTimeMakeWithSeconds(videoDuration, videoFrameRate);	//<<SET MAX DURATION
             videoFileOutput.maxRecordedDuration = maxDuration;

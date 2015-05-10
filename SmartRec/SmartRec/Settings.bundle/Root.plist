@@ -21,15 +21,15 @@
 			<integer>30</integer>
 			<key>Titles</key>
 			<array>
-				<string>45</string>
+				<string>40</string>
 				<string>30</string>
-				<string>15</string>
+				<string>24</string>
 			</array>
 			<key>Values</key>
 			<array>
-				<integer>45</integer>
+				<integer>40</integer>
 				<integer>30</integer>
-				<integer>15</integer>
+				<integer>24</integer>
 			</array>
 		</dict>
 		<dict>

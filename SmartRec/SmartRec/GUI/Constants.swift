@@ -11,7 +11,7 @@ import QuartzCore
 
 let kDefaultVideoDuration: Float64 = 10;
 
-let kLowFramRate: Int32 = 15;
+let kLowFramRate: Int32 = 24;
 
 let kDefaultFramRate: Int32 = 30;
 
