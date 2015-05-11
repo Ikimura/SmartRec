@@ -79,10 +79,8 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
             }
         });
         
-        #if DEBUG
-            //:for debug start monitoring acceleration
-            acceleraometrWidget?.startAccelerationMonitoring();
-        #endif
+        //:for debug start monitoring acceleration
+//        acceleraometrWidget?.startAccelerationMonitoring();
         
         #if (arch(i386) || arch(x86_64)) && os(iOS)
         
@@ -109,10 +107,8 @@ class SRVideoWriterViewController: SRCommonViewController, SRVideoCaptureManager
             }
         });
         
-        #if DEBUG
-            //: - for debug stop monitoring acceleration
-            acceleraometrWidget?.stopAccelerationMonitoring();
-        #endif
+        //: - for debug stop monitoring acceleration
+//        acceleraometrWidget?.stopAccelerationMonitoring();
         
         #if (arch(i386) || arch(x86_64)) && os(iOS)
             

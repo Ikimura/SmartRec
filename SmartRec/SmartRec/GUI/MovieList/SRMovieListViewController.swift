@@ -78,7 +78,8 @@ class SRMovieListViewController: SRCommonViewController, SRDataSourceDelegate, U
                 cell.dateLabel.text = videoDataItem.fileName;
                 
                 var timeSec = NSLocalizedString("time_seconds_reduction", comment: "");
-                cell.locationLabel.text = "\(videoDataItem.duration) \(timeSec).";
+                var durStr = videoDataItem.duration.format(".2");
+                cell.locationLabel.text = "\(durStr) \(timeSec).";
             }
 
             if let image = UIImage(data: item.thumbnailImage)? {
