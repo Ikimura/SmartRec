@@ -56,9 +56,12 @@ class SRPlacesMapViewController: SRBaseMapViewController, SRPlacesListViewContro
         
         self.setUpSearchController();
 
-        self.loadPlacesWithTypes(placesTypes, textSearch: nil, coordinates: self.initialLocation(), radius: Int(oldRadius), isQeurySearch: false);
+        if (placesTypes != nil && placesTypes?.count != 0 ) {
+            
+            self.loadPlacesWithTypes(placesTypes, textSearch: nil, coordinates: self.initialLocation(), radius: Int(oldRadius), isQeurySearch: false);
         
-        self.drawCircle(onMap: self.mapView!.googleMapView, withRadius: oldRadius);
+            self.drawCircle(onMap: self.mapView!.googleMapView, withRadius: oldRadius);
+        }
     }
     
     override func viewDidAppear(animated: Bool) {

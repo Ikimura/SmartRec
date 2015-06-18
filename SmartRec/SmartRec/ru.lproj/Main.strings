@@ -78,7 +78,7 @@
 "uXC-J1-Rwl.title" = "Маршруты";
 
 /* Class = "UIButton"; normalTitle = "Video Recorder"; ObjectID = "vN7-1X-VT9"; */
-"vN7-1X-VT9.normalTitle" = "Видео Регистратор";
+"vN7-1X-VT9.normalTitle" = "Видеорегистратор";
 
 /* Class = "UIButton"; normalTitle = "Add To Calendar"; ObjectID = "xDL-9C-ECG"; */
 "xDL-9C-ECG.normalTitle" = "Добавить в Календарь";

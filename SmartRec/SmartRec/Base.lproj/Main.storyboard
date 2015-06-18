@@ -797,6 +797,10 @@
                             <constraint firstAttribute="trailing" secondItem="WLS-bO-jDq" secondAttribute="trailing" id="uYw-Vo-rdO"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="recorderButton" destination="vN7-1X-VT9" id="mr0-DW-SFX"/>
+                        <outlet property="videoHistoryButton" destination="RGJ-ha-0eY" id="Bgw-4Y-teT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SDg-J2-fq3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AVFoundation
 
 enum SRMenuViewControllerMenuItem: Int {
     
@@ -19,13 +20,34 @@ class SRLeftMenuViewController: SRCommonViewController {
 
     private var menuItemInstancesByTag = Dictionary<Int, UIViewController>();
     
-    
+    @IBOutlet weak var recorderButton: UIButton!    
+    @IBOutlet weak var videoHistoryButton: UIButton!
+
     //MARK: life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad();
         
+        self.prepareMenuButtons();
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showAppointmentDetails:", name: "SHOW_APPOINTMENT", object: nil);
+    }
+    
+    func prepareMenuButtons() {
+        
+        var videoDevices = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo);
+
+        var hasBackCamera: Bool = false;
+        for device in videoDevices {
+            
+            if let backCamera = device as? AVCaptureDevice {
+                
+                hasBackCamera = backCamera.position == .Back;
+            }
+        }
+        
+        self.recorderButton.hidden = !hasBackCamera;
+        self.videoHistoryButton.hidden = !hasBackCamera;
     }
         
     @IBAction func menuButtonDidTap(sender: AnyObject) {
