@@ -42,7 +42,11 @@ class SRLeftMenuViewController: SRCommonViewController {
             
             if let backCamera = device as? AVCaptureDevice {
                 
-                hasBackCamera = backCamera.position == .Back;
+                if backCamera.position == .Back {
+                    
+                    hasBackCamera = true;
+                    break;
+                }
             }
         }
         
